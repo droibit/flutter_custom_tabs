@@ -1,0 +1,23 @@
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/*
+
+# Android Studio files
+/captures
+.externalNativeBuild/
+projectFilesBackup/
+output.json
+
+# Gradle files
+/.gradle
+/build
+
+.DS_Store
+
+# Flutter files
+GeneratedPluginRegistrant.java
