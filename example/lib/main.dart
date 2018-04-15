@@ -1,53 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => new _MyAppState();
-}
+const String _urlFlutter = 'https://flutter.io/';
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
-  @override
-  initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await FlutterCustomTabs.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted)
-      return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return new MaterialApp(
+      title: 'Flutter Custom Tabs Example',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+        accentColor: Colors.orange,
+      ),
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text('Plugin example app'),
+          title: const Text('Flutter Custom Tabs Example'),
         ),
         body: new Center(
-          child: new Text('Running on: $_platformVersion\n'),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new FlatButton(
+                child: new Text(
+                  'https://flutter.io/',
+                  style: new TextStyle(
+                    fontSize: theme.textTheme.subhead.fontSize,
+                    color: theme.primaryColor,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                onPressed: () async {
+                  await launch(
+                    _urlFlutter,
+                    option: new CustomTabsOption(
+                      toolbarColor: theme.primaryColor,
+                      enableDefaultShare: true,
+                      enableUrlBarHiding: true,
+                      showPageTitle: true,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
