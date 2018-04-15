@@ -36,4 +36,14 @@ android {
     libraryVariants.all {
       it.generateBuildConfig.enabled = false
     }
+
+    dependencies {
+        api 'com.github.droibit.customtabslauncher:launcher:1.1.0'
+
+
+        testImplementation 'junit:junit:4.12'
+        testImplementation 'org.robolectric:robolectric:3.8'
+        testImplementation 'org.mockito:mockito-core:2.18.0'
+        testImplementation 'org.assertj:assertj-core:3.9.1'
+    }
 }

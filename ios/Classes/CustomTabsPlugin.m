@@ -1,11 +1,11 @@
-#import "FlutterCustomTabsPlugin.h"
+#import "CustomTabsPlugin.h"
 
-@implementation FlutterCustomTabsPlugin
+@implementation CustomTabsPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"flutter_custom_tabs"
             binaryMessenger:[registrar messenger]];
-  FlutterCustomTabsPlugin* instance = [[FlutterCustomTabsPlugin alloc] init];
+  CustomTabsPlugin* instance = [[CustomTabsPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 
