@@ -21,7 +21,7 @@ main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
-          'options': const <String, dynamic>{},
+          'option': const <String, dynamic>{},
         }),
       ],
     );
@@ -42,7 +42,7 @@ main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
-          'options': const <String, dynamic>{
+          'option': const <String, dynamic>{
             'toolbarColor': '#ffffebee',
             'enableUrlBarHiding': true,
             'enableDefaultShare': false,

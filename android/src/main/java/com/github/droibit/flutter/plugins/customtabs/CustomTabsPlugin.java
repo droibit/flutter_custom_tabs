@@ -23,7 +23,7 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
     channel.setMethodCallHandler(new CustomTabsPlugin(registrar));
   }
 
-  private static final String KEY_OPTIONS = "options";
+  private static final String KEY_OPTION = "option";
 
   private static final String KEY_URL = "url";
 
@@ -54,7 +54,7 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
     final Uri uri = Uri.parse(args.get(KEY_URL).toString());
     //noinspection unchecked
     final CustomTabsIntent customTabsIntent =
-        launcher.buildIntent(((Map<String, Object>) args.get(KEY_OPTIONS)));
+        launcher.buildIntent(((Map<String, Object>) args.get(KEY_OPTION)));
 
     final Context context;
     if (registrar.activity() != null) {

@@ -19,7 +19,7 @@ Future<void> customTabsLauncher(String urlString, CustomTabsOption option) {
 
   final args = <String, dynamic>{
     'url': urlString,
-    'options': option.toMap(),
+    'option': option.toMap(),
   };
   return _channel.invokeMethod('launch', args);
 }
