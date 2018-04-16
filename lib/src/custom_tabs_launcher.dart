@@ -12,8 +12,7 @@ Future<void> customTabsLauncher(String urlString, CustomTabsOption option) {
   if (url.scheme != 'http' && url.scheme != 'https') {
     throw new PlatformException(
       code: 'NOT_A_WEB_SCHEME',
-      message:
-          'Flutter Custom Tabs only supports URLs of http or https scheme.',
+      message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
     );
   }
 

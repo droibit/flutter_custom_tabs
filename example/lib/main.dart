@@ -3,8 +3,6 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 void main() => runApp(new MyApp());
 
-const String _urlFlutter = 'https://flutter.io/';
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,7 @@ class MyApp extends StatelessWidget {
                 onPressed: () async {
                   try {
                     await launch(
-                      _urlFlutter,
+                      'https://flutter.io/',
                       option: new CustomTabsOption(
                         toolbarColor: theme.primaryColor,
                         enableDefaultShare: true,

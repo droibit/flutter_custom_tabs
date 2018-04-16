@@ -81,9 +81,15 @@ Future<void> launch(
   assert(urlString != null);
   assert(option != null);
 
-  if (Platform.isAndroid) {
-    return customTabsLauncher(urlString, option);
-  } else {
-    return urlLauncher(urlString);
-  }
+  return _launcher(urlString, option);
 }
+
+typedef Future<void> _PlatformLauncher(String urlString, CustomTabsOption option);
+
+_PlatformLauncher get _launcher {
+  if (_platformLauncher == null) {
+    _platformLauncher = Platform.isAndroid ? customTabsLauncher : urlLauncher;
+  }
+  return _platformLauncher;
+}
+_PlatformLauncher _platformLauncher;
