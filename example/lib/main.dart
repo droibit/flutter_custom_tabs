@@ -33,15 +33,20 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  await launch(
-                    _urlFlutter,
-                    option: new CustomTabsOption(
-                      toolbarColor: theme.primaryColor,
-                      enableDefaultShare: true,
-                      enableUrlBarHiding: true,
-                      showPageTitle: true,
-                    ),
-                  );
+                  try {
+                    await launch(
+                      _urlFlutter,
+                      option: new CustomTabsOption(
+                        toolbarColor: theme.primaryColor,
+                        enableDefaultShare: true,
+                        enableUrlBarHiding: true,
+                        showPageTitle: true,
+                      ),
+                    );
+                  } catch (e) {
+                    // An exception is thrown if browser app is not installed on Android device.
+                    debugPrint(e.toString());
+                  }
                 },
               ),
             ],
