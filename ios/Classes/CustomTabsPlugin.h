@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface CustomTabsPlugin : NSObject<FlutterPlugin>
+@interface GDBCustomTabsPlugin : NSObject<FlutterPlugin>
 @end

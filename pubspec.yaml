@@ -16,6 +16,7 @@ dependencies:
 flutter:
   plugin:
     androidPackage: com.github.droibit.flutter.plugins.customtabs
+    iosPrefix: GDB
     pluginClass: CustomTabsPlugin
 
 dev_dependencies:
