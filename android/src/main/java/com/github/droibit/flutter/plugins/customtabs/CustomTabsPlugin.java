@@ -27,7 +27,7 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
 
   private static final String KEY_URL = "url";
 
-  private static final String ERROR_LAUNCH_FAILED = "launch_failed";
+  private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
   private final PluginRegistry.Registrar registrar;
 
@@ -68,8 +68,7 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
       launcher.launch(context, uri, customTabsIntent);
       result.success(null);
     } catch (ActivityNotFoundException e) {
-      result.error(ERROR_LAUNCH_FAILED, e.getMessage(), null);
+      result.error(CODE_LAUNCH_ERROR, e.getMessage(), null);
     }
   }
 }
-
