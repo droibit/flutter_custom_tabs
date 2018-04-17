@@ -38,10 +38,10 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
     this.launcher = new Launcher();
   }
 
-  @Override public void onMethodCall(MethodCall call, final MethodChannel.Result result) {
+  @SuppressWarnings("unchecked") @Override
+  public void onMethodCall(MethodCall call, final MethodChannel.Result result) {
     switch (call.method) {
       case "launch":
-        //noinspection unchecked
         launch(((Map<String, Object>) call.arguments), result);
         break;
       default:
@@ -50,9 +50,9 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void launch(@NonNull Map<String, Object> args, @NonNull MethodChannel.Result result) {
     final Uri uri = Uri.parse(args.get(KEY_URL).toString());
-    //noinspection unchecked
     final CustomTabsIntent customTabsIntent =
         launcher.buildIntent(((Map<String, Object>) args.get(KEY_OPTION)));
 
