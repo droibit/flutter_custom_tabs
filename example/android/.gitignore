@@ -16,6 +16,9 @@ output.json
 # Gradle files
 /.gradle
 /build
+/gradle
+/gradlew
+/gradlew.bat
 
 .DS_Store
 
