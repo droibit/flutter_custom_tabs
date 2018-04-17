@@ -19,13 +19,13 @@ class CustomTabsOption {
   /// Custom tab toolbar color.
   final Color toolbarColor;
 
-  /// Enables the url bar to hide as the user scrolls down on the page.
+  /// If enabled, hides the toolbar when the user scrolls down the page.
   final bool enableUrlBarHiding;
 
-  /// Adds a default share item to the menu.
+  /// If enabled, default sharing menu is added.
   final bool enableDefaultShare;
 
-  /// The page title should be shown in the custom tab.
+  /// Show web page title in tool bar.
   final bool showPageTitle;
 
   const CustomTabsOption({
