@@ -66,24 +66,24 @@ import java.util.regex.Pattern;
       @NonNull Map<String, String> animations) {
     final int startEnterAnimationId = animations.containsKey(KEY_ANIMATION_START_ENTER)
         ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_START_ENTER))
-        : 0;
+        : -1;
     final int startExitAnimationId = animations.containsKey(KEY_ANIMATION_START_EXIT)
         ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_START_EXIT))
-        : 0;
+        : -1;
     final int endEnterAnimationId = animations.containsKey(KEY_ANIMATION_END_ENTER)
         ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_END_ENTER))
-        : 0;
+        : -1;
     final int endExitAnimationId = animations.containsKey(KEY_ANIMATION_END_EXIT)
         ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_END_EXIT))
-        : 0;
+        : -1;
 
-    if (startEnterAnimationId == 0 || startExitAnimationId == 0 ||
-        endEnterAnimationId == 0 || endExitAnimationId == 0) {
-      throw new IllegalArgumentException("`animations` contains invalid resource modifiers.");
+    if (startEnterAnimationId != -1 && startExitAnimationId != -1) {
+      builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId);
     }
 
-    builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId)
-        .setExitAnimations(context, endEnterAnimationId, endExitAnimationId);
+    if (endEnterAnimationId != -1 && endExitAnimationId != -1) {
+      builder.setExitAnimations(context, endEnterAnimationId, endExitAnimationId);
+    }
   }
 
   private int resolveAnimationIdentifierIfNeeded(@NonNull String identifier) {

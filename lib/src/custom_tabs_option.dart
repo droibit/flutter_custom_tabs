@@ -48,12 +48,7 @@ class CustomTabsOption {
     }
 
     if (animation != null) {
-      dest['animations'] = <String, String>{
-        'startEnter': animation.startEnter,
-        'startExit': animation.startExit,
-        'endEnter': animation.endEnter,
-        'endExit': animation.endExit,
-      };
+      dest['animations'] = animation.toMap();
     }
     return dest;
   }
@@ -63,13 +58,14 @@ class CustomTabsOption {
 /// **This animation applies only on Android platform.**
 ///
 /// An animation specification is as follows:
-/// * For application resources, only resource name.
-///  * e.g. `slide_in_right`
+/// * For application animation resources, only resource file name.
+///  * e.g. `slide_up`
 /// * Otherwise a resource identifier and type `anim` fixed..
 ///  * e.g. `android:anim/fade_in`
 ///
 /// See also:
 ///
+/// * [View Animation](https://developer.android.com/guide/topics/resources/animation-resource.html#View)
 /// * https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String,%20java.lang.String,%20java.lang.String)
 ///
 class CustomTabsAnimation {
@@ -90,14 +86,11 @@ class CustomTabsAnimation {
   final String endExit;
 
   const CustomTabsAnimation({
-    @required this.startEnter,
-    @required this.startExit,
-    @required this.endEnter,
-    @required this.endExit,
-  })  : assert(startEnter != null),
-        assert(startExit != null),
-        assert(endEnter != null),
-        assert(endExit != null);
+    this.startEnter,
+    this.startExit,
+    this.endEnter,
+    this.endExit,
+  });
 
   /// Create a built-in slide in animation.
   factory CustomTabsAnimation.slideIn() {
@@ -118,10 +111,23 @@ class CustomTabsAnimation {
       _fade = const CustomTabsAnimation(
         startEnter: 'android:anim/fade_in',
         startExit: 'android:anim/fade_out',
-        endEnter: 'android:anim/fade_out',
-        endExit: 'android:anim/fade_in',
+        endEnter: 'android:anim/fade_in',
+        endExit: 'android:anim/fade_out',
       );
     }
     return _fade;
+  }
+
+  Map<String, String> toMap() {
+    final dest = <String, String>{};
+    if (startEnter != null && startExit != null) {
+      dest['startEnter'] = startEnter;
+      dest['startExit'] = startExit;
+    }
+    if (endEnter != null && endExit != null) {
+      dest['endEnter'] = endEnter;
+      dest['endExit'] = endExit;
+    }
+    return dest;
   }
 }
