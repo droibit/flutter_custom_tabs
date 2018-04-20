@@ -15,7 +15,6 @@ import 'src/url_launcher.dart';
 /// * [CustomTabsIntent.Builder](https://developer.android.com/reference/android/support/customtabs/CustomTabsIntent.Builder.html)
 ///
 class CustomTabsOption {
-
   /// Custom tab toolbar color.
   final Color toolbarColor;
 
@@ -84,7 +83,8 @@ Future<void> launch(
   return _launcher(urlString, option);
 }
 
-typedef Future<void> _PlatformLauncher(String urlString, CustomTabsOption option);
+typedef Future<void> _PlatformLauncher(
+    String urlString, CustomTabsOption option);
 
 _PlatformLauncher get _launcher {
   if (_platformLauncher == null) {
@@ -92,4 +92,5 @@ _PlatformLauncher get _launcher {
   }
   return _platformLauncher;
 }
+
 _PlatformLauncher _platformLauncher;
