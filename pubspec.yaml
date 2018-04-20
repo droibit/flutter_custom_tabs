@@ -1,5 +1,5 @@
 name: flutter_custom_tabs
-description: A Flutter plugin to use Chrome Custom Tabs.
+description: Flutter plugin for seamlessly displaying web content using Chrome Custom Tabs.
 version: 0.1.0
 author: Shinya Kumagai <roomful.rooms@gmail.com>
 homepage: https://github.com/droibit/flutter_custom_tabs
