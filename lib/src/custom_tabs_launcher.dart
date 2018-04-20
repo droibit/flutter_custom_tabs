@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart'
-    show CustomTabsOption;
+
+import 'custom_tabs_option.dart';
 
 const MethodChannel _channel =
     const MethodChannel('com.github.droibit.flutter.plugins.custom_tabs');

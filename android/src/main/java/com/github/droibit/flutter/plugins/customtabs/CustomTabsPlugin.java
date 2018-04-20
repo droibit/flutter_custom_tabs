@@ -35,7 +35,7 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
 
   private CustomTabsPlugin(@NonNull PluginRegistry.Registrar registrar) {
     this.registrar = registrar;
-    this.launcher = new Launcher();
+    this.launcher = new Launcher(registrar.activeContext());
   }
 
   @SuppressWarnings("unchecked") @Override

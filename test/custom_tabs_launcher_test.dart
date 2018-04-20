@@ -1,8 +1,7 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart'
-    show CustomTabsOption;
 import 'package:flutter_custom_tabs/src/custom_tabs_launcher.dart';
+import 'package:flutter_custom_tabs/src/custom_tabs_option.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
@@ -35,6 +34,12 @@ main() {
         enableUrlBarHiding: true,
         enableDefaultShare: false,
         showPageTitle: true,
+        animation: const CustomTabsAnimation(
+          startEnter: '_startEnter',
+          startExit: '_startExit',
+          endEnter: '_endEnter',
+          endExit: '_endExit',
+        ),
       ),
     );
     expect(
@@ -47,6 +52,12 @@ main() {
             'enableUrlBarHiding': true,
             'enableDefaultShare': false,
             'showPageTitle': true,
+            'animations': <String, String>{
+              'startEnter': '_startEnter',
+              'startExit': '_startExit',
+              'endEnter': '_endEnter',
+              'endExit': '_endExit',
+            },
           },
         }),
       ],

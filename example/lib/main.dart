@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
+          animation: new CustomTabsAnimation.slideIn()
         ),
       );
     } catch (e) {
