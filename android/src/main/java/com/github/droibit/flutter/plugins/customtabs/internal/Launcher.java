@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.AnimRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.support.customtabs.CustomTabsIntent;
@@ -18,6 +19,7 @@ import java.util.regex.Pattern;
   private static final String KEY_OPTIONS_ENABLE_URL_BAR_HIDING = "enableUrlBarHiding";
   private static final String KEY_OPTIONS_SHOW_PAGE_TITLE = "showPageTitle";
   private static final String KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM = "enableDefaultShare";
+  private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
   private static final String KEY_OPTIONS_ANIMATIONS = "animations";
   private static final String KEY_ANIMATION_START_ENTER = "startEnter";
   private static final String KEY_ANIMATION_START_EXIT = "startExit";
@@ -56,6 +58,10 @@ import java.util.regex.Pattern;
       builder.setShowTitle(((Boolean) options.get(KEY_OPTIONS_SHOW_PAGE_TITLE)));
     }
 
+    if (options.containsKey(KEY_OPTIONS_ENABLE_INSTANT_APPS)) {
+      builder.setInstantAppsEnabled(((Boolean) options.get(KEY_OPTIONS_ENABLE_INSTANT_APPS)));
+    }
+
     if (options.containsKey(KEY_OPTIONS_ANIMATIONS)) {
       applyAnimations(builder, ((Map<String, String>) options.get(KEY_OPTIONS_ANIMATIONS)));
     }
@@ -86,6 +92,7 @@ import java.util.regex.Pattern;
     }
   }
 
+  @AnimRes
   private int resolveAnimationIdentifierIfNeeded(@NonNull String identifier) {
     if (animationIdentifierPattern.matcher(identifier).find()) {
       return context.getResources().getIdentifier(identifier, null, null);

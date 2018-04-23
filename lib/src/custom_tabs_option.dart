@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
 /// Option class for customizing appearance of Custom Tabs.
@@ -21,6 +20,9 @@ class CustomTabsOption {
   /// Show web page title in tool bar.
   final bool showPageTitle;
 
+  /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
+  final bool enableInstantApps;
+
   ///  Enter and exit animation.
   final CustomTabsAnimation animation;
 
@@ -29,6 +31,7 @@ class CustomTabsOption {
     this.enableUrlBarHiding,
     this.enableDefaultShare,
     this.showPageTitle,
+    this.enableInstantApps,
     this.animation,
   });
 
@@ -46,6 +49,9 @@ class CustomTabsOption {
     if (showPageTitle != null) {
       dest['showPageTitle'] = showPageTitle;
     }
+    if (enableInstantApps != null) {
+      dest['enableInstantApps'] = enableInstantApps;
+    }
 
     if (animation != null) {
       dest['animations'] = animation.toMap();
@@ -60,7 +66,7 @@ class CustomTabsOption {
 /// An animation specification is as follows:
 /// * For application animation resources, only resource file name.
 ///  * e.g. `slide_up`
-/// * Otherwise a resource identifier and type `anim` fixed..
+/// * Otherwise a resource identifier and type `anim` fixed.
 ///  * e.g. `android:anim/fade_in`
 ///
 /// See also:

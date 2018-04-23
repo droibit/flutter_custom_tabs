@@ -34,6 +34,7 @@ main() {
         enableUrlBarHiding: true,
         enableDefaultShare: false,
         showPageTitle: true,
+        enableInstantApps: false,
         animation: const CustomTabsAnimation(
           startEnter: '_startEnter',
           startExit: '_startExit',
@@ -52,6 +53,7 @@ main() {
             'enableUrlBarHiding': true,
             'enableDefaultShare': false,
             'showPageTitle': true,
+            'enableInstantApps': false,
             'animations': <String, String>{
               'startEnter': '_startEnter',
               'startExit': '_startExit',
