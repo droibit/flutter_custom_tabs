@@ -103,9 +103,9 @@ import java.util.regex.Pattern;
   @NonNull
   private CustomTabsFallback createFallback(final @NonNull CustomTabsIntent customTabsIntent) {
     return new CustomTabsFallback() {
-      @Override public void openUrl(@NonNull Context context, @NonNull Uri url) {
+      @Override public void openUrl(@NonNull Context context, @NonNull Uri uri) {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(url);
+        intent.setData(uri);
         intent.setFlags(customTabsIntent.intent.getFlags());
         context.startActivity(intent);
       }
