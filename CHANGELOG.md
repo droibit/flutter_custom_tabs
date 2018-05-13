@@ -1,3 +1,8 @@
+## 0.2.0
+
+* Support custom transition.
+* Support enabling of Instant apps.
+
 ## 0.1.0
 
 Initial release of plugin supports following customization options:
