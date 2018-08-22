@@ -19,7 +19,7 @@ Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
 dependencies:
-  flutter_custom_tabs: "^0.2.0"
+  flutter_custom_tabs: "^0.3.0"
 ```
 
 ### Usage
@@ -78,6 +78,7 @@ class MyApp extends StatelessWidget {
 ```
 ## License
 
+    Copyright (C) 2015 The Android Open Source Project
     Copyright (C) 2018 Shinya Kumagai
 
     Licensed under the Apache License, Version 2.0 (the "License");
