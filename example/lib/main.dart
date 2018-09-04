@@ -41,7 +41,11 @@ class MyApp extends StatelessWidget {
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: new CustomTabsAnimation.slideIn()
+          animation: new CustomTabsAnimation.slideIn(),
+          extraCustomTabs: <String>[
+            'org.mozilla.firefox',
+            'com.microsoft.emmx'
+          ],
         ),
       );
     } catch (e) {

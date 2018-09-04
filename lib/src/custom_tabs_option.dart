@@ -26,6 +26,9 @@ class CustomTabsOption {
   ///  Enter and exit animation.
   final CustomTabsAnimation animation;
 
+  ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
+  final List<String> extraCustomTabs;
+
   const CustomTabsOption({
     this.toolbarColor,
     this.enableUrlBarHiding,
@@ -33,6 +36,7 @@ class CustomTabsOption {
     this.showPageTitle,
     this.enableInstantApps,
     this.animation,
+    this.extraCustomTabs,
   });
 
   Map<String, dynamic> toMap() {
@@ -52,9 +56,11 @@ class CustomTabsOption {
     if (enableInstantApps != null) {
       dest['enableInstantApps'] = enableInstantApps;
     }
-
     if (animation != null) {
       dest['animations'] = animation.toMap();
+    }
+    if (extraCustomTabs != null) {
+      dest['extraCustomTabs'] = extraCustomTabs;
     }
     return dest;
   }
