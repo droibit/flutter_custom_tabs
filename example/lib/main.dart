@@ -43,8 +43,10 @@ class MyApp extends StatelessWidget {
           showPageTitle: true,
           animation: new CustomTabsAnimation.slideIn(),
           extraCustomTabs: <String>[
+            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
             'org.mozilla.firefox',
-            'com.microsoft.emmx'
+            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+            'com.microsoft.emmx',
           ],
         ),
       );

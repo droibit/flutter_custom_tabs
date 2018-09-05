@@ -66,7 +66,13 @@ class MyApp extends StatelessWidget {
             startExit: 'android:anim/fade_out',
             endEnter: 'android:anim/fade_in',
             endExit: 'slide_down',
-          ),          
+          ),
+          extraCustomTabs: <String>[
+            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+            'org.mozilla.firefox',
+            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+            'com.microsoft.emmx',
+          ],        
         ),
       );
     } catch (e) {
