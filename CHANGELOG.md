@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Fix: Only works with Chrome([#2](https://github.com/droibit/flutter_custom_tabs/issues/2)).
+
 ## 0.3.0
 
 - Migrate to dart 2.0 release([#1](https://github.com/droibit/flutter_custom_tabs/pull/1)).
