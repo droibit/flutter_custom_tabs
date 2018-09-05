@@ -10,6 +10,7 @@ import com.github.droibit.flutter.plugins.customtabs.internal.Launcher;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
+import java.util.List;
 import java.util.Map;
 
 public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
@@ -26,6 +27,8 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
   private static final String KEY_OPTION = "option";
 
   private static final String KEY_URL = "url";
+
+  private static final String KEY_EXTRA_CUSTOM_TABS = "extraCustomTabs";
 
   private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
@@ -53,8 +56,8 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
   @SuppressWarnings("unchecked")
   private void launch(@NonNull Map<String, Object> args, @NonNull MethodChannel.Result result) {
     final Uri uri = Uri.parse(args.get(KEY_URL).toString());
-    final CustomTabsIntent customTabsIntent =
-        launcher.buildIntent(((Map<String, Object>) args.get(KEY_OPTION)));
+    final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTION);
+    final CustomTabsIntent customTabsIntent = launcher.buildIntent(options);
 
     final Context context;
     if (registrar.activity() != null) {
@@ -65,7 +68,13 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
     }
 
     try {
-      launcher.launch(context, uri, customTabsIntent);
+      final List<String> extraCustomTabs;
+      if (options.containsKey(KEY_EXTRA_CUSTOM_TABS)) {
+        extraCustomTabs = ((List<String>) options.get(KEY_EXTRA_CUSTOM_TABS));
+      } else {
+        extraCustomTabs = null;
+      }
+      launcher.launch(context, uri, customTabsIntent, extraCustomTabs);
       result.success(null);
     } catch (ActivityNotFoundException e) {
       result.error(CODE_LAUNCH_ERROR, e.getMessage(), null);

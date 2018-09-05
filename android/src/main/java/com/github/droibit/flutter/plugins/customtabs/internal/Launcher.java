@@ -1,15 +1,18 @@
 package com.github.droibit.flutter.plugins.customtabs.internal;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.AnimRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.customtabs.CustomTabsIntent;
 import com.droibit.android.customtabs.launcher.CustomTabsFallback;
 import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
+import com.droibit.android.customtabs.launcher.CustomTabsLauncher.LaunchBrowser;
+import com.droibit.android.customtabs.launcher.CustomTabsLauncher.LaunchNonChromeCustomTabs;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -70,18 +73,18 @@ import java.util.regex.Pattern;
 
   private void applyAnimations(@NonNull CustomTabsIntent.Builder builder,
       @NonNull Map<String, String> animations) {
-    final int startEnterAnimationId = animations.containsKey(KEY_ANIMATION_START_ENTER)
-        ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_START_ENTER))
-        : -1;
-    final int startExitAnimationId = animations.containsKey(KEY_ANIMATION_START_EXIT)
-        ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_START_EXIT))
-        : -1;
-    final int endEnterAnimationId = animations.containsKey(KEY_ANIMATION_END_ENTER)
-        ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_END_ENTER))
-        : -1;
-    final int endExitAnimationId = animations.containsKey(KEY_ANIMATION_END_EXIT)
-        ? resolveAnimationIdentifierIfNeeded(animations.get(KEY_ANIMATION_END_EXIT))
-        : -1;
+    final int startEnterAnimationId =
+        animations.containsKey(KEY_ANIMATION_START_ENTER) ? resolveAnimationIdentifierIfNeeded(
+            animations.get(KEY_ANIMATION_START_ENTER)) : -1;
+    final int startExitAnimationId =
+        animations.containsKey(KEY_ANIMATION_START_EXIT) ? resolveAnimationIdentifierIfNeeded(
+            animations.get(KEY_ANIMATION_START_EXIT)) : -1;
+    final int endEnterAnimationId =
+        animations.containsKey(KEY_ANIMATION_END_ENTER) ? resolveAnimationIdentifierIfNeeded(
+            animations.get(KEY_ANIMATION_END_ENTER)) : -1;
+    final int endExitAnimationId =
+        animations.containsKey(KEY_ANIMATION_END_EXIT) ? resolveAnimationIdentifierIfNeeded(
+            animations.get(KEY_ANIMATION_END_EXIT)) : -1;
 
     if (startEnterAnimationId != -1 && startExitAnimationId != -1) {
       builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId);
@@ -92,8 +95,7 @@ import java.util.regex.Pattern;
     }
   }
 
-  @AnimRes
-  private int resolveAnimationIdentifierIfNeeded(@NonNull String identifier) {
+  @AnimRes private int resolveAnimationIdentifierIfNeeded(@NonNull String identifier) {
     if (animationIdentifierPattern.matcher(identifier).find()) {
       return context.getResources().getIdentifier(identifier, null, null);
     } else {
@@ -102,20 +104,13 @@ import java.util.regex.Pattern;
   }
 
   public void launch(@NonNull Context context, @NonNull Uri uri,
-      @NonNull CustomTabsIntent customTabsIntent) {
-    final CustomTabsFallback fallback = createFallback(customTabsIntent);
+      @NonNull CustomTabsIntent customTabsIntent, @Nullable List<String> extraCustomTabs) {
+    final CustomTabsFallback fallback;
+    if (extraCustomTabs != null && !extraCustomTabs.isEmpty()) {
+      fallback = new LaunchNonChromeCustomTabs(extraCustomTabs);
+    } else {
+      fallback = new LaunchBrowser();
+    }
     CustomTabsLauncher.launch(context, customTabsIntent, uri, fallback);
-  }
-
-  @NonNull
-  private CustomTabsFallback createFallback(final @NonNull CustomTabsIntent customTabsIntent) {
-    return new CustomTabsFallback() {
-      @Override public void openUrl(@NonNull Context context, @NonNull Uri uri) {
-        final Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(uri);
-        intent.setFlags(customTabsIntent.intent.getFlags());
-        context.startActivity(intent);
-      }
-    };
   }
 }

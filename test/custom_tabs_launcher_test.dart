@@ -41,6 +41,10 @@ main() {
           endEnter: '_endEnter',
           endExit: '_endExit',
         ),
+        extraCustomTabs: <String>[
+          'org.mozilla.firefox',
+          'com.microsoft.emmx',
+        ],
       ),
     );
     expect(
@@ -60,6 +64,10 @@ main() {
               'endEnter': '_endEnter',
               'endExit': '_endExit',
             },
+            'extraCustomTabs': <String>[
+              'org.mozilla.firefox',
+              'com.microsoft.emmx',
+            ],
           },
         }),
       ],
