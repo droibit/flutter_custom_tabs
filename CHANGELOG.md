@@ -1,3 +1,12 @@
+## 0.5.0
+
+**NOTE:**  
+This package only support CustomTabs for **androidx** from v0.5.0.  
+If you migrate existing project to androidx see the [official docs](https://developer.android.com/jetpack/androidx/migrate).
+
+
+- AndroidX support([#11](https://github.com/droibit/flutter_custom_tabs/pull/11))
+
 ## 0.4.0
 
 - Fix: Only works with Chrome([#2](https://github.com/droibit/flutter_custom_tabs/issues/2)).
