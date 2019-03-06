@@ -29,6 +29,9 @@ class CustomTabsOption {
   ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
   final List<String> extraCustomTabs;
 
+  /// Request Headers
+  final Map<String, String> headers;
+  
   const CustomTabsOption({
     this.toolbarColor,
     this.enableUrlBarHiding,
@@ -37,6 +40,7 @@ class CustomTabsOption {
     this.enableInstantApps,
     this.animation,
     this.extraCustomTabs,
+    this.headers,
   });
 
   Map<String, dynamic> toMap() {
@@ -61,6 +65,9 @@ class CustomTabsOption {
     }
     if (extraCustomTabs != null) {
       dest['extraCustomTabs'] = extraCustomTabs;
+    }
+    if (headers != null) {
+      dest['headers'] = headers;
     }
     return dest;
   }
