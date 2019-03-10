@@ -1,8 +1,11 @@
 package com.github.droibit.flutter.plugins.customtabs.internal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Browser;
 import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +27,7 @@ import java.util.regex.Pattern;
   private static final String KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM = "enableDefaultShare";
   private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
   private static final String KEY_OPTIONS_ANIMATIONS = "animations";
+  private static final String KEY_HEADERS = "headers";
   private static final String KEY_ANIMATION_START_ENTER = "startEnter";
   private static final String KEY_ANIMATION_START_EXIT = "startExit";
   private static final String KEY_ANIMATION_END_ENTER = "endEnter";
@@ -68,7 +72,21 @@ import java.util.regex.Pattern;
     if (options.containsKey(KEY_OPTIONS_ANIMATIONS)) {
       applyAnimations(builder, ((Map<String, String>) options.get(KEY_OPTIONS_ANIMATIONS)));
     }
-    return builder.build();
+
+    final CustomTabsIntent customTabsIntent = builder.build();
+    onPostBuild(customTabsIntent.intent, options);
+    return customTabsIntent;
+  }
+
+  private void onPostBuild(@NonNull Intent intent, @NonNull Map<String, Object> options) {
+    if (options.containsKey(KEY_HEADERS)) {
+      Map<String, String> headers = (Map<String, String>) options.get(KEY_HEADERS);
+      Bundle bundleHeaders = new Bundle();
+      for (Map.Entry<String, String> header : headers.entrySet()) {
+        bundleHeaders.putString(header.getKey(), header.getValue());
+      }
+      intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
+    }
   }
 
   private void applyAnimations(@NonNull CustomTabsIntent.Builder builder,

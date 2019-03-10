@@ -29,8 +29,6 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
   private static final String KEY_OPTION = "option";
 
   private static final String KEY_URL = "url";
-  
-  private static final String KEY_HEADERS = "headers";
 
   private static final String KEY_EXTRA_CUSTOM_TABS = "extraCustomTabs";
 
@@ -62,14 +60,7 @@ public class CustomTabsPlugin implements MethodChannel.MethodCallHandler {
     final Uri uri = Uri.parse(args.get(KEY_URL).toString());
     final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTION);
     final CustomTabsIntent customTabsIntent = launcher.buildIntent(options);
-    
-    Map<String, String> headers = (Map<String, String>) options.get(KEY_HEADERS);
-    Bundle bundleHeaders = new Bundle();
-    for (Map.Entry<String, String> header : headers.entrySet()) {
-      bundleHeaders.putString(header.getKey(), header.getValue());
-    }
-    customTabsIntent.intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
-    
+
     final Context context;
     if (registrar.activity() != null) {
       context = registrar.activity();
