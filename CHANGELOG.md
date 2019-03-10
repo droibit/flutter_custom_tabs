@@ -1,9 +1,12 @@
+## 0.6.0
+
+- Added HTTP headers option([#13](https://github.com/droibit/flutter_custom_tabs/pull/13))
+
 ## 0.5.0
 
 **NOTE:**  
 This package only support CustomTabs for **androidx** from v0.5.0.  
 If you migrate existing project to androidx see the [official docs](https://developer.android.com/jetpack/androidx/migrate).
-
 
 - AndroidX support([#11](https://github.com/droibit/flutter_custom_tabs/pull/11))
 
