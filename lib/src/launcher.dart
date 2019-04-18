@@ -3,9 +3,9 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 
-import 'custom_tabs_launcher.dart';
-import 'custom_tabs_option.dart';
-import 'url_launcher.dart';
+import './custom_tabs_launcher.dart';
+import './custom_tabs_option.dart';
+import './url_launcher.dart';
 
 /// Open the specified Web URL with Custom Tabs.
 ///
@@ -44,13 +44,13 @@ Future<void> launch(
   return _launcher(urlString, option);
 }
 
-typedef Future<void> _PlatformLauncher(
-    String urlString, CustomTabsOption option);
+typedef _PlatformLauncher = Future<void> Function(
+  String urlString,
+  CustomTabsOption option,
+);
 
 _PlatformLauncher get _launcher {
-  if (_platformLauncher == null) {
-    _platformLauncher = Platform.isAndroid ? customTabsLauncher : urlLauncher;
-  }
+  _platformLauncher ??= Platform.isAndroid ? customTabsLauncher : urlLauncher;
   return _platformLauncher;
 }
 

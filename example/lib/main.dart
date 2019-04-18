@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Flutter Custom Tabs Example',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new Scaffold(
-        appBar: new AppBar(
+      home: Scaffold(
+        appBar: AppBar(
           title: const Text('Flutter Custom Tabs Example'),
         ),
-        body: new Center(
-          child: new FlatButton(
-            child: new Text(
+        body: Center(
+          child: FlatButton(
+            child: Text(
               'Show Flutter homepage',
-              style: new TextStyle(
+              style: TextStyle(
                 fontSize: theme.textTheme.subhead.fontSize,
                 color: theme.primaryColor,
               ),
@@ -32,17 +32,17 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  void _launchURL(BuildContext context) async {
+  Future<void> _launchURL(BuildContext context) async {
     try {
       await launch(
         'https://flutter.io/',
-        option: new CustomTabsOption(
+        option: CustomTabsOption(
           toolbarColor: Theme.of(context).primaryColor,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: new CustomTabsAnimation.slideIn(),
-          extraCustomTabs: <String>[
+          animation: CustomTabsAnimation.slideIn(),
+          extraCustomTabs: const <String>[
             // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
             'org.mozilla.firefox',
             // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx

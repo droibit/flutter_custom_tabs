@@ -1,5 +1,7 @@
 name: flutter_custom_tabs_example
 description: Demonstrates how to use the flutter_custom_tabs plugin.
+environment:
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
