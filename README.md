@@ -19,7 +19,7 @@ Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
 dependencies:
-  flutter_custom_tabs: "^0.6.0"
+  flutter_custom_tabs: ^0.6.0
 ```
 
 ### Usage
@@ -35,14 +35,14 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(
+    return MaterialApp(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new Scaffold(
-        body: new Center(
-          child: new FlatButton(
-            child: new Text('Show Flutter homepage'),
+      home: Scaffold(
+        body: Center(
+          child: FlatButton(
+            child: const Text('Show Flutter homepage'),
             onPressed: () => _launchURL(context),
           ),
         ),
@@ -53,21 +53,21 @@ class MyApp extends StatelessWidget {
   void _launchURL(BuildContext context) async {
     try {
       await launch(
-        'https://flutter.io/',
-        option: new CustomTabsOption(
+        'https://flutter.dev',
+        option: CustomTabsOption(
           toolbarColor: Theme.of(context).primaryColor,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: new CustomTabsAnimation.slideIn()
+          animation: CustomTabsAnimation.slideIn()
           // or user defined animation.
-          animation: new CustomTabsAnimation(
+          animation: const CustomTabsAnimation(
             startEnter: 'slide_up',
             startExit: 'android:anim/fade_out',
             endEnter: 'android:anim/fade_in',
             endExit: 'slide_down',
           ),
-          extraCustomTabs: <String>[
+          extraCustomTabs: const <String>[
             // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
             'org.mozilla.firefox',
             // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
