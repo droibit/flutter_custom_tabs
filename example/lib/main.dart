@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   Future<void> _launchURL(BuildContext context) async {
     try {
       await launch(
-        'https://flutter.io/',
+        'https://flutter.dev',
         option: CustomTabsOption(
           toolbarColor: Theme.of(context).primaryColor,
           enableDefaultShare: true,
