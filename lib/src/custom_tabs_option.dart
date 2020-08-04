@@ -10,6 +10,17 @@ import 'package:meta/meta.dart';
 ///
 @immutable
 class CustomTabsOption {
+  const CustomTabsOption({
+    this.toolbarColor,
+    this.enableUrlBarHiding,
+    this.enableDefaultShare,
+    this.showPageTitle,
+    this.enableInstantApps,
+    this.animation,
+    this.extraCustomTabs,
+    this.headers,
+  });
+
   /// Custom tab toolbar color.
   final Color toolbarColor;
 
@@ -33,17 +44,6 @@ class CustomTabsOption {
 
   /// Request Headers
   final Map<String, String> headers;
-
-  const CustomTabsOption({
-    this.toolbarColor,
-    this.enableUrlBarHiding,
-    this.enableDefaultShare,
-    this.showPageTitle,
-    this.enableInstantApps,
-    this.animation,
-    this.extraCustomTabs,
-    this.headers,
-  });
 
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
