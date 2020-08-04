@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             child: Text(
               'Show Flutter homepage',
               style: TextStyle(
-                fontSize: theme.textTheme.subhead.fontSize,
+                fontSize: theme.textTheme.subtitle1.fontSize,
                 color: theme.primaryColor,
               ),
             ),
