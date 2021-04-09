@@ -5,6 +5,7 @@ import 'package:flutter_custom_tabs/src/custom_tabs_option.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   const channel =
       MethodChannel('com.github.droibit.flutter.plugins.custom_tabs');
 
