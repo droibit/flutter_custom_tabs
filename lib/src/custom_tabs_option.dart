@@ -101,8 +101,8 @@ class CustomTabsAnimation {
   /// Create a built-in slide in animation.
   factory CustomTabsAnimation.slideIn() {
     _slideIn ??= const CustomTabsAnimation(
-      startEnter: 'slide_in_right',
-      startExit: 'slide_out_left',
+      startEnter: 'android:anim/slide_in_right',
+      startExit: 'android:anim/slide_out_left',
       endEnter: 'android:anim/slide_in_left',
       endExit: 'android:anim/slide_out_right',
     );
