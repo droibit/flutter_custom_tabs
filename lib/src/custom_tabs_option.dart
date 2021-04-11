@@ -10,30 +10,6 @@ import 'package:meta/meta.dart';
 ///
 @immutable
 class CustomTabsOption {
-  /// Custom tab toolbar color.
-  final Color toolbarColor;
-
-  /// If enabled, hides the toolbar when the user scrolls down the page.
-  final bool enableUrlBarHiding;
-
-  /// If enabled, default sharing menu is added.
-  final bool enableDefaultShare;
-
-  /// Show web page title in tool bar.
-  final bool showPageTitle;
-
-  /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
-  final bool enableInstantApps;
-
-  ///  Enter and exit animation.
-  final CustomTabsAnimation animation;
-
-  ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
-  final List<String> extraCustomTabs;
-
-  /// Request Headers
-  final Map<String, String> headers;
-
   const CustomTabsOption({
     this.toolbarColor,
     this.enableUrlBarHiding,
@@ -45,10 +21,34 @@ class CustomTabsOption {
     this.headers,
   });
 
+  /// Custom tab toolbar color.
+  final Color? toolbarColor;
+
+  /// If enabled, hides the toolbar when the user scrolls down the page.
+  final bool? enableUrlBarHiding;
+
+  /// If enabled, default sharing menu is added.
+  final bool? enableDefaultShare;
+
+  /// Show web page title in tool bar.
+  final bool? showPageTitle;
+
+  /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
+  final bool? enableInstantApps;
+
+  ///  Enter and exit animation.
+  final CustomTabsAnimation? animation;
+
+  ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
+  final List<String>? extraCustomTabs;
+
+  /// Request Headers
+  final Map<String, String>? headers;
+
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
     if (toolbarColor != null) {
-      dest['toolbarColor'] = '#${toolbarColor.value.toRadixString(16)}';
+      dest['toolbarColor'] = '#${toolbarColor?.value.toRadixString(16)}';
     }
     if (enableUrlBarHiding != null) {
       dest['enableUrlBarHiding'] = enableUrlBarHiding;
@@ -63,7 +63,7 @@ class CustomTabsOption {
       dest['enableInstantApps'] = enableInstantApps;
     }
     if (animation != null) {
-      dest['animations'] = animation.toMap();
+      dest['animations'] = animation?.toMap();
     }
     if (extraCustomTabs != null) {
       dest['extraCustomTabs'] = extraCustomTabs;
@@ -106,7 +106,7 @@ class CustomTabsAnimation {
       endEnter: 'android:anim/slide_in_left',
       endExit: 'android:anim/slide_out_right',
     );
-    return _slideIn;
+    return _slideIn!;
   }
 
   /// Create a built-in fade animation.
@@ -117,34 +117,34 @@ class CustomTabsAnimation {
       endEnter: 'android:anim/fade_in',
       endExit: 'android:anim/fade_out',
     );
-    return _fade;
+    return _fade!;
   }
 
-  static CustomTabsAnimation _slideIn;
+  static CustomTabsAnimation? _slideIn;
 
-  static CustomTabsAnimation _fade;
+  static CustomTabsAnimation? _fade;
 
   /// Enter animation for the custom tab.
-  final String startEnter;
+  final String? startEnter;
 
   /// Exit animation for the application.
-  final String startExit;
+  final String? startExit;
 
   /// Enter animation for the application.
-  final String endEnter;
+  final String? endEnter;
 
   /// Exit animation for the custom tab.
-  final String endExit;
+  final String? endExit;
 
   Map<String, String> toMap() {
     final dest = <String, String>{};
     if (startEnter != null && startExit != null) {
-      dest['startEnter'] = startEnter;
-      dest['startExit'] = startExit;
+      dest['startEnter'] = startEnter!;
+      dest['startExit'] = startExit!;
     }
     if (endEnter != null && endExit != null) {
-      dest['endEnter'] = endEnter;
-      dest['endExit'] = endExit;
+      dest['endEnter'] = endEnter!;
+      dest['endExit'] = endExit!;
     }
     return dest;
   }
