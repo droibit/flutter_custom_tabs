@@ -2,42 +2,42 @@ group 'com.github.droibit.plugins.flutter.customtabs'
 version '1.0-SNAPSHOT'
 
 buildscript {
-  repositories {
-    google()
-    jcenter()
-  }
+    repositories {
+        google()
+        mavenCentral()
+    }
 
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.3.2'
-  }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.2'
+    }
 }
 
 rootProject.allprojects {
-  repositories {
-    google()
-    jcenter()
-    maven { url "https://jitpack.io" }
-  }
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 28
+    compileSdkVersion 30
 
-  defaultConfig {
-    minSdkVersion 16
-  }
-  lintOptions {
-    disable 'InvalidPackage'
-  }
+    defaultConfig {
+        minSdkVersion 16
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 
-  // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
-  libraryVariants.all {
-    it.generateBuildConfig.enabled = false
-  }
+    // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
 
-  dependencies {
-    api 'com.github.droibit.customtabslauncher:launcher:1.4.0'
-  }
+    dependencies {
+        api 'com.github.droibit.customtabslauncher:launcher:1.5.0'
+    }
 }
