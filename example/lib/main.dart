@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: TextButton(
+            onPressed: () => _launchURL(context),
             child: Text(
               'Show Flutter homepage',
               style: TextStyle(
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
                 color: theme.primaryColor,
               ),
             ),
-            onPressed: () => _launchURL(context),
           ),
         ),
       ),

@@ -8,7 +8,7 @@ const MethodChannel _channel =
     MethodChannel('com.github.droibit.flutter.plugins.custom_tabs');
 
 Future<void> customTabsLauncher(String urlString, CustomTabsOption option) {
-  final Uri url = Uri.parse(urlString.trimLeft());
+  final url = Uri.parse(urlString.trimLeft());
   if (url.scheme != 'http' && url.scheme != 'https') {
     throw PlatformException(
       code: 'NOT_A_WEB_SCHEME',
