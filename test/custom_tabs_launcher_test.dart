@@ -5,13 +5,16 @@ import 'package:flutter_custom_tabs/src/custom_tabs_option.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   const channel =
       MethodChannel('com.github.droibit.flutter.plugins.custom_tabs');
+  late List<MethodCall> log;
 
-  final log = <MethodCall>[];
   channel.setMockMethodCallHandler((methodCall) async => log.add(methodCall));
-
-  tearDown(() => log.clear());
+  setUp(() {
+    log = <MethodCall>[];
+  });
 
   test('customTabLauncher() no options', () async {
     await customTabsLauncher('http://example.com/', const CustomTabsOption());
