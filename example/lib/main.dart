@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
           title: const Text('Flutter Custom Tabs Example'),
         ),
         body: Center(
-          child: FlatButton(
+          child: TextButton(
             child: Text(
               'Show Flutter homepage',
               style: TextStyle(
-                fontSize: theme.textTheme.subhead.fontSize,
+                fontSize: 17,
                 color: theme.primaryColor,
               ),
             ),

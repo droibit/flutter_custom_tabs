@@ -36,12 +36,11 @@ import './url_launcher.dart';
 /// ```
 Future<void> launch(
   String urlString, {
-  @required CustomTabsOption option,
+  @required CustomTabsOption? option,
 }) {
-  assert(urlString != null);
   assert(option != null);
 
-  return _launcher(urlString, option);
+  return _launcher(urlString, option!);
 }
 
 typedef _PlatformLauncher = Future<void> Function(
@@ -50,8 +49,8 @@ typedef _PlatformLauncher = Future<void> Function(
 );
 
 _PlatformLauncher get _launcher {
-  _platformLauncher ??= Platform.isAndroid ? customTabsLauncher : urlLauncher;
+  _platformLauncher = Platform.isAndroid ? customTabsLauncher : urlLauncher;
   return _platformLauncher;
 }
 
-_PlatformLauncher _platformLauncher;
+late _PlatformLauncher _platformLauncher;
