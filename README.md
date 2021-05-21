@@ -1,6 +1,5 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
- [![Build Status](https://travis-ci.org/droibit/flutter_custom_tabs.svg?branch=master)](https://travis-ci.org/droibit/flutter_custom_tabs)
 
 A Flutter plugin to use [Chrome Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs).  
 
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         body: Center(
-          child: FlatButton(
+          child: TextButton(
             child: const Text('Show Flutter homepage'),
             onPressed: () => _launchURL(context),
           ),
