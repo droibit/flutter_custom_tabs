@@ -1,3 +1,9 @@
+## 0.7.0
+- Migrated to Null Safety([#36](https://github.com/droibit/flutter_custom_tabs/pull/36)).
+- Bug Fix : shows black screen while launching in release mode([#37](https://github.com/droibit/flutter_custom_tabs/pull/36)).
+- Support Android11.
+- Update the dependent `url_launcher` to v6.0.3.
+
 ## 0.6.0
 
 - Added HTTP headers option([#13](https://github.com/droibit/flutter_custom_tabs/pull/13))
