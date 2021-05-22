@@ -1,23 +1,26 @@
 name: flutter_custom_tabs
 description: Flutter plugin for seamlessly displaying web content using Chrome Custom Tabs.
 version: 0.6.0
-author: Shinya Kumagai <roomful.rooms@gmail.com>
 homepage: https://github.com/droibit/flutter_custom_tabs
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=0.1.4 <2.0.0"
+  flutter: ">=1.20.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  meta: ^1.3.0
   url_launcher: ^6.0.3
 
 flutter:
   plugin:
-    androidPackage: com.github.droibit.flutter.plugins.customtabs
-    iosPrefix: GDB
-    pluginClass: CustomTabsPlugin
+    platforms:
+        android:
+          package: com.github.droibit.flutter.plugins.customtabs
+          pluginClass: CustomTabsPlugin
+        ios:
+          pluginClass: GDBCustomTabsPlugin
 
 dev_dependencies:
   flutter_test:
