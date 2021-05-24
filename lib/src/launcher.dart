@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 import './custom_tabs_launcher.dart';
 import './custom_tabs_option.dart';
-import './url_launcher.dart';
 
 /// Open the specified Web URL with Custom Tabs.
 ///
@@ -22,7 +21,7 @@ import './url_launcher.dart';
 /// ```dart
 /// await launch(
 ///   'https://flutter.io',
-///   option: new CustomTabsOption(
+///   option: CustomTabsOption(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     enableUrlBarHiding: true,
 ///     showPageTitle: true,
@@ -40,17 +39,12 @@ Future<void> launch(
 }) {
   assert(option != null);
 
-  return _launcher(urlString, option!);
+  final url = Uri.parse(urlString.trimLeft());
+  if (url.scheme != 'http' && url.scheme != 'https') {
+    throw PlatformException(
+      code: 'NOT_A_WEB_SCHEME',
+      message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
+    );
+  }
+  return customTabsLauncher(urlString, option!);
 }
-
-typedef _PlatformLauncher = Future<void> Function(
-  String urlString,
-  CustomTabsOption option,
-);
-
-_PlatformLauncher get _launcher {
-  _platformLauncher = Platform.isAndroid ? customTabsLauncher : urlLauncher;
-  return _platformLauncher;
-}
-
-late _PlatformLauncher _platformLauncher;
