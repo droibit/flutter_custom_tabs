@@ -22,7 +22,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 
 public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
 
-    private static final String KEY_OPTION = "option";
+    private static final String KEY_OPTION = "customTabsOption";
 
     private static final String KEY_URL = "url";
 

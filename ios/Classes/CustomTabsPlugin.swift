@@ -3,7 +3,7 @@ import SafariServices
 import UIKit
 
 private let keyURL = "url"
-private let keyOption = "option"
+private let keyOption = "safariVCOption"
 
 public class CustomTabsPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -27,7 +27,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
     private func present(withURL url: String, option: [String: Any], result: @escaping FlutterResult) {
         if #available(iOS 9.0, *) {
             if let topViewController = UIWindow.keyWindow?.topViewController() {
-                let safariViewController = buildSafariViewController(withURL: url, option: option)
+                let safariViewController = SFSafariViewController.make(url: URL(string: url)!, option: option)
                 topViewController.present(safariViewController, animated: true) {
                     result(nil)
                 }
@@ -36,14 +36,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
             result(FlutterMethodNotImplemented)
         }
     }
-    
-    @available(iOS 9.0, *)
-    private func buildSafariViewController(withURL url: String, option: [String: Any]) -> SFSafariViewController {
-        let safariViewController = SFSafariViewController(url: URL(string: url)!)
-        return safariViewController
-    }
 }
-
 
 private extension UIWindow {
     static var keyWindow: UIWindow? {
