@@ -15,6 +15,7 @@ class SafariViewControllerOption {
     this.preferredControlTintColor,
     this.barCollapsingEnabled,
     this.entersReaderIfAvailable,
+    this.dismissButtonStyle
   });
 
   /// The color to tint the background of the navigation bar and the toolbar.
@@ -33,6 +34,10 @@ class SafariViewControllerOption {
   /// - Availability: iOS11.0+
   final bool? entersReaderIfAvailable;
 
+  /// Dismiss button style on the navigation bar.
+  /// - Availability: iOS11.0+
+  final SafariViewControllerDismissButtonStyle? dismissButtonStyle;
+
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
 
@@ -50,6 +55,29 @@ class SafariViewControllerOption {
     if (entersReaderIfAvailable != null) {
       dest['entersReaderIfAvailable'] = entersReaderIfAvailable;
     }
+    if (dismissButtonStyle != null) {
+      dest['dismissButtonStyle'] = dismissButtonStyle!.rawValue;
+    }
     return dest;
+  }
+}
+
+/// Dismiss button style on the navigation bar of SafariViewController.
+enum SafariViewControllerDismissButtonStyle {
+  done,
+  close,
+  cancel
+}
+
+extension _RawValueCompatible on SafariViewControllerDismissButtonStyle {
+  int get rawValue {
+    switch (this) {
+      case SafariViewControllerDismissButtonStyle.done:
+        return 0;
+      case SafariViewControllerDismissButtonStyle.close:
+        return 1;
+      case SafariViewControllerDismissButtonStyle.cancel:
+        return 2;
+    }
   }
 }

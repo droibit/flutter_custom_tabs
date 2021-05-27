@@ -35,7 +35,8 @@ import './safari_view_controller_option.dart';
 ///     preferredBarTintColor: Theme.of(context).primaryColor,
 ///     preferredControlTintColor: Colors.white,
 ///     barCollapsingEnabled: true,
-///     entersReaderIfAvailable: false
+///     entersReaderIfAvailable: false,
+///     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
 ///   ),
 /// );
 /// ```
