@@ -1,17 +1,16 @@
 import 'dart:async';
-import 'dart:io' show Platform;
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 import './custom_tabs_launcher.dart';
 import './custom_tabs_option.dart';
-import './url_launcher.dart';
+import './safari_view_controller_option.dart';
 
-/// Open the specified Web URL with Custom Tabs.
+/// Open the specified Web URL with Chrome Custom Tabs(Safari View Controller).
 ///
-/// Custom Tab is only supported on the Android platform.
-/// Therefore, this plugin uses [url_launcher](https://pub.dartlang.org/packages/url_launcher) on iOS to launch `SFSafariViewController`.
-/// (The specified [option] is ignored on iOS.)
+/// Chrome Custom Tabs is only supported on the Android platform.
+/// Therefore, Open the web page using Safari View Controller ([`SFSafariViewController`]((https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)),
+/// whose appearance can be customized even on iOS.
 ///
 /// When Chrome is not installed on Android device, try to start other browsers.
 /// If you want to launch a CustomTabs compatible browser on a device without Chrome, you can set its package name with `option.extraCustomTabs`.
@@ -22,35 +21,36 @@ import './url_launcher.dart';
 /// ```dart
 /// await launch(
 ///   'https://flutter.io',
-///   option: new CustomTabsOption(
+///   customTabsOption: CustomTabsOption(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     enableUrlBarHiding: true,
 ///     showPageTitle: true,
-///     animation: new CustomTabsAnimation.slideIn(),
+///     animation: CustomTabsAnimation.slideIn(),
 ///     extraCustomTabs: <String>[
 ///       'org.mozilla.firefox',
 ///       'com.microsoft.emmx'
 ///     ],
 ///   ),
+///   safariVCOption: SafariViewControllerOption(
+///     preferredBarTintColor: Theme.of(context).primaryColor,
+///     preferredControlTintColor: Colors.white,
+///     barCollapsingEnabled: true,
+///     entersReaderIfAvailable: false,
+///     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+///   ),
 /// );
 /// ```
 Future<void> launch(
   String urlString, {
-  @required CustomTabsOption? option,
+  CustomTabsOption? customTabsOption,
+  SafariViewControllerOption? safariVCOption,
 }) {
-  assert(option != null);
-
-  return _launcher(urlString, option!);
+  final url = Uri.parse(urlString.trimLeft());
+  if (url.scheme != 'http' && url.scheme != 'https') {
+    throw PlatformException(
+      code: 'NOT_A_WEB_SCHEME',
+      message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
+    );
+  }
+  return customTabsLauncher(urlString, customTabsOption, safariVCOption);
 }
-
-typedef _PlatformLauncher = Future<void> Function(
-  String urlString,
-  CustomTabsOption option,
-);
-
-_PlatformLauncher get _launcher {
-  _platformLauncher = Platform.isAndroid ? customTabsLauncher : urlLauncher;
-  return _platformLauncher;
-}
-
-late _PlatformLauncher _platformLauncher;

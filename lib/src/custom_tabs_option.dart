@@ -1,7 +1,7 @@
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 
-/// Option class for customizing appearance of Custom Tabs.
+/// Option class for customizing appearance of Chrome Custom Tabs.
 /// **This option applies only on Android platform.**
 ///
 /// See also:
@@ -48,7 +48,7 @@ class CustomTabsOption {
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
     if (toolbarColor != null) {
-      dest['toolbarColor'] = '#${toolbarColor?.value.toRadixString(16)}';
+      dest['toolbarColor'] = '#${toolbarColor!.value.toRadixString(16)}';
     }
     if (enableUrlBarHiding != null) {
       dest['enableUrlBarHiding'] = enableUrlBarHiding;
@@ -63,7 +63,7 @@ class CustomTabsOption {
       dest['enableInstantApps'] = enableInstantApps;
     }
     if (animation != null) {
-      dest['animations'] = animation?.toMap();
+      dest['animations'] = animation!.toMap();
     }
     if (extraCustomTabs != null) {
       dest['extraCustomTabs'] = extraCustomTabs;

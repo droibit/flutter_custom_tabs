@@ -1,19 +1,21 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin to use [Chrome Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs).  
+A Flutter plugin to use [Chrome Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs)(for Android) / [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)(for iOS).
 
-![screenshot](https://i.imgur.com/lgPWvLS.gif)
+| Android | iOS |
+| - | - |
+| ![android](./images/android.gif) | ![iOS](./images/ios.gif) |
 
 Custom Tabs is supported only Chrome for Android. For this reason, the interface is same, but behavior is following:
 
-* **Android**  
- If Chrome is installed, open web URL in custom tab that you have customized some of look & feel. If it is not installed, open in other browser.
-* **iOS**  
- Open SFSafariViewController using [url_launcher](https://pub.dartlang.org/packages/url_launcher), and all options at launch are **ignored**.
+#### Android
+If Chrome is installed, open web URL in custom tabs. If it is not installed, open in other browser.
+
+#### iOS
+Open web URL in SFSafariViewController.
 
 ## Getting Started
-
 Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
@@ -22,8 +24,10 @@ dependencies:
 ```
 
 ### Usage
-
-Open the web URL like `url_launcher`.
+Open the web URL like `url_launcher`.  
+It is also possible to customize look & feel by specifying options for each Platform.
+- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs/blob/develop/lib/src/custom_tabs_option.dart)
+- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs/blob/develop/lib/src/safari_view_controller_option.dart)
 
 #### Example
 
@@ -53,7 +57,7 @@ class MyApp extends StatelessWidget {
     try {
       await launch(
         'https://flutter.dev',
-        option: CustomTabsOption(
+        customTabsOption: CustomTabsOption(
           toolbarColor: Theme.of(context).primaryColor,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
@@ -71,7 +75,14 @@ class MyApp extends StatelessWidget {
             'org.mozilla.firefox',
             // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
             'com.microsoft.emmx',
-          ],        
+          ],
+        ),                    
+        safariVCOption: SafariViewControllerOption(
+          preferredBarTintColor: Theme.of(context).primaryColor,
+          preferredControlTintColor: Colors.white,
+          barCollapsingEnabled: true,
+          entersReaderIfAvailable: false,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,        
         ),
       );
     } catch (e) {

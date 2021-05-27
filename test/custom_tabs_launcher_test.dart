@@ -1,5 +1,5 @@
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs/src/custom_tabs_launcher.dart';
 import 'package:flutter_custom_tabs/src/custom_tabs_option.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,66 +16,25 @@ void main() {
     log = <MethodCall>[];
   });
 
-  test('customTabLauncher() no options', () async {
-    await customTabsLauncher('http://example.com/', const CustomTabsOption());
+  test('customTabLauncher() called method "launch"', () async {
+    await customTabsLauncher(
+        'http://example.com/',
+        const CustomTabsOption(
+          enableUrlBarHiding: true,
+        ),
+        const SafariViewControllerOption(barCollapsingEnabled: false));
     expect(
       log,
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
-          'option': const <String, dynamic>{},
-        }),
-      ],
-    );
-  });
-
-  test('customTabLauncher() contains options', () async {
-    await customTabsLauncher(
-      'http://example.com/',
-      const CustomTabsOption(
-        toolbarColor: Color(0xFFFFEBEE),
-        enableUrlBarHiding: true,
-        enableDefaultShare: false,
-        showPageTitle: true,
-        enableInstantApps: false,
-        animation: CustomTabsAnimation(
-          startEnter: '_startEnter',
-          startExit: '_startExit',
-          endEnter: '_endEnter',
-          endExit: '_endExit',
-        ),
-        extraCustomTabs: <String>[
-          'org.mozilla.firefox',
-          'com.microsoft.emmx',
-        ],
-      ),
-    );
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall(
-          'launch',
-          arguments: <String, dynamic>{
-            'url': 'http://example.com/',
-            'option': const <String, dynamic>{
-              'toolbarColor': '#ffffebee',
-              'enableUrlBarHiding': true,
-              'enableDefaultShare': false,
-              'showPageTitle': true,
-              'enableInstantApps': false,
-              'animations': <String, String>{
-                'startEnter': '_startEnter',
-                'startExit': '_startExit',
-                'endEnter': '_endEnter',
-                'endExit': '_endExit',
-              },
-              'extraCustomTabs': <String>[
-                'org.mozilla.firefox',
-                'com.microsoft.emmx',
-              ],
-            },
+          'customTabsOption': const <String, dynamic>{
+            'enableUrlBarHiding': true,
           },
-        ),
+          'safariVCOption': const <String, dynamic>{
+            'barCollapsingEnabled': false
+          }
+        }),
       ],
     );
   });
