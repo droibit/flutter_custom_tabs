@@ -10,13 +10,12 @@ import 'package:meta/meta.dart';
 ///
 @immutable
 class SafariViewControllerOption {
-  SafariViewControllerOption({
-    this.preferredBarTintColor,
-    this.preferredControlTintColor,
-    this.barCollapsingEnabled,
-    this.entersReaderIfAvailable,
-    this.dismissButtonStyle
-  });
+  const SafariViewControllerOption(
+      {this.preferredBarTintColor,
+      this.preferredControlTintColor,
+      this.barCollapsingEnabled,
+      this.entersReaderIfAvailable,
+      this.dismissButtonStyle});
 
   /// The color to tint the background of the navigation bar and the toolbar.
   /// - Availability: iOS10.0+
@@ -63,13 +62,10 @@ class SafariViewControllerOption {
 }
 
 /// Dismiss button style on the navigation bar of SafariViewController.
-enum SafariViewControllerDismissButtonStyle {
-  done,
-  close,
-  cancel
-}
+enum SafariViewControllerDismissButtonStyle { done, close, cancel }
 
-extension _RawValueCompatible on SafariViewControllerDismissButtonStyle {
+extension RawValueCompatible on SafariViewControllerDismissButtonStyle {
+  @visibleForTesting
   int get rawValue {
     switch (this) {
       case SafariViewControllerDismissButtonStyle.done:
