@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn(),
+          animation: CustomTabsSystemAnimation.slideIn(),
           extraCustomTabs: const <String>[
             // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
             'org.mozilla.firefox',

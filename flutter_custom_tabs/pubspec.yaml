@@ -11,17 +11,23 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.3.0
-
-flutter:
-  plugin:
-    platforms:
-        android:
-          package: com.github.droibit.flutter.plugins.customtabs
-          pluginClass: CustomTabsPlugin
-        ios:
-          pluginClass: GDBCustomTabsPlugin
+  # TODO: Depends on the package on pub.dev
+  flutter_custom_tabs_platform_interface:
+    path: ../flutter_custom_tabs_platform_interface
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.9
   pedantic: ^1.11.0
+  plugin_platform_interface: ^2.0.0
+
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.github.droibit.flutter.plugins.customtabs
+        pluginClass: CustomTabsPlugin
+      ios:
+        pluginClass: GDBCustomTabsPlugin

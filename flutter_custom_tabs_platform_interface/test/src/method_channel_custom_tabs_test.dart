@@ -18,7 +18,21 @@ void main() {
     customTabs = MethodChannelCustomTabs();
   });
 
-  test('launch invoke method "launch"', () async {
+  test('launch invoke method "launch" with null option', () async {
+    await customTabs.launch('http://example.com/');
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('launch', arguments: <String, dynamic>{
+          'url': 'http://example.com/',
+          'customTabsOption': const <String, dynamic>{},
+          'safariVCOption': const <String, dynamic>{}
+        }),
+      ],
+    );
+  });
+
+  test('launch invoke method "launch" with option', () async {
     await customTabs.launch(
       'http://example.com/',
       customTabsOption: const CustomTabsOption(

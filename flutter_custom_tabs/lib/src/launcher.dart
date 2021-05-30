@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-
-import './custom_tabs_launcher.dart';
-import './custom_tabs_option.dart';
-import './safari_view_controller_option.dart';
+import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
 /// Open the specified Web URL with Chrome Custom Tabs(Safari View Controller).
 ///
@@ -52,5 +49,9 @@ Future<void> launch(
       message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
     );
   }
-  return customTabsLauncher(urlString, customTabsOption, safariVCOption);
+  return CustomTabsPlatform.instance.launch(
+    urlString,
+    customTabsOption: customTabsOption,
+    safariVCOption: safariVCOption,
+  );
 }

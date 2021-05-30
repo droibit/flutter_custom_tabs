@@ -36,7 +36,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding binding) {
-        channel = new MethodChannel(binding.getBinaryMessenger(), "com.github.droibit.flutter.plugins.custom_tabs");
+        channel = new MethodChannel(binding.getBinaryMessenger(), "plugins.flutter.droibit.github.io/custom_tabs");
         channel.setMethodCallHandler(this);
     }
 

@@ -1,4 +1,8 @@
-export './src/custom_tabs_option.dart';
-export './src/safari_view_controller_option.dart';
+export 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart'
+    show
+        CustomTabsOption,
+        SafariViewControllerOption,
+        SafariViewControllerDismissButtonStyle;
 
-export './src/launcher.dart';
+export 'src/custom_tabs_option.dart';
+export 'src/launcher.dart';
