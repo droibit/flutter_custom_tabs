@@ -1,0 +1,43 @@
+  
+name: CI for app-facing package
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    paths:
+      - 'flutter_custom_tabs/**'
+  pull_request:
+    paths:
+      - 'flutter_custom_tabs/**'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+    - name: Get flutter dependencies
+      run: flutter pub get
+      working-directory: ./flutter_custom_tabs
+    - name: Check for any formatting issues in the code
+      run: flutter format --set-exit-if-changed .
+      working-directory: ./flutter_custom_tabs
+    - name: Statically analyze the Dart code for any errors
+      run: flutter analyze .
+      working-directory: ./flutter_custom_tabs
+    - name: Run unit tests
+      run: flutter test
+      working-directory: ./flutter_custom_tabs
+    - name: Build example android app
+      run: flutter build apk --release
+      working-directory: ./flutter_custom_tabs/example   
+    - name: Build example iOS app
+      run: flutter build ios --no-codesign
+      working-directory: ./flutter_custom_tabs/example

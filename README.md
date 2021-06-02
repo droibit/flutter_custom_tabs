@@ -1,101 +1,12 @@
-# flutter_custom_tabs
-[![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
+# Flutter Custom Tabs Plugin
 
-A Flutter plugin to use [Chrome Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs)(for Android) / [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)(for iOS).
+With the Flutter [Custom Tabs]((https://developer.chrome.com/multidevice/android/customtabs)) Plugin, you can use Custom Tabs as easily as [url_launcher](https://pub.dev/packages/url_launcher).
 
-| Android | iOS |
-| - | - |
-| ![android](./images/android.gif) | ![iOS](./images/ios.gif) |
+This plugin is built as federated plugins, see the [flutter_custom_tabs](./flutter_custom_tabs) package for details.
 
-Custom Tabs is supported only Chrome for Android. For this reason, the interface is same, but behavior is following:
-
-#### Android
-If Chrome is installed, open web URL in custom tabs. If it is not installed, open in other browser.
-
-#### iOS
-Open web URL in SFSafariViewController.
-
-## Getting Started
-Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
-
-``` yaml
-dependencies:
-  flutter_custom_tabs: ^0.7.0
-```
-
-### Usage
-Open the web URL like `url_launcher`.  
-It is also possible to customize look & feel by specifying options for each Platform.
-- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs/blob/develop/lib/src/custom_tabs_option.dart)
-- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs/blob/develop/lib/src/safari_view_controller_option.dart)
-
-#### Example
-
-``` dart
-import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: Center(
-          child: TextButton(
-            child: const Text('Show Flutter homepage'),
-            onPressed: () => _launchURL(context),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _launchURL(BuildContext context) async {
-    try {
-      await launch(
-        'https://flutter.dev',
-        customTabsOption: CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn()
-          // or user defined animation.
-          animation: const CustomTabsAnimation(
-            startEnter: 'slide_up',
-            startExit: 'android:anim/fade_out',
-            endEnter: 'android:anim/fade_in',
-            endExit: 'slide_down',
-          ),
-          extraCustomTabs: const <String>[
-            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-            'org.mozilla.firefox',
-            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-            'com.microsoft.emmx',
-          ],
-        ),                    
-        safariVCOption: SafariViewControllerOption(
-          preferredBarTintColor: Theme.of(context).primaryColor,
-          preferredControlTintColor: Colors.white,
-          barCollapsingEnabled: true,
-          entersReaderIfAvailable: false,
-          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,        
-        ),
-      );
-    } catch (e) {
-      // An exception is thrown if browser app is not installed on Android device.
-      debugPrint(e.toString());
-    }
-  }
-}
-```
 ## License
 
-    Copyright (C) 2015 The Android Open Source Project
-    Copyright (C) 2018 Shinya Kumagai
+    Copyright (C) 2021 Shinya Kumagai
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
