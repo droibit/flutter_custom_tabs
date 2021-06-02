@@ -3,11 +3,14 @@ name: CI for app-facing package
 
 on:
   push:
+    branches:
+      - master
+      - develop
     paths:
-    - 'flutter_custom_tabs/**'
+      - 'flutter_custom_tabs/**'
   pull_request:
     paths:
-    - 'flutter_custom_tabs/**'
+      - 'flutter_custom_tabs/**'
 
 jobs:
   build:

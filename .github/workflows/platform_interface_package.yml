@@ -3,11 +3,14 @@ name: CI for platform interface package
 
 on:
   push:
+    branches:
+      - master
+      - develop
     paths:
-    - 'flutter_custom_tabs_platform_interface/**'
+      - 'flutter_custom_tabs_platform_interface/**'      
   pull_request:
     paths:
-    - 'flutter_custom_tabs_platform_interface/**'
+      - 'flutter_custom_tabs_platform_interface/**'
 
 jobs:
   build:
