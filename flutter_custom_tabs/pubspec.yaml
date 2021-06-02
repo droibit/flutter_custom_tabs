@@ -10,10 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_custom_tabs_platform_interface: ^1.0.0
   meta: ^1.3.0
-  # TODO: Depends on the package on pub.dev
-  flutter_custom_tabs_platform_interface:
-    path: ../flutter_custom_tabs_platform_interface
 
 dev_dependencies:
   flutter_test:
