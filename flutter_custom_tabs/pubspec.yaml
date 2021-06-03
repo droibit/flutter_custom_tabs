@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_custom_tabs_platform_interface: ^1.0.0
+  flutter_custom_tabs_web:
+    path: ../flutter_custom_tabs_web
   meta: ^1.3.0
 
 dev_dependencies:
@@ -20,7 +22,6 @@ dev_dependencies:
   pedantic: ^1.11.0
   plugin_platform_interface: ^2.0.0
 
-
 flutter:
   plugin:
     platforms:
@@ -29,3 +30,5 @@ flutter:
         pluginClass: CustomTabsPlugin
       ios:
         pluginClass: GDBCustomTabsPlugin
+      web:
+        default_package: ../flutter_custom_tabs_web
