@@ -23,6 +23,9 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'stable'
+    - uses: nanasess/setup-chromedriver@master
+    - name: Start ChromeDriver
+      run: chromedriver --port=444
     - name: Get flutter dependencies
       run: flutter pub get
       working-directory: ./flutter_custom_tabs_web
@@ -32,3 +35,6 @@ jobs:
     - name: Statically analyze the Dart code for any errors
       run: flutter analyze .
       working-directory: ./flutter_custom_tabs_web
+    - name: Run unit tests
+      run: ./run_test.sh
+      working-directory: ./flutter_custom_tabs_web/example
