@@ -1,15 +1,21 @@
 # flutter_custom_tabs_web
 
-Web platform implementation of flutter_custom_tabs.
+Web platform implementation of [flutter_custom_tabs][1].
 
-## Getting Started
+## Usage
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+### Import the package
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This package is the endorsed implementation of `flutter_custom_tabs` for the web platform since version `1.0.0`, so it gets automatically added to your dependencies by depending on `flutter_custom_tabs: ^1.0.0`.
 
+```yaml
+...
+dependencies:
+  ...
+  flutter_custom_tabs: ^1.0.0
+  ...
+```
+
+Once you have `flutter_custom_tabs` in `pubspec.yaml` you should be able to use `package:flutter_custom_tabs` as normal.
+
+[1]: ../flutter_custom_tabs
