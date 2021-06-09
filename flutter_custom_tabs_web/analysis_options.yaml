@@ -1,0 +1,6 @@
+# ref. https://github.com/flutter/plugins/blob/master/analysis_options_legacy.yaml
+include: package:pedantic/analysis_options.1.11.0.yaml
+analyzer:
+  errors:
+    always_require_non_null_named_parameters: false # not needed with nnbd
+    unnecessary_null_comparison: false # Turned as long as nnbd mix-mode is supported.

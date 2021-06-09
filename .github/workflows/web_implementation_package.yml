@@ -1,0 +1,41 @@
+  
+name: CI for web implementation package
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    paths:
+      - 'flutter_custom_tabs_web/**'      
+  pull_request:
+    paths:
+      - 'flutter_custom_tabs_web/**'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+    - name: Get flutter dependencies
+      run: flutter pub get
+      working-directory: ./flutter_custom_tabs_web
+    - name: Check for any formatting issues in the code
+      run: flutter format --set-exit-if-changed .
+      working-directory: ./flutter_custom_tabs_web
+    - name: Statically analyze the Dart code for any errors
+      run: flutter analyze .
+      working-directory: ./flutter_custom_tabs_web
+    # TODO: Consider how to do integration tests on GitHub Actions.
+    # - uses: nanasess/setup-chromedriver@master
+    # - name: Start ChromeDriver
+    #   run: chromedriver --port=444
+    # - name: Run unit tests
+    #   run: ./run_test.sh
+    #   working-directory: ./flutter_custom_tabs_web/example

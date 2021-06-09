@@ -1,19 +1,29 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin to use [Chrome Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs)(for Android) / [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)(for iOS).
+A Flutter plugin for launching a URL using [Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs)
+ like [url_launcher](https://pub.dev/packages/url_launcher).  
+
+The following platforms are supported:
+- Android
+- iOS(`*`)
+- Web(`*`)
+
+On Android and iOS, you can customize the screen 
+to display web contents according to your application.
 
 | Android | iOS |
 | - | - |
 | ![android](./images/android.gif) | ![iOS](./images/ios.gif) |
 
-Custom Tabs is supported only Chrome for Android. For this reason, the interface is same, but behavior is following:
+`*`Custom Tabs is a feature that works seamlessly with apps and web content,  
+and requires browsers such as Chrome on **Android**.  
 
-#### Android
-If Chrome is installed, open web URL in custom tabs. If it is not installed, open in other browser.
-
-#### iOS
-Open web URL in SFSafariViewController.
+Therefore, other platforms use different native features.
+- iOS: [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller).
+  - You can customize the look & feel of the screen.
+- Web: [url_launcher_web](https://pub.dev/packages/url_launcher_web)
+  - You can't customize it at all.
 
 ## Getting Started
 Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
