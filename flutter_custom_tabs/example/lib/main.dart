@@ -6,24 +6,28 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return MaterialApp(
       title: 'Flutter Custom Tabs Example',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Custom Tabs Example'),
-        ),
-        body: Center(
-          child: TextButton(
-            onPressed: () => _launchURL(context),
-            child: Text(
-              'Show Flutter homepage',
-              style: TextStyle(
-                fontSize: 17,
-                color: theme.primaryColor,
+      darkTheme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+      ),
+      home: Builder(
+        builder: (_context) => Scaffold(
+          appBar: AppBar(
+            title: const Text('Flutter Custom Tabs Example'),
+            brightness: Brightness.dark,
+          ),
+          body: Center(
+            child: TextButton(
+              onPressed: () => _launchURL(_context),
+              child: Text(
+                'Show Flutter homepage',
+                style: TextStyle(fontSize: 17),
               ),
             ),
           ),
@@ -33,11 +37,12 @@ class MyApp extends StatelessWidget {
   }
 
   Future<void> _launchURL(BuildContext context) async {
+    final theme = Theme.of(context);
     try {
       await launch(
         'https://flutter.dev',
         customTabsOption: CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
+          toolbarColor: theme.primaryColor,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
@@ -50,7 +55,7 @@ class MyApp extends StatelessWidget {
           ],
         ),
         safariVCOption: SafariViewControllerOption(
-          preferredBarTintColor: Theme.of(context).primaryColor,
+          preferredBarTintColor: theme.primaryColor,
           preferredControlTintColor: Colors.white,
           barCollapsingEnabled: true,
           entersReaderIfAvailable: false,
