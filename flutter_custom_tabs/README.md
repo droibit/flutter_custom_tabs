@@ -36,8 +36,8 @@ dependencies:
 ### Usage
 Open the web URL like `url_launcher`.  
 It is also possible to customize look & feel by specifying options for each Platform.
-- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs/blob/develop/lib/src/custom_tabs_option.dart)
-- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs/blob/develop/lib/src/safari_view_controller_option.dart)
+- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs_platform_interface/blob/develop/lib/src/custom_tabs_option.dart)
+- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs_platform_interface/blob/develop/lib/src/safari_view_controller_option.dart)
 
 #### Example
 
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn()
+          animation: CustomTabsAnimation.slideIn(),
           // or user defined animation.
           animation: const CustomTabsAnimation(
             startEnter: 'slide_up',

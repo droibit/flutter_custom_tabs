@@ -1,4 +1,5 @@
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 /// Option class for customizing appearance of Safari View Controller.
@@ -10,12 +11,14 @@ import 'package:meta/meta.dart';
 ///
 @immutable
 class SafariViewControllerOption {
-  const SafariViewControllerOption(
-      {this.preferredBarTintColor,
-      this.preferredControlTintColor,
-      this.barCollapsingEnabled,
-      this.entersReaderIfAvailable,
-      this.dismissButtonStyle});
+  const SafariViewControllerOption({
+    this.preferredBarTintColor,
+    this.preferredControlTintColor,
+    this.barCollapsingEnabled,
+    this.entersReaderIfAvailable,
+    this.dismissButtonStyle,
+    this.statusBarBrightness,
+  });
 
   /// The color to tint the background of the navigation bar and the toolbar.
   /// - Availability: iOS10.0+
@@ -36,6 +39,9 @@ class SafariViewControllerOption {
   /// Dismiss button style on the navigation bar.
   /// - Availability: iOS11.0+
   final SafariViewControllerDismissButtonStyle? dismissButtonStyle;
+
+  /// A value that specifies the status bar brightness of the application after opening a link.
+  final Brightness? statusBarBrightness;
 
   @internal
   Map<String, dynamic> toMap() {
