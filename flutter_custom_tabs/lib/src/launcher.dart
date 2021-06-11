@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-/// Open the specified Web URL with Chrome Custom Tabs(Safari View Controller).
+/// Open the specified Web URL with Custom Tabs.
 ///
-/// Chrome Custom Tabs is only supported on the Android platform.
+/// Custom Tabs is only supported on the Android platform.
 /// Therefore, Open the web page using Safari View Controller ([`SFSafariViewController`]((https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)),
 /// whose appearance can be customized even on iOS.
 ///
@@ -37,11 +39,9 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   ),
 /// );
 /// ```
-Future<void> launch(
-  String urlString, {
-  CustomTabsOption? customTabsOption,
-  SafariViewControllerOption? safariVCOption,
-}) {
+Future<void> launch(String urlString,
+    {CustomTabsOption? customTabsOption,
+    SafariViewControllerOption? safariVCOption}) async {
   final url = Uri.parse(urlString.trimLeft());
   if (url.scheme != 'http' && url.scheme != 'https') {
     throw PlatformException(
@@ -49,9 +49,45 @@ Future<void> launch(
       message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
     );
   }
-  return CustomTabsPlatform.instance.launch(
-    urlString,
-    customTabsOption: customTabsOption,
-    safariVCOption: safariVCOption,
-  );
+
+  final launch = () => CustomTabsPlatform.instance.launch(
+        urlString,
+        customTabsOption: customTabsOption,
+        safariVCOption: safariVCOption,
+      );
+
+  if (defaultTargetPlatform == TargetPlatform.iOS) {
+    Brightness? statusBarBrightness;
+    if (safariVCOption != null) {
+      statusBarBrightness = safariVCOption.statusBarBrightness;
+    }
+    _applyStatusBarBrightnessTemporally(statusBarBrightness, action: launch);
+  } else {
+    await launch();
+  }
+}
+
+void _applyStatusBarBrightnessTemporally(
+  Brightness? statusBarBrightness, {
+  required Future<void> Function() action,
+}) async {
+  var previousAutomaticSystemUiAdjustment = true;
+  final widgetsBinding = WidgetsBinding.instance;
+  if (statusBarBrightness != null && widgetsBinding != null) {
+    previousAutomaticSystemUiAdjustment =
+        widgetsBinding.renderView.automaticSystemUiAdjustment;
+    widgetsBinding.renderView.automaticSystemUiAdjustment = false;
+    SystemChrome.setSystemUIOverlayStyle(
+      statusBarBrightness == Brightness.light
+          ? SystemUiOverlayStyle.dark
+          : SystemUiOverlayStyle.light,
+    );
+  }
+
+  await action();
+
+  if (statusBarBrightness != null && widgetsBinding != null) {
+    widgetsBinding.renderView.automaticSystemUiAdjustment =
+        previousAutomaticSystemUiAdjustment;
+  }
 }
