@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
@@ -11,7 +12,7 @@ void main() {
   final mock = _MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launch with null option', () async {
+  test('launch: with null option', () async {
     final url = 'http://example.com/';
     when(mock.launch(
       any,
@@ -24,7 +25,7 @@ void main() {
     verify(mock.launch(url));
   });
 
-  test('launch with empty option', () async {
+  test('launch: with empty option', () async {
     final url = 'http://example.com/';
     when(mock.launch(
       any,
@@ -47,7 +48,7 @@ void main() {
     ));
   });
 
-  test('launch with empty option', () async {
+  test('launch: with empty option', () async {
     final url = 'http://example.com/';
     when(mock.launch(
       any,
@@ -78,6 +79,7 @@ void main() {
       barCollapsingEnabled: true,
       entersReaderIfAvailable: false,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      statusBarBrightness: Brightness.dark,
     );
 
     await launch(
@@ -91,6 +93,56 @@ void main() {
       customTabsOption: customTabsOption,
       safariVCOption: safariVCOption,
     ));
+  });
+
+  test('statusBarBrightness: run on iOS', () async {
+    when(mock.launch(
+      any,
+      customTabsOption: anyNamed('customTabsOption'),
+      safariVCOption: anyNamed('safariVCOption'),
+    )).thenAnswer((_) async => null);
+
+    final binding = TestWidgetsFlutterBinding.ensureInitialized()
+    as TestWidgetsFlutterBinding;
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
+
+    final url = 'http://example.com/';
+    final launchResult = launch(
+      url,
+      safariVCOption: const SafariViewControllerOption(
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
+
+    expect(binding.renderView.automaticSystemUiAdjustment, isFalse);
+    await launchResult;
+    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
+  });
+
+  test('statusBarBrightness: run on non-iOS', () async {
+    when(mock.launch(
+      any,
+      customTabsOption: anyNamed('customTabsOption'),
+      safariVCOption: anyNamed('safariVCOption'),
+    )).thenAnswer((_) async => null);
+
+    final binding = TestWidgetsFlutterBinding.ensureInitialized()
+    as TestWidgetsFlutterBinding;
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    expect(binding.renderView.automaticSystemUiAdjustment, true);
+
+    final url = 'http://example.com/';
+    final launchResult = launch(
+      url,
+      safariVCOption: const SafariViewControllerOption(
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
+
+    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
+    await launchResult;
+    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
   });
 }
 
