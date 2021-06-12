@@ -103,7 +103,7 @@ void main() {
     )).thenAnswer((_) async => null);
 
     final binding = TestWidgetsFlutterBinding.ensureInitialized()
-    as TestWidgetsFlutterBinding;
+        as TestWidgetsFlutterBinding;
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
 
@@ -128,7 +128,7 @@ void main() {
     )).thenAnswer((_) async => null);
 
     final binding = TestWidgetsFlutterBinding.ensureInitialized()
-    as TestWidgetsFlutterBinding;
+        as TestWidgetsFlutterBinding;
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     expect(binding.renderView.automaticSystemUiAdjustment, true);
 
