@@ -1,4 +1,14 @@
+## 1.0.0
+
+**NOTE:**  
+The first major release include some breaking changes, see the [migration guide](docs/migration-guides.md#Migrate+%60flutter_custom_tabs%60+to+v1.0.0) for details.
+
+- Migrate to federated plugins([#41](https://github.com/droibit/flutter_custom_tabs/pull/41)).
+- Web support([#42](https://github.com/droibit/flutter_custom_tabs/pull/42)).
+- Improved customization on iOS([#39](https://github.com/droibit/flutter_custom_tabs/pull/39), [#43](https://github.com/droibit/flutter_custom_tabs/pull/43)).
+
 ## 0.7.0
+
 - Migrated to Null Safety([#36](https://github.com/droibit/flutter_custom_tabs/pull/36)).
 - Bug Fix : shows black screen while launching in release mode([#37](https://github.com/droibit/flutter_custom_tabs/pull/36)).
 - Support Android11.
