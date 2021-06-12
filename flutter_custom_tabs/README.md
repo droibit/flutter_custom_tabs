@@ -14,7 +14,7 @@ to display web contents according to your application.
 
 | Android | iOS |
 | - | - |
-| ![android](./images/android.gif) | ![iOS](./images/ios.gif) |
+| ![android](https://i.imgur.com/lgPWvLS.gif) | ![iOS](https://i.imgur.com/LhsCUzb.gif) |
 
 `*`Custom Tabs is a feature that works seamlessly with apps and web content,  
 and requires browsers such as Chrome on **Android**.  
