@@ -1,3 +1,8 @@
+## 1.0.2
+
+- Fix NullPointerException when calling launch without setting the value of enableUrlBarHiding([#47](https://github.com/droibit/flutter_custom_tabs/pull/47)).
+
+
 ## 1.0.1
 
 - Fix links in the document on pub.dev
