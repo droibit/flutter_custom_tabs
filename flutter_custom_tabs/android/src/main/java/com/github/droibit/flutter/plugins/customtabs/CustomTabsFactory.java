@@ -52,8 +52,8 @@ class CustomTabsFactory {
             builder.setToolbarColor(Color.parseColor(colorString));
         }
 
-        if (options.containsKey(KEY_OPTIONS_ENABLE_URL_BAR_HIDING)
-                & ((Boolean) options.get(KEY_OPTIONS_ENABLE_URL_BAR_HIDING))) {
+        if (options.containsKey(KEY_OPTIONS_ENABLE_URL_BAR_HIDING) &&
+                ((Boolean) options.get(KEY_OPTIONS_ENABLE_URL_BAR_HIDING))) {
             builder.enableUrlBarHiding();
         }
 
