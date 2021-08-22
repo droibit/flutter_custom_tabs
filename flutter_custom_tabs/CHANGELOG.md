@@ -1,7 +1,11 @@
+## 1.0.3
+
+- Migrate from deprecated gradle getGenerateBuildConfig to buildFeatures([#49](https://github.com/droibit/flutter_custom_tabs/pull/49))
+- Avoiding app crashes caused by URLs containing whitespaces([#50](https://github.com/droibit/flutter_custom_tabs/issues/50), [#52](https://github.com/droibit/flutter_custom_tabs/pull/52))
+
 ## 1.0.2
 
 - Fix NullPointerException when calling launch without setting the value of enableUrlBarHiding([#47](https://github.com/droibit/flutter_custom_tabs/pull/47)).
-
 
 ## 1.0.1
 
