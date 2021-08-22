@@ -51,7 +51,7 @@ Future<void> launch(String urlString,
   }
 
   final launch = () => CustomTabsPlatform.instance.launch(
-        urlString,
+        url.toString(),
         customTabsOption: customTabsOption,
         safariVCOption: safariVCOption,
       );
