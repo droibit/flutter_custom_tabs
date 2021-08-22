@@ -95,6 +95,21 @@ void main() {
     ));
   });
 
+  test('launch: with a url containg a whitespace', () async {
+    final url = ' http://example.com/';
+    when(mock.launch(
+      any,
+      customTabsOption: anyNamed('customTabsOption'),
+      safariVCOption: anyNamed('safariVCOption'),
+    )).thenAnswer((_) async => null);
+
+    await launch(url);
+
+    verify(mock.launch(
+      url.trimLeft(),
+    ));
+  });
+
   test('statusBarBrightness: run on iOS', () async {
     when(mock.launch(
       any,
