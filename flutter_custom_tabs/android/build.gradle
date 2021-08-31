@@ -32,9 +32,9 @@ android {
         disable 'InvalidPackage'
     }
 
-    buildFeatures {
-        buildConfig = false
-    }
+    // buildFeatures {
+    //     buildConfig = false
+    // }
 
     dependencies {
         api 'com.github.droibit.customtabslauncher:launcher:1.5.0'
