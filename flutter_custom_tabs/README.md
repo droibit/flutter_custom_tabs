@@ -33,6 +33,19 @@ dependencies:
   flutter_custom_tabs: ^1.0.3
 ```
 
+### Requirements
+- Android Gradle Plugin 4.1 or higher
+
+```diff
+// your-project/android/build.gradle
+buildscript {    
+    dependencies {
+-        classpath 'com.android.tools.build:gradle:3.x.x'
++        classpath 'com.android.tools.build:gradle:4.1.0' // or higher
+    }
+}
+```
+
 ### Usage
 Open the web URL like `url_launcher`.  
 It is also possible to customize look & feel by specifying options for each Platform.
