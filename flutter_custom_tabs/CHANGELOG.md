@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Update to Android CustomTabsLauncher 1.0.6
+
 ## 1.0.3
 
 - Migrate from deprecated gradle getGenerateBuildConfig to buildFeatures([#49](https://github.com/droibit/flutter_custom_tabs/pull/49))
