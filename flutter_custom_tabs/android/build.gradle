@@ -37,6 +37,6 @@ android {
     }
 
     dependencies {
-        api 'com.github.droibit:CustomTabsLauncher:1.6.0'
+        api 'com.github.droibit:customtabslauncher:1.6.0'
     }
 }
