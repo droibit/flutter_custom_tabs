@@ -1,11 +1,11 @@
 ## 1.0.4
 
-- Update to Android CustomTabsLauncher 1.0.6
+- Update to Android CustomTabsLauncher 1.0.6([#62](https://github.com/droibit/flutter_custom_tabs/pull/62)).
 
-## 1.0.3
+## 1.0.3,
 
-- Migrate from deprecated gradle getGenerateBuildConfig to buildFeatures([#49](https://github.com/droibit/flutter_custom_tabs/pull/49))
-- Avoiding app crashes caused by URLs containing whitespaces([#50](https://github.com/droibit/flutter_custom_tabs/issues/50), [#52](https://github.com/droibit/flutter_custom_tabs/pull/52))
+- Migrate from deprecated gradle getGenerateBuildConfig to buildFeatures([#49](https://github.com/droibit/flutter_custom_tabs/pull/49)).
+- Avoiding app crashes caused by URLs containing whitespaces([#50](https://github.com/droibit/flutter_custom_tabs/issues/50), [#52](https://github.com/droibit/flutter_custom_tabs/pull/52)).
 
 ## 1.0.2
 
@@ -13,7 +13,7 @@
 
 ## 1.0.1
 
-- Fix links in the document on pub.dev
+- Fix links in the document on pub.dev.
 
 ## 1.0.0
 
