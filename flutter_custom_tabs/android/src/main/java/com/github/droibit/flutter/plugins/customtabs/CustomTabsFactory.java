@@ -136,7 +136,7 @@ class CustomTabsFactory {
         if (extraCustomTabs != null && !extraCustomTabs.isEmpty()) {
             fallback = new CustomTabsLauncher.LaunchNonChromeCustomTabs(extraCustomTabs);
         } else {
-            fallback = new CustomTabsLauncher.LaunchBrowser();
+            fallback = new CustomTabsLauncher.LaunchNonChromeCustomTabs(context);
         }
         return fallback;
     }
