@@ -73,7 +73,9 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
     public void onMethodCall(@NonNull MethodCall call, @NonNull final MethodChannel.Result result) {
         if ("launch".equals(call.method)) {
             launch(((Map<String, Object>) call.arguments), result);
-        } else {
+        } if ("closeAllIfPossible".equals(call.method)) {
+            closeAllIfPossible(result);
+        }else {
             result.notImplemented();
         }
     }
@@ -97,5 +99,10 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
         } catch (ActivityNotFoundException e) {
             result.error(CODE_LAUNCH_ERROR, e.getMessage(), null);
         }
+    }
+
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    private void closeAllIfPossible(@NonNull MethodChannel.Result result) {
+        result.success(null);
     }
 }

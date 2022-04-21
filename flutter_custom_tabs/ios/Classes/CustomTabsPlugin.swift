@@ -6,6 +6,8 @@ private let keyURL = "url"
 private let keyOption = "safariVCOption"
 
 public class CustomTabsPlugin: NSObject, FlutterPlugin {
+    private var dismissStack = [() -> Void]()
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(
             name: "plugins.flutter.droibit.github.io/custom_tabs",
@@ -22,6 +24,8 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
             let url = arguments[keyURL] as! String
             let option = arguments[keyOption] as! [String: Any]
             present(withURL: url, option: option, result: result)
+        case "closeAllIfPossible":
+            dismissAllIfPossible(result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -31,10 +35,24 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
         if #available(iOS 9.0, *) {
             if let topViewController = UIWindow.keyWindow?.topViewController() {
                 let safariViewController = SFSafariViewController.make(url: URL(string: url)!, option: option)
+                dismissStack.append({ [weak safariViewController] in
+                    safariViewController?.dismiss(animated: true)
+                })
                 topViewController.present(safariViewController, animated: true) {
                     result(nil)
                 }
             }
+        } else {
+            result(FlutterMethodNotImplemented)
+        }
+    }
+
+    private func dismissAllIfPossible(result: @escaping FlutterResult) {
+        if #available(iOS 9.0, *) {
+            while let task = dismissStack.popLast() {
+                task()
+            }
+            result(nil)
         } else {
             result(FlutterMethodNotImplemented)
         }

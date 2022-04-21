@@ -37,4 +37,9 @@ abstract class CustomTabsPlatform extends PlatformInterface {
   }) {
     throw UnimplementedError('launch() has not been implemented.');
   }
+
+  /// Close all the launched implementation by platform if possible.
+  Future<void> closeAllIfPossible() {
+    throw UnimplementedError('closeAllIfPossible() has not been implemented.');
+  }
 }

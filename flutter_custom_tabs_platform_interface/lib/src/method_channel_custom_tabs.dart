@@ -22,4 +22,9 @@ class MethodChannelCustomTabs extends CustomTabsPlatform {
     };
     return _channel.invokeMethod('launch', args);
   }
+
+  @override
+  Future<void> closeAllIfPossible() {
+    return _channel.invokeMethod('closeAllIfPossible');
+  }
 }
