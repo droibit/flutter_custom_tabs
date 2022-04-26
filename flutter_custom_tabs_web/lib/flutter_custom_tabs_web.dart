@@ -23,4 +23,7 @@ class CustomTabsPlugin extends CustomTabsPlatform {
     final plugin = UrlLauncherPlatform.instance as UrlLauncherPlugin;
     return plugin.launch(urlString).then((_) => null);
   }
+
+  @override
+  Future<void> closeAllIfPossible() {}
 }
