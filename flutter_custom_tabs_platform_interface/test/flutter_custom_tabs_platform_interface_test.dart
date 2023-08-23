@@ -32,5 +32,5 @@ class _CustomTabsPlatformMock extends Mock
     with MockPlatformInterfaceMixin
     implements CustomTabsPlatform {}
 
-class _ImplementsCustomTabsPlatform extends Mock implements CustomTabsPlatform {
-}
+class _ImplementsCustomTabsPlatform extends Mock
+    implements CustomTabsPlatform {}
