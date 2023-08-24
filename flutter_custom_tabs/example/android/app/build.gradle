@@ -25,16 +25,13 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 30
-
-    lintOptions {
-        disable 'InvalidPackage'
-    }
+    namespace "com.github.droibit.flutter.plugins.customtabs.example"
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.github.droibit.flutter.plugins.customtabs.example"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -44,6 +41,9 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+    lint {
+        disable 'InvalidPackage'
     }
 }
 
