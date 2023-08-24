@@ -27,7 +27,7 @@ jobs:
       run: flutter pub get
       working-directory: ./flutter_custom_tabs_platform_interface
     - name: Check for any formatting issues in the code
-      run: flutter format --set-exit-if-changed .
+      run: dart format --set-exit-if-changed .
       working-directory: ./flutter_custom_tabs_platform_interface
     - name: Statically analyze the Dart code for any errors
       run: flutter analyze .
