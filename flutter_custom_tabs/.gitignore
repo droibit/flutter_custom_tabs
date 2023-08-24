@@ -2,7 +2,7 @@
 *.iml
 *.ipr
 *.iws
-.idea/*
+.idea/
 !.idea/codeStyleSettings.xml
 !.idea/runConfigurations/*
 
