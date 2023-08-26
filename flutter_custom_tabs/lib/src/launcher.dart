@@ -91,3 +91,7 @@ void _applyStatusBarBrightnessTemporally(
         previousAutomaticSystemUiAdjustment;
   }
 }
+
+Future<void> closeAllIfPossible() async {
+  await CustomTabsPlatform.instance.closeAllIfPossible();
+}

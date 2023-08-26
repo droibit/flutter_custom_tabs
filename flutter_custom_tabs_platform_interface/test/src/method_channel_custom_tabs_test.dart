@@ -59,4 +59,14 @@ void main() {
       ],
     );
   });
+
+  test('closeAllIfPossible invoke method "closeAllIfPossible"', () async {
+    await customTabs.closeAllIfPossible();
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('closeAllIfPossible', arguments: null),
+      ],
+    );
+  });
 }

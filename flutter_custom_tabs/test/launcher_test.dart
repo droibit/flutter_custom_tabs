@@ -157,6 +157,14 @@ void main() {
     await launchResult;
     expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
   });
+
+  test('closeAllIfPossible', () async {
+    when(mock.closeAllIfPossible()).thenAnswer((_) async => null);
+
+    await closeAllIfPossible();
+
+    verify(mock.closeAllIfPossible());
+  });
 }
 
 class _MockCustomTabsPlatform extends Mock
@@ -176,6 +184,17 @@ class _MockCustomTabsPlatform extends Mock
           #customTabsOption: customTabsOption,
           #safariVCOption: safariVCOption
         },
+      ),
+      returnValue: Future.value(null),
+    );
+  }
+
+  @override
+  Future<void> closeAllIfPossible() async {
+    return super.noSuchMethod(
+      Invocation.method(
+        #closeAllIfPossible,
+        {},
       ),
       returnValue: Future.value(null),
     );
