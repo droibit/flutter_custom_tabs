@@ -1,4 +1,3 @@
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
