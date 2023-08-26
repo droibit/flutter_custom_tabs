@@ -2,7 +2,7 @@
 *.iml
 *.ipr
 *.iws
-.idea/*
+.idea/
 !.idea/codeStyleSettings.xml
 !.idea/runConfigurations/*
 
@@ -16,3 +16,6 @@ pubspec.lock
 
 # Directory created by dartdoc
 doc/api/
+
+# Test Coverage
+/coverage/

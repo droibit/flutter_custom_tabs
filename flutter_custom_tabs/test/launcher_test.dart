@@ -117,8 +117,7 @@ void main() {
       safariVCOption: anyNamed('safariVCOption'),
     )).thenAnswer((_) async => null);
 
-    final binding = TestWidgetsFlutterBinding.ensureInitialized()
-        as TestWidgetsFlutterBinding;
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
 
@@ -142,8 +141,7 @@ void main() {
       safariVCOption: anyNamed('safariVCOption'),
     )).thenAnswer((_) async => null);
 
-    final binding = TestWidgetsFlutterBinding.ensureInitialized()
-        as TestWidgetsFlutterBinding;
+    final binding = TestWidgetsFlutterBinding.ensureInitialized();
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     expect(binding.renderView.automaticSystemUiAdjustment, true);
 

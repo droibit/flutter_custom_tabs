@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:8.1.1'
     }
 }
 
@@ -23,7 +23,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    namespace "com.github.droibit.plugins.customtabs"
+    compileSdk 34
 
     defaultConfig {
         minSdkVersion 16
@@ -37,6 +38,6 @@ android {
     }
 
     dependencies {
-        api 'com.github.droibit:customtabslauncher:1.6.0'
+        api 'com.github.droibit:customtabslauncher:1.7.0'
     }
 }
