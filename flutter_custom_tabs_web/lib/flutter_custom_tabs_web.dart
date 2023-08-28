@@ -25,5 +25,5 @@ class CustomTabsPlugin extends CustomTabsPlatform {
   }
 
   @override
-  Future<void> closeAllIfPossible() {}
+  Future<void> closeAllIfPossible() async {}
 }
