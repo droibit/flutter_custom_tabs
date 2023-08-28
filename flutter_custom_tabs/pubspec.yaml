@@ -28,6 +28,6 @@ flutter:
         package: com.github.droibit.flutter.plugins.customtabs
         pluginClass: CustomTabsPlugin
       ios:
-        pluginClass: GDBCustomTabsPlugin
+        pluginClass: CustomTabsPlugin
       web:
         default_package: flutter_custom_tabs_web

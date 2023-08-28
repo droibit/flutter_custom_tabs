@@ -32,40 +32,31 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
     }
     
     private func present(withURL url: String, option: [String: Any], result: @escaping FlutterResult) {
-        if #available(iOS 9.0, *) {
-            if let topViewController = UIWindow.keyWindow?.topViewController() {
-                let safariViewController = SFSafariViewController.make(url: URL(string: url)!, option: option)
-                dismissStack.append({ [weak safariViewController] in
-                    safariViewController?.dismiss(animated: true)
-                })
-                topViewController.present(safariViewController, animated: true) {
-                    result(nil)
-                }
+        if let topViewController = UIWindow.keyWindow?.topViewController() {
+            let safariViewController = SFSafariViewController.make(url: URL(string: url)!, option: option)
+            dismissStack.append({ [weak safariViewController] in
+                safariViewController?.dismiss(animated: true)
+            })
+            topViewController.present(safariViewController, animated: true) {
+                result(nil)
             }
-        } else {
-            result(FlutterMethodNotImplemented)
         }
     }
 
     private func dismissAllIfPossible(result: @escaping FlutterResult) {
-        if #available(iOS 9.0, *) {
-            while let task = dismissStack.popLast() {
-                task()
-            }
-            result(nil)
-        } else {
-            result(FlutterMethodNotImplemented)
+        while let task = dismissStack.popLast() {
+            task()
         }
+        result(nil)
     }
 }
 
 private extension UIWindow {
     static var keyWindow: UIWindow? {
-        if #available(iOS 13, *) {
+        guard let delegate = UIApplication.shared.delegate as? FlutterAppDelegate else {
             return UIApplication.shared.windows.first(where: { $0.isKeyWindow })
-        } else {
-            return UIApplication.shared.keyWindow
         }
+        return delegate.window
     }
 
     func topViewController() -> UIViewController? {
