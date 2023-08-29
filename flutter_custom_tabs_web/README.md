@@ -6,13 +6,13 @@ Web platform implementation of [flutter_custom_tabs][1].
 
 ### Import the package
 
-This package is the endorsed implementation of `flutter_custom_tabs` for the web platform since version `1.0.0`, so it gets automatically added to your dependencies by depending on `flutter_custom_tabs: ^1.0.0`.
+This package is the endorsed implementation of `flutter_custom_tabs` for the web platform since version `1.0.0`, so it gets automatically added to your dependencies by depending on `flutter_custom_tabs: ^1.1.0`.
 
 ```yaml
 ...
 dependencies:
   ...
-  flutter_custom_tabs: ^1.0.0
+  flutter_custom_tabs: ^1.1.0
   ...
 ```
 
