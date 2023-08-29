@@ -4,7 +4,7 @@ name: CI for platform interface package
 on:
   push:
     branches:
-      - master
+      - main
       - develop
     paths:
       - 'flutter_custom_tabs_platform_interface/**'      
