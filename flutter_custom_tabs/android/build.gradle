@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'com.android.tools.build:gradle:7.4.0'
     }
 }
 
@@ -23,21 +23,28 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    namespace "com.github.droibit.plugins.customtabs"
-    compileSdk 34
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.github.droibit.plugins.flutter.customtabs'
+    }
+
+    compileSdk 33
 
     defaultConfig {
-        minSdkVersion 16
+        minSdk 16
     }
     lintOptions {
         disable 'InvalidPackage'
     }
 
     buildFeatures {
-        buildConfig = false
+        buildConfig false
     }
 
     dependencies {
+        // TODO: Delete Flutter's default compiles sdk version when it reaches 34.
+        api('androidx.browser:browser') {
+            version { strictly "1.5.0" }
+        }
         api 'com.github.droibit:customtabslauncher:1.7.0'
     }
 }

@@ -7,44 +7,34 @@ private let keyBarCollapsingEnabled = "barCollapsingEnabled"
 private let keyEntersReaderIfAvailable = "entersReaderIfAvailable"
 private let keyDismissButtonStyle = "dismissButtonStyle"
 
-@available(iOS 9.0, *)
 extension SFSafariViewController {    
      static func make(url: URL, option: [String: Any]) -> SFSafariViewController {
-        let viewController: SFSafariViewController
-        if #available(iOS 11, *) {
-            let configuration = SFSafariViewController.Configuration()
-            if let barCollapsingEnabled = option[keyBarCollapsingEnabled] as? Bool {
-                configuration.barCollapsingEnabled = barCollapsingEnabled
-            }
-            if let entersReaderIfAvailable = option[keyEntersReaderIfAvailable] as? Bool {
-                configuration.entersReaderIfAvailable = entersReaderIfAvailable
-            }
-            
-            viewController = SFSafariViewController(
-                url: url,
-                configuration: configuration
-            )
-        } else {
-            viewController = SFSafariViewController(url: url)
-        }
+         let configuration = SFSafariViewController.Configuration()
+         if let barCollapsingEnabled = option[keyBarCollapsingEnabled] as? Bool {
+             configuration.barCollapsingEnabled = barCollapsingEnabled
+         }
+         if let entersReaderIfAvailable = option[keyEntersReaderIfAvailable] as? Bool {
+             configuration.entersReaderIfAvailable = entersReaderIfAvailable
+         }
+         
+         let viewController = SFSafariViewController(
+             url: url,
+             configuration: configuration
+         )
         
-        if #available(iOS 10, *) {
-            if let barTintColorHex = option[keyPreferredBarTintColor] as? String,
-               let barTintColor = UIColor(hex: barTintColorHex) {
-                viewController.preferredBarTintColor = barTintColor
-            }
-            if let controlTintColorHex = option[keyPreferredControlTintColor] as? String,
-               let controlTintColor = UIColor(hex: controlTintColorHex) {
-                viewController.preferredControlTintColor = controlTintColor
-            }
-        }
+         if let barTintColorHex = option[keyPreferredBarTintColor] as? String,
+            let barTintColor = UIColor(hex: barTintColorHex) {
+             viewController.preferredBarTintColor = barTintColor
+         }
+         if let controlTintColorHex = option[keyPreferredControlTintColor] as? String,
+            let controlTintColor = UIColor(hex: controlTintColorHex) {
+             viewController.preferredControlTintColor = controlTintColor
+         }
         
-        if #available(iOS 11, *) {            
-            if let dismissButtonStyleRawValue = option[keyDismissButtonStyle] as? Int,
-               let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: dismissButtonStyleRawValue) {
-                viewController.dismissButtonStyle = dismissButtonStyle
-            }
-        }
+         if let dismissButtonStyleRawValue = option[keyDismissButtonStyle] as? Int,
+            let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: dismissButtonStyleRawValue) {
+             viewController.dismissButtonStyle = dismissButtonStyle
+         }
          return viewController
      }
 }
