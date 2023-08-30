@@ -1,3 +1,10 @@
+## 1.1.0
+
+- Added a manual close feature for SFSafariViewController on iOS([#67](https://github.com/droibit/flutter_custom_tabs/pull/67)).
+- Update dependency CustomTabLauncher to [v1.7.0](https://github.com/droibit/CustomTabsLauncher/releases/tag/1.7.0)([#74](https://github.com/droibit/flutter_custom_tabs/pull/74)).
+- Update Android Gradle Plugin to v7.4.0([#75](https://github.com/droibit/flutter_custom_tabs/pull/75)).
+- Update the minimum supported OS to iOS11([#75](https://github.com/droibit/flutter_custom_tabs/pull/75)).
+
 ## 1.0.4
 
 - Update to Android CustomTabsLauncher 1.0.6([#62](https://github.com/droibit/flutter_custom_tabs/pull/62)).
