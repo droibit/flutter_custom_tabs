@@ -3,7 +3,7 @@ import SafariServices
 import UIKit
 
 private let keyURL = "url"
-private let keyOption = "safariVCOption"
+private let keyOptions = "safariVCOptions"
 
 public class CustomTabsPlugin: NSObject, FlutterPlugin {
     private var dismissStack = [() -> Void]()
@@ -22,8 +22,8 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
         case "launch":
             let arguments = call.arguments as! [String: Any]
             let url = arguments[keyURL] as! String
-            let option = arguments[keyOption] as! [String: Any]
-            present(withURL: url, option: option, result: result)
+            let options = arguments[keyOptions] as! [String: Any]
+            present(withURL: url, options: options, result: result)
         case "closeAllIfPossible":
             dismissAllIfPossible(result: result)
         default:
@@ -31,9 +31,9 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
         }
     }
     
-    private func present(withURL url: String, option: [String: Any], result: @escaping FlutterResult) {
+    private func present(withURL url: String, options: [String: Any], result: @escaping FlutterResult) {
         if let topViewController = UIWindow.keyWindow?.topViewController() {
-            let safariViewController = SFSafariViewController.make(url: URL(string: url)!, option: option)
+            let safariViewController = SFSafariViewController.make(url: URL(string: url)!, options: options)
             dismissStack.append({ [weak safariViewController] in
                 safariViewController?.dismiss(animated: true)
             })

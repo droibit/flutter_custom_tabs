@@ -6,12 +6,12 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('toMap() with empty option', () {
-    const option = CustomTabsOption();
-    expect(option.toMap(), <String, dynamic>{});
+    const options = CustomTabsOptions();
+    expect(options.toMap(), <String, dynamic>{});
   });
 
   test('toMap() with full option', () {
-    const option = CustomTabsOption(
+    const options = CustomTabsOptions(
       toolbarColor: Color(0xFFFFEBEE),
       enableUrlBarHiding: true,
       enableDefaultShare: false,
@@ -30,7 +30,7 @@ void main() {
       ],
     );
 
-    expect(option.toMap(), <String, dynamic>{
+    expect(options.toMap(), <String, dynamic>{
       'toolbarColor': '#ffffebee',
       'enableUrlBarHiding': true,
       'enableDefaultShare': false,

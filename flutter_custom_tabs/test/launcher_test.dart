@@ -12,12 +12,12 @@ void main() {
   final mock = _MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launch: with null option', () async {
+  test('launch: with null options', () async {
     const url = 'http://example.com/';
     when(mock.launch(
       any,
-      customTabsOption: anyNamed('customTabsOption'),
-      safariVCOption: anyNamed('safariVCOption'),
+      customTabsOptions: anyNamed('customTabsOptions'),
+      safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
     await launch(url);
@@ -25,38 +25,38 @@ void main() {
     verify(mock.launch(url));
   });
 
-  test('launch: with empty option', () async {
+  test('launch: with empty options', () async {
     const url = 'http://example.com/';
     when(mock.launch(
       any,
-      customTabsOption: anyNamed('customTabsOption'),
-      safariVCOption: anyNamed('safariVCOption'),
+      customTabsOptions: anyNamed('customTabsOptions'),
+      safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    const customTabsOption = CustomTabsOption();
-    const safariVCOption = SafariViewControllerOption();
+    const customTabsOptions = CustomTabsOptions();
+    const safariVCOptions = SafariViewControllerOptions();
     await launch(
       url,
-      customTabsOption: customTabsOption,
-      safariVCOption: safariVCOption,
+      customTabsOptions: customTabsOptions,
+      safariVCOptions: safariVCOptions,
     );
 
     verify(mock.launch(
       url,
-      customTabsOption: customTabsOption,
-      safariVCOption: safariVCOption,
+      customTabsOptions: customTabsOptions,
+      safariVCOptions: safariVCOptions,
     ));
   });
 
-  test('launch: with empty option', () async {
+  test('launch: with empty options', () async {
     const url = 'http://example.com/';
     when(mock.launch(
       any,
-      customTabsOption: anyNamed('customTabsOption'),
-      safariVCOption: anyNamed('safariVCOption'),
+      customTabsOptions: anyNamed('customTabsOptions'),
+      safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    const customTabsOption = CustomTabsOption(
+    const customTabsOptions = CustomTabsOptions(
       toolbarColor: Color(0xFFFFEBEE),
       enableUrlBarHiding: true,
       enableDefaultShare: false,
@@ -73,7 +73,7 @@ void main() {
         'com.microsoft.emmx',
       ],
     );
-    const safariVCOption = SafariViewControllerOption(
+    const safariVCOptions = SafariViewControllerOptions(
       preferredBarTintColor: Color(0xFFFFEBEE),
       preferredControlTintColor: Color(0xFFFFFFFF),
       barCollapsingEnabled: true,
@@ -84,23 +84,23 @@ void main() {
 
     await launch(
       url,
-      customTabsOption: customTabsOption,
-      safariVCOption: safariVCOption,
+      customTabsOptions: customTabsOptions,
+      safariVCOptions: safariVCOptions,
     );
 
     verify(mock.launch(
       url,
-      customTabsOption: customTabsOption,
-      safariVCOption: safariVCOption,
+      customTabsOptions: customTabsOptions,
+      safariVCOptions: safariVCOptions,
     ));
   });
 
-  test('launch: with a url containg a whitespace', () async {
+  test('launch: with a url containing a whitespace', () async {
     const url = ' http://example.com/';
     when(mock.launch(
       any,
-      customTabsOption: anyNamed('customTabsOption'),
-      safariVCOption: anyNamed('safariVCOption'),
+      customTabsOptions: anyNamed('customTabsOptions'),
+      safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
     await launch(url);
@@ -113,8 +113,8 @@ void main() {
   test('statusBarBrightness: run on iOS', () async {
     when(mock.launch(
       any,
-      customTabsOption: anyNamed('customTabsOption'),
-      safariVCOption: anyNamed('safariVCOption'),
+      customTabsOptions: anyNamed('customTabsOptions'),
+      safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
@@ -124,7 +124,7 @@ void main() {
     const url = 'http://example.com/';
     final launchResult = launch(
       url,
-      safariVCOption: const SafariViewControllerOption(
+      safariVCOptions: const SafariViewControllerOptions(
         statusBarBrightness: Brightness.dark,
       ),
     );
@@ -137,8 +137,8 @@ void main() {
   test('statusBarBrightness: run on non-iOS', () async {
     when(mock.launch(
       any,
-      customTabsOption: anyNamed('customTabsOption'),
-      safariVCOption: anyNamed('safariVCOption'),
+      customTabsOptions: anyNamed('customTabsOptions'),
+      safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
@@ -148,7 +148,7 @@ void main() {
     const url = 'http://example.com/';
     final launchResult = launch(
       url,
-      safariVCOption: const SafariViewControllerOption(
+      safariVCOptions: const SafariViewControllerOptions(
         statusBarBrightness: Brightness.dark,
       ),
     );
@@ -173,16 +173,16 @@ class _MockCustomTabsPlatform extends Mock
   @override
   Future<void> launch(
     String? urlString, {
-    CustomTabsOption? customTabsOption,
-    SafariViewControllerOption? safariVCOption,
+    CustomTabsOptions? customTabsOptions,
+    SafariViewControllerOptions? safariVCOptions,
   }) {
     return super.noSuchMethod(
       Invocation.method(
         #launch,
         [urlString],
         <Symbol, Object?>{
-          #customTabsOption: customTabsOption,
-          #safariVCOption: safariVCOption
+          #customTabsOptions: customTabsOptions,
+          #safariVCOptions: safariVCOptions
         },
       ),
       returnValue: Future.value(null),

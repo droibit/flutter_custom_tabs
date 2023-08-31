@@ -12,13 +12,13 @@ class MethodChannelCustomTabs extends CustomTabsPlatform {
   @override
   Future<void> launch(
     String urlString, {
-    CustomTabsOption? customTabsOption,
-    SafariViewControllerOption? safariVCOption,
+    CustomTabsOptions? customTabsOptions,
+    SafariViewControllerOptions? safariVCOptions,
   }) {
     final args = <String, dynamic>{
       'url': urlString,
-      'customTabsOption': customTabsOption?.toMap() ?? <String, dynamic>{},
-      'safariVCOption': safariVCOption?.toMap() ?? <String, dynamic>{}
+      'customTabsOptions': customTabsOptions?.toMap() ?? <String, dynamic>{},
+      'safariVCOptions': safariVCOptions?.toMap() ?? <String, dynamic>{}
     };
     return _channel.invokeMethod('launch', args);
   }

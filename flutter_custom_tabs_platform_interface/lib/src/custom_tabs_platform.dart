@@ -32,8 +32,8 @@ abstract class CustomTabsPlatform extends PlatformInterface {
   /// Open the specified Web URL with Custom Tabs or implementation by platform.
   Future<void> launch(
     String urlString, {
-    CustomTabsOption? customTabsOption,
-    SafariViewControllerOption? safariVCOption,
+    CustomTabsOptions? customTabsOptions,
+    SafariViewControllerOptions? safariVCOptions,
   }) {
     throw UnimplementedError('launch() has not been implemented.');
   }

@@ -12,7 +12,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// whose appearance can be customized even on iOS.
 ///
 /// When Chrome is not installed on Android device, try to start other browsers.
-/// If you want to launch a CustomTabs compatible browser on a device without Chrome, you can set its package name with `option.extraCustomTabs`.
+/// If you want to launch a Custom Tabs compatible browser on a device without Chrome, you can set its package name with `options.extraCustomTabs`.
 /// e.g. Firefox(`org.mozilla.firefox`), Microsoft Edge(`com.microsoft.emmx`).
 ///
 /// Example:
@@ -20,7 +20,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// ```dart
 /// await launch(
 ///   'https://flutter.io',
-///   customTabsOption: CustomTabsOption(
+///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     enableUrlBarHiding: true,
 ///     showPageTitle: true,
@@ -30,7 +30,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///       'com.microsoft.emmx'
 ///     ],
 ///   ),
-///   safariVCOption: SafariViewControllerOption(
+///   safariVCOptions: SafariViewControllerOptions(
 ///     preferredBarTintColor: Theme.of(context).primaryColor,
 ///     preferredControlTintColor: Colors.white,
 ///     barCollapsingEnabled: true,
@@ -40,8 +40,8 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// );
 /// ```
 Future<void> launch(String urlString,
-    {CustomTabsOption? customTabsOption,
-    SafariViewControllerOption? safariVCOption}) async {
+    {CustomTabsOptions? customTabsOptions,
+    SafariViewControllerOptions? safariVCOptions}) async {
   final url = Uri.parse(urlString.trimLeft());
   if (url.scheme != 'http' && url.scheme != 'https') {
     throw PlatformException(
@@ -52,14 +52,14 @@ Future<void> launch(String urlString,
 
   launch() => CustomTabsPlatform.instance.launch(
         url.toString(),
-        customTabsOption: customTabsOption,
-        safariVCOption: safariVCOption,
+        customTabsOptions: customTabsOptions,
+        safariVCOptions: safariVCOptions,
       );
 
   if (defaultTargetPlatform == TargetPlatform.iOS) {
     Brightness? statusBarBrightness;
-    if (safariVCOption != null) {
-      statusBarBrightness = safariVCOption.statusBarBrightness;
+    if (safariVCOptions != null) {
+      statusBarBrightness = safariVCOptions.statusBarBrightness;
     }
     _applyStatusBarBrightnessTemporally(statusBarBrightness, action: launch);
   } else {

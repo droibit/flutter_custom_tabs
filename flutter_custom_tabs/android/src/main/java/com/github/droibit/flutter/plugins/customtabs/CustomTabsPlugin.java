@@ -32,16 +32,12 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
 
 public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
-
-    private static final String KEY_OPTION = "customTabsOption";
-
+    private static final String KEY_OPTIONS = "customTabsOptions";
     private static final String KEY_URL = "url";
-
     private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
     @Nullable
     private Activity activity;
-
     @Nullable
     private MethodChannel channel;
 
@@ -101,7 +97,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
 
         final CustomTabsFactory factory = new CustomTabsFactory(activity);
         try {
-            final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTION);
+            final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTIONS);
             final CustomTabsIntent customTabsIntent = factory.createIntent(options);
             final Uri uri = Uri.parse(args.get(KEY_URL).toString());
             final CustomTabsFallback fallback = factory.createFallback(options);
