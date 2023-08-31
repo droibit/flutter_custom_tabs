@@ -27,6 +27,7 @@ class CustomTabsFactory {
     private static final String KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM = "enableDefaultShare";
     private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
     private static final String KEY_OPTIONS_ANIMATIONS = "animations";
+    private static final String KEY_CLOSE_BUTTON_POSITION = "closeButtonPosition";
     private static final String KEY_HEADERS = "headers";
     private static final String KEY_ANIMATION_START_ENTER = "startEnter";
     private static final String KEY_ANIMATION_START_EXIT = "startExit";
@@ -72,6 +73,11 @@ class CustomTabsFactory {
 
         if (options.containsKey(KEY_OPTIONS_ANIMATIONS)) {
             applyAnimations(builder, ((Map<String, String>) options.get(KEY_OPTIONS_ANIMATIONS)));
+        }
+
+        if (options.containsKey(KEY_CLOSE_BUTTON_POSITION)) {
+            final int position = (int) options.get(KEY_CLOSE_BUTTON_POSITION);
+            builder.setCloseButtonPosition(position);
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();

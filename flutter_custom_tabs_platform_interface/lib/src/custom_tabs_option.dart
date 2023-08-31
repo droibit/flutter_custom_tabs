@@ -16,6 +16,7 @@ class CustomTabsOption {
     this.enableDefaultShare,
     this.showPageTitle,
     this.enableInstantApps,
+    this.closeButtonPosition,
     this.animation,
     this.extraCustomTabs,
     this.headers,
@@ -35,6 +36,9 @@ class CustomTabsOption {
 
   /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
   final bool? enableInstantApps;
+
+  /// The position of the close button of Custom Tabs.
+  final CustomTabsCloseButtonPosition? closeButtonPosition;
 
   ///  Enter and exit animation.
   final CustomTabsAnimation? animation;
@@ -68,6 +72,9 @@ class CustomTabsOption {
     }
     if (extraCustomTabs != null) {
       dest['extraCustomTabs'] = extraCustomTabs;
+    }
+    if (closeButtonPosition != null) {
+      dest['closeButtonPosition'] = closeButtonPosition!.rawValue;
     }
     if (headers != null) {
       dest['headers'] = headers;
@@ -122,5 +129,21 @@ class CustomTabsAnimation {
       dest['endExit'] = endExit!;
     }
     return dest;
+  }
+}
+
+/// The position of the close button of Custom Tabs.
+enum CustomTabsCloseButtonPosition { start, end }
+
+extension CustomTabsCloseButtonPositionRawValue
+    on CustomTabsCloseButtonPosition {
+  @visibleForTesting
+  int get rawValue {
+    switch (this) {
+      case CustomTabsCloseButtonPosition.start:
+        return 1;
+      case CustomTabsCloseButtonPosition.end:
+        return 2;
+    }
   }
 }
