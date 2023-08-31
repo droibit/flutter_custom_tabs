@@ -17,6 +17,7 @@ void main() {
       enableDefaultShare: false,
       showPageTitle: true,
       enableInstantApps: false,
+      closeButtonPosition: CustomTabsCloseButtonPosition.end,
       animation: CustomTabsAnimation(
         startEnter: '_startEnter',
         startExit: '_startExit',
@@ -35,6 +36,7 @@ void main() {
       'enableDefaultShare': false,
       'showPageTitle': true,
       'enableInstantApps': false,
+      'closeButtonPosition': 2,
       'animations': <String, String>{
         'startEnter': '_startEnter',
         'startExit': '_startExit',
@@ -46,5 +48,10 @@ void main() {
         'com.microsoft.emmx',
       ],
     });
+  });
+
+  test('CustomTabsCloseButtonPosition.rawValue return associated value', () {
+    expect(CustomTabsCloseButtonPosition.start.rawValue, 1);
+    expect(CustomTabsCloseButtonPosition.end.rawValue, 2);
   });
 }

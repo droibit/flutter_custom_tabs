@@ -70,7 +70,8 @@ class SafariViewControllerOption {
 /// Dismiss button style on the navigation bar of SafariViewController.
 enum SafariViewControllerDismissButtonStyle { done, close, cancel }
 
-extension RawValueCompatible on SafariViewControllerDismissButtonStyle {
+extension SafariViewControllerDismissButtonStyleRawValue
+    on SafariViewControllerDismissButtonStyle {
   @visibleForTesting
   int get rawValue {
     switch (this) {
