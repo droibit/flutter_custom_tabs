@@ -73,9 +73,9 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
     public void onMethodCall(@NonNull MethodCall call, @NonNull final MethodChannel.Result result) {
         if ("launch".equals(call.method)) {
             launch(((Map<String, Object>) call.arguments), result);
-        } if ("closeAllIfPossible".equals(call.method)) {
+        } else if ("closeAllIfPossible".equals(call.method)) {
             closeAllIfPossible(result);
-        }else {
+        } else {
             result.notImplemented();
         }
     }
