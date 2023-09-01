@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Fixed a bug that handled results multiple times when opening a URL on Android.
+
 ## 1.1.0
 
 - Added a manual close feature for SFSafariViewController on iOS([#67](https://github.com/droibit/flutter_custom_tabs/pull/67)).
