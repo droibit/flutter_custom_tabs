@@ -45,6 +45,6 @@ android {
         api('androidx.browser:browser') {
             version { strictly "1.5.0" }
         }
-        api 'com.github.droibit:customtabslauncher:1.7.0'
+        api 'com.github.droibit:customtabslauncher:1.7.1'
     }
 }

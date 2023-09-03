@@ -34,12 +34,14 @@ dependencies:
 ```
 
 ### Requirements
-- Android Gradle Plugin 7.4.0 or higher.
-- 
+- Android Gradle Plugin v7.4.0 or higher.
+- Kotlin v1.7.0 or higher.
 
 ```diff
 // your-project/android/build.gradle
-buildscript {    
+buildscript {
+    ext.kotlin_version = '1.7.0' // or higher if explicitly depending on Kotlin.
+
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.0' // or higher
     }
