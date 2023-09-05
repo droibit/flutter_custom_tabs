@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 void main() => runApp(MyApp());
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
         builder: (_context) => Scaffold(
           appBar: AppBar(
             title: const Text('Flutter Custom Tabs Example'),
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
           ),
           body: Center(
             child: TextButton(

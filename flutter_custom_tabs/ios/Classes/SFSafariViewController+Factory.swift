@@ -6,6 +6,7 @@ private let keyPreferredControlTintColor = "preferredControlTintColor"
 private let keyBarCollapsingEnabled = "barCollapsingEnabled"
 private let keyEntersReaderIfAvailable = "entersReaderIfAvailable"
 private let keyDismissButtonStyle = "dismissButtonStyle"
+private let keyModalPresentationStyle = "modalPresentationStyle"
 
 extension SFSafariViewController {    
      static func make(url: URL, option: [String: Any]) -> SFSafariViewController {
@@ -34,6 +35,11 @@ extension SFSafariViewController {
          if let dismissButtonStyleRawValue = option[keyDismissButtonStyle] as? Int,
             let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: dismissButtonStyleRawValue) {
              viewController.dismissButtonStyle = dismissButtonStyle
+         }
+         
+         if let modalPresentationStyleRawValue = option[keyModalPresentationStyle] as? Int,
+            let modalPresentationStyle = UIModalPresentationStyle(rawValue: modalPresentationStyleRawValue) {
+             viewController.modalPresentationStyle = modalPresentationStyle
          }
          return viewController
      }

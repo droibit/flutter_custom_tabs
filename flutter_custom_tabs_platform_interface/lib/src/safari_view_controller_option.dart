@@ -16,6 +16,7 @@ class SafariViewControllerOption {
     this.barCollapsingEnabled,
     this.entersReaderIfAvailable,
     this.dismissButtonStyle,
+    this.modalPresentationStyle,
     this.statusBarBrightness,
   });
 
@@ -39,6 +40,9 @@ class SafariViewControllerOption {
   /// - Availability: iOS11.0+
   final SafariViewControllerDismissButtonStyle? dismissButtonStyle;
 
+  /// The presentation style for modal view controllers.
+  final ViewControllerModalPresentationStyle? modalPresentationStyle;
+
   /// A value that specifies the status bar brightness of the application after opening a link.
   final Brightness? statusBarBrightness;
 
@@ -60,6 +64,9 @@ class SafariViewControllerOption {
     if (entersReaderIfAvailable != null) {
       dest['entersReaderIfAvailable'] = entersReaderIfAvailable;
     }
+    if (modalPresentationStyle != null) {
+      dest['modalPresentationStyle'] = modalPresentationStyle!.rawValue;
+    }
     if (dismissButtonStyle != null) {
       dest['dismissButtonStyle'] = dismissButtonStyle!.rawValue;
     }
@@ -68,6 +75,11 @@ class SafariViewControllerOption {
 }
 
 /// Dismiss button style on the navigation bar of SafariViewController.
+///
+/// See also:
+///
+/// * [SFSafariViewController.DismissButtonStyle](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/dismissbuttonstyle)
+///
 enum SafariViewControllerDismissButtonStyle { done, close, cancel }
 
 extension SafariViewControllerDismissButtonStyleRawValue
@@ -81,6 +93,54 @@ extension SafariViewControllerDismissButtonStyleRawValue
         return 1;
       case SafariViewControllerDismissButtonStyle.cancel:
         return 2;
+    }
+  }
+}
+
+/// A view presentation style in which the presented view covers the screen.
+///
+/// See also:
+///
+/// * [UIModalPresentationStyle](https://developer.apple.com/documentation/uikit/uimodalpresentationstyle)
+///
+enum ViewControllerModalPresentationStyle {
+  /// The default presentation style chosen by the system.
+  /// - Availability: iOS13.0+
+  automatic,
+
+  /// A presentation style that indicates no adaptations should be made.
+  none,
+
+  /// A presentation style in which the presented view covers the screen.
+  fullScreen,
+
+  /// A presentation style that partially covers the underlying content.
+  pageSheet,
+
+  /// A presentation style that displays the content centered in the screen.
+  formSheet,
+
+  /// A view presentation style in which the presented view covers the screen.
+  overFullScreen
+}
+
+extension ViewControllerModalPresentationStyleRawValue
+    on ViewControllerModalPresentationStyle {
+  @visibleForTesting
+  int get rawValue {
+    switch (this) {
+      case ViewControllerModalPresentationStyle.automatic:
+        return -2;
+      case ViewControllerModalPresentationStyle.none:
+        return -1;
+      case ViewControllerModalPresentationStyle.fullScreen:
+        return 0;
+      case ViewControllerModalPresentationStyle.pageSheet:
+        return 1;
+      case ViewControllerModalPresentationStyle.formSheet:
+        return 2;
+      case ViewControllerModalPresentationStyle.overFullScreen:
+        return 5;
     }
   }
 }
