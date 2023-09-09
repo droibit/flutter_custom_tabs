@@ -1,17 +1,24 @@
 package com.github.droibit.flutter.plugins.customtabs;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsService;
+import androidx.core.content.ContextCompat;
 
 import com.droibit.android.customtabs.launcher.CustomTabsFallback;
 import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
 
 import java.util.Map;
+import java.util.Objects;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -19,6 +26,10 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
 
 public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
 
@@ -101,8 +112,36 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
         }
     }
 
-    @SuppressWarnings({"unchecked", "ConstantConditions"})
     private void closeAllIfPossible(@NonNull MethodChannel.Result result) {
+        final Activity activity = this.activity;
+        if (activity == null) {
+            result.success(null);
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final ActivityManager am = ContextCompat.getSystemService(activity, ActivityManager.class);
+            final ComponentName selfActivityName = new ComponentName(activity, activity.getClass());
+            //noinspection DataFlowIssue
+            for (ActivityManager.AppTask appTask : am.getAppTasks()) {
+                final ActivityManager.RecentTaskInfo taskInfo = appTask.getTaskInfo();
+                if (!Objects.equals(selfActivityName, taskInfo.baseActivity) ||
+                        taskInfo.topActivity == null) {
+                    continue;
+                }
+                final Intent serviceIntent = new Intent(ACTION_CUSTOM_TABS_CONNECTION)
+                        .setPackage(taskInfo.topActivity.getPackageName());
+                if (activity.getPackageManager().resolveService(serviceIntent, 0) != null) {
+                    try {
+                        final Intent intent = new Intent(activity, activity.getClass())
+                                .setFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
+                        activity.startActivity(intent);
+                    } catch (ActivityNotFoundException ignored) {
+                    }
+                    break;
+                }
+            }
+        }
         result.success(null);
     }
 }
