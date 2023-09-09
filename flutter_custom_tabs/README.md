@@ -1,7 +1,7 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin for launching a URL using [Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs)
+A Flutter plugin for launching a URL using [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/)
  like [url_launcher](https://pub.dev/packages/url_launcher).  
 
 The following platforms are supported:
@@ -51,8 +51,8 @@ buildscript {
 ### Usage
 Open the web URL like `url_launcher`.  
 It is also possible to customize look & feel by specifying options for each Platform.
-- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs_platform_interface/blob/develop/lib/src/custom_tabs_option.dart)
-- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs_platform_interface/blob/develop/lib/src/safari_view_controller_option.dart)
+- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs_platform_interface/lib/src/custom_tabs_option.dart)
+- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs_platform_interface/lib/src/safari_view_controller_option.dart)
 
 #### Example
 
