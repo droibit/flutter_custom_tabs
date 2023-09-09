@@ -1,3 +1,10 @@
+## 1.2.0
+- Supports presentation style customization for SFSafariViewController([#85](https://github.com/droibit/flutter_custom_tabs/pull/85)).
+- Make `closeAllIfPossible` work on Android 6.0 and above([#86](https://github.com/droibit/flutter_custom_tabs/pull/86)).
+- Update dependency CustomTabLauncher to [v1.7.1](https://github.com/droibit/CustomTabsLauncher/releases/tag/1.7.1)([#82](https://github.com/droibit/flutter_custom_tabs/pull/82)).
+- Depends on CocoaPods v1.12.1.
+- Corrects the URLs in the README.
+
 ## 1.1.1
 
 - Fixed a bug that handled results multiple times when opening a URL on Android.
