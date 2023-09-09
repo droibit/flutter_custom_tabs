@@ -17,6 +17,7 @@ void main() {
       barCollapsingEnabled: true,
       entersReaderIfAvailable: false,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      modalPresentationStyle: ViewControllerModalPresentationStyle.automatic,
     );
 
     expect(option.toMap(), <String, dynamic>{
@@ -24,7 +25,8 @@ void main() {
       'preferredControlTintColor': '#ffffffff',
       'barCollapsingEnabled': true,
       'entersReaderIfAvailable': false,
-      'dismissButtonStyle': 1
+      'dismissButtonStyle': 1,
+      'modalPresentationStyle': -2,
     });
   });
 
@@ -32,5 +34,15 @@ void main() {
     expect(SafariViewControllerDismissButtonStyle.done.rawValue, 0);
     expect(SafariViewControllerDismissButtonStyle.close.rawValue, 1);
     expect(SafariViewControllerDismissButtonStyle.cancel.rawValue, 2);
+  });
+
+  test('ViewControllerModalPresentationStyle.rawValue return associated value',
+      () {
+    expect(ViewControllerModalPresentationStyle.automatic.rawValue, -2);
+    expect(ViewControllerModalPresentationStyle.none.rawValue, -1);
+    expect(ViewControllerModalPresentationStyle.fullScreen.rawValue, 0);
+    expect(ViewControllerModalPresentationStyle.pageSheet.rawValue, 1);
+    expect(ViewControllerModalPresentationStyle.formSheet.rawValue, 2);
+    expect(ViewControllerModalPresentationStyle.overFullScreen.rawValue, 5);
   });
 }
