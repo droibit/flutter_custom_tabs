@@ -30,20 +30,20 @@ Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
 dependencies:
-  flutter_custom_tabs: ^1.1.1
+  flutter_custom_tabs: ^1.2.0
 ```
 
 ### Requirements
-- Android Gradle Plugin v7.4.0 or higher.
-- Kotlin v1.7.0 or higher.
+- Android Gradle Plugin v7.4.0 and above.
+- Kotlin v1.7.0 and above.
 
 ```diff
 // your-project/android/build.gradle
 buildscript {
-    ext.kotlin_version = '1.7.0' // or higher if explicitly depending on Kotlin.
+    ext.kotlin_version = '1.7.0' // and above if explicitly depending on Kotlin.
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0' // or higher
+        classpath 'com.android.tools.build:gradle:7.4.0' // and above.
     }
 }
 ```
