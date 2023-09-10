@@ -13,12 +13,12 @@ void main() {
   setUp(() => {CustomTabsPlatform.instance = mock});
 
   test('launch: with null option', () async {
-    final url = 'http://example.com/';
+    const url = 'http://example.com/';
     when(mock.launch(
       any,
       customTabsOption: anyNamed('customTabsOption'),
       safariVCOption: anyNamed('safariVCOption'),
-    )).thenAnswer((_) async => null);
+    )).thenAnswer((_) async {});
 
     await launch(url);
 
@@ -26,15 +26,15 @@ void main() {
   });
 
   test('launch: with empty option', () async {
-    final url = 'http://example.com/';
+    const url = 'http://example.com/';
     when(mock.launch(
       any,
       customTabsOption: anyNamed('customTabsOption'),
       safariVCOption: anyNamed('safariVCOption'),
-    )).thenAnswer((_) async => null);
+    )).thenAnswer((_) async {});
 
-    final customTabsOption = const CustomTabsOption();
-    final safariVCOption = const SafariViewControllerOption();
+    const customTabsOption = CustomTabsOption();
+    const safariVCOption = SafariViewControllerOption();
     await launch(
       url,
       customTabsOption: customTabsOption,
@@ -49,12 +49,12 @@ void main() {
   });
 
   test('launch: with empty option', () async {
-    final url = 'http://example.com/';
+    const url = 'http://example.com/';
     when(mock.launch(
       any,
       customTabsOption: anyNamed('customTabsOption'),
       safariVCOption: anyNamed('safariVCOption'),
-    )).thenAnswer((_) async => null);
+    )).thenAnswer((_) async {});
 
     const customTabsOption = CustomTabsOption(
       toolbarColor: Color(0xFFFFEBEE),
@@ -96,12 +96,12 @@ void main() {
   });
 
   test('launch: with a url containg a whitespace', () async {
-    final url = ' http://example.com/';
+    const url = ' http://example.com/';
     when(mock.launch(
       any,
       customTabsOption: anyNamed('customTabsOption'),
       safariVCOption: anyNamed('safariVCOption'),
-    )).thenAnswer((_) async => null);
+    )).thenAnswer((_) async {});
 
     await launch(url);
 
@@ -115,13 +115,13 @@ void main() {
       any,
       customTabsOption: anyNamed('customTabsOption'),
       safariVCOption: anyNamed('safariVCOption'),
-    )).thenAnswer((_) async => null);
+    )).thenAnswer((_) async {});
 
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
 
-    final url = 'http://example.com/';
+    const url = 'http://example.com/';
     final launchResult = launch(
       url,
       safariVCOption: const SafariViewControllerOption(
@@ -139,13 +139,13 @@ void main() {
       any,
       customTabsOption: anyNamed('customTabsOption'),
       safariVCOption: anyNamed('safariVCOption'),
-    )).thenAnswer((_) async => null);
+    )).thenAnswer((_) async {});
 
     final binding = TestWidgetsFlutterBinding.ensureInitialized();
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     expect(binding.renderView.automaticSystemUiAdjustment, true);
 
-    final url = 'http://example.com/';
+    const url = 'http://example.com/';
     final launchResult = launch(
       url,
       safariVCOption: const SafariViewControllerOption(
@@ -159,7 +159,7 @@ void main() {
   });
 
   test('closeAllIfPossible', () async {
-    when(mock.closeAllIfPossible()).thenAnswer((_) async => null);
+    when(mock.closeAllIfPossible()).thenAnswer((_) async {});
 
     await closeAllIfPossible();
 
