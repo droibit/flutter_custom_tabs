@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+// ignore:depend_on_referenced_packages
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,14 +20,14 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       home: Builder(
-        builder: (_context) => Scaffold(
+        builder: (context) => Scaffold(
           appBar: AppBar(
             title: const Text('Flutter Custom Tabs Example'),
           ),
           body: Center(
             child: TextButton(
-              onPressed: () => _launchURL(_context),
-              child: Text(
+              onPressed: () => _launchURL(context),
+              child: const Text(
                 'Show Flutter homepage',
                 style: TextStyle(fontSize: 17),
               ),

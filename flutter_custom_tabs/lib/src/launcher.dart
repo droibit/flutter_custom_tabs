@@ -50,7 +50,7 @@ Future<void> launch(String urlString,
     );
   }
 
-  final launch = () => CustomTabsPlatform.instance.launch(
+  launch() => CustomTabsPlatform.instance.launch(
         url.toString(),
         customTabsOption: customTabsOption,
         safariVCOption: safariVCOption,
@@ -73,7 +73,7 @@ void _applyStatusBarBrightnessTemporally(
 }) async {
   var previousAutomaticSystemUiAdjustment = true;
   final widgetsBinding = WidgetsBinding.instance;
-  if (statusBarBrightness != null && widgetsBinding != null) {
+  if (statusBarBrightness != null) {
     previousAutomaticSystemUiAdjustment =
         widgetsBinding.renderView.automaticSystemUiAdjustment;
     widgetsBinding.renderView.automaticSystemUiAdjustment = false;
@@ -86,7 +86,7 @@ void _applyStatusBarBrightnessTemporally(
 
   await action();
 
-  if (statusBarBrightness != null && widgetsBinding != null) {
+  if (statusBarBrightness != null) {
     widgetsBinding.renderView.automaticSystemUiAdjustment =
         previousAutomaticSystemUiAdjustment;
   }
