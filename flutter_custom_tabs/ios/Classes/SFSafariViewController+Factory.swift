@@ -1,5 +1,5 @@
 import SafariServices
-import UIKit
+import UIKit.UIColor
 
 private let keyPreferredBarTintColor = "preferredBarTintColor"
 private let keyPreferredControlTintColor = "preferredControlTintColor"
@@ -9,12 +9,12 @@ private let keyDismissButtonStyle = "dismissButtonStyle"
 private let keyModalPresentationStyle = "modalPresentationStyle"
 
 extension SFSafariViewController {    
-     static func make(url: URL, option: [String: Any]) -> SFSafariViewController {
+     static func make(url: URL, options: [String: Any]) -> SFSafariViewController {
          let configuration = SFSafariViewController.Configuration()
-         if let barCollapsingEnabled = option[keyBarCollapsingEnabled] as? Bool {
+         if let barCollapsingEnabled = options[keyBarCollapsingEnabled] as? Bool {
              configuration.barCollapsingEnabled = barCollapsingEnabled
          }
-         if let entersReaderIfAvailable = option[keyEntersReaderIfAvailable] as? Bool {
+         if let entersReaderIfAvailable = options[keyEntersReaderIfAvailable] as? Bool {
              configuration.entersReaderIfAvailable = entersReaderIfAvailable
          }
          
@@ -23,21 +23,21 @@ extension SFSafariViewController {
              configuration: configuration
          )
         
-         if let barTintColorHex = option[keyPreferredBarTintColor] as? String,
+         if let barTintColorHex = options[keyPreferredBarTintColor] as? String,
             let barTintColor = UIColor(hex: barTintColorHex) {
              viewController.preferredBarTintColor = barTintColor
          }
-         if let controlTintColorHex = option[keyPreferredControlTintColor] as? String,
+         if let controlTintColorHex = options[keyPreferredControlTintColor] as? String,
             let controlTintColor = UIColor(hex: controlTintColorHex) {
              viewController.preferredControlTintColor = controlTintColor
          }
         
-         if let dismissButtonStyleRawValue = option[keyDismissButtonStyle] as? Int,
+         if let dismissButtonStyleRawValue = options[keyDismissButtonStyle] as? Int,
             let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: dismissButtonStyleRawValue) {
              viewController.dismissButtonStyle = dismissButtonStyle
          }
          
-         if let modalPresentationStyleRawValue = option[keyModalPresentationStyle] as? Int,
+         if let modalPresentationStyleRawValue = options[keyModalPresentationStyle] as? Int,
             let modalPresentationStyle = UIModalPresentationStyle(rawValue: modalPresentationStyleRawValue) {
              viewController.modalPresentationStyle = modalPresentationStyle
          }

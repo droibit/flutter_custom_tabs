@@ -1,16 +1,16 @@
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
-/// Option class for customizing appearance of Safari View Controller.
-/// **This option applies only on iOS platform.**
+/// Options class for customizing appearance of Safari View Controller.
+/// **This options applied only on iOS platform.**
 ///
 /// See also:
 ///
 /// * [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
 ///
 @immutable
-class SafariViewControllerOption {
-  const SafariViewControllerOption({
+class SafariViewControllerOptions {
+  const SafariViewControllerOptions({
     this.preferredBarTintColor,
     this.preferredControlTintColor,
     this.barCollapsingEnabled,

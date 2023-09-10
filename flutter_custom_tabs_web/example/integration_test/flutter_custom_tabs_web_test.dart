@@ -34,10 +34,9 @@ void main() {
     final url = 'https://example.com';
     await plugin.launch(
       url,
-      customTabsOption: const CustomTabsOption(),
-      safariVCOption: const SafariViewControllerOption(),
+      customTabsOptions: const CustomTabsOptions(),
+      safariVCOptions: const SafariViewControllerOptions(),
     );
-
     verify(mock.launch(url));
   });
 }

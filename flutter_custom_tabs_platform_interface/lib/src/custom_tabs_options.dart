@@ -1,16 +1,16 @@
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 
-/// Option class for customizing appearance of Custom Tabs.
-/// **This option applies only on Android platform.**
+/// Options class for customizing appearance of Custom Tabs.
+/// **This options applied only on Android platform.**
 ///
 /// See also:
 ///
 /// * [CustomTabsIntent.Builder](https://developer.android.com/reference/android/support/customtabs/CustomTabsIntent.Builder.html)
 ///
 @immutable
-class CustomTabsOption {
-  const CustomTabsOption({
+class CustomTabsOptions {
+  const CustomTabsOptions({
     this.toolbarColor,
     this.enableUrlBarHiding,
     this.enableDefaultShare,

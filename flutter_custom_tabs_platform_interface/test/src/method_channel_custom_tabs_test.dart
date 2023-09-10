@@ -27,8 +27,8 @@ void main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
-          'customTabsOption': const <String, dynamic>{},
-          'safariVCOption': const <String, dynamic>{}
+          'customTabsOptions': const <String, dynamic>{},
+          'safariVCOptions': const <String, dynamic>{}
         }),
       ],
     );
@@ -37,10 +37,10 @@ void main() {
   test('launch invoke method "launch" with option', () async {
     await customTabs.launch(
       'http://example.com/',
-      customTabsOption: const CustomTabsOption(
+      customTabsOptions: const CustomTabsOptions(
         enableUrlBarHiding: true,
       ),
-      safariVCOption: const SafariViewControllerOption(
+      safariVCOptions: const SafariViewControllerOptions(
         barCollapsingEnabled: false,
       ),
     );
@@ -49,10 +49,10 @@ void main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
-          'customTabsOption': const <String, dynamic>{
+          'customTabsOptions': const <String, dynamic>{
             'enableUrlBarHiding': true,
           },
-          'safariVCOption': const <String, dynamic>{
+          'safariVCOptions': const <String, dynamic>{
             'barCollapsingEnabled': false
           }
         }),

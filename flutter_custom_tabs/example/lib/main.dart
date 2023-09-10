@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
     try {
       await launch(
         'https://flutter.dev',
-        customTabsOption: CustomTabsOption(
+        customTabsOptions: CustomTabsOptions(
           toolbarColor: theme.primaryColor,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             'com.microsoft.emmx',
           ],
         ),
-        safariVCOption: SafariViewControllerOption(
+        safariVCOptions: SafariViewControllerOptions(
           preferredBarTintColor: theme.primaryColor,
           preferredControlTintColor: Colors.white,
           barCollapsingEnabled: true,

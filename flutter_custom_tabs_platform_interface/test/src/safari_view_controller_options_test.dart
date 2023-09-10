@@ -6,12 +6,12 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('toMap() with empty option', () {
-    const option = SafariViewControllerOption();
-    expect(option.toMap(), <String, dynamic>{});
+    const options = SafariViewControllerOptions();
+    expect(options.toMap(), <String, dynamic>{});
   });
 
   test('toMap() with full option', () {
-    const option = SafariViewControllerOption(
+    const options = SafariViewControllerOptions(
       preferredBarTintColor: Color(0xFFFFEBEE),
       preferredControlTintColor: Color(0xFFFFFFFF),
       barCollapsingEnabled: true,
@@ -20,7 +20,7 @@ void main() {
       modalPresentationStyle: ViewControllerModalPresentationStyle.automatic,
     );
 
-    expect(option.toMap(), <String, dynamic>{
+    expect(options.toMap(), <String, dynamic>{
       'preferredBarTintColor': '#ffffebee',
       'preferredControlTintColor': '#ffffffff',
       'barCollapsingEnabled': true,

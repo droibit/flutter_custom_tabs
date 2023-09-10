@@ -17,8 +17,8 @@ class CustomTabsPlugin extends CustomTabsPlatform {
   @override
   Future<void> launch(
     String urlString, {
-    CustomTabsOption? customTabsOption,
-    SafariViewControllerOption? safariVCOption,
+    CustomTabsOptions? customTabsOptions,
+    SafariViewControllerOptions? safariVCOptions,
   }) {
     final plugin = UrlLauncherPlatform.instance as UrlLauncherPlugin;
     return plugin.launch(urlString).then((_) => null);
