@@ -1,3 +1,7 @@
+## 1.3.0
+- Supports sheet mode style customization for Android Custom Tabs ([#91](https://github.com/droibit/flutter_custom_tabs/pull/91)).
+- Supports share state mode for Android Custom Tabs ([#91](https://github.com/droibit/flutter_custom_tabs/pull/91)).
+
 ## 1.2.0
 - Supports presentation style customization for SFSafariViewController([#85](https://github.com/droibit/flutter_custom_tabs/pull/85)).
 - Make `closeAllIfPossible` work on Android 6.0 and above([#86](https://github.com/droibit/flutter_custom_tabs/pull/86)).
