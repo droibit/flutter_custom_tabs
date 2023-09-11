@@ -20,6 +20,10 @@ class CustomTabsOption {
     this.animation,
     this.extraCustomTabs,
     this.headers,
+    this.shareState,
+    this.initialHeightPx,
+    this.heightResizeBehaviour,
+    this.toolbarCornerRadiusDp
   });
 
   /// Custom tab toolbar color.
@@ -48,6 +52,29 @@ class CustomTabsOption {
 
   /// Request Headers
   final Map<String, String>? headers;
+
+  /// Define share state for the custom tabs browser.
+  /// **This applies only on Android platform.**
+  ///
+  /// See also:
+  ///
+  /// * https://developer.android.com/reference/androidx/browser/customtabs/CustomTabsIntent.Builder#setShareState(int)
+  ///
+  final CustomTabsShareState? shareState;
+
+  /// Extra that, if set, makes the Custom Tab Activity's height to be x pixels, the Custom Tab
+  /// will behave as a bottom sheet. x will be clamped between 50% and 100% of screen height.
+  /// Bottom sheet does not take effect in landscape mode or in multi-window mode.
+  final int? initialHeightPx;
+
+  /// Extra that, if set in combination with [initialHeightPx],
+  /// defines the height resize behavior of the Custom Tab Activity when
+  /// it behaves as a bottom sheet. Default is [ActivityHeightResizeBehaviour.defaultBehaviour].
+  final ActivityHeightResizeBehaviour? heightResizeBehaviour;
+
+  /// Extra that sets the toolbar's top corner radii in dp. This will only have
+  /// effect if the custom tab is behaving as a bottom sheet. Currently, this is capped at 16dp.
+  final int? toolbarCornerRadiusDp;
 
   @internal
   Map<String, dynamic> toMap() {
@@ -79,6 +106,20 @@ class CustomTabsOption {
     if (headers != null) {
       dest['headers'] = headers;
     }
+    if (shareState != null) {
+      dest['shareState'] = shareState!.index;
+    }
+    if (initialHeightPx != null) {
+      dest['initialHeightPx'] = initialHeightPx;
+    }
+    final behaviour = heightResizeBehaviour?.index ??
+        ActivityHeightResizeBehaviour.defaultBehaviour.index;
+    dest['heightResizeBehaviour'] = behaviour;
+
+    if (toolbarCornerRadiusDp != null) {
+      dest['toolbarCornerRadiusDp'] = toolbarCornerRadiusDp;
+    }
+
     return dest;
   }
 }
@@ -146,4 +187,18 @@ extension CustomTabsCloseButtonPositionRawValue
         return 2;
     }
   }
+}
+
+/// Define share state for the custom tabs browser.
+enum CustomTabsShareState {
+  defaultState,
+  on,
+  off,
+}
+
+/// Define activity resize behaviour when set along with [initialHeightPx]
+enum ActivityHeightResizeBehaviour {
+  defaultBehaviour,
+  adjustable,
+  fixed,
 }

@@ -10,6 +10,7 @@ import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsSession;
 
 import com.droibit.android.customtabs.launcher.CustomTabsFallback;
 import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
@@ -34,6 +35,10 @@ class CustomTabsFactory {
     private static final String KEY_ANIMATION_END_ENTER = "endEnter";
     private static final String KEY_ANIMATION_END_EXIT = "endExit";
     private static final String KEY_EXTRA_CUSTOM_TABS = "extraCustomTabs";
+    private static final String KEY_SHARE_STATE = "shareState";
+    private static final String KEY_INITIAL_HEIGHT_PX = "initialHeightPx";
+    private static final String KEY_HEIGHT_RESIZE_BEHAVIOUR = "heightResizeBehaviour";
+    private static final String KEY_TOOLBAR_CORNER_RADIUS_DP = "toolbarCornerRadiusDp";
 
     // Note: The full resource qualifier is "package:type/entry".
     // https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String, java.lang.String, java.lang.String)
@@ -46,8 +51,8 @@ class CustomTabsFactory {
     }
 
     @NonNull
-    CustomTabsIntent createIntent(@NonNull Map<String, Object> options) {
-        final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+    CustomTabsIntent createIntent(@NonNull Map<String, Object> options, CustomTabsSession session) {
+        final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(session);
         if (options.containsKey(KEY_OPTIONS_TOOLBAR_COLOR)) {
             final String colorString = (String) options.get(KEY_OPTIONS_TOOLBAR_COLOR);
             builder.setToolbarColor(Color.parseColor(colorString));
@@ -78,6 +83,22 @@ class CustomTabsFactory {
         if (options.containsKey(KEY_CLOSE_BUTTON_POSITION)) {
             final int position = (int) options.get(KEY_CLOSE_BUTTON_POSITION);
             builder.setCloseButtonPosition(position);
+        }
+
+        if (options.containsKey(KEY_SHARE_STATE)) {
+            final int state = (int) options.get(KEY_SHARE_STATE);
+            builder.setShareState(state);
+        }
+
+        if (options.containsKey(KEY_INITIAL_HEIGHT_PX)) {
+            final int height = (int) options.get(KEY_INITIAL_HEIGHT_PX);
+            final int behaviour = (int) options.get(KEY_HEIGHT_RESIZE_BEHAVIOUR);
+            builder.setInitialActivityHeightPx(height, behaviour);
+        }
+
+        if (options.containsKey(KEY_TOOLBAR_CORNER_RADIUS_DP)) {
+            final int radius = (int) options.get(KEY_TOOLBAR_CORNER_RADIUS_DP);
+            builder.setToolbarCornerRadiusDp(radius);
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();

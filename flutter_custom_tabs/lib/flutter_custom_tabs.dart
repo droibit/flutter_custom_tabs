@@ -1,9 +1,12 @@
 export 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart'
     show
-        CustomTabsOption,
+        ActivityHeightResizeBehaviour,
+        CustomTabsAnimation,
         CustomTabsCloseButtonPosition,
-        SafariViewControllerOption,
+        CustomTabsOption,
+        CustomTabsShareState,
         SafariViewControllerDismissButtonStyle,
+        SafariViewControllerOption,
         ViewControllerModalPresentationStyle;
 
 export 'src/custom_tabs_option.dart';

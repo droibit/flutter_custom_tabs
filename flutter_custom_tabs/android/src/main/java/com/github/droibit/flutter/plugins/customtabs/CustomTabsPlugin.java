@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsService;
 import androidx.core.content.ContextCompat;
+import androidx.browser.customtabs.CustomTabsSession;
 
 import com.droibit.android.customtabs.launcher.CustomTabsFallback;
 import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
@@ -39,6 +40,8 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
 
     private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
+    private CustomTabActivityHelper mCustomTabActivityHelper;
+
     @Nullable
     private Activity activity;
 
@@ -49,6 +52,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding binding) {
         channel = new MethodChannel(binding.getBinaryMessenger(), "plugins.flutter.droibit.github.io/custom_tabs");
         channel.setMethodCallHandler(this);
+        mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
 
     @Override
@@ -62,6 +66,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        mCustomTabActivityHelper.bindCustomTabsService(activity);
     }
 
     @Override
@@ -76,6 +81,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
 
     @Override
     public void onDetachedFromActivity() {
+        mCustomTabActivityHelper.unbindCustomTabsService(activity);
         activity = null;
     }
 
@@ -102,7 +108,8 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
         final CustomTabsFactory factory = new CustomTabsFactory(activity);
         try {
             final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTION);
-            final CustomTabsIntent customTabsIntent = factory.createIntent(options);
+            final CustomTabsSession session = mCustomTabActivityHelper.getSession();
+            final CustomTabsIntent customTabsIntent = factory.createIntent(options, session);
             final Uri uri = Uri.parse(args.get(KEY_URL).toString());
             final CustomTabsFallback fallback = factory.createFallback(options);
             CustomTabsLauncher.launch(activity, customTabsIntent, uri, fallback);
