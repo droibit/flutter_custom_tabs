@@ -31,7 +31,7 @@ void main() {
       webOnlyWindowName: anyNamed('webOnlyWindowName'),
     )).thenAnswer((_) async => true);
 
-    final url = 'https://example.com';
+    const url = 'https://example.com';
     await plugin.launch(
       url,
       customTabsOptions: const CustomTabsOptions(),

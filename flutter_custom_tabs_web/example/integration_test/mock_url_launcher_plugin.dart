@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:mockito/mockito.dart';
@@ -28,7 +29,7 @@ class MockUrlLauncherPlugin extends Mock
     bool? universalLinksOnly = false,
     Map<String, String>? headers = const <String, String>{},
     String? webOnlyWindowName,
-  }) {
+  }) async {
     return super.noSuchMethod(
       Invocation.method(#launch, [
         url
