@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    # Ignore generated files
+    - '**/*.g.dart'
+    - '**/*.mocks.dart' # Mockito @GenerateMocks
+
+linter:
+  rules:
+    depend_on_referenced_packages: false
+    avoid_web_libraries_in_flutter: false
