@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
           toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
+          shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
           showPageTitle: true,
           animation: CustomTabsAnimation.slideIn(),

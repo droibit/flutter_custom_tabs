@@ -14,7 +14,7 @@ void main() {
     const options = CustomTabsOptions(
       toolbarColor: Color(0xFFFFEBEE),
       urlBarHidingEnabled: true,
-      enableDefaultShare: false,
+      shareState: CustomTabsShareState.off,
       showPageTitle: true,
       enableInstantApps: false,
       closeButtonPosition: CustomTabsCloseButtonPosition.end,
@@ -33,7 +33,7 @@ void main() {
     expect(options.toMap(), <String, dynamic>{
       'toolbarColor': '#ffffebee',
       'urlBarHidingEnabled': true,
-      'enableDefaultShare': false,
+      'shareState': 2,
       'showPageTitle': true,
       'enableInstantApps': false,
       'closeButtonPosition': 2,

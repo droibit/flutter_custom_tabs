@@ -13,7 +13,7 @@ class CustomTabsOptions {
   const CustomTabsOptions({
     this.toolbarColor,
     this.urlBarHidingEnabled,
-    this.enableDefaultShare,
+    this.shareState,
     this.showPageTitle,
     this.enableInstantApps,
     this.closeButtonPosition,
@@ -29,7 +29,7 @@ class CustomTabsOptions {
   final bool? urlBarHidingEnabled;
 
   /// If enabled, default sharing menu is added.
-  final bool? enableDefaultShare;
+  final CustomTabsShareState? shareState;
 
   /// Show web page title in tool bar.
   final bool? showPageTitle;
@@ -58,8 +58,8 @@ class CustomTabsOptions {
     if (urlBarHidingEnabled != null) {
       dest['urlBarHidingEnabled'] = urlBarHidingEnabled;
     }
-    if (enableDefaultShare != null) {
-      dest['enableDefaultShare'] = enableDefaultShare;
+    if (shareState != null) {
+      dest['shareState'] = shareState!.rawValue;
     }
     if (showPageTitle != null) {
       dest['showPageTitle'] = showPageTitle;
@@ -133,13 +133,31 @@ class CustomTabsAnimation {
   }
 }
 
-/// The position of the close button of Custom Tabs.
+/// The position of the close button on the custom tab.
 enum CustomTabsCloseButtonPosition {
   start(1),
   end(2);
 
   @internal
   const CustomTabsCloseButtonPosition(this.rawValue);
+
+  @internal
+  final int rawValue;
+}
+
+/// The share state that should be applied to the custom tab.
+enum CustomTabsShareState {
+  /// Applies the default share settings depending on the browser.
+  browserDefault(0),
+
+  /// Explicitly does not show a share option in the tab.
+  on(1),
+
+  /// Shows a share option in the tab.
+  off(2);
+
+  @internal
+  const CustomTabsShareState(this.rawValue);
 
   @internal
   final int rawValue;
