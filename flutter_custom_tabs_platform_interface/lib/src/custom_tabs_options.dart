@@ -12,7 +12,7 @@ import 'package:meta/meta.dart';
 class CustomTabsOptions {
   const CustomTabsOptions({
     this.toolbarColor,
-    this.enableUrlBarHiding,
+    this.urlBarHidingEnabled,
     this.enableDefaultShare,
     this.showPageTitle,
     this.enableInstantApps,
@@ -26,7 +26,7 @@ class CustomTabsOptions {
   final Color? toolbarColor;
 
   /// If enabled, hides the toolbar when the user scrolls down the page.
-  final bool? enableUrlBarHiding;
+  final bool? urlBarHidingEnabled;
 
   /// If enabled, default sharing menu is added.
   final bool? enableDefaultShare;
@@ -55,8 +55,8 @@ class CustomTabsOptions {
     if (toolbarColor != null) {
       dest['toolbarColor'] = '#${toolbarColor!.value.toRadixString(16)}';
     }
-    if (enableUrlBarHiding != null) {
-      dest['enableUrlBarHiding'] = enableUrlBarHiding;
+    if (urlBarHidingEnabled != null) {
+      dest['urlBarHidingEnabled'] = urlBarHidingEnabled;
     }
     if (enableDefaultShare != null) {
       dest['enableDefaultShare'] = enableDefaultShare;

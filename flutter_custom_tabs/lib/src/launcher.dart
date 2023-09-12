@@ -22,7 +22,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   'https://flutter.io',
 ///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
-///     enableUrlBarHiding: true,
+///     urlBarHidingEnabled: true,
 ///     showPageTitle: true,
 ///     animation: CustomTabsAnimation.slideIn(),
 ///     extraCustomTabs: <String>[

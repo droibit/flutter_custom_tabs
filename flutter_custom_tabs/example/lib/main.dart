@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         customTabsOptions: CustomTabsOptions(
           toolbarColor: theme.primaryColor,
           enableDefaultShare: true,
-          enableUrlBarHiding: true,
+          urlBarHidingEnabled: true,
           showPageTitle: true,
           animation: CustomTabsSystemAnimation.slideIn(),
           extraCustomTabs: const <String>[

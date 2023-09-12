@@ -1,5 +1,6 @@
 package com.github.droibit.flutter.plugins.customtabs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +23,7 @@ import java.util.regex.Pattern;
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class CustomTabsFactory {
     private static final String KEY_OPTIONS_TOOLBAR_COLOR = "toolbarColor";
-    private static final String KEY_OPTIONS_ENABLE_URL_BAR_HIDING = "enableUrlBarHiding";
+    private static final String KEY_OPTIONS_URL_BAR_HIDING_ENABLED = "urlBarHidingEnabled";
     private static final String KEY_OPTIONS_SHOW_PAGE_TITLE = "showPageTitle";
     private static final String KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM = "enableDefaultShare";
     private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
@@ -53,9 +54,8 @@ class CustomTabsFactory {
             builder.setToolbarColor(Color.parseColor(colorString));
         }
 
-        if (options.containsKey(KEY_OPTIONS_ENABLE_URL_BAR_HIDING) &&
-                ((Boolean) options.get(KEY_OPTIONS_ENABLE_URL_BAR_HIDING))) {
-            builder.enableUrlBarHiding();
+        if (options.containsKey(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)) {
+            builder.setUrlBarHidingEnabled(((Boolean) options.get(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)));
         }
 
         if (options.containsKey(KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM) &&
@@ -100,26 +100,27 @@ class CustomTabsFactory {
                                  @NonNull Map<String, String> animations) {
         final int startEnterAnimationId =
                 animations.containsKey(KEY_ANIMATION_START_ENTER) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_START_ENTER)) : -1;
+                        animations.get(KEY_ANIMATION_START_ENTER)) : 0;
         final int startExitAnimationId =
                 animations.containsKey(KEY_ANIMATION_START_EXIT) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_START_EXIT)) : -1;
+                        animations.get(KEY_ANIMATION_START_EXIT)) : 0;
         final int endEnterAnimationId =
                 animations.containsKey(KEY_ANIMATION_END_ENTER) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_END_ENTER)) : -1;
+                        animations.get(KEY_ANIMATION_END_ENTER)) : 0;
         final int endExitAnimationId =
                 animations.containsKey(KEY_ANIMATION_END_EXIT) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_END_EXIT)) : -1;
+                        animations.get(KEY_ANIMATION_END_EXIT)) : 0;
 
-        if (startEnterAnimationId != -1 && startExitAnimationId != -1) {
+        if (startEnterAnimationId != 0 && startExitAnimationId != 0) {
             builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId);
         }
 
-        if (endEnterAnimationId != -1 && endExitAnimationId != -1) {
+        if (endEnterAnimationId != 0 && endExitAnimationId != 0) {
             builder.setExitAnimations(context, endEnterAnimationId, endExitAnimationId);
         }
     }
 
+    @SuppressLint("DiscouragedApi")
     @AnimRes
     private int resolveAnimationIdentifierIfNeeded(@NonNull String identifier) {
         if (animationIdentifierPattern.matcher(identifier).find()) {

@@ -38,7 +38,7 @@ void main() {
     await customTabs.launch(
       'http://example.com/',
       customTabsOptions: const CustomTabsOptions(
-        enableUrlBarHiding: true,
+        urlBarHidingEnabled: true,
       ),
       safariVCOptions: const SafariViewControllerOptions(
         barCollapsingEnabled: false,
@@ -50,7 +50,7 @@ void main() {
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
           'customTabsOptions': const <String, dynamic>{
-            'enableUrlBarHiding': true,
+            'urlBarHidingEnabled': true,
           },
           'safariVCOptions': const <String, dynamic>{
             'barCollapsingEnabled': false
