@@ -2,6 +2,7 @@ export 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
     show
         CustomTabsOptions,
         CustomTabsCloseButtonPosition,
+        CustomTabsShareState,
         SafariViewControllerDismissButtonStyle,
         SafariViewControllerOptions,
         ViewControllerModalPresentationStyle;

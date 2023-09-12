@@ -25,7 +25,7 @@ class CustomTabsFactory {
     private static final String KEY_OPTIONS_TOOLBAR_COLOR = "toolbarColor";
     private static final String KEY_OPTIONS_URL_BAR_HIDING_ENABLED = "urlBarHidingEnabled";
     private static final String KEY_OPTIONS_SHOW_PAGE_TITLE = "showPageTitle";
-    private static final String KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM = "enableDefaultShare";
+    private static final String KEY_OPTIONS_SHARE_STATE = "shareState";
     private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
     private static final String KEY_OPTIONS_ANIMATIONS = "animations";
     private static final String KEY_CLOSE_BUTTON_POSITION = "closeButtonPosition";
@@ -58,9 +58,9 @@ class CustomTabsFactory {
             builder.setUrlBarHidingEnabled(((Boolean) options.get(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)));
         }
 
-        if (options.containsKey(KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM) &&
-                ((Boolean) options.get(KEY_OPTIONS_DEFAULT_SHARE_MENU_ITEM))) {
-            builder.addDefaultShareMenuItem();
+        if (options.containsKey(KEY_OPTIONS_SHARE_STATE)) {
+             final int shareState = ((int) options.get(KEY_OPTIONS_SHARE_STATE));
+             builder.setShareState(shareState);
         }
 
         if (options.containsKey(KEY_OPTIONS_SHOW_PAGE_TITLE)) {

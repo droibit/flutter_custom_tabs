@@ -59,7 +59,7 @@ void main() {
     const customTabsOptions = CustomTabsOptions(
       toolbarColor: Color(0xFFFFEBEE),
       urlBarHidingEnabled: true,
-      enableDefaultShare: false,
+      shareState: CustomTabsShareState.off,
       showPageTitle: true,
       enableInstantApps: false,
       animation: CustomTabsAnimation(
