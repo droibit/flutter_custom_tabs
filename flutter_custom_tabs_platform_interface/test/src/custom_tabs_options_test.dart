@@ -13,7 +13,7 @@ void main() {
   test('toMap() with full option', () {
     const options = CustomTabsOptions(
       toolbarColor: Color(0xFFFFEBEE),
-      enableUrlBarHiding: true,
+      urlBarHidingEnabled: true,
       enableDefaultShare: false,
       showPageTitle: true,
       enableInstantApps: false,
@@ -32,7 +32,7 @@ void main() {
 
     expect(options.toMap(), <String, dynamic>{
       'toolbarColor': '#ffffebee',
-      'enableUrlBarHiding': true,
+      'urlBarHidingEnabled': true,
       'enableDefaultShare': false,
       'showPageTitle': true,
       'enableInstantApps': false,

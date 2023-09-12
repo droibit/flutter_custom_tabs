@@ -58,7 +58,7 @@ void main() {
 
     const customTabsOptions = CustomTabsOptions(
       toolbarColor: Color(0xFFFFEBEE),
-      enableUrlBarHiding: true,
+      urlBarHidingEnabled: true,
       enableDefaultShare: false,
       showPageTitle: true,
       enableInstantApps: false,
