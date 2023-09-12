@@ -118,6 +118,7 @@ class CustomTabsAnimation {
   /// Exit animation for the custom tab.
   final String? endExit;
 
+  @internal
   Map<String, String> toMap() {
     final dest = <String, String>{};
     if (startEnter != null && startExit != null) {
@@ -133,17 +134,13 @@ class CustomTabsAnimation {
 }
 
 /// The position of the close button of Custom Tabs.
-enum CustomTabsCloseButtonPosition { start, end }
+enum CustomTabsCloseButtonPosition {
+  start(1),
+  end(2);
 
-extension CustomTabsCloseButtonPositionRawValue
-    on CustomTabsCloseButtonPosition {
-  @visibleForTesting
-  int get rawValue {
-    switch (this) {
-      case CustomTabsCloseButtonPosition.start:
-        return 1;
-      case CustomTabsCloseButtonPosition.end:
-        return 2;
-    }
-  }
+  @internal
+  const CustomTabsCloseButtonPosition(this.rawValue);
+
+  @internal
+  final int rawValue;
 }
