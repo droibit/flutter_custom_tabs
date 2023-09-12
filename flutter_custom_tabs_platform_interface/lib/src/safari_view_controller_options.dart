@@ -80,21 +80,16 @@ class SafariViewControllerOptions {
 ///
 /// * [SFSafariViewController.DismissButtonStyle](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/dismissbuttonstyle)
 ///
-enum SafariViewControllerDismissButtonStyle { done, close, cancel }
+enum SafariViewControllerDismissButtonStyle {
+  done(0),
+  close(1),
+  cancel(2);
 
-extension SafariViewControllerDismissButtonStyleRawValue
-    on SafariViewControllerDismissButtonStyle {
-  @visibleForTesting
-  int get rawValue {
-    switch (this) {
-      case SafariViewControllerDismissButtonStyle.done:
-        return 0;
-      case SafariViewControllerDismissButtonStyle.close:
-        return 1;
-      case SafariViewControllerDismissButtonStyle.cancel:
-        return 2;
-    }
-  }
+  @internal
+  const SafariViewControllerDismissButtonStyle(this.rawValue);
+
+  @internal
+  final int rawValue;
 }
 
 /// A view presentation style in which the presented view covers the screen.
@@ -106,41 +101,26 @@ extension SafariViewControllerDismissButtonStyleRawValue
 enum ViewControllerModalPresentationStyle {
   /// The default presentation style chosen by the system.
   /// - Availability: iOS13.0+
-  automatic,
+  automatic(-2),
 
   /// A presentation style that indicates no adaptations should be made.
-  none,
+  none(-1),
 
   /// A presentation style in which the presented view covers the screen.
-  fullScreen,
+  fullScreen(0),
 
   /// A presentation style that partially covers the underlying content.
-  pageSheet,
+  pageSheet(1),
 
   /// A presentation style that displays the content centered in the screen.
-  formSheet,
+  formSheet(2),
 
   /// A view presentation style in which the presented view covers the screen.
-  overFullScreen
-}
+  overFullScreen(5);
 
-extension ViewControllerModalPresentationStyleRawValue
-    on ViewControllerModalPresentationStyle {
-  @visibleForTesting
-  int get rawValue {
-    switch (this) {
-      case ViewControllerModalPresentationStyle.automatic:
-        return -2;
-      case ViewControllerModalPresentationStyle.none:
-        return -1;
-      case ViewControllerModalPresentationStyle.fullScreen:
-        return 0;
-      case ViewControllerModalPresentationStyle.pageSheet:
-        return 1;
-      case ViewControllerModalPresentationStyle.formSheet:
-        return 2;
-      case ViewControllerModalPresentationStyle.overFullScreen:
-        return 5;
-    }
-  }
+  @internal
+  const ViewControllerModalPresentationStyle(this.rawValue);
+
+  @internal
+  final int rawValue;
 }
