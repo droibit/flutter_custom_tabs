@@ -11,11 +11,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.browser.customtabs.CustomTabsService;
 import androidx.core.content.ContextCompat;
-
-import com.droibit.android.customtabs.launcher.CustomTabsFallback;
-import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
 
 import java.util.Map;
 import java.util.Objects;
@@ -29,12 +25,14 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+import static androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX;
 import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
 
 public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
     private static final String KEY_OPTIONS = "customTabsOptions";
     private static final String KEY_URL = "url";
     private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
+    private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
     @Nullable
     private Activity activity;
@@ -100,8 +98,12 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
             final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTIONS);
             final CustomTabsIntent customTabsIntent = factory.createIntent(options);
             final Uri uri = Uri.parse(args.get(KEY_URL).toString());
-            final CustomTabsFallback fallback = factory.createFallback(options);
-            CustomTabsLauncher.launch(activity, customTabsIntent, uri, fallback);
+            if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
+                customTabsIntent.intent.setData(uri);
+                activity.startActivityForResult(customTabsIntent.intent, REQUEST_CODE_CUSTOM_TABS);
+            } else {
+                customTabsIntent.launchUrl(activity, uri);
+            }
             result.success(null);
         } catch (ActivityNotFoundException e) {
             result.error(CODE_LAUNCH_ERROR, e.getMessage(), null);

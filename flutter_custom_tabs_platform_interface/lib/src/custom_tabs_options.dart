@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 
@@ -20,7 +22,26 @@ class CustomTabsOptions {
     this.animation,
     this.extraCustomTabs,
     this.headers,
+    this.bottomSheetConfiguration,
   });
+
+  const CustomTabsOptions.bottomSheet({
+    required CustomTabsBottomSheetConfiguration configuration,
+    Color? toolbarColor,
+    CustomTabsShareState? shareState,
+    bool? showPageTitle,
+    CustomTabsCloseButtonPosition? closeButtonPosition,
+    List<String>? extraCustomTabs,
+    Map<String, String>? headers,
+  }) : this(
+          toolbarColor: toolbarColor,
+          shareState: shareState,
+          showPageTitle: showPageTitle,
+          closeButtonPosition: closeButtonPosition,
+          extraCustomTabs: extraCustomTabs,
+          headers: headers,
+          bottomSheetConfiguration: configuration,
+        );
 
   /// Custom tab toolbar color.
   final Color? toolbarColor;
@@ -46,8 +67,11 @@ class CustomTabsOptions {
   ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
   final List<String>? extraCustomTabs;
 
-  /// Request Headers
+  /// Request Headers.
   final Map<String, String>? headers;
+
+  /// The bottom sheet configuration.
+  final CustomTabsBottomSheetConfiguration? bottomSheetConfiguration;
 
   @internal
   Map<String, dynamic> toMap() {
@@ -78,6 +102,9 @@ class CustomTabsOptions {
     }
     if (headers != null) {
       dest['headers'] = headers;
+    }
+    if (bottomSheetConfiguration != null) {
+      dest['bottomSheet'] = bottomSheetConfiguration!.toMap();
     }
     return dest;
   }
@@ -158,6 +185,59 @@ enum CustomTabsShareState {
 
   @internal
   const CustomTabsShareState(this.rawValue);
+
+  @internal
+  final int rawValue;
+}
+
+/// The configuration to show custom tab as a bottom sheet.
+@immutable
+class CustomTabsBottomSheetConfiguration {
+  const CustomTabsBottomSheetConfiguration({
+    required this.initialHeight,
+    this.activityHeightResizeBehavior =
+        CustomTabsActivityHeightResizeBehavior.defaultBehavior,
+    this.cornerRadius,
+  });
+
+  /// The Custom Tab Activity's initial height.
+  ///
+  /// *The minimum partial custom tab height is 50% of the screen height.
+  final double initialHeight;
+
+  /// The Custom Tab Activity's desired resize behavior.
+  final CustomTabsActivityHeightResizeBehavior activityHeightResizeBehavior;
+
+  /// The toolbar's top corner radius.
+  ///
+  /// *The maximum corner radius is 16dp(lp).
+  final int? cornerRadius;
+
+  @internal
+  Map<String, dynamic> toMap() {
+    final dest = <String, dynamic>{
+      'initialHeightDp': initialHeight,
+      'activityHeightResizeBehavior': activityHeightResizeBehavior.rawValue,
+    };
+    if (cornerRadius != null) {
+      dest['cornerRadiusDp'] = min(cornerRadius!, 16);
+    }
+    return dest;
+  }
+}
+
+/// Desired height behavior for the custom tab.
+enum CustomTabsActivityHeightResizeBehavior {
+  /// Applies the default height resize behavior for the Custom Tab Activity when it behaves as a bottom sheet.
+  defaultBehavior(0),
+
+  /// The Custom Tab Activity, when it behaves as a bottom sheet, can have its height manually resized by the user.
+  adjustable(1),
+
+  /// The Custom Tab Activity, when it behaves as a bottom sheet, cannot have its height manually resized by the user.
+  fixed(2);
+
+  const CustomTabsActivityHeightResizeBehavior(this.rawValue);
 
   @internal
   final int rawValue;
