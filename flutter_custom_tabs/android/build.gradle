@@ -40,11 +40,16 @@ android {
         buildConfig false
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     dependencies {
         // TODO: Delete Flutter's default compiles sdk version when it reaches 34.
         api('androidx.browser:browser') {
             version { strictly "1.5.0" }
         }
-        api 'com.github.droibit:customtabslauncher:1.7.1'
+        api 'com.github.droibit:customtabslauncher:2.0.0-beta01'
     }
 }
