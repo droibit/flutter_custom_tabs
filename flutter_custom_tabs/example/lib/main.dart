@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 // ignore:depend_on_referenced_packages
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
@@ -25,12 +26,25 @@ class MyApp extends StatelessWidget {
             title: const Text('Flutter Custom Tabs Example'),
           ),
           body: Center(
-            child: TextButton(
-              onPressed: () => _launchURL(context),
-              child: const Text(
-                'Show Flutter homepage',
-                style: TextStyle(fontSize: 17),
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FilledButton(
+                  onPressed: () => _launchURL(context),
+                  child: const Text(
+                    'Show Flutter homepage',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextButton(
+                  onPressed: () => _launchURLInBottomSheet(context),
+                  child: const Text(
+                    'Show Flutter homepage(bottom Sheet)',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -55,6 +69,33 @@ class MyApp extends StatelessWidget {
             // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
             'com.microsoft.emmx',
           ],
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.primaryColor,
+          preferredControlTintColor: Colors.white,
+          barCollapsingEnabled: true,
+          entersReaderIfAvailable: false,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
+      // An exception is thrown if browser app is not installed on Android device.
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> _launchURLInBottomSheet(BuildContext context) async {
+    final theme = Theme.of(context);
+    final mediaQuery = MediaQuery.of(context);
+    try {
+      await launch(
+        'https://flutter.dev',
+        customTabsOptions: CustomTabsOptions.bottomSheet(
+          configuration: CustomTabsBottomSheetConfiguration(
+            initialHeight: mediaQuery.size.height * 0.7,
+          ),
+          toolbarColor: theme.primaryColor,
+          showPageTitle: true,
         ),
         safariVCOptions: SafariViewControllerOptions(
           preferredBarTintColor: theme.primaryColor,

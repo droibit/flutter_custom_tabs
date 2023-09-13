@@ -1,5 +1,7 @@
 export 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart'
     show
+        CustomTabsActivityHeightResizeBehavior,
+        CustomTabsBottomSheetConfiguration,
         CustomTabsOptions,
         CustomTabsCloseButtonPosition,
         CustomTabsShareState,

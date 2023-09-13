@@ -2,7 +2,6 @@ package com.github.droibit.flutter.plugins.customtabs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Browser;
@@ -14,10 +13,14 @@ import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.droibit.android.customtabs.launcher.CustomTabsFallback;
 import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
+import com.droibit.android.customtabs.launcher.CustomTabsPackageFallback;
+import com.droibit.android.customtabs.launcher.NonChromeCustomTabs;
 
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureCustomTabsPackage;
 
 @SuppressWarnings({"ConstantConditions", "unchecked"})
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -34,7 +37,11 @@ class CustomTabsFactory {
     private static final String KEY_ANIMATION_START_EXIT = "startExit";
     private static final String KEY_ANIMATION_END_ENTER = "endEnter";
     private static final String KEY_ANIMATION_END_EXIT = "endExit";
-    private static final String KEY_EXTRA_CUSTOM_TABS = "extraCustomTabs";
+    private static final String KEY_OPTIONS_EXTRA_CUSTOM_TABS = "extraCustomTabs";
+    private static final String KEY_OPTIONS_BOTTOM_SHEET = "bottomSheet";
+    private static final String KEY_BOTTOM_SHEET_INITIAL_HEIGHT_DP = "initialHeightDp";
+    private static final String KEY_BOTTOM_SHEET_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR = "activityHeightResizeBehavior";
+    private static final String KEY_BOTTOM_SHEET_CORNER_RADIUS_DP = "cornerRadiusDp";
 
     // Note: The full resource qualifier is "package:type/entry".
     // https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String, java.lang.String, java.lang.String)
@@ -59,8 +66,8 @@ class CustomTabsFactory {
         }
 
         if (options.containsKey(KEY_OPTIONS_SHARE_STATE)) {
-             final int shareState = ((int) options.get(KEY_OPTIONS_SHARE_STATE));
-             builder.setShareState(shareState);
+            final int shareState = ((int) options.get(KEY_OPTIONS_SHARE_STATE));
+            builder.setShareState(shareState);
         }
 
         if (options.containsKey(KEY_OPTIONS_SHOW_PAGE_TITLE)) {
@@ -80,24 +87,50 @@ class CustomTabsFactory {
             builder.setCloseButtonPosition(position);
         }
 
+        if (options.containsKey(KEY_OPTIONS_BOTTOM_SHEET)) {
+            final Map<String, Object> bottomSheetConfig =
+                    ((Map<String, Object>) options.get(KEY_OPTIONS_BOTTOM_SHEET));
+            applyBottomSheetConfiguration(builder, bottomSheetConfig);
+        }
+
         final CustomTabsIntent customTabsIntent = builder.build();
-        onPostBuild(customTabsIntent.intent, options);
+        onPostBuild(customTabsIntent, options);
         return customTabsIntent;
     }
 
-    private void onPostBuild(@NonNull Intent intent, @NonNull Map<String, Object> options) {
+    private void onPostBuild(
+            @NonNull CustomTabsIntent customTabsIntent,
+            @NonNull Map<String, Object> options
+    ) {
         if (options.containsKey(KEY_HEADERS)) {
-            Map<String, String> headers = (Map<String, String>) options.get(KEY_HEADERS);
-            Bundle bundleHeaders = new Bundle();
+            final Map<String, String> headers = (Map<String, String>) options.get(KEY_HEADERS);
+            final Bundle bundleHeaders = new Bundle();
             for (Map.Entry<String, String> header : headers.entrySet()) {
                 bundleHeaders.putString(header.getKey(), header.getValue());
             }
-            intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
+            customTabsIntent.intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
         }
+
+        final List<String> extraCustomTabs;
+        if (options.containsKey(KEY_OPTIONS_EXTRA_CUSTOM_TABS)) {
+            extraCustomTabs = ((List<String>) options.get(KEY_OPTIONS_EXTRA_CUSTOM_TABS));
+        } else {
+            extraCustomTabs = null;
+        }
+
+        final CustomTabsPackageFallback fallback;
+        if (extraCustomTabs != null && !extraCustomTabs.isEmpty()) {
+            fallback = new NonChromeCustomTabs(extraCustomTabs);
+        } else {
+            fallback = new NonChromeCustomTabs(context);
+        }
+        ensureCustomTabsPackage(customTabsIntent, context, fallback);
     }
 
-    private void applyAnimations(@NonNull CustomTabsIntent.Builder builder,
-                                 @NonNull Map<String, String> animations) {
+    private void applyAnimations(
+            @NonNull CustomTabsIntent.Builder builder,
+            @NonNull Map<String, String> animations
+    ) {
         final int startEnterAnimationId =
                 animations.containsKey(KEY_ANIMATION_START_ENTER) ? resolveAnimationIdentifierIfNeeded(
                         animations.get(KEY_ANIMATION_START_ENTER)) : 0;
@@ -130,11 +163,28 @@ class CustomTabsFactory {
         }
     }
 
+    private void applyBottomSheetConfiguration(
+            @NonNull CustomTabsIntent.Builder builder,
+            @NonNull Map<String, Object> configuration
+    ) {
+        final double initialHeightDp = (double) configuration.get(KEY_BOTTOM_SHEET_INITIAL_HEIGHT_DP);
+        final float scale = context.getResources().getDisplayMetrics().density;
+        final int resizeBehavior = (int) configuration.get(KEY_BOTTOM_SHEET_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR);
+        builder.setInitialActivityHeightPx(
+                (int) (initialHeightDp * scale + 0.5),
+                resizeBehavior
+        );
+        if (configuration.containsKey(KEY_BOTTOM_SHEET_CORNER_RADIUS_DP)) {
+            final int cornerRadius = ((int) configuration.get(KEY_BOTTOM_SHEET_CORNER_RADIUS_DP));
+            builder.setToolbarCornerRadiusDp(cornerRadius);
+        }
+    }
+
     @NonNull
     CustomTabsFallback createFallback(@NonNull Map<String, Object> options) {
         final List<String> extraCustomTabs;
-        if (options.containsKey(KEY_EXTRA_CUSTOM_TABS)) {
-            extraCustomTabs = ((List<String>) options.get(KEY_EXTRA_CUSTOM_TABS));
+        if (options.containsKey(KEY_OPTIONS_EXTRA_CUSTOM_TABS)) {
+            extraCustomTabs = ((List<String>) options.get(KEY_OPTIONS_EXTRA_CUSTOM_TABS));
         } else {
             extraCustomTabs = null;
         }
