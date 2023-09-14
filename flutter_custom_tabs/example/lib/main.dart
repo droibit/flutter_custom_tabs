@@ -97,11 +97,22 @@ class MyApp extends StatelessWidget {
           toolbarColor: theme.primaryColor,
           showPageTitle: true,
         ),
-        safariVCOptions: SafariViewControllerOptions(
+        safariVCOptions: SafariViewControllerOptions.pageSheet(
+          configuration: const SheetPresentationControllerConfiguration(
+            detents: {
+              SheetPresentationControllerDetent.large,
+              SheetPresentationControllerDetent.medium,
+            },
+            largestUndimmedDetentIdentifier:
+                SheetPresentationControllerDetent.medium,
+            prefersScrollingExpandsWhenScrolledToEdge: false,
+            prefersGrabberVisible: true,
+            prefersEdgeAttachedInCompactHeight: true,
+            preferredCornerRadius: 16.0,
+          ),
           preferredBarTintColor: theme.primaryColor,
           preferredControlTintColor: Colors.white,
-          barCollapsingEnabled: true,
-          entersReaderIfAvailable: false,
+          entersReaderIfAvailable: true,
           dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
         ),
       );
