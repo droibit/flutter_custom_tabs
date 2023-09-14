@@ -103,7 +103,8 @@ class MyApp extends StatelessWidget {
               SheetPresentationControllerDetent.large,
               SheetPresentationControllerDetent.medium,
             },
-            largestUndimmedDetentIdentifier: SheetPresentationControllerDetent.medium,
+            largestUndimmedDetentIdentifier:
+                SheetPresentationControllerDetent.medium,
             prefersScrollingExpandsWhenScrolledToEdge: false,
             prefersGrabberVisible: true,
             prefersEdgeAttachedInCompactHeight: true,
