@@ -17,8 +17,26 @@ class SafariViewControllerOptions {
     this.entersReaderIfAvailable,
     this.dismissButtonStyle,
     this.modalPresentationStyle,
+    this.pageSheetConfiguration,
     this.statusBarBrightness,
   });
+
+  /// Availability: iOS15.0+
+  const SafariViewControllerOptions.pageSheet({
+    required SheetPresentationControllerConfiguration? configuration,
+    Color? preferredBarTintColor,
+    Color? preferredControlTintColor,
+    bool? entersReaderIfAvailable,
+    SafariViewControllerDismissButtonStyle? dismissButtonStyle,
+  }) : this(
+          preferredBarTintColor: preferredBarTintColor,
+          preferredControlTintColor: preferredControlTintColor,
+          entersReaderIfAvailable: entersReaderIfAvailable,
+          dismissButtonStyle: dismissButtonStyle,
+          modalPresentationStyle:
+              ViewControllerModalPresentationStyle.pageSheet,
+          pageSheetConfiguration: configuration,
+        );
 
   /// The color to tint the background of the navigation bar and the toolbar.
   /// - Availability: iOS10.0+
@@ -42,6 +60,9 @@ class SafariViewControllerOptions {
 
   /// The presentation style for modal view controllers.
   final ViewControllerModalPresentationStyle? modalPresentationStyle;
+
+  /// The bottom sheet configuration.
+  final SheetPresentationControllerConfiguration? pageSheetConfiguration;
 
   /// A value that specifies the status bar brightness of the application after opening a link.
   final Brightness? statusBarBrightness;
@@ -69,6 +90,9 @@ class SafariViewControllerOptions {
     }
     if (dismissButtonStyle != null) {
       dest['dismissButtonStyle'] = dismissButtonStyle!.rawValue;
+    }
+    if (pageSheetConfiguration != null) {
+      dest['pageSheet'] = pageSheetConfiguration!.toMap();
     }
     return dest;
   }
@@ -123,4 +147,81 @@ enum ViewControllerModalPresentationStyle {
 
   @internal
   final int rawValue;
+}
+
+/// The configuration to show SFSafariViewController as a bottom sheet.
+///
+/// - Availability: iOS15.0+
+///
+/// See also:
+/// - [UISheetPresentationController](https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller)
+@immutable
+class SheetPresentationControllerConfiguration {
+  const SheetPresentationControllerConfiguration({
+    required this.detents,
+    this.largestUndimmedDetentIdentifier,
+    this.prefersScrollingExpandsWhenScrolledToEdge,
+    this.prefersGrabberVisible,
+    this.prefersEdgeAttachedInCompactHeight,
+    this.preferredCornerRadius,
+  });
+
+  /// The set of heights where a sheet can rest.
+  final Set<SheetPresentationControllerDetent> detents;
+
+  /// The largest detent that doesn’t dim the view underneath the sheet.
+  final SheetPresentationControllerDetent? largestUndimmedDetentIdentifier;
+
+  /// A Boolean value that determines whether scrolling expands the sheet to a larger detent.
+  final bool? prefersScrollingExpandsWhenScrolledToEdge;
+
+  /// A Boolean value that determines whether the sheet shows a grabber at the top.
+  final bool? prefersGrabberVisible;
+
+  /// A Boolean value that determines whether the sheet attaches to the bottom edge of the screen in a compact-height size class.
+  final bool? prefersEdgeAttachedInCompactHeight;
+
+  /// The corner radius that the sheet attempts to present with.
+  final double? preferredCornerRadius;
+
+  @internal
+  Map<String, dynamic> toMap() {
+    final dest = <String, dynamic>{
+      'pageSheetDetents': detents.map((e) => e.rawValue).toList(),
+    };
+    if (largestUndimmedDetentIdentifier != null) {
+      dest['pageSheetLargestUndimmedDetentIdentifier'] =
+          largestUndimmedDetentIdentifier!.rawValue;
+    }
+    if (prefersScrollingExpandsWhenScrolledToEdge != null) {
+      dest['pageSheetPrefersScrollingExpandsWhenScrolledToEdge'] =
+          prefersScrollingExpandsWhenScrolledToEdge;
+    }
+    if (prefersGrabberVisible != null) {
+      dest['pageSheetPrefersGrabberVisible'] = prefersGrabberVisible;
+    }
+    if (prefersEdgeAttachedInCompactHeight != null) {
+      dest['pageSheetPrefersEdgeAttachedInCompactHeight'] =
+          prefersEdgeAttachedInCompactHeight;
+    }
+    if (preferredCornerRadius != null) {
+      dest['pageSheetPreferredCornerRadius'] = preferredCornerRadius;
+    }
+    return dest;
+  }
+}
+
+/// An object that represents a height where a sheet naturally rests.
+enum SheetPresentationControllerDetent {
+  /// A system detent for a sheet at full height.
+  large("large"),
+
+  /// A system detent for a sheet that’s approximately half the height of the screen, and is inactive in compact height.
+  medium("medium");
+
+  @internal
+  const SheetPresentationControllerDetent(this.rawValue);
+
+  @internal
+  final String rawValue;
 }

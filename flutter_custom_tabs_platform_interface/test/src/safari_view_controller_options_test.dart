@@ -5,19 +5,31 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('toMap() with empty option', () {
+  test('toMap() with empty options', () {
     const options = SafariViewControllerOptions();
     expect(options.toMap(), <String, dynamic>{});
   });
 
-  test('toMap() with full option', () {
+  test('toMap() with full options', () {
     const options = SafariViewControllerOptions(
       preferredBarTintColor: Color(0xFFFFEBEE),
       preferredControlTintColor: Color(0xFFFFFFFF),
       barCollapsingEnabled: true,
       entersReaderIfAvailable: false,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-      modalPresentationStyle: ViewControllerModalPresentationStyle.automatic,
+      modalPresentationStyle: ViewControllerModalPresentationStyle.pageSheet,
+      pageSheetConfiguration: SheetPresentationControllerConfiguration(
+        detents: {
+          SheetPresentationControllerDetent.large,
+          SheetPresentationControllerDetent.medium,
+        },
+        largestUndimmedDetentIdentifier:
+            SheetPresentationControllerDetent.medium,
+        prefersScrollingExpandsWhenScrolledToEdge: true,
+        prefersGrabberVisible: false,
+        prefersEdgeAttachedInCompactHeight: true,
+        preferredCornerRadius: 16,
+      ),
     );
 
     expect(options.toMap(), <String, dynamic>{
@@ -26,7 +38,15 @@ void main() {
       'barCollapsingEnabled': true,
       'entersReaderIfAvailable': false,
       'dismissButtonStyle': 1,
-      'modalPresentationStyle': -2,
+      'modalPresentationStyle': 1,
+      'pageSheet': <String, dynamic>{
+        'pageSheetDetents': ['large', 'medium'],
+        'pageSheetLargestUndimmedDetentIdentifier': 'medium',
+        'pageSheetPrefersScrollingExpandsWhenScrolledToEdge': true,
+        'pageSheetPrefersGrabberVisible': false,
+        'pageSheetPrefersEdgeAttachedInCompactHeight': true,
+        'pageSheetPreferredCornerRadius': 16,
+      },
     });
   });
 
@@ -44,5 +64,11 @@ void main() {
     expect(ViewControllerModalPresentationStyle.pageSheet.rawValue, 1);
     expect(ViewControllerModalPresentationStyle.formSheet.rawValue, 2);
     expect(ViewControllerModalPresentationStyle.overFullScreen.rawValue, 5);
+  });
+
+  test('SheetPresentationControllerDetent.rawValue return associated value',
+      () {
+    expect(SheetPresentationControllerDetent.large.rawValue, 'large');
+    expect(SheetPresentationControllerDetent.medium.rawValue, 'medium');
   });
 }
