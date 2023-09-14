@@ -71,19 +71,25 @@ extension SFSafariViewController {
 private extension UISheetPresentationController {
     func configure(with configuration: [String: Any]) {
         if let rawDetents = configuration[keyPageSheetDetents] as? [String], !rawDetents.isEmpty {
-            detents = rawDetents.compactMap {
+            self.detents = rawDetents.compactMap {
                 switch $0 {
-                case pageSheetDetentMedium: .medium()
-                case pageSheetDetentLarge: .large()
-                default: nil
+                case pageSheetDetentMedium:
+                    return .medium()
+                case pageSheetDetentLarge:
+                    return .large()
+                default:
+                    return nil
                 }
             }
         }
         if let largestUndimmedDetentIdentifier = configuration[keyPageSheetLargestUndimmedDetentIdentifier] as? String {
-            self.largestUndimmedDetentIdentifier = switch largestUndimmedDetentIdentifier {
-            case pageSheetDetentMedium: .medium
-            case pageSheetDetentLarge: .large
-            default: nil
+            switch largestUndimmedDetentIdentifier {
+            case pageSheetDetentMedium:
+                self.largestUndimmedDetentIdentifier = .medium
+            case pageSheetDetentLarge:
+                self.largestUndimmedDetentIdentifier = .large
+            default:
+                break
             }
         }
         if let prefersScrollingExpandsWhenScrolledToEdge = configuration[keyPageSheetPrefersScrollingExpandsWhenScrolledToEdge] as? Bool {
