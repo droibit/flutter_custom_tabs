@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureCustomTabsPackage;
+import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
+import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveAnimationIdentifier;
+import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveDrawableIdentifier;
 
 @SuppressWarnings({"ConstantConditions", "unchecked"})
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -30,6 +33,7 @@ class CustomTabsFactory {
     private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
     private static final String KEY_OPTIONS_ANIMATIONS = "animations";
     private static final String KEY_CLOSE_BUTTON_POSITION = "closeButtonPosition";
+    private static final String KEY_CLOSE_BUTTON_ICON = "closeButtonIcon";
     private static final String KEY_HEADERS = "headers";
     private static final String KEY_ANIMATION_START_ENTER = "startEnter";
     private static final String KEY_ANIMATION_START_EXIT = "startExit";
@@ -54,7 +58,18 @@ class CustomTabsFactory {
             final String colorString = (String) options.get(KEY_OPTIONS_TOOLBAR_COLOR);
             builder.setToolbarColor(Color.parseColor(colorString));
         }
-        
+
+        if (options.containsKey(KEY_CLOSE_BUTTON_ICON)) {
+            final int closeButtonIconId =
+                    resolveDrawableIdentifier(context, ((String) options.get(KEY_CLOSE_BUTTON_ICON)));
+            if (closeButtonIconId != INVALID_RESOURCE_ID) {
+                final Bitmap closeButtonIcon = ResourceFactory.getBitmap(context, closeButtonIconId);
+                if (closeButtonIcon != null) {
+                    builder.setCloseButtonIcon(closeButtonIcon);
+                }
+            }
+        }
+
         if (options.containsKey(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)) {
             builder.setUrlBarHidingEnabled(((Boolean) options.get(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)));
         }
