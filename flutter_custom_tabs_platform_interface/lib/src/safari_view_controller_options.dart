@@ -18,7 +18,6 @@ class SafariViewControllerOptions {
     this.dismissButtonStyle,
     this.modalPresentationStyle,
     this.pageSheetConfiguration,
-    this.statusBarBrightness,
   });
 
   /// Availability: iOS15.0+
@@ -63,9 +62,6 @@ class SafariViewControllerOptions {
 
   /// The bottom sheet configuration.
   final SheetPresentationControllerConfiguration? pageSheetConfiguration;
-
-  /// A value that specifies the status bar brightness of the application after opening a link.
-  final Brightness? statusBarBrightness;
 
   @internal
   Map<String, dynamic> toMap() {

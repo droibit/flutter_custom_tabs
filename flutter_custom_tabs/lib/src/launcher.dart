@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
 /// Open the specified Web URL with Custom Tabs.
@@ -39,9 +37,11 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   ),
 /// );
 /// ```
-Future<void> launch(String urlString,
-    {CustomTabsOptions? customTabsOptions,
-    SafariViewControllerOptions? safariVCOptions}) async {
+Future<void> launch(
+  String urlString, {
+  CustomTabsOptions? customTabsOptions,
+  SafariViewControllerOptions? safariVCOptions,
+}) async {
   final url = Uri.parse(urlString.trimLeft());
   if (url.scheme != 'http' && url.scheme != 'https') {
     throw PlatformException(
@@ -50,46 +50,11 @@ Future<void> launch(String urlString,
     );
   }
 
-  launch() => CustomTabsPlatform.instance.launch(
-        url.toString(),
-        customTabsOptions: customTabsOptions,
-        safariVCOptions: safariVCOptions,
-      );
-
-  if (defaultTargetPlatform == TargetPlatform.iOS) {
-    Brightness? statusBarBrightness;
-    if (safariVCOptions != null) {
-      statusBarBrightness = safariVCOptions.statusBarBrightness;
-    }
-    _applyStatusBarBrightnessTemporally(statusBarBrightness, action: launch);
-  } else {
-    await launch();
-  }
-}
-
-void _applyStatusBarBrightnessTemporally(
-  Brightness? statusBarBrightness, {
-  required Future<void> Function() action,
-}) async {
-  var previousAutomaticSystemUiAdjustment = true;
-  final widgetsBinding = WidgetsBinding.instance;
-  if (statusBarBrightness != null) {
-    previousAutomaticSystemUiAdjustment =
-        widgetsBinding.renderView.automaticSystemUiAdjustment;
-    widgetsBinding.renderView.automaticSystemUiAdjustment = false;
-    SystemChrome.setSystemUIOverlayStyle(
-      statusBarBrightness == Brightness.light
-          ? SystemUiOverlayStyle.dark
-          : SystemUiOverlayStyle.light,
-    );
-  }
-
-  await action();
-
-  if (statusBarBrightness != null) {
-    widgetsBinding.renderView.automaticSystemUiAdjustment =
-        previousAutomaticSystemUiAdjustment;
-  }
+  await CustomTabsPlatform.instance.launch(
+    url.toString(),
+    customTabsOptions: customTabsOptions,
+    safariVCOptions: safariVCOptions,
+  );
 }
 
 Future<void> closeAllIfPossible() async {

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
@@ -79,7 +78,6 @@ void main() {
       barCollapsingEnabled: true,
       entersReaderIfAvailable: false,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-      statusBarBrightness: Brightness.dark,
     );
 
     await launch(
@@ -108,54 +106,6 @@ void main() {
     verify(mock.launch(
       url.trimLeft(),
     ));
-  });
-
-  test('statusBarBrightness: run on iOS', () async {
-    when(mock.launch(
-      any,
-      customTabsOptions: anyNamed('customTabsOptions'),
-      safariVCOptions: anyNamed('safariVCOptions'),
-    )).thenAnswer((_) async {});
-
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
-
-    const url = 'http://example.com/';
-    final launchResult = launch(
-      url,
-      safariVCOptions: const SafariViewControllerOptions(
-        statusBarBrightness: Brightness.dark,
-      ),
-    );
-
-    expect(binding.renderView.automaticSystemUiAdjustment, isFalse);
-    await launchResult;
-    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
-  });
-
-  test('statusBarBrightness: run on non-iOS', () async {
-    when(mock.launch(
-      any,
-      customTabsOptions: anyNamed('customTabsOptions'),
-      safariVCOptions: anyNamed('safariVCOptions'),
-    )).thenAnswer((_) async {});
-
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    debugDefaultTargetPlatformOverride = TargetPlatform.android;
-    expect(binding.renderView.automaticSystemUiAdjustment, true);
-
-    const url = 'http://example.com/';
-    final launchResult = launch(
-      url,
-      safariVCOptions: const SafariViewControllerOptions(
-        statusBarBrightness: Brightness.dark,
-      ),
-    );
-
-    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
-    await launchResult;
-    expect(binding.renderView.automaticSystemUiAdjustment, isTrue);
   });
 
   test('closeAllIfPossible', () async {
