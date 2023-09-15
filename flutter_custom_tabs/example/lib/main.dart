@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Custom Tabs Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
       ),
       darkTheme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.dark,
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
       ),
       home: Builder(
         builder: (context) => Scaffold(
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       await launch(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
-          toolbarColor: theme.primaryColor,
+          toolbarColor: theme.colorScheme.surface,
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
           showPageTitle: true,
@@ -71,8 +71,8 @@ class MyApp extends StatelessWidget {
           ],
         ),
         safariVCOptions: SafariViewControllerOptions(
-          preferredBarTintColor: theme.primaryColor,
-          preferredControlTintColor: Colors.white,
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
           barCollapsingEnabled: true,
           entersReaderIfAvailable: false,
           dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
