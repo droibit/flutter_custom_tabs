@@ -18,7 +18,7 @@ class CustomTabsOptions {
     this.shareState,
     this.showPageTitle,
     this.enableInstantApps,
-    this.closeButtonPosition,
+    this.closeButton,
     this.animation,
     this.extraCustomTabs,
     this.headers,
@@ -30,14 +30,14 @@ class CustomTabsOptions {
     Color? toolbarColor,
     CustomTabsShareState? shareState,
     bool? showPageTitle,
-    CustomTabsCloseButtonPosition? closeButtonPosition,
+    CustomTabsCloseButton? closeButton,
     List<String>? extraCustomTabs,
     Map<String, String>? headers,
   }) : this(
           toolbarColor: toolbarColor,
           shareState: shareState,
           showPageTitle: showPageTitle,
-          closeButtonPosition: closeButtonPosition,
+          closeButton: closeButton,
           extraCustomTabs: extraCustomTabs,
           headers: headers,
           bottomSheetConfiguration: configuration,
@@ -58,8 +58,8 @@ class CustomTabsOptions {
   /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
   final bool? enableInstantApps;
 
-  /// The position of the close button of Custom Tabs.
-  final CustomTabsCloseButtonPosition? closeButtonPosition;
+  /// The close button configuration.
+  final CustomTabsCloseButton? closeButton;
 
   ///  Enter and exit animation.
   final CustomTabsAnimation? animation;
@@ -94,11 +94,16 @@ class CustomTabsOptions {
     if (animation != null) {
       dest['animations'] = animation!.toMap();
     }
+    if (closeButton != null) {
+      if (closeButton!.icon != null) {
+        dest['closeButtonIcon'] = closeButton!.icon;
+      }
+      if (closeButton!.position != null) {
+        dest['closeButtonPosition'] = closeButton!.position!.rawValue;
+      }
+    }
     if (extraCustomTabs != null) {
       dest['extraCustomTabs'] = extraCustomTabs;
-    }
-    if (closeButtonPosition != null) {
-      dest['closeButtonPosition'] = closeButtonPosition!.rawValue;
     }
     if (headers != null) {
       dest['headers'] = headers;
@@ -160,9 +165,27 @@ class CustomTabsAnimation {
   }
 }
 
+/// The configuration for close button on the custom tab.
+@immutable
+class CustomTabsCloseButton {
+  const CustomTabsCloseButton({
+    this.icon,
+    this.position,
+  });
+
+  /// Resource identifier of the close button icon for the custom tab.
+  final String? icon;
+
+  /// The position of the close button on the custom tab.
+  final CustomTabsCloseButtonPosition? position;
+}
+
 /// The position of the close button on the custom tab.
 enum CustomTabsCloseButtonPosition {
+  /// Positions the close button at the start of the toolbar.
   start(1),
+
+  /// Positions the close button at the end of the toolbar.
   end(2);
 
   @internal

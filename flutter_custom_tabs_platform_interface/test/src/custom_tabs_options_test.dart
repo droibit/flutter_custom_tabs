@@ -17,7 +17,10 @@ void main() {
       shareState: CustomTabsShareState.off,
       showPageTitle: true,
       enableInstantApps: false,
-      closeButtonPosition: CustomTabsCloseButtonPosition.end,
+      closeButton: CustomTabsCloseButton(
+        icon: "icon",
+        position: CustomTabsCloseButtonPosition.end,
+      ),
       animation: CustomTabsAnimation(
         startEnter: '_startEnter',
         startExit: '_startExit',
@@ -43,6 +46,7 @@ void main() {
       'shareState': 2,
       'showPageTitle': true,
       'enableInstantApps': false,
+      'closeButtonIcon': "icon",
       'closeButtonPosition': 2,
       'animations': <String, String>{
         'startEnter': '_startEnter',

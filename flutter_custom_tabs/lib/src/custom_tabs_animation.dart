@@ -1,6 +1,6 @@
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-/// Build in enter and exit animations for Custom Tabs.
+/// Build-in enter and exit animations for Custom Tabs.
 class CustomTabsSystemAnimation {
   /// Create a built-in slide in animation.
   static CustomTabsAnimation slideIn() {
