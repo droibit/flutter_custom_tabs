@@ -1,12 +1,11 @@
 package com.github.droibit.flutter.plugins.customtabs;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Browser;
 
-import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -18,7 +17,6 @@ import com.droibit.android.customtabs.launcher.NonChromeCustomTabs;
 
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureCustomTabsPackage;
 
@@ -43,10 +41,6 @@ class CustomTabsFactory {
     private static final String KEY_BOTTOM_SHEET_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR = "activityHeightResizeBehavior";
     private static final String KEY_BOTTOM_SHEET_CORNER_RADIUS_DP = "cornerRadiusDp";
 
-    // Note: The full resource qualifier is "package:type/entry".
-    // https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String, java.lang.String, java.lang.String)
-    private static final Pattern animationIdentifierPattern = Pattern.compile("^.+:.+/");
-
     private final Context context;
 
     CustomTabsFactory(@NonNull Context context) {
@@ -60,7 +54,7 @@ class CustomTabsFactory {
             final String colorString = (String) options.get(KEY_OPTIONS_TOOLBAR_COLOR);
             builder.setToolbarColor(Color.parseColor(colorString));
         }
-
+        
         if (options.containsKey(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)) {
             builder.setUrlBarHidingEnabled(((Boolean) options.get(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)));
         }
@@ -132,34 +126,22 @@ class CustomTabsFactory {
             @NonNull Map<String, String> animations
     ) {
         final int startEnterAnimationId =
-                animations.containsKey(KEY_ANIMATION_START_ENTER) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_START_ENTER)) : 0;
+                resolveAnimationIdentifier(context, animations.get(KEY_ANIMATION_START_ENTER));
         final int startExitAnimationId =
-                animations.containsKey(KEY_ANIMATION_START_EXIT) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_START_EXIT)) : 0;
+                resolveAnimationIdentifier(context, animations.get(KEY_ANIMATION_START_EXIT));
         final int endEnterAnimationId =
-                animations.containsKey(KEY_ANIMATION_END_ENTER) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_END_ENTER)) : 0;
+                resolveAnimationIdentifier(context, animations.get(KEY_ANIMATION_END_ENTER));
         final int endExitAnimationId =
-                animations.containsKey(KEY_ANIMATION_END_EXIT) ? resolveAnimationIdentifierIfNeeded(
-                        animations.get(KEY_ANIMATION_END_EXIT)) : 0;
+                resolveAnimationIdentifier(context, animations.get(KEY_ANIMATION_END_EXIT));
 
-        if (startEnterAnimationId != 0 && startExitAnimationId != 0) {
+        if (startEnterAnimationId != INVALID_RESOURCE_ID
+                && startExitAnimationId != INVALID_RESOURCE_ID) {
             builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId);
         }
 
-        if (endEnterAnimationId != 0 && endExitAnimationId != 0) {
+        if (endEnterAnimationId != INVALID_RESOURCE_ID
+                && endExitAnimationId != INVALID_RESOURCE_ID) {
             builder.setExitAnimations(context, endEnterAnimationId, endExitAnimationId);
-        }
-    }
-
-    @SuppressLint("DiscouragedApi")
-    @AnimRes
-    private int resolveAnimationIdentifierIfNeeded(@NonNull String identifier) {
-        if (animationIdentifierPattern.matcher(identifier).find()) {
-            return context.getResources().getIdentifier(identifier, null, null);
-        } else {
-            return context.getResources().getIdentifier(identifier, "anim", context.getPackageName());
         }
     }
 
