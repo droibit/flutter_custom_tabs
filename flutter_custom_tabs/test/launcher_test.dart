@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
@@ -79,7 +78,6 @@ void main() {
       barCollapsingEnabled: true,
       entersReaderIfAvailable: false,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-      statusBarBrightness: Brightness.dark,
     );
 
     await launch(
