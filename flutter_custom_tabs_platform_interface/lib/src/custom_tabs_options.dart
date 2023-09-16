@@ -13,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CustomTabsOptions {
   const CustomTabsOptions({
-    this.toolbarColor,
+    this.colorSchemes,
     this.urlBarHidingEnabled,
     this.shareState,
     this.showPageTitle,
@@ -27,14 +27,14 @@ class CustomTabsOptions {
 
   const CustomTabsOptions.bottomSheet({
     required CustomTabsBottomSheetConfiguration configuration,
-    Color? toolbarColor,
+    CustomTabsColorSchemes? colorSchemes,
     CustomTabsShareState? shareState,
     bool? showPageTitle,
     CustomTabsCloseButton? closeButton,
     List<String>? extraCustomTabs,
     Map<String, String>? headers,
   }) : this(
-          toolbarColor: toolbarColor,
+          colorSchemes: colorSchemes,
           shareState: shareState,
           showPageTitle: showPageTitle,
           closeButton: closeButton,
@@ -43,8 +43,8 @@ class CustomTabsOptions {
           bottomSheetConfiguration: configuration,
         );
 
-  /// Custom tab toolbar color.
-  final Color? toolbarColor;
+  /// The visualization configuration.
+  final CustomTabsColorSchemes? colorSchemes;
 
   /// If enabled, hides the toolbar when the user scrolls down the page.
   final bool? urlBarHidingEnabled;
@@ -76,8 +76,8 @@ class CustomTabsOptions {
   @internal
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
-    if (toolbarColor != null) {
-      dest['toolbarColor'] = '#${toolbarColor!.value.toRadixString(16)}';
+    if (colorSchemes != null) {
+      dest['colorSchemes'] = colorSchemes!.toMap();
     }
     if (urlBarHidingEnabled != null) {
       dest['urlBarHidingEnabled'] = urlBarHidingEnabled;
@@ -110,6 +110,121 @@ class CustomTabsOptions {
     }
     if (bottomSheetConfiguration != null) {
       dest['bottomSheet'] = bottomSheetConfiguration!.toMap();
+    }
+    return dest;
+  }
+}
+
+/// Configuration of a custom tab visualization.
+@immutable
+class CustomTabsColorSchemes {
+  const CustomTabsColorSchemes({
+    this.colorScheme,
+    this.lightParams,
+    this.darkParams,
+    this.defaultPrams,
+  });
+
+  CustomTabsColorSchemes.theme({
+    Color? toolbarColor,
+    Color? navigationBarColor,
+    Color? navigationBarDividerColor,
+    CustomTabsColorScheme? colorScheme,
+  }) : this(
+          colorScheme: colorScheme,
+          defaultPrams: CustomTabsColorSchemeParams(
+            toolbarColor: toolbarColor,
+            navigationBarColor: navigationBarColor,
+            navigationBarDividerColor: navigationBarDividerColor,
+          ),
+        );
+
+  ///  Desired color scheme.
+  final CustomTabsColorScheme? colorScheme;
+
+  /// The [CustomTabsColorSchemeParams] for the light color scheme.
+  final CustomTabsColorSchemeParams? lightParams;
+
+  /// The [CustomTabsColorSchemeParams] for the dark color scheme.
+  final CustomTabsColorSchemeParams? darkParams;
+
+  /// The default [CustomTabsColorSchemeParams].
+  ///
+  /// If there is no [CustomTabsColorSchemeParams] for the current scheme,
+  /// or a particular field of it is null, Custom Tabs will fall back to the defaults provided via [defaultPrams].
+  final CustomTabsColorSchemeParams? defaultPrams;
+
+  @internal
+  Map<String, dynamic> toMap() {
+    final dest = <String, dynamic>{};
+    if (colorScheme != null) {
+      dest['colorScheme'] = colorScheme!.rawValue;
+    }
+    if (lightParams != null) {
+      dest['lightColorSchemeParams'] = lightParams!.toMap();
+    }
+    if (darkParams != null) {
+      dest['darkColorSchemeParams'] = darkParams!.toMap();
+    }
+    if (defaultPrams != null) {
+      dest['defaultColorSchemeParams'] = defaultPrams!.toMap();
+    }
+    return dest;
+  }
+}
+
+/// Desired color scheme on a custom tab.
+enum CustomTabsColorScheme {
+  /// Applies either a light or dark color scheme to the user interface in the custom tab depending on the user's system settings.
+  system(0),
+
+  /// Applies a light color scheme to the user interface in the custom tab.
+  light(1),
+
+  /// Applies a dark color scheme to the user interface in the custom tab.
+  dark(2);
+
+  @internal
+  const CustomTabsColorScheme(this.rawValue);
+
+  @internal
+  final int rawValue;
+}
+
+/// Contains visual parameters of a custom tab that may depend on the color scheme.
+///
+/// See also:
+/// - [CustomTabColorSchemeParams](https://developer.android.com/reference/androidx/browser/customtabs/CustomTabColorSchemeParams)
+@immutable
+class CustomTabsColorSchemeParams {
+  const CustomTabsColorSchemeParams({
+    this.toolbarColor,
+    this.navigationBarColor,
+    this.navigationBarDividerColor,
+  });
+
+  /// Toolbar color.
+  final Color? toolbarColor;
+
+  /// Navigation bar color.
+  final Color? navigationBarColor;
+
+  /// Navigation bar divider color.
+  final Color? navigationBarDividerColor;
+
+  @internal
+  Map<String, String> toMap() {
+    final dest = <String, String>{};
+    if (toolbarColor != null) {
+      dest['toolbarColor'] = '#${toolbarColor!.value.toRadixString(16)}';
+    }
+    if (navigationBarColor != null) {
+      dest['navigationBarColor'] =
+          '#${navigationBarColor!.value.toRadixString(16)}';
+    }
+    if (navigationBarDividerColor != null) {
+      dest['navigationBarDividerColor'] =
+          '#${navigationBarDividerColor!.value.toRadixString(16)}';
     }
     return dest;
   }

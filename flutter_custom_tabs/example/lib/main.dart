@@ -61,7 +61,10 @@ class MyApp extends StatelessWidget {
       await launch(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
-          toolbarColor: theme.colorScheme.surface,
+          colorSchemes: CustomTabsColorSchemes.theme(
+            toolbarColor: theme.colorScheme.surface,
+            navigationBarColor: theme.colorScheme.background,
+          ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
           showPageTitle: true,
@@ -100,7 +103,10 @@ class MyApp extends StatelessWidget {
           configuration: CustomTabsBottomSheetConfiguration(
             initialHeight: mediaQuery.size.height * 0.7,
           ),
-          toolbarColor: theme.primaryColor,
+          colorSchemes: CustomTabsColorSchemes.theme(
+            colorScheme: theme.brightness.toColorScheme(),
+            toolbarColor: theme.primaryColor,
+          ),
           showPageTitle: true,
         ),
         safariVCOptions: SafariViewControllerOptions.pageSheet(
