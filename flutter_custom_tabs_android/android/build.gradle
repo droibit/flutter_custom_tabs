@@ -1,0 +1,57 @@
+group 'com.github.droibit.plugins.flutter.customtabs'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.github.droibit.plugins.flutter.customtabs'
+    }
+
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 16
+
+        vectorDrawables.useSupportLibrary = true
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    buildFeatures {
+        buildConfig false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dependencies {
+        // TODO: Delete Flutter's default compiles sdk version when it reaches 34.
+        api('androidx.browser:browser') {
+            version { strictly "1.5.0" }
+        }
+        api 'com.github.droibit:customtabslauncher:2.0.0-beta01'
+    }
+}

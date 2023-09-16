@@ -73,7 +73,7 @@ class CustomTabsOptions {
   /// The bottom sheet configuration.
   final CustomTabsBottomSheetConfiguration? bottomSheetConfiguration;
 
-  @internal
+  /// Converts the [CustomTabsOptions] instance into a [Map] instance for serialization.
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
     if (colorSchemes != null) {

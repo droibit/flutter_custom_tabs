@@ -18,4 +18,4 @@ dependencies:
 
 Once you have `flutter_custom_tabs` in `pubspec.yaml` you should be able to use `package:flutter_custom_tabs` as normal.
 
-[1]: ../flutter_custom_tabs
+[1]: https://pub.dev/packages/flutter_custom_tabs
