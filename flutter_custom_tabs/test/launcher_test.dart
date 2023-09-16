@@ -56,7 +56,11 @@ void main() {
     )).thenAnswer((_) async {});
 
     const customTabsOptions = CustomTabsOptions(
-      toolbarColor: Color(0xFFFFEBEE),
+      colorSchemes: CustomTabsColorSchemes(
+        defaultPrams: CustomTabsColorSchemeParams(
+          toolbarColor: Color(0xFFFFEBEE),
+        ),
+      ),
       urlBarHidingEnabled: true,
       shareState: CustomTabsShareState.off,
       showPageTitle: true,

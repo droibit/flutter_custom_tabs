@@ -12,7 +12,24 @@ void main() {
 
   test('toMap() with full options', () {
     const options = CustomTabsOptions(
-      toolbarColor: Color(0xFFFFEBEE),
+      colorSchemes: CustomTabsColorSchemes(
+        colorScheme: CustomTabsColorScheme.system,
+        lightParams: CustomTabsColorSchemeParams(
+          toolbarColor: Color(0xFFFFEBAA),
+          navigationBarColor: Color(0xFFFFEBAB),
+          navigationBarDividerColor: Color(0xFFFFEBAC),
+        ),
+        darkParams: CustomTabsColorSchemeParams(
+          toolbarColor: Color(0xFFFFEBBA),
+          navigationBarColor: Color(0xFFFFEBBB),
+          navigationBarDividerColor: Color(0xFFFFEBBC),
+        ),
+        defaultPrams: CustomTabsColorSchemeParams(
+          toolbarColor: Color(0xFFFFEBCA),
+          navigationBarColor: Color(0xFFFFEBCB),
+          navigationBarDividerColor: Color(0xFFFFEBCC),
+        ),
+      ),
       urlBarHidingEnabled: true,
       shareState: CustomTabsShareState.off,
       showPageTitle: true,
@@ -41,7 +58,24 @@ void main() {
     );
 
     expect(options.toMap(), <String, dynamic>{
-      'toolbarColor': '#ffffebee',
+      'colorSchemes': <String, dynamic>{
+        'colorScheme': 0,
+        'lightColorSchemeParams': <String, String>{
+          'toolbarColor': '#ffffebaa',
+          'navigationBarColor': '#ffffebab',
+          'navigationBarDividerColor': '#ffffebac',
+        },
+        'darkColorSchemeParams': <String, String>{
+          'toolbarColor': '#ffffebba',
+          'navigationBarColor': '#ffffebbb',
+          'navigationBarDividerColor': '#ffffebbc',
+        },
+        'defaultColorSchemeParams': {
+          'toolbarColor': '#ffffebca',
+          'navigationBarColor': '#ffffebcb',
+          'navigationBarDividerColor': '#ffffebcc',
+        },
+      },
       'urlBarHidingEnabled': true,
       'shareState': 2,
       'showPageTitle': true,
@@ -65,6 +99,12 @@ void main() {
         'cornerRadiusDp': 16,
       },
     });
+  });
+
+  test('CustomTabsColorScheme.rawValue return associated value', () {
+    expect(CustomTabsColorScheme.system.rawValue, 0);
+    expect(CustomTabsColorScheme.light.rawValue, 1);
+    expect(CustomTabsColorScheme.dark.rawValue, 2);
   });
 
   test('CustomTabsCloseButtonPosition.rawValue return associated value', () {

@@ -8,6 +8,7 @@ import android.provider.Browser;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
+import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.droibit.android.customtabs.launcher.CustomTabsFallback;
@@ -27,6 +28,14 @@ import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.reso
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class CustomTabsFactory {
     private static final String KEY_OPTIONS_TOOLBAR_COLOR = "toolbarColor";
+    private static final String KEY_OPTIONS_COLOR_SCHEMES = "colorSchemes";
+    private static final String KEY_COLOR_SCHEMES_COLOR_SCHEME = "colorScheme";
+    private static final String KEY_LIGHT_COLOR_SCHEME_PARAMS = "lightColorSchemeParams";
+    private static final String KEY_DARK_COLOR_SCHEME_PARAMS = "darkColorSchemeParams";
+    private static final String KEY_DEFAULT_COLOR_SCHEME_PARAMS = "defaultColorSchemeParams";
+    private static final String KEY_COLOR_SCHEME_PARAMS_TOOLBAR_COLOR = "toolbarColor";
+    private static final String KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_COLOR = "navigationBarColor";
+    private static final String KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_DIVIDER_COLOR = "navigationBarDividerColor";
     private static final String KEY_OPTIONS_URL_BAR_HIDING_ENABLED = "urlBarHidingEnabled";
     private static final String KEY_OPTIONS_SHOW_PAGE_TITLE = "showPageTitle";
     private static final String KEY_OPTIONS_SHARE_STATE = "shareState";
@@ -54,9 +63,10 @@ class CustomTabsFactory {
     @NonNull
     CustomTabsIntent createIntent(@NonNull Map<String, Object> options) {
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        if (options.containsKey(KEY_OPTIONS_TOOLBAR_COLOR)) {
-            final String colorString = (String) options.get(KEY_OPTIONS_TOOLBAR_COLOR);
-            builder.setToolbarColor(Color.parseColor(colorString));
+        if (options.containsKey(KEY_OPTIONS_COLOR_SCHEMES)) {
+            final Map<String, Object> colorSchemes =
+                    (Map<String, Object>) options.get(KEY_OPTIONS_COLOR_SCHEMES);
+            applyColorSchemes(builder, colorSchemes);
         }
 
         if (options.containsKey(KEY_CLOSE_BUTTON_ICON)) {
@@ -68,6 +78,10 @@ class CustomTabsFactory {
                     builder.setCloseButtonIcon(closeButtonIcon);
                 }
             }
+        }
+        if (options.containsKey(KEY_CLOSE_BUTTON_POSITION)) {
+            final int position = (int) options.get(KEY_CLOSE_BUTTON_POSITION);
+            builder.setCloseButtonPosition(position);
         }
 
         if (options.containsKey(KEY_OPTIONS_URL_BAR_HIDING_ENABLED)) {
@@ -89,11 +103,6 @@ class CustomTabsFactory {
 
         if (options.containsKey(KEY_OPTIONS_ANIMATIONS)) {
             applyAnimations(builder, ((Map<String, String>) options.get(KEY_OPTIONS_ANIMATIONS)));
-        }
-
-        if (options.containsKey(KEY_CLOSE_BUTTON_POSITION)) {
-            final int position = (int) options.get(KEY_CLOSE_BUTTON_POSITION);
-            builder.setCloseButtonPosition(position);
         }
 
         if (options.containsKey(KEY_OPTIONS_BOTTOM_SHEET)) {
@@ -134,6 +143,56 @@ class CustomTabsFactory {
             fallback = new NonChromeCustomTabs(context);
         }
         ensureCustomTabsPackage(customTabsIntent, context, fallback);
+    }
+
+    void applyColorSchemes(
+            @NonNull CustomTabsIntent.Builder builder,
+            @NonNull Map<String, Object> colorSchemes
+    ) {
+        if (colorSchemes.containsKey(KEY_COLOR_SCHEMES_COLOR_SCHEME)) {
+            final int colorScheme = (int) colorSchemes.get(KEY_COLOR_SCHEMES_COLOR_SCHEME);
+            builder.setColorScheme(colorScheme);
+        }
+
+        if (colorSchemes.containsKey(KEY_LIGHT_COLOR_SCHEME_PARAMS)) {
+            final Map<String, String> colorSchemeParams =
+                    (Map<String, String>) colorSchemes.get(KEY_LIGHT_COLOR_SCHEME_PARAMS);
+            builder.setColorSchemeParams(
+                    CustomTabsIntent.COLOR_SCHEME_LIGHT,
+                    buildColorSchemeParams(colorSchemeParams)
+            );
+        }
+        if (colorSchemes.containsKey(KEY_DARK_COLOR_SCHEME_PARAMS)) {
+            final Map<String, String> colorSchemeParams =
+                    (Map<String, String>) colorSchemes.get(KEY_DARK_COLOR_SCHEME_PARAMS);
+            builder.setColorSchemeParams(
+                    CustomTabsIntent.COLOR_SCHEME_DARK,
+                    buildColorSchemeParams(colorSchemeParams)
+            );
+        }
+        if (colorSchemes.containsKey(KEY_DEFAULT_COLOR_SCHEME_PARAMS)) {
+            final Map<String, String> colorSchemeParams =
+                    (Map<String, String>) colorSchemes.get(KEY_DEFAULT_COLOR_SCHEME_PARAMS);
+            builder.setDefaultColorSchemeParams(buildColorSchemeParams(colorSchemeParams));
+        }
+    }
+
+    @NonNull
+    CustomTabColorSchemeParams buildColorSchemeParams(@NonNull Map<String, String> source) {
+        final CustomTabColorSchemeParams.Builder builder = new CustomTabColorSchemeParams.Builder();
+        if (source.containsKey(KEY_COLOR_SCHEME_PARAMS_TOOLBAR_COLOR)) {
+            final String colorString = source.get(KEY_COLOR_SCHEME_PARAMS_TOOLBAR_COLOR);
+            builder.setToolbarColor(Color.parseColor(colorString));
+        }
+        if (source.containsKey(KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_COLOR)) {
+            final String colorString = source.get(KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_COLOR);
+            builder.setNavigationBarColor(Color.parseColor(colorString));
+        }
+        if (source.containsKey(KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_DIVIDER_COLOR)) {
+            final String colorString = source.get(KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_DIVIDER_COLOR);
+            builder.setNavigationBarDividerColor(Color.parseColor(colorString));
+        }
+        return builder.build();
     }
 
     private void applyAnimations(

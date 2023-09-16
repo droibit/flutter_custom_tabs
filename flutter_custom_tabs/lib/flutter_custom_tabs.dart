@@ -3,4 +3,5 @@ export 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 
 export 'src/custom_tabs_animation.dart';
 export 'src/custom_tabs_close_button.dart';
+export 'src/custom_tabs_color_scheme.dart';
 export 'src/launcher.dart';
