@@ -11,8 +11,6 @@ import androidx.annotation.RestrictTo;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 
-import com.droibit.android.customtabs.launcher.CustomTabsFallback;
-import com.droibit.android.customtabs.launcher.CustomTabsLauncher;
 import com.droibit.android.customtabs.launcher.CustomTabsPackageFallback;
 import com.droibit.android.customtabs.launcher.NonChromeCustomTabs;
 
@@ -27,7 +25,6 @@ import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.reso
 @SuppressWarnings({"ConstantConditions", "unchecked"})
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class CustomTabsFactory {
-    private static final String KEY_OPTIONS_TOOLBAR_COLOR = "toolbarColor";
     private static final String KEY_OPTIONS_COLOR_SCHEMES = "colorSchemes";
     private static final String KEY_COLOR_SCHEMES_COLOR_SCHEME = "colorScheme";
     private static final String KEY_LIGHT_COLOR_SCHEME_PARAMS = "lightColorSchemeParams";
@@ -234,23 +231,5 @@ class CustomTabsFactory {
             final int cornerRadius = ((int) configuration.get(KEY_BOTTOM_SHEET_CORNER_RADIUS_DP));
             builder.setToolbarCornerRadiusDp(cornerRadius);
         }
-    }
-
-    @NonNull
-    CustomTabsFallback createFallback(@NonNull Map<String, Object> options) {
-        final List<String> extraCustomTabs;
-        if (options.containsKey(KEY_OPTIONS_EXTRA_CUSTOM_TABS)) {
-            extraCustomTabs = ((List<String>) options.get(KEY_OPTIONS_EXTRA_CUSTOM_TABS));
-        } else {
-            extraCustomTabs = null;
-        }
-
-        final CustomTabsFallback fallback;
-        if (extraCustomTabs != null && !extraCustomTabs.isEmpty()) {
-            fallback = new CustomTabsLauncher.LaunchNonChromeCustomTabs(extraCustomTabs);
-        } else {
-            fallback = new CustomTabsLauncher.LaunchNonChromeCustomTabs(context);
-        }
-        return fallback;
     }
 }
