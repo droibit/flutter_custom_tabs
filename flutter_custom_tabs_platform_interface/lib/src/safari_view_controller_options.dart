@@ -66,7 +66,6 @@ class SafariViewControllerOptions {
   @internal
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
-
     if (preferredBarTintColor != null) {
       dest['preferredBarTintColor'] =
           '#${preferredBarTintColor!.value.toRadixString(16)}';
@@ -183,25 +182,25 @@ class SheetPresentationControllerConfiguration {
   @internal
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{
-      'pageSheetDetents': detents.map((e) => e.rawValue).toList(),
+      'detents': detents.map((e) => e.rawValue).toList(),
     };
     if (largestUndimmedDetentIdentifier != null) {
-      dest['pageSheetLargestUndimmedDetentIdentifier'] =
+      dest['largestUndimmedDetentIdentifier'] =
           largestUndimmedDetentIdentifier!.rawValue;
     }
     if (prefersScrollingExpandsWhenScrolledToEdge != null) {
-      dest['pageSheetPrefersScrollingExpandsWhenScrolledToEdge'] =
+      dest['prefersScrollingExpandsWhenScrolledToEdge'] =
           prefersScrollingExpandsWhenScrolledToEdge;
     }
     if (prefersGrabberVisible != null) {
-      dest['pageSheetPrefersGrabberVisible'] = prefersGrabberVisible;
+      dest['prefersGrabberVisible'] = prefersGrabberVisible;
     }
     if (prefersEdgeAttachedInCompactHeight != null) {
-      dest['pageSheetPrefersEdgeAttachedInCompactHeight'] =
+      dest['prefersEdgeAttachedInCompactHeight'] =
           prefersEdgeAttachedInCompactHeight;
     }
     if (preferredCornerRadius != null) {
-      dest['pageSheetPreferredCornerRadius'] = preferredCornerRadius;
+      dest['preferredCornerRadius'] = preferredCornerRadius;
     }
     return dest;
   }
