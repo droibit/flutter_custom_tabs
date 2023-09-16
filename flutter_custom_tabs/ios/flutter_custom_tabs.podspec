@@ -13,6 +13,7 @@ A Flutter plugin to use Chrome Custom Tabs.
   s.author           = { 'Your Company' => 'roomful.rooms@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.platform = :ios, '11.0'
 
