@@ -40,12 +40,12 @@ void main() {
       'dismissButtonStyle': 1,
       'modalPresentationStyle': 1,
       'pageSheet': <String, dynamic>{
-        'pageSheetDetents': ['large', 'medium'],
-        'pageSheetLargestUndimmedDetentIdentifier': 'medium',
-        'pageSheetPrefersScrollingExpandsWhenScrolledToEdge': true,
-        'pageSheetPrefersGrabberVisible': false,
-        'pageSheetPrefersEdgeAttachedInCompactHeight': true,
-        'pageSheetPreferredCornerRadius': 16,
+        'detents': ['large', 'medium'],
+        'largestUndimmedDetentIdentifier': 'medium',
+        'prefersScrollingExpandsWhenScrolledToEdge': true,
+        'prefersGrabberVisible': false,
+        'prefersEdgeAttachedInCompactHeight': true,
+        'preferredCornerRadius': 16,
       },
     });
   });
