@@ -15,11 +15,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
+        brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
+        brightness: Brightness.dark,
       ),
+      themeMode: ThemeMode.system,
       home: Builder(
         builder: (context) => Scaffold(
           appBar: AppBar(
