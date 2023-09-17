@@ -1,5 +1,5 @@
   
-name: CI for app-facing package
+name: CI for android implementation package
 
 on:
   push:
@@ -7,38 +7,35 @@ on:
       - main
       - develop
     paths:
-      - 'flutter_custom_tabs/**'
+      - 'flutter_custom_tabs_android/**'      
   pull_request:
     paths:
-      - 'flutter_custom_tabs/**'
+      - 'flutter_custom_tabs_android/**'
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
-        java-version: 17
+        java-version: 17    
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
     - name: Get flutter dependencies
       run: flutter pub get
-      working-directory: ./flutter_custom_tabs
+      working-directory: ./flutter_custom_tabs_android
     - name: Check for any formatting issues in the code
       run: dart format --set-exit-if-changed .
-      working-directory: ./flutter_custom_tabs
+      working-directory: ./flutter_custom_tabs_android
     - name: Statically analyze the Dart code for any errors
       run: flutter analyze .
-      working-directory: ./flutter_custom_tabs
+      working-directory: ./flutter_custom_tabs_android
     - name: Run unit tests
       run: flutter test
-      working-directory: ./flutter_custom_tabs
+      working-directory: ./flutter_custom_tabs_android
     - name: Build example android app
       run: flutter build apk --release
-      working-directory: ./flutter_custom_tabs/example
-    - name: Build example iOS app
-      run: flutter build ios --no-codesign
-      working-directory: ./flutter_custom_tabs/example
+      working-directory: ./flutter_custom_tabs_android/example      
