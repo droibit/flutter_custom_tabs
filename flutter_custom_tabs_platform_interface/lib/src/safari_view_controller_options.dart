@@ -63,7 +63,7 @@ class SafariViewControllerOptions {
   /// The bottom sheet configuration.
   final SheetPresentationControllerConfiguration? pageSheetConfiguration;
 
-  @internal
+  /// Converts the [SafariViewControllerOptions] instance into a [Map] instance for serialization.
   Map<String, dynamic> toMap() {
     final dest = <String, dynamic>{};
     if (preferredBarTintColor != null) {
