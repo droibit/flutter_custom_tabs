@@ -18,6 +18,10 @@ dependencies:
   # TODO: To be removed before v2.0.0 release
   flutter_custom_tabs_platform_interface: 
     path: ../flutter_custom_tabs_platform_interface
+  # TODO: To be removed before v2.0.0 release
+  # flutter_custom_tabs_android: ^2.0.0
+  flutter_custom_tabs_android:
+    path: ../flutter_custom_tabs_android
   # flutter_custom_tabs_web: ^1.1.0
   # TODO: To be removed before v2.0.0 release  
   flutter_custom_tabs_web: 
@@ -35,8 +39,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.github.droibit.flutter.plugins.customtabs
-        pluginClass: CustomTabsPlugin
+        default_package: flutter_custom_tabs_android
       ios:
         pluginClass: GDBCustomTabsPlugin
       web:
