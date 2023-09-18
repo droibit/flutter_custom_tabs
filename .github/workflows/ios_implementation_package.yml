@@ -20,9 +20,7 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-    - name: Installs all the packages
-      run: make bootstrap
-      working-directory: ./flutter_custom_tabs_ios        
+    - uses: irgaly/setup-mint@v1
     - name: Get flutter dependencies
       run: flutter pub get
       working-directory: ./flutter_custom_tabs_ios
