@@ -79,31 +79,23 @@ class MyApp extends StatelessWidget {
   }
 
   void _launchURL(BuildContext context) async {
+    final theme = Theme.of(context);
     try {
       await launch(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
-          toolbarColor: Theme.of(context).primaryColor,
+          colorSchemes: CustomTabsColorSchemes.theme(
+            toolbarColor: theme.primaryColor,
+          ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
           showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn(),
-          // or user defined animation.
-          animation: const CustomTabsAnimation(
-            startEnter: 'slide_up',
-            startExit: 'android:anim/fade_out',
-            endEnter: 'android:anim/fade_in',
-            endExit: 'slide_down',
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcon.back,
           ),
-          extraCustomTabs: const <String>[
-            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-            'org.mozilla.firefox',
-            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-            'com.microsoft.emmx',
-          ],
         ),                    
         safariVCOptions: SafariViewControllerOptions(
-          preferredBarTintColor: Theme.of(context).primaryColor,
+          preferredBarTintColor: theme.primaryColor,
           preferredControlTintColor: Colors.white,
           barCollapsingEnabled: true,
           entersReaderIfAvailable: false,

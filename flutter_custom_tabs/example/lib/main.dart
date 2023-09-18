@@ -68,16 +68,9 @@ class MyApp extends StatelessWidget {
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
           showPageTitle: true,
-          animation: CustomTabsSystemAnimation.slideIn(),
           closeButton: CustomTabsCloseButton(
             icon: CustomTabsCloseButtonIcon.back,
           ),
-          extraCustomTabs: const <String>[
-            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-            'org.mozilla.firefox',
-            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-            'com.microsoft.emmx',
-          ],
         ),
         safariVCOptions: SafariViewControllerOptions(
           preferredBarTintColor: theme.colorScheme.surface,
