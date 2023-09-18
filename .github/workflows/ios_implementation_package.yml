@@ -1,0 +1,42 @@
+  
+name: CI for iOS implementation package
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'flutter_custom_tabs_ios/**'
+  pull_request:
+    paths:
+      - 'flutter_custom_tabs_ios/**'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - name: Installs all the packages
+      run: make bootstrap
+      working-directory: ./flutter_custom_tabs_ios        
+    - name: Get flutter dependencies
+      run: flutter pub get
+      working-directory: ./flutter_custom_tabs_ios
+    - name: Check for any formatting issues in the code
+      run: dart format --set-exit-if-changed .
+      working-directory: ./flutter_custom_tabs_ios
+    - name: Statically analyze the Dart code for any errors
+      run: flutter analyze .
+    - name: Statically analyze the Swift code for any errors
+      run: make lint
+      working-directory: ./flutter_custom_tabs_ios
+    - name: Run unit tests
+      run: flutter test
+      working-directory: ./flutter_custom_tabs_ios
+    - name: Build example iOS app
+      run: flutter build ios --no-codesign
+      working-directory: ./flutter_custom_tabs_ios/example

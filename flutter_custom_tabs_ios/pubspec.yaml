@@ -1,0 +1,32 @@
+name: flutter_custom_tabs_ios
+description: iOS platform implementation of flutter_custom_tabs.
+version: 2.0.0
+homepage: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_ios
+
+# TODO: To be deleted before v2.0.0 release.
+publish_to: none
+
+environment:
+  sdk: '>=2.17.0 <4.0.0'
+  flutter: '>=3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # flutter_custom_tabs_platform_interface: ^1.1.0
+  # TODO: To be removed before v2.0.0 release
+  flutter_custom_tabs_platform_interface:
+    path: ../flutter_custom_tabs_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:
+  plugin:
+    implements: shared_preferences
+    platforms:
+      ios:
+        pluginClass: GDBCustomTabsPlugin
+        dartPluginClass: CustomTabsPluginIOS

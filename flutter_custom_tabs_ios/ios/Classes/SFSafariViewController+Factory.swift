@@ -1,3 +1,4 @@
+// swiftlint:disable identifier_name cyclomatic_complexity
 import SafariServices
 import UIKit.UIColor
 
@@ -56,9 +57,9 @@ extension SFSafariViewController {
             viewController.modalPresentationStyle = modalPresentationStyle
 
             if #available(iOS 15, *),
-               let pageSheetConfig = options[keyPageSheet] as? [String: Any],
                modalPresentationStyle == .pageSheet || modalPresentationStyle == .formSheet,
-               let sheet = viewController.sheetPresentationController
+               let sheet = viewController.sheetPresentationController,
+               let pageSheetConfig = options[keyPageSheet] as? [String: Any]
             {
                 sheet.configure(with: pageSheetConfig)
             }
@@ -71,8 +72,8 @@ extension SFSafariViewController {
 private extension UISheetPresentationController {
     func configure(with configuration: [String: Any]) {
         if let rawDetents = configuration[keyPageSheetDetents] as? [String], !rawDetents.isEmpty {
-            self.detents = rawDetents.compactMap {
-                switch $0 {
+            detents = rawDetents.compactMap { detent in
+                switch detent {
                 case pageSheetDetentMedium:
                     return .medium()
                 case pageSheetDetentLarge:
@@ -120,10 +121,10 @@ private extension UIColor {
                 var hexNumber: UInt64 = 0
 
                 if scanner.scanHexInt64(&hexNumber) {
-                    a = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    r = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    g = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    b = CGFloat(hexNumber & 0x000000ff) / 255
+                    a = CGFloat((hexNumber & 0xFF00_0000) >> 24) / 255
+                    r = CGFloat((hexNumber & 0x00FF_0000) >> 16) / 255
+                    g = CGFloat((hexNumber & 0x0000_FF00) >> 8) / 255
+                    b = CGFloat(hexNumber & 0x0000_00FF) / 255
 
                     self.init(red: r, green: g, blue: b, alpha: a)
                     return

@@ -16,7 +16,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
         let instance = CustomTabsPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
+
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "launch":
@@ -30,13 +30,13 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
             result(FlutterMethodNotImplemented)
         }
     }
-    
+
     private func present(withURL url: String, options: [String: Any], result: @escaping FlutterResult) {
         if let topViewController = UIWindow.keyWindow?.topViewController() {
             let safariViewController = SFSafariViewController.make(url: URL(string: url)!, options: options)
-            dismissStack.append({ [weak safariViewController] in
+            dismissStack.append { [weak safariViewController] in
                 safariViewController?.dismiss(animated: true)
-            })
+            }
             topViewController.present(safariViewController, animated: true) {
                 result(nil)
             }
@@ -54,7 +54,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
 private extension UIWindow {
     static var keyWindow: UIWindow? {
         guard let delegate = UIApplication.shared.delegate as? FlutterAppDelegate else {
-            return UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
         }
         return delegate.window
     }
@@ -66,7 +66,8 @@ private extension UIWindow {
                 topViewController = navigationController.visibleViewController
                 continue
             } else if let tabBarController = topViewController as? UITabBarController,
-                      let selected = tabBarController.selectedViewController {
+                      let selected = tabBarController.selectedViewController
+            {
                 topViewController = selected
                 continue
             } else if let presentedViewController = topViewController?.presentedViewController {

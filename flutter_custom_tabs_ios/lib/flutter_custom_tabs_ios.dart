@@ -1,16 +1,16 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-/// The Android implementation of [CustomTabsPlatform].
+/// The iOS implementation of [CustomTabsPlatform].
 ///
 /// This class implements the `package:flutter_custom_tabs` functionality for Android.
-class CustomTabsPluginAndroid extends CustomTabsPlatform {
+class CustomTabsPluginIOS extends CustomTabsPlatform {
   static const MethodChannel _channel =
       MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
 
   /// Registers this class as the default instance of [CustomTabsPlatform].
   static void registerWith() {
-    CustomTabsPlatform.instance = CustomTabsPluginAndroid();
+    CustomTabsPlatform.instance = CustomTabsPluginIOS();
   }
 
   @override
@@ -21,7 +21,7 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
   }) {
     final args = <String, dynamic>{
       'url': urlString,
-      'customTabsOptions': customTabsOptions?.toMap() ?? <String, dynamic>{},
+      'safariVCOptions': safariVCOptions?.toMap() ?? <String, dynamic>{},
     };
     return _channel.invokeMethod('launch', args);
   }
