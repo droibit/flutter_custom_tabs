@@ -1,6 +1,5 @@
 .PHONY: bootstrap
 bootstrap:
-	@brew install mint
 	@mint bootstrap
 
 .PHONY: format
