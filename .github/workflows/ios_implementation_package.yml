@@ -31,6 +31,7 @@ jobs:
       working-directory: ./flutter_custom_tabs_ios
     - name: Statically analyze the Dart code for any errors
       run: flutter analyze .
+      working-directory: ./flutter_custom_tabs_ios
     - name: Statically analyze the Swift code for any errors
       run: make lint
       working-directory: ./flutter_custom_tabs_ios
