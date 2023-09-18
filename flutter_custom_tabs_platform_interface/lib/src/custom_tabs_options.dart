@@ -75,43 +75,22 @@ class CustomTabsOptions {
 
   /// Converts the [CustomTabsOptions] instance into a [Map] instance for serialization.
   Map<String, dynamic> toMap() {
-    final dest = <String, dynamic>{};
-    if (colorSchemes != null) {
-      dest['colorSchemes'] = colorSchemes!.toMap();
-    }
-    if (urlBarHidingEnabled != null) {
-      dest['urlBarHidingEnabled'] = urlBarHidingEnabled;
-    }
-    if (shareState != null) {
-      dest['shareState'] = shareState!.rawValue;
-    }
-    if (showPageTitle != null) {
-      dest['showPageTitle'] = showPageTitle;
-    }
-    if (enableInstantApps != null) {
-      dest['enableInstantApps'] = enableInstantApps;
-    }
-    if (animation != null) {
-      dest['animations'] = animation!.toMap();
-    }
-    if (closeButton != null) {
-      if (closeButton!.icon != null) {
-        dest['closeButtonIcon'] = closeButton!.icon;
-      }
-      if (closeButton!.position != null) {
-        dest['closeButtonPosition'] = closeButton!.position!.rawValue;
-      }
-    }
-    if (extraCustomTabs != null) {
-      dest['extraCustomTabs'] = extraCustomTabs;
-    }
-    if (headers != null) {
-      dest['headers'] = headers;
-    }
-    if (bottomSheetConfiguration != null) {
-      dest['bottomSheet'] = bottomSheetConfiguration!.toMap();
-    }
-    return dest;
+    return <String, dynamic>{
+      if (colorSchemes != null) 'colorSchemes': colorSchemes!.toMap(),
+      if (urlBarHidingEnabled != null)
+        'urlBarHidingEnabled': urlBarHidingEnabled,
+      if (shareState != null) 'shareState': shareState!.rawValue,
+      if (showPageTitle != null) 'showPageTitle': showPageTitle,
+      if (enableInstantApps != null) 'enableInstantApps': enableInstantApps,
+      if (animation != null) 'animations': animation!.toMap(),
+      if (closeButton?.icon != null) 'closeButtonIcon': closeButton!.icon,
+      if (closeButton?.position != null)
+        'closeButtonPosition': closeButton!.position!.rawValue,
+      if (extraCustomTabs != null) 'extraCustomTabs': extraCustomTabs,
+      if (headers != null) 'headers': headers,
+      if (bottomSheetConfiguration != null)
+        'bottomSheet': bottomSheetConfiguration!.toMap(),
+    };
   }
 }
 
@@ -156,20 +135,13 @@ class CustomTabsColorSchemes {
 
   @internal
   Map<String, dynamic> toMap() {
-    final dest = <String, dynamic>{};
-    if (colorScheme != null) {
-      dest['colorScheme'] = colorScheme!.rawValue;
-    }
-    if (lightParams != null) {
-      dest['lightColorSchemeParams'] = lightParams!.toMap();
-    }
-    if (darkParams != null) {
-      dest['darkColorSchemeParams'] = darkParams!.toMap();
-    }
-    if (defaultPrams != null) {
-      dest['defaultColorSchemeParams'] = defaultPrams!.toMap();
-    }
-    return dest;
+    return <String, dynamic>{
+      if (colorScheme != null) 'colorScheme': colorScheme!.rawValue,
+      if (lightParams != null) 'lightColorSchemeParams': lightParams!.toMap(),
+      if (darkParams != null) 'darkColorSchemeParams': darkParams!.toMap(),
+      if (defaultPrams != null)
+        'defaultColorSchemeParams': defaultPrams!.toMap()
+    };
   }
 }
 
@@ -214,19 +186,15 @@ class CustomTabsColorSchemeParams {
 
   @internal
   Map<String, String> toMap() {
-    final dest = <String, String>{};
-    if (toolbarColor != null) {
-      dest['toolbarColor'] = '#${toolbarColor!.value.toRadixString(16)}';
-    }
-    if (navigationBarColor != null) {
-      dest['navigationBarColor'] =
-          '#${navigationBarColor!.value.toRadixString(16)}';
-    }
-    if (navigationBarDividerColor != null) {
-      dest['navigationBarDividerColor'] =
-          '#${navigationBarDividerColor!.value.toRadixString(16)}';
-    }
-    return dest;
+    return <String, String>{
+      if (toolbarColor != null)
+        'toolbarColor': '#${toolbarColor!.value.toRadixString(16)}',
+      if (navigationBarColor != null)
+        'navigationBarColor': '#${navigationBarColor!.value.toRadixString(16)}',
+      if (navigationBarDividerColor != null)
+        'navigationBarDividerColor':
+            '#${navigationBarDividerColor!.value.toRadixString(16)}',
+    };
   }
 }
 
@@ -356,10 +324,8 @@ class CustomTabsBottomSheetConfiguration {
     final dest = <String, dynamic>{
       'initialHeightDp': initialHeight,
       'activityHeightResizeBehavior': activityHeightResizeBehavior.rawValue,
+      if (cornerRadius != null) 'cornerRadiusDp': min(cornerRadius!, 16)
     };
-    if (cornerRadius != null) {
-      dest['cornerRadiusDp'] = min(cornerRadius!, 16);
-    }
     return dest;
   }
 }

@@ -65,31 +65,24 @@ class SafariViewControllerOptions {
 
   /// Converts the [SafariViewControllerOptions] instance into a [Map] instance for serialization.
   Map<String, dynamic> toMap() {
-    final dest = <String, dynamic>{};
-    if (preferredBarTintColor != null) {
-      dest['preferredBarTintColor'] =
-          '#${preferredBarTintColor!.value.toRadixString(16)}';
-    }
-    if (preferredControlTintColor != null) {
-      dest['preferredControlTintColor'] =
-          '#${preferredControlTintColor!.value.toRadixString(16)}';
-    }
-    if (barCollapsingEnabled != null) {
-      dest['barCollapsingEnabled'] = barCollapsingEnabled;
-    }
-    if (entersReaderIfAvailable != null) {
-      dest['entersReaderIfAvailable'] = entersReaderIfAvailable;
-    }
-    if (modalPresentationStyle != null) {
-      dest['modalPresentationStyle'] = modalPresentationStyle!.rawValue;
-    }
-    if (dismissButtonStyle != null) {
-      dest['dismissButtonStyle'] = dismissButtonStyle!.rawValue;
-    }
-    if (pageSheetConfiguration != null) {
-      dest['pageSheet'] = pageSheetConfiguration!.toMap();
-    }
-    return dest;
+    return <String, dynamic>{
+      if (preferredBarTintColor != null)
+        'preferredBarTintColor':
+            '#${preferredBarTintColor!.value.toRadixString(16)}',
+      if (preferredControlTintColor != null)
+        'preferredControlTintColor':
+            '#${preferredControlTintColor!.value.toRadixString(16)}',
+      if (barCollapsingEnabled != null)
+        'barCollapsingEnabled': barCollapsingEnabled,
+      if (entersReaderIfAvailable != null)
+        'entersReaderIfAvailable': entersReaderIfAvailable,
+      if (modalPresentationStyle != null)
+        'modalPresentationStyle': modalPresentationStyle!.rawValue,
+      if (dismissButtonStyle != null)
+        'dismissButtonStyle': dismissButtonStyle!.rawValue,
+      if (pageSheetConfiguration != null)
+        'pageSheet': pageSheetConfiguration!.toMap(),
+    };
   }
 }
 
@@ -181,28 +174,22 @@ class SheetPresentationControllerConfiguration {
 
   @internal
   Map<String, dynamic> toMap() {
-    final dest = <String, dynamic>{
+    return <String, dynamic>{
       'detents': detents.map((e) => e.rawValue).toList(),
+      if (largestUndimmedDetentIdentifier != null)
+        'largestUndimmedDetentIdentifier':
+            largestUndimmedDetentIdentifier!.rawValue,
+      if (prefersScrollingExpandsWhenScrolledToEdge != null)
+        'prefersScrollingExpandsWhenScrolledToEdge':
+            prefersScrollingExpandsWhenScrolledToEdge,
+      if (prefersGrabberVisible != null)
+        'prefersGrabberVisible': prefersGrabberVisible,
+      if (prefersEdgeAttachedInCompactHeight != null)
+        'prefersEdgeAttachedInCompactHeight':
+            prefersEdgeAttachedInCompactHeight,
+      if (preferredCornerRadius != null)
+        'preferredCornerRadius': preferredCornerRadius,
     };
-    if (largestUndimmedDetentIdentifier != null) {
-      dest['largestUndimmedDetentIdentifier'] =
-          largestUndimmedDetentIdentifier!.rawValue;
-    }
-    if (prefersScrollingExpandsWhenScrolledToEdge != null) {
-      dest['prefersScrollingExpandsWhenScrolledToEdge'] =
-          prefersScrollingExpandsWhenScrolledToEdge;
-    }
-    if (prefersGrabberVisible != null) {
-      dest['prefersGrabberVisible'] = prefersGrabberVisible;
-    }
-    if (prefersEdgeAttachedInCompactHeight != null) {
-      dest['prefersEdgeAttachedInCompactHeight'] =
-          prefersEdgeAttachedInCompactHeight;
-    }
-    if (preferredCornerRadius != null) {
-      dest['preferredCornerRadius'] = preferredCornerRadius;
-    }
-    return dest;
   }
 }
 
