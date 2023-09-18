@@ -11,12 +11,12 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   late MockUrlLauncherPlugin mock;
-  late CustomTabsPlugin plugin;
+  late CustomTabsPluginWeb plugin;
   setUp(() {
     mock = MockUrlLauncherPlugin();
     UrlLauncherPlatform.instance = mock;
 
-    plugin = CustomTabsPlugin();
+    plugin = CustomTabsPluginWeb();
   });
 
   testWidgets('launch: delegate to url_launcher_web', (WidgetTester _) async {

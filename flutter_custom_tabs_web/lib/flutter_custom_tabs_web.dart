@@ -8,10 +8,10 @@ import 'package:url_launcher_web/url_launcher_web.dart';
 /// The web implementation of [CustomTabsPlatform].
 ///
 /// This class implements the `package:flutter_custom_tabs` functionality for the web.
-class CustomTabsPlugin extends CustomTabsPlatform {
+class CustomTabsPluginWeb extends CustomTabsPlatform {
   /// Registers this class as the default instance of [CustomTabsPlatform].
   static void registerWith(Registrar registrar) {
-    CustomTabsPlatform.instance = CustomTabsPlugin();
+    CustomTabsPlatform.instance = CustomTabsPluginWeb();
   }
 
   @override
