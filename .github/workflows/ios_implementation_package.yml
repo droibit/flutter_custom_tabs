@@ -21,6 +21,8 @@ jobs:
       with:
         channel: 'stable'
     - uses: irgaly/setup-mint@v1
+      with:
+        mint-directory: ./flutter_custom_tabs_ios
     - name: Get flutter dependencies
       run: flutter pub get
       working-directory: ./flutter_custom_tabs_ios
