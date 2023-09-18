@@ -15,7 +15,7 @@ flutter:
     implements: flutter_custom_tabs
     platforms:
       web:
-        pluginClass: CustomTabsPlugin
+        pluginClass: CustomTabsPluginWeb
         fileName: flutter_custom_tabs_web.dart
 
 dependencies:
