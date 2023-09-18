@@ -10,10 +10,10 @@ void main() {
   late CustomTabsPluginIOS customTabs;
 
   const channel =
-  MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
+      MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-      channel, (methodCall) async => log.add(methodCall));
+          channel, (methodCall) async => log.add(methodCall));
 
   setUp(() {
     log = <MethodCall>[];
