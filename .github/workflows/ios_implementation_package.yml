@@ -1,5 +1,5 @@
   
-name: CI for app-facing package
+name: CI for iOS implementation package
 
 on:
   push:
