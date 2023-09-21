@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
   void _launchURL(BuildContext context) async {
     final theme = Theme.of(context);
     try {
-      await launch(
+      await launchUrlString(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.theme(

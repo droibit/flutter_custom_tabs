@@ -12,7 +12,7 @@ void main() {
   setUp(() => {CustomTabsPlatform.instance = mock});
 
   test('launch: with null options', () async {
-    const url = 'http://example.com/';
+    final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
       customTabsOptions: anyNamed('customTabsOptions'),
@@ -21,11 +21,11 @@ void main() {
 
     await launchUrl(url);
 
-    verify(mock.launch(url));
+    verify(mock.launch(url.toString()));
   });
 
   test('launch: with empty options', () async {
-    const url = 'http://example.com/';
+    final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
       customTabsOptions: anyNamed('customTabsOptions'),
@@ -41,14 +41,14 @@ void main() {
     );
 
     verify(mock.launch(
-      url,
+      url.toString(),
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     ));
   });
 
   test('launch: with empty options', () async {
-    const url = 'http://example.com/';
+    final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
       customTabsOptions: anyNamed('customTabsOptions'),
@@ -91,13 +91,13 @@ void main() {
     );
 
     verify(mock.launch(
-      url,
+      url.toString(),
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     ));
   });
 
-  test('launch: with a url containing a whitespace', () async {
+  test('launchUrlString: with a url containing a whitespace', () async {
     const url = ' http://example.com/';
     when(mock.launch(
       any,
@@ -105,11 +105,9 @@ void main() {
       safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    await launchUrl(url);
+    await launchUrlString(url);
 
-    verify(mock.launch(
-      url.trimLeft(),
-    ));
+    verify(mock.launch(url.trimLeft()));
   });
 
   test('closeCustomTabs', () async {
