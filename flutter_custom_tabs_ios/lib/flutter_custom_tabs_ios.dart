@@ -16,11 +16,13 @@ class CustomTabsPluginIOS extends CustomTabsPlatform {
   @override
   Future<void> launch(
     String urlString, {
+    bool prefersDeepLink = false,
     CustomTabsOptions? customTabsOptions,
     SafariViewControllerOptions? safariVCOptions,
   }) {
     final args = <String, dynamic>{
       'url': urlString,
+      'prefersDeepLink': prefersDeepLink,
       'safariVCOptions': safariVCOptions?.toMap() ?? <String, dynamic>{},
     };
     return _channel.invokeMethod('launch', args);

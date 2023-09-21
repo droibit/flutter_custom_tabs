@@ -45,6 +45,14 @@ class MyApp extends StatelessWidget {
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
+                const SizedBox(height: 16),
+                TextButton(
+                  onPressed: () => _launchDeepLinkURL(context),
+                  child: const Text(
+                    'Show Apple Maps(deep linking)',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
               ],
             ),
           ),
@@ -112,6 +120,35 @@ class MyApp extends StatelessWidget {
           preferredBarTintColor: theme.primaryColor,
           preferredControlTintColor: Colors.white,
           entersReaderIfAvailable: true,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
+      // An exception is thrown if browser app is not installed on Android device.
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> _launchDeepLinkURL(BuildContext context) async {
+    final theme = Theme.of(context);
+    try {
+      await CustomTabsPlatform.instance.launch(
+        'http://maps.apple.com/?q=Mexican+Restaurant',
+        prefersDeepLink: true,
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.theme(
+            toolbarColor: theme.colorScheme.surface,
+            navigationBarColor: theme.colorScheme.background,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showPageTitle: true,
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
+          barCollapsingEnabled: true,
+          entersReaderIfAvailable: false,
           dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
         ),
       );

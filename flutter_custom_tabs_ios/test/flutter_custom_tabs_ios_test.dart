@@ -23,6 +23,7 @@ void main() {
   test('launch: invoke method "launch" with safariVCOptions', () async {
     await customTabs.launch(
       'http://example.com/',
+      prefersDeepLink: true,
       customTabsOptions: const CustomTabsOptions(),
       safariVCOptions: const SafariViewControllerOptions(
         barCollapsingEnabled: true,
@@ -33,6 +34,7 @@ void main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
+          'prefersDeepLink': true,
           'safariVCOptions': const <String, dynamic>{
             'barCollapsingEnabled': true
           }
