@@ -12,20 +12,20 @@ void main() {
   setUp(() => {CustomTabsPlatform.instance = mock});
 
   test('launch: with null options', () async {
-    const url = 'http://example.com/';
+    final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
       customTabsOptions: anyNamed('customTabsOptions'),
       safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    await launch(url);
+    await launchUrl(url);
 
-    verify(mock.launch(url));
+    verify(mock.launch(url.toString()));
   });
 
   test('launch: with empty options', () async {
-    const url = 'http://example.com/';
+    final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
       customTabsOptions: anyNamed('customTabsOptions'),
@@ -34,21 +34,21 @@ void main() {
 
     const customTabsOptions = CustomTabsOptions();
     const safariVCOptions = SafariViewControllerOptions();
-    await launch(
+    await launchUrl(
       url,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     );
 
     verify(mock.launch(
-      url,
+      url.toString(),
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     ));
   });
 
   test('launch: with empty options', () async {
-    const url = 'http://example.com/';
+    final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
       customTabsOptions: anyNamed('customTabsOptions'),
@@ -84,20 +84,20 @@ void main() {
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
     );
 
-    await launch(
+    await launchUrl(
       url,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     );
 
     verify(mock.launch(
-      url,
+      url.toString(),
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     ));
   });
 
-  test('launch: with a url containing a whitespace', () async {
+  test('launchUrlString: with a url containing a whitespace', () async {
     const url = ' http://example.com/';
     when(mock.launch(
       any,
@@ -105,17 +105,15 @@ void main() {
       safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    await launch(url);
+    await launchUrlString(url);
 
-    verify(mock.launch(
-      url.trimLeft(),
-    ));
+    verify(mock.launch(url.trimLeft()));
   });
 
-  test('closeAllIfPossible', () async {
+  test('closeCustomTabs', () async {
     when(mock.closeAllIfPossible()).thenAnswer((_) async {});
 
-    await closeAllIfPossible();
+    await closeCustomTabs();
 
     verify(mock.closeAllIfPossible());
   });

@@ -341,6 +341,7 @@ enum CustomTabsActivityHeightResizeBehavior {
   /// The Custom Tab Activity, when it behaves as a bottom sheet, cannot have its height manually resized by the user.
   fixed(2);
 
+  @internal
   const CustomTabsActivityHeightResizeBehavior(this.rawValue);
 
   @internal
