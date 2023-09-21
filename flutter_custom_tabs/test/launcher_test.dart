@@ -19,7 +19,7 @@ void main() {
       safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    await launch(url);
+    await launchUrl(url);
 
     verify(mock.launch(url));
   });
@@ -34,7 +34,7 @@ void main() {
 
     const customTabsOptions = CustomTabsOptions();
     const safariVCOptions = SafariViewControllerOptions();
-    await launch(
+    await launchUrl(
       url,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
@@ -84,7 +84,7 @@ void main() {
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
     );
 
-    await launch(
+    await launchUrl(
       url,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
@@ -105,17 +105,17 @@ void main() {
       safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
 
-    await launch(url);
+    await launchUrl(url);
 
     verify(mock.launch(
       url.trimLeft(),
     ));
   });
 
-  test('closeAllIfPossible', () async {
+  test('closeCustomTabs', () async {
     when(mock.closeAllIfPossible()).thenAnswer((_) async {});
 
-    await closeAllIfPossible();
+    await closeCustomTabs();
 
     verify(mock.closeAllIfPossible());
   });

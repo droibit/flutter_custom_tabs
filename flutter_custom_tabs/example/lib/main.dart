@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
   Future<void> _launchURL(BuildContext context) async {
     final theme = Theme.of(context);
     try {
-      await launch(
+      await launchUrl(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.theme(
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
     try {
-      await launch(
+      await launchUrl(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions.bottomSheet(
           configuration: CustomTabsBottomSheetConfiguration(

@@ -16,17 +16,15 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// Example:
 ///
 /// ```dart
-/// await launch(
+/// await launchUrl(
 ///   'https://flutter.io',
 ///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     urlBarHidingEnabled: true,
 ///     showPageTitle: true,
-///     animation: CustomTabsAnimation.slideIn(),
-///     extraCustomTabs: <String>[
-///       'org.mozilla.firefox',
-///       'com.microsoft.emmx'
-///     ],
+///     closeButton: CustomTabsCloseButton(
+///       icon: CustomTabsCloseButtonIcon.back,
+///     ),
 ///   ),
 ///   safariVCOptions: SafariViewControllerOptions(
 ///     preferredBarTintColor: Theme.of(context).primaryColor,
@@ -37,7 +35,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   ),
 /// );
 /// ```
-Future<void> launch(
+Future<void> launchUrl(
   String urlString, {
   CustomTabsOptions? customTabsOptions,
   SafariViewControllerOptions? safariVCOptions,
@@ -57,6 +55,6 @@ Future<void> launch(
   );
 }
 
-Future<void> closeAllIfPossible() async {
+Future<void> closeCustomTabs() async {
   await CustomTabsPlatform.instance.closeAllIfPossible();
 }
