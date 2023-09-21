@@ -32,6 +32,7 @@ abstract class CustomTabsPlatform extends PlatformInterface {
   /// Open the specified Web URL with Custom Tabs or implementation by platform.
   Future<void> launch(
     String urlString, {
+    bool prefersDeepLink = false,
     CustomTabsOptions? customTabsOptions,
     SafariViewControllerOptions? safariVCOptions,
   }) {
