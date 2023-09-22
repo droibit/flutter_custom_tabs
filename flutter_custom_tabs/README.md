@@ -83,6 +83,7 @@ class MyApp extends StatelessWidget {
     try {
       await launchUrlString(
         'https://flutter.dev',
+        prefersDeepLink: true,
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.theme(
             toolbarColor: theme.primaryColor,

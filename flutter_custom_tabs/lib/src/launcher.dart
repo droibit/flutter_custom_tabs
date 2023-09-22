@@ -17,7 +17,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///
 /// ```dart
 /// await launchUrlString(
-///   'https://flutter.io',
+///   'https://flutter.dev',
 ///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     urlBarHidingEnabled: true,
@@ -37,11 +37,13 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// ```
 Future<void> launchUrlString(
   String urlString, {
+  bool prefersDeepLink = false,
   CustomTabsOptions? customTabsOptions,
   SafariViewControllerOptions? safariVCOptions,
 }) async {
   await launchUrl(
     Uri.parse(urlString.trimLeft()),
+    prefersDeepLink: prefersDeepLink,
     customTabsOptions: customTabsOptions,
     safariVCOptions: safariVCOptions,
   );
@@ -61,7 +63,7 @@ Future<void> launchUrlString(
 ///
 /// ```dart
 /// await launchUrl(
-///   'https://flutter.io',
+///   'https://flutter.dev',
 ///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     urlBarHidingEnabled: true,
@@ -81,6 +83,7 @@ Future<void> launchUrlString(
 /// ```
 Future<void> launchUrl(
   Uri url, {
+  bool prefersDeepLink = false,
   CustomTabsOptions? customTabsOptions,
   SafariViewControllerOptions? safariVCOptions,
 }) async {
@@ -93,6 +96,7 @@ Future<void> launchUrl(
 
   await CustomTabsPlatform.instance.launch(
     url.toString(),
+    prefersDeepLink: prefersDeepLink,
     customTabsOptions: customTabsOptions,
     safariVCOptions: safariVCOptions,
   );

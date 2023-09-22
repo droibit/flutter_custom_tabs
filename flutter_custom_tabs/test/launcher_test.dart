@@ -42,15 +42,17 @@ void main() {
 
     verify(mock.launch(
       url.toString(),
+      prefersDeepLink: false,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     ));
   });
 
-  test('launch: with empty options', () async {
+  test('launch: with full options', () async {
     final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
+      prefersDeepLink: anyNamed('prefersDeepLink'),
       customTabsOptions: anyNamed('customTabsOptions'),
       safariVCOptions: anyNamed('safariVCOptions'),
     )).thenAnswer((_) async {});
@@ -83,15 +85,17 @@ void main() {
       entersReaderIfAvailable: false,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
     );
-
+    const prefersDeepLink = true;
     await launchUrl(
       url,
+      prefersDeepLink: prefersDeepLink,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     );
 
     verify(mock.launch(
       url.toString(),
+      prefersDeepLink: prefersDeepLink,
       customTabsOptions: customTabsOptions,
       safariVCOptions: safariVCOptions,
     ));
@@ -125,6 +129,7 @@ class _MockCustomTabsPlatform extends Mock
   @override
   Future<void> launch(
     String? urlString, {
+    bool? prefersDeepLink = false,
     CustomTabsOptions? customTabsOptions,
     SafariViewControllerOptions? safariVCOptions,
   }) {
@@ -133,6 +138,7 @@ class _MockCustomTabsPlatform extends Mock
         #launch,
         [urlString],
         <Symbol, Object?>{
+          #prefersDeepLink: prefersDeepLink,
           #customTabsOptions: customTabsOptions,
           #safariVCOptions: safariVCOptions
         },
