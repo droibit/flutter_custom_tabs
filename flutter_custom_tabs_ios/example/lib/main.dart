@@ -133,7 +133,7 @@ class MyApp extends StatelessWidget {
     final theme = Theme.of(context);
     try {
       await CustomTabsPlatform.instance.launch(
-        'http://maps.apple.com/?q=Mexican+Restaurant',
+        'https://maps.apple.com/?q=tokyo+station',
         prefersDeepLink: true,
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.theme(
