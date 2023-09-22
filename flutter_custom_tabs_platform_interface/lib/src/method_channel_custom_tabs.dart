@@ -12,11 +12,13 @@ class MethodChannelCustomTabs extends CustomTabsPlatform {
   @override
   Future<void> launch(
     String urlString, {
+    bool prefersDeepLink = false,
     CustomTabsOptions? customTabsOptions,
     SafariViewControllerOptions? safariVCOptions,
   }) {
     final args = <String, dynamic>{
       'url': urlString,
+      'prefersDeepLink': prefersDeepLink,
       'customTabsOptions': customTabsOptions?.toMap() ?? <String, dynamic>{},
       'safariVCOptions': safariVCOptions?.toMap() ?? <String, dynamic>{}
     };

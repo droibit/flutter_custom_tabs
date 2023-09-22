@@ -17,6 +17,7 @@ class CustomTabsPluginWeb extends CustomTabsPlatform {
   @override
   Future<void> launch(
     String urlString, {
+    bool prefersDeepLink = false,
     CustomTabsOptions? customTabsOptions,
     SafariViewControllerOptions? safariVCOptions,
   }) {

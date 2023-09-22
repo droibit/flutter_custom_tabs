@@ -3,6 +3,7 @@ import SafariServices
 import UIKit
 
 private let keyURL = "url"
+private let keyPrefersDeepLink = "prefersDeepLink"
 private let keyOptions = "safariVCOptions"
 
 public class CustomTabsPlugin: NSObject, FlutterPlugin {
@@ -21,9 +22,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
         switch call.method {
         case "launch":
             let arguments = call.arguments as! [String: Any]
-            let url = arguments[keyURL] as! String
-            let options = arguments[keyOptions] as! [String: Any]
-            present(withURL: url, options: options, result: result)
+            launch(with: arguments, result: result)
         case "closeAllIfPossible":
             dismissAllIfPossible(result: result)
         default:
@@ -31,9 +30,24 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    private func present(withURL url: String, options: [String: Any], result: @escaping FlutterResult) {
+    private func launch(with arguments: [String: Any], result: @escaping FlutterResult) {
+        let url = URL(string: arguments[keyURL] as! String)!
+        let options = arguments[keyOptions] as! [String: Any]
+        let prefersDeepLink = arguments[keyPrefersDeepLink] as! Bool
+        if prefersDeepLink {
+            UIApplication.shared.open(url, options: [.universalLinksOnly: true]) { [weak self] opened in
+                if !opened {
+                    self?.present(with: url, options: options, result: result)
+                }
+            }
+        } else {
+            present(with: url, options: options, result: result)
+        }
+    }
+
+    private func present(with url: URL, options: [String: Any], result: @escaping FlutterResult) {
         if let topViewController = UIWindow.keyWindow?.topViewController() {
-            let safariViewController = SFSafariViewController.make(url: URL(string: url)!, options: options)
+            let safariViewController = SFSafariViewController.make(url: url, options: options)
             dismissStack.append { [weak safariViewController] in
                 safariViewController?.dismiss(animated: true)
             }

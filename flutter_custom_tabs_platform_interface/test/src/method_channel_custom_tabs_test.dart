@@ -20,13 +20,14 @@ void main() {
     customTabs = MethodChannelCustomTabs();
   });
 
-  test('launch invoke method "launch" with null option', () async {
+  test('launch invoke method "launch" with null options', () async {
     await customTabs.launch('http://example.com/');
     expect(
       log,
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
+          'prefersDeepLink': false,
           'customTabsOptions': const <String, dynamic>{},
           'safariVCOptions': const <String, dynamic>{}
         }),
@@ -34,9 +35,10 @@ void main() {
     );
   });
 
-  test('launch invoke method "launch" with option', () async {
+  test('launch invoke method "launch" with options', () async {
     await customTabs.launch(
       'http://example.com/',
+      prefersDeepLink: true,
       customTabsOptions: const CustomTabsOptions(
         urlBarHidingEnabled: true,
       ),
@@ -49,6 +51,7 @@ void main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
+          'prefersDeepLink': true,
           'customTabsOptions': const <String, dynamic>{
             'urlBarHidingEnabled': true,
           },

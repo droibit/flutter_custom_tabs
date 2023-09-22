@@ -20,9 +20,10 @@ void main() {
     customTabs = CustomTabsPluginAndroid();
   });
 
-  test('launch: invoke method "launch" with safariVCOptions', () async {
+  test('launch: invoke method "launch" with customTabsOptions', () async {
     await customTabs.launch(
       'http://example.com/',
+      prefersDeepLink: true,
       customTabsOptions: const CustomTabsOptions(
         urlBarHidingEnabled: true,
       ),
@@ -33,6 +34,7 @@ void main() {
       <Matcher>[
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
+          'prefersDeepLink': true,
           'customTabsOptions': const <String, dynamic>{
             'urlBarHidingEnabled': true,
           }
