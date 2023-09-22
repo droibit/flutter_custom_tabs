@@ -31,6 +31,7 @@ import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_C
 public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
     private static final String KEY_OPTIONS = "customTabsOptions";
     private static final String KEY_URL = "url";
+    private static final String KEY_PREFERS_DEEP_LINK = "prefersDeepLink";
     private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
     private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
@@ -93,11 +94,18 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
             return;
         }
 
+        final Uri uri = Uri.parse(args.get(KEY_URL).toString());
+        if (args.containsKey(KEY_PREFERS_DEEP_LINK) && ((Boolean) args.get(KEY_PREFERS_DEEP_LINK))) {
+            if (NativeLauncher.launch(activity, uri)) {
+                result.success(null);
+                return;
+            }
+        }
+
         final CustomTabsFactory factory = new CustomTabsFactory(activity);
         try {
             final Map<String, Object> options = (Map<String, Object>) args.get(KEY_OPTIONS);
             final CustomTabsIntent customTabsIntent = factory.createIntent(options);
-            final Uri uri = Uri.parse(args.get(KEY_URL).toString());
             if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
                 customTabsIntent.intent.setData(uri);
                 activity.startActivityForResult(customTabsIntent.intent, REQUEST_CODE_CUSTOM_TABS);
