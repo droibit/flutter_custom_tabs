@@ -77,12 +77,16 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
     @SuppressWarnings("unchecked")
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull final MethodChannel.Result result) {
-        if ("launch".equals(call.method)) {
-            launch(((Map<String, Object>) call.arguments), result);
-        } else if ("closeAllIfPossible".equals(call.method)) {
-            closeAllIfPossible(result);
-        } else {
-            result.notImplemented();
+        switch (call.method) {
+            case "launch":
+                launch(((Map<String, Object>) call.arguments), result);
+                break;
+            case "closeAllIfPossible":
+                closeAllIfPossible(result);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
@@ -90,7 +94,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
     private void launch(@NonNull Map<String, Object> args, @NonNull MethodChannel.Result result) {
         final Activity activity = this.activity;
         if (activity == null) {
-            result.error(CODE_LAUNCH_ERROR, "Launching a CustomTabs requires a foreground activity.", null);
+            result.error(CODE_LAUNCH_ERROR, "Launching a custom tab requires a foreground activity.", null);
             return;
         }
 
