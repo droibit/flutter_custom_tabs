@@ -96,7 +96,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
 
         final Uri uri = Uri.parse(args.get(KEY_URL).toString());
         if (args.containsKey(KEY_PREFERS_DEEP_LINK) && ((Boolean) args.get(KEY_PREFERS_DEEP_LINK))) {
-            if (NativeLauncher.launch(activity, uri)) {
+            if (NativeAppLauncher.launch(activity, uri)) {
                 result.success(null);
                 return;
             }

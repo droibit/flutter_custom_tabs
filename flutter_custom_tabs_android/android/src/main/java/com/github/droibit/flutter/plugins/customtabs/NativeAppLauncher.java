@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * ref. https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-native-apps/
+ * ref. <a href="https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-native-apps/">Let native applications handle the content</a>
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-class NativeLauncher {
+class NativeAppLauncher {
     static boolean launch(@NonNull Context context, @NonNull Uri uri) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ?
                 launchNativeApi30(context, uri) :
