@@ -32,7 +32,7 @@ void main() {
       ),
       urlBarHidingEnabled: true,
       shareState: CustomTabsShareState.off,
-      showPageTitle: true,
+      showTitle: true,
       instantAppsEnabled: false,
       closeButton: CustomTabsCloseButton(
         icon: "icon",
@@ -78,7 +78,7 @@ void main() {
       },
       'urlBarHidingEnabled': true,
       'shareState': 2,
-      'showPageTitle': true,
+      'showTitle': true,
       'instantAppsEnabled': false,
       'closeButtonIcon': "icon",
       'closeButtonPosition': 2,

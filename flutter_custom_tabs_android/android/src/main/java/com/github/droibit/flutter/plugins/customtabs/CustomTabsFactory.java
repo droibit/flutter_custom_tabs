@@ -34,7 +34,7 @@ class CustomTabsFactory {
     private static final String KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_COLOR = "navigationBarColor";
     private static final String KEY_COLOR_SCHEME_PARAMS_NAVIGATION_BAR_DIVIDER_COLOR = "navigationBarDividerColor";
     private static final String KEY_OPTIONS_URL_BAR_HIDING_ENABLED = "urlBarHidingEnabled";
-    private static final String KEY_OPTIONS_SHOW_PAGE_TITLE = "showPageTitle";
+    private static final String KEY_OPTIONS_SHOW_TITLE = "showTitle";
     private static final String KEY_OPTIONS_SHARE_STATE = "shareState";
     private static final String KEY_INSTANT_APPS_ENABLED = "instantAppsEnabled";
     private static final String KEY_OPTIONS_ANIMATIONS = "animations";
@@ -90,8 +90,8 @@ class CustomTabsFactory {
             builder.setShareState(shareState);
         }
 
-        if (options.containsKey(KEY_OPTIONS_SHOW_PAGE_TITLE)) {
-            builder.setShowTitle(((Boolean) options.get(KEY_OPTIONS_SHOW_PAGE_TITLE)));
+        if (options.containsKey(KEY_OPTIONS_SHOW_TITLE)) {
+            builder.setShowTitle(((Boolean) options.get(KEY_OPTIONS_SHOW_TITLE)));
         }
 
         if (options.containsKey(KEY_INSTANT_APPS_ENABLED)) {

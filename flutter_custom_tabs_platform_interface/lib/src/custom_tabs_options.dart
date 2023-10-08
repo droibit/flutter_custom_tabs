@@ -16,7 +16,7 @@ class CustomTabsOptions {
     this.colorSchemes,
     this.urlBarHidingEnabled,
     this.shareState,
-    this.showPageTitle,
+    this.showTitle,
     this.instantAppsEnabled,
     this.closeButton,
     this.animations,
@@ -29,14 +29,14 @@ class CustomTabsOptions {
     required CustomTabsBottomSheetConfiguration configuration,
     CustomTabsColorSchemes? colorSchemes,
     CustomTabsShareState? shareState,
-    bool? showPageTitle,
+    bool? showTitle,
     CustomTabsCloseButton? closeButton,
     List<String>? extraCustomTabs,
     Map<String, String>? headers,
   }) : this(
           colorSchemes: colorSchemes,
           shareState: shareState,
-          showPageTitle: showPageTitle,
+          showTitle: showTitle,
           closeButton: closeButton,
           extraCustomTabs: extraCustomTabs,
           headers: headers,
@@ -53,7 +53,7 @@ class CustomTabsOptions {
   final CustomTabsShareState? shareState;
 
   /// Show web page title in tool bar.
-  final bool? showPageTitle;
+  final bool? showTitle;
 
   /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
   final bool? instantAppsEnabled;
@@ -80,7 +80,7 @@ class CustomTabsOptions {
       if (urlBarHidingEnabled != null)
         'urlBarHidingEnabled': urlBarHidingEnabled,
       if (shareState != null) 'shareState': shareState!.rawValue,
-      if (showPageTitle != null) 'showPageTitle': showPageTitle,
+      if (showTitle != null) 'showTitle': showTitle,
       if (instantAppsEnabled != null) 'instantAppsEnabled': instantAppsEnabled,
       if (animations != null) 'animations': animations!.toMap(),
       if (closeButton?.icon != null) 'closeButtonIcon': closeButton!.icon,

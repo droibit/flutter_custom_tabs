@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
-          showPageTitle: true,
+          showTitle: true,
           closeButton: CustomTabsCloseButton(
             icon: CustomTabsCloseButtonIcon.back,
           ),
@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
             colorScheme: theme.brightness.toColorScheme(),
             toolbarColor: theme.primaryColor,
           ),
-          showPageTitle: true,
+          showTitle: true,
         ),
         safariVCOptions: SafariViewControllerOptions.pageSheet(
           configuration: const SheetPresentationControllerConfiguration(

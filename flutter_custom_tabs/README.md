@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
           ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
-          showPageTitle: true,
+          showTitle: true,
           closeButton: CustomTabsCloseButton(
             icon: CustomTabsCloseButtonIcon.back,
           ),

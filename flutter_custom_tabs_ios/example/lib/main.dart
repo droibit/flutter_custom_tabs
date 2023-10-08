@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
-          showPageTitle: true,
+          showTitle: true,
         ),
         safariVCOptions: SafariViewControllerOptions(
           preferredBarTintColor: theme.colorScheme.surface,
@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
           colorSchemes: CustomTabsColorSchemes.theme(
             toolbarColor: theme.primaryColor,
           ),
-          showPageTitle: true,
+          showTitle: true,
         ),
         safariVCOptions: SafariViewControllerOptions.pageSheet(
           configuration: const SheetPresentationControllerConfiguration(
@@ -142,7 +142,7 @@ class MyApp extends StatelessWidget {
           ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
-          showPageTitle: true,
+          showTitle: true,
         ),
         safariVCOptions: SafariViewControllerOptions(
           preferredBarTintColor: theme.colorScheme.surface,

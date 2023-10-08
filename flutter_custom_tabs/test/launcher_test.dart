@@ -65,7 +65,7 @@ void main() {
       ),
       urlBarHidingEnabled: true,
       shareState: CustomTabsShareState.off,
-      showPageTitle: true,
+      showTitle: true,
       instantAppsEnabled: false,
       animations: CustomTabsAnimations(
         startEnter: '_startEnter',
