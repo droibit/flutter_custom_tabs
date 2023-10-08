@@ -32,8 +32,8 @@ void main() {
       ),
       urlBarHidingEnabled: true,
       shareState: CustomTabsShareState.off,
-      showPageTitle: true,
-      enableInstantApps: false,
+      showTitle: true,
+      instantAppsEnabled: false,
       closeButton: CustomTabsCloseButton(
         icon: "icon",
         position: CustomTabsCloseButtonPosition.end,
@@ -78,8 +78,8 @@ void main() {
       },
       'urlBarHidingEnabled': true,
       'shareState': 2,
-      'showPageTitle': true,
-      'enableInstantApps': false,
+      'showTitle': true,
+      'instantAppsEnabled': false,
       'closeButtonIcon': "icon",
       'closeButtonPosition': 2,
       'animations': <String, String>{

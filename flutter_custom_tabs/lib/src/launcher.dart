@@ -21,7 +21,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     urlBarHidingEnabled: true,
-///     showPageTitle: true,
+///     showTitle: true,
 ///     closeButton: CustomTabsCloseButton(
 ///       icon: CustomTabsCloseButtonIcon.back,
 ///     ),
@@ -67,7 +67,7 @@ Future<void> launchUrlString(
 ///   customTabsOptions: CustomTabsOptions(
 ///     toolbarColor: Theme.of(context).primaryColor,
 ///     urlBarHidingEnabled: true,
-///     showPageTitle: true,
+///     showTitle: true,
 ///     closeButton: CustomTabsCloseButton(
 ///       icon: CustomTabsCloseButtonIcon.back,
 ///     ),
