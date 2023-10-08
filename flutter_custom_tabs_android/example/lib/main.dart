@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
           showPageTitle: true,
-          animation: CustomTabsSystemAnimation.slideIn(),
+          animations: CustomTabsSystemAnimations.slideIn(),
           closeButton: CustomTabsCloseButton(
             icon: CustomTabsCloseButtonIcon.back,
           ),

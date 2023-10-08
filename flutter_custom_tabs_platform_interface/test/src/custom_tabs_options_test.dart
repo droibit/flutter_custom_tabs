@@ -38,7 +38,7 @@ void main() {
         icon: "icon",
         position: CustomTabsCloseButtonPosition.end,
       ),
-      animation: CustomTabsAnimation(
+      animations: CustomTabsAnimations(
         startEnter: '_startEnter',
         startExit: '_startExit',
         endEnter: '_endEnter',

@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('slideIn: create the built-in slide in animation', () {
     expect(
-      CustomTabsSystemAnimation.slideIn(),
-      const CustomTabsAnimation(
+      CustomTabsSystemAnimations.slideIn(),
+      const CustomTabsAnimations(
         startEnter: 'android:anim/slide_in_right',
         startExit: 'android:anim/slide_out_left',
         endEnter: 'android:anim/slide_in_left',
@@ -17,8 +17,8 @@ void main() {
 
   test('fade: create the built-in fade animation', () {
     expect(
-      CustomTabsSystemAnimation.fade(),
-      const CustomTabsAnimation(
+      CustomTabsSystemAnimations.fade(),
+      const CustomTabsAnimations(
         startEnter: 'android:anim/fade_in',
         startExit: 'android:anim/fade_out',
         endEnter: 'android:anim/fade_in',
