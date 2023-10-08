@@ -17,7 +17,7 @@ class CustomTabsOptions {
     this.urlBarHidingEnabled,
     this.shareState,
     this.showPageTitle,
-    this.enableInstantApps,
+    this.instantAppsEnabled,
     this.closeButton,
     this.animations,
     this.extraCustomTabs,
@@ -56,7 +56,7 @@ class CustomTabsOptions {
   final bool? showPageTitle;
 
   /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
-  final bool? enableInstantApps;
+  final bool? instantAppsEnabled;
 
   /// The close button configuration.
   final CustomTabsCloseButton? closeButton;
@@ -81,7 +81,7 @@ class CustomTabsOptions {
         'urlBarHidingEnabled': urlBarHidingEnabled,
       if (shareState != null) 'shareState': shareState!.rawValue,
       if (showPageTitle != null) 'showPageTitle': showPageTitle,
-      if (enableInstantApps != null) 'enableInstantApps': enableInstantApps,
+      if (instantAppsEnabled != null) 'instantAppsEnabled': instantAppsEnabled,
       if (animations != null) 'animations': animations!.toMap(),
       if (closeButton?.icon != null) 'closeButtonIcon': closeButton!.icon,
       if (closeButton?.position != null)

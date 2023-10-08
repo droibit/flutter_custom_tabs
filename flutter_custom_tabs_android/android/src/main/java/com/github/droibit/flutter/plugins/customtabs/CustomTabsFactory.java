@@ -36,7 +36,7 @@ class CustomTabsFactory {
     private static final String KEY_OPTIONS_URL_BAR_HIDING_ENABLED = "urlBarHidingEnabled";
     private static final String KEY_OPTIONS_SHOW_PAGE_TITLE = "showPageTitle";
     private static final String KEY_OPTIONS_SHARE_STATE = "shareState";
-    private static final String KEY_OPTIONS_ENABLE_INSTANT_APPS = "enableInstantApps";
+    private static final String KEY_INSTANT_APPS_ENABLED = "instantAppsEnabled";
     private static final String KEY_OPTIONS_ANIMATIONS = "animations";
     private static final String KEY_CLOSE_BUTTON_POSITION = "closeButtonPosition";
     private static final String KEY_CLOSE_BUTTON_ICON = "closeButtonIcon";
@@ -94,8 +94,8 @@ class CustomTabsFactory {
             builder.setShowTitle(((Boolean) options.get(KEY_OPTIONS_SHOW_PAGE_TITLE)));
         }
 
-        if (options.containsKey(KEY_OPTIONS_ENABLE_INSTANT_APPS)) {
-            builder.setInstantAppsEnabled(((Boolean) options.get(KEY_OPTIONS_ENABLE_INSTANT_APPS)));
+        if (options.containsKey(KEY_INSTANT_APPS_ENABLED)) {
+            builder.setInstantAppsEnabled(((Boolean) options.get(KEY_INSTANT_APPS_ENABLED)));
         }
 
         if (options.containsKey(KEY_OPTIONS_ANIMATIONS)) {
