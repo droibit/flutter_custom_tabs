@@ -19,7 +19,7 @@ class CustomTabsOptions {
     this.showPageTitle,
     this.enableInstantApps,
     this.closeButton,
-    this.animation,
+    this.animations,
     this.extraCustomTabs,
     this.headers,
     this.bottomSheetConfiguration,
@@ -62,7 +62,7 @@ class CustomTabsOptions {
   final CustomTabsCloseButton? closeButton;
 
   ///  Enter and exit animation.
-  final CustomTabsAnimation? animation;
+  final CustomTabsAnimations? animations;
 
   ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
   final List<String>? extraCustomTabs;
@@ -82,7 +82,7 @@ class CustomTabsOptions {
       if (shareState != null) 'shareState': shareState!.rawValue,
       if (showPageTitle != null) 'showPageTitle': showPageTitle,
       if (enableInstantApps != null) 'enableInstantApps': enableInstantApps,
-      if (animation != null) 'animations': animation!.toMap(),
+      if (animations != null) 'animations': animations!.toMap(),
       if (closeButton?.icon != null) 'closeButtonIcon': closeButton!.icon,
       if (closeButton?.position != null)
         'closeButtonPosition': closeButton!.position!.rawValue,
@@ -213,8 +213,8 @@ class CustomTabsColorSchemeParams {
 /// * https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String,%20java.lang.String,%20java.lang.String)
 ///
 @immutable
-class CustomTabsAnimation {
-  const CustomTabsAnimation({
+class CustomTabsAnimations {
+  const CustomTabsAnimations({
     this.startEnter,
     this.startExit,
     this.endEnter,

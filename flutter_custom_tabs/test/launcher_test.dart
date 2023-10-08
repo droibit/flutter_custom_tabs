@@ -67,7 +67,7 @@ void main() {
       shareState: CustomTabsShareState.off,
       showPageTitle: true,
       enableInstantApps: false,
-      animation: CustomTabsAnimation(
+      animations: CustomTabsAnimations(
         startEnter: '_startEnter',
         startExit: '_startExit',
         endEnter: '_endEnter',
