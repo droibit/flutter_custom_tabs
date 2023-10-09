@@ -13,23 +13,27 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///
 /// ```dart
 /// final theme = ...;
-/// await launchUrlString(
-///   'https://flutter.dev',
-///   customTabsOptions: CustomTabsOptions(
-///     toolbarColor: theme.surface,
-///     urlBarHidingEnabled: true,
-///     showTitle: true,
-///     closeButton: CustomTabsCloseButton(
-///       icon: CustomTabsCloseButtonIcon.back,
+/// try {
+///   await launchUrlString(
+///     'https://flutter.dev',
+///     customTabsOptions: CustomTabsOptions(
+///       toolbarColor: theme.surface,
+///       urlBarHidingEnabled: true,
+///       showTitle: true,
+///       closeButton: CustomTabsCloseButton(
+///         icon: CustomTabsCloseButtonIcon.back,
+///       ),
 ///     ),
-///   ),
-///   safariVCOptions: SafariViewControllerOptions(
-///     preferredBarTintColor: theme.colorScheme.surface,
-///     preferredControlTintColor: theme.colorScheme.onSurface,
-///     barCollapsingEnabled: true,
-///     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-///   ),
-/// );
+///     safariVCOptions: SafariViewControllerOptions(
+///       preferredBarTintColor: theme.colorScheme.surface,
+///       preferredControlTintColor: theme.colorScheme.onSurface,
+///       barCollapsingEnabled: true,
+///       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+///     ),
+///   );
+/// } catch (e) {
+///   // An exception is thrown if browser app is not installed on Android device.
+/// }
 /// ```
 Future<void> launchUrlString(
   String urlString, {
@@ -55,23 +59,27 @@ Future<void> launchUrlString(
 ///
 /// ```dart
 /// final theme = ...;
-/// await launchUrl(
-///   Uri.parse('https://flutter.dev'),
-///   customTabsOptions: CustomTabsOptions(
-///     toolbarColor: theme.surface,
-///     urlBarHidingEnabled: true,
-///     showTitle: true,
-///     closeButton: CustomTabsCloseButton(
-///       icon: CustomTabsCloseButtonIcon.back,
+/// try {
+///   await launchUrl(
+///     Uri.parse('https://flutter.dev'),
+///     customTabsOptions: CustomTabsOptions(
+///       toolbarColor: theme.surface,
+///       urlBarHidingEnabled: true,
+///       showTitle: true,
+///       closeButton: CustomTabsCloseButton(
+///         icon: CustomTabsCloseButtonIcon.back,
+///       ),
 ///     ),
-///   ),
-///   safariVCOptions: SafariViewControllerOptions(
-///     preferredBarTintColor: theme.colorScheme.surface,
-///     preferredControlTintColor: theme.colorScheme.onSurface,
-///     barCollapsingEnabled: true,
-///     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-///   ),
-/// );
+///     safariVCOptions: SafariViewControllerOptions(
+///       preferredBarTintColor: theme.colorScheme.surface,
+///       preferredControlTintColor: theme.colorScheme.onSurface,
+///       barCollapsingEnabled: true,
+///       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+///     ),
+///   );
+/// } catch (e) {
+///   // An exception is thrown if browser app is not installed on Android device.
+/// }
 /// ```
 Future<void> launchUrl(
   Uri url, {

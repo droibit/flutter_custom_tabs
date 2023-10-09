@@ -1,29 +1,12 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin for launching a URL using [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/)
- like [url_launcher](https://pub.dev/packages/url_launcher).  
+A Flutter plugin for launching URLs with a custom tab, optimized for mobile apps.
 
-The following platforms are supported:
-- Android
-- iOS(`*`)
-- Web(`*`)
-
-On Android and iOS, you can customize the screen 
-to display web contents according to your application.
-
-| Android | iOS |
-| - | - |
-| ![android](https://i.imgur.com/lgPWvLS.gif) | ![iOS](https://i.imgur.com/LhsCUzb.gif) |
-
-`*`Custom Tabs is a feature that works seamlessly with apps and web content,  
-and requires browsers such as Chrome on **Android**.  
-
-Therefore, other platforms use different native features.
-- iOS: [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller).
-  - You can customize the look & feel of the screen.
-- Web: [url_launcher_web](https://pub.dev/packages/url_launcher_web)
-  - You can't customize it at all.
+|             | Android | iOS   |  Web  |
+|-------------|---------|-------|-------|
+| **Support** | SDK 19+ | 11.0+ | Any   |
+| **A custom tab** | [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) | [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) | Not supported (delegate to [url_launcher](https://pub.dev/packages/url_launcher)) |
 
 ## Getting Started
 Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
@@ -33,7 +16,7 @@ dependencies:
   flutter_custom_tabs: ^1.2.1
 ```
 
-### Requirements
+### Requirements for Android
 - Android Gradle Plugin v7.4.0 and above.
 - Kotlin v1.7.0 and above.
 
@@ -48,13 +31,14 @@ buildscript {
 }
 ```
 
-### Usage
-Open the web URL like `url_launcher`.  
-It is also possible to customize look & feel by specifying options for each Platform.
-- Android: [`CustomTabsOption`](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs_platform_interface/lib/src/custom_tabs_option.dart)
-- iOS: [`SafariViewControllerOption`](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs_platform_interface/lib/src/safari_view_controller_option.dart)
+## Basic Usage
+You can launch web URLs similar to `url_launcher` and specify options to customize appearance and behavior.
 
-#### Example
+| Android | iOS |
+| --- | --- |
+| ![android](https://i.imgur.com/lgPWvLS.gif) | ![iOS](https://i.imgur.com/LhsCUzb.gif) |
+
+### Example
 
 ``` dart
 import 'package:flutter/material.dart';
@@ -64,12 +48,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         body: Center(
-          child: TextButton(
+          child: ElevatedButton(
             child: const Text('Show Flutter homepage'),
             onPressed: () => _launchURL(context),
           ),
@@ -83,10 +64,9 @@ class MyApp extends StatelessWidget {
     try {
       await launchUrlString(
         'https://flutter.dev',
-        prefersDeepLink: true,
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.theme(
-            toolbarColor: theme.primaryColor,
+            toolbarColor: theme.surface,
           ),
           shareState: CustomTabsShareState.on,
           urlBarHidingEnabled: true,
@@ -96,10 +76,9 @@ class MyApp extends StatelessWidget {
           ),
         ),                    
         safariVCOptions: SafariViewControllerOptions(
-          preferredBarTintColor: theme.primaryColor,
-          preferredControlTintColor: Colors.white,
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
           barCollapsingEnabled: true,
-          entersReaderIfAvailable: false,
           dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,        
         ),
       );
@@ -109,6 +88,75 @@ class MyApp extends StatelessWidget {
     }
   }
 }
+```
+
+See the example app for more complex examples.
+
+## Advanced Usage
+
+### Deep Linking
+Supports launching deep link URLs.  
+(If a native app that responds to the deep link URL is installed, it will directly launch it. otherwise, it will launch a custom tab.)
+
+```dart
+Future<void> _launchDeepLinkURL(BuildContext context) async {
+  final theme = Theme.of(context);
+  await launchUrlString(
+    'https://www.google.com/maps/@35.6908883,139.7865242,13z',
+    prefersDeepLink: true,
+    customTabsOptions: CustomTabsOptions(
+      colorSchemes: CustomTabsColorSchemes.theme(
+        toolbarColor: theme.colorScheme.surface,
+      ),
+    ),
+    safariVCOptions: SafariViewControllerOptions(
+      preferredBarTintColor: theme.colorScheme.surface,
+      preferredControlTintColor: theme.colorScheme.onSurface,
+    ),
+  );
+}
+```
+
+### Launches as a bottom sheet
+You can launch URLs in Custom Tabs as a bottom sheet.
+
+Requirements:
+- Android: Chrome v107 and above or [other browsers](https://developer.chrome.com/docs/android/custom-tabs/browser-support/#setinitialactivityheightpx)
+- iOS: 15.0+ 
+
+```dart
+  Future<void> _launchURLInBottomSheet(BuildContext context) async {
+    final theme = Theme.of(context);
+    final mediaQuery = MediaQuery.of(context);    
+    await launchUrlString(
+      'https://flutter.dev',
+      customTabsOptions: CustomTabsOptions.partial(
+        configuration: PartialCustomTabsConfiguration(
+          initialHeight: mediaQuery.size.height * 0.7,
+        ),
+        colorSchemes: CustomTabsColorSchemes.theme(
+          toolbarColor: theme.colorScheme.surface,
+        ),
+      ),
+      safariVCOptions: SafariViewControllerOptions.pageSheet(
+        configuration: const SheetPresentationControllerConfiguration(
+          detents: {
+            SheetPresentationControllerDetent.large,
+            SheetPresentationControllerDetent.medium,
+          },
+          largestUndimmedDetentIdentifier:
+              SheetPresentationControllerDetent.medium,
+          prefersScrollingExpandsWhenScrolledToEdge: false,
+          prefersGrabberVisible: true,
+          prefersEdgeAttachedInCompactHeight: true,
+          preferredCornerRadius: 16.0,
+        ),
+        preferredBarTintColor: theme.colorScheme.surface,
+        preferredControlTintColor: theme.colorScheme.onSurface,
+        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      ),
+    );
+  }
 ```
 
 ## License
