@@ -23,12 +23,12 @@ class CustomTabsOptions {
     this.animations,
     this.extraCustomTabs,
     this.headers,
-    this.bottomSheetConfiguration,
+    this.partialConfiguration,
   });
 
-  /// Creates a [CustomTabsOptions] instance with bottom sheet configuration.
-  const CustomTabsOptions.bottomSheet({
-    required CustomTabsBottomSheetConfiguration configuration,
+  /// Creates a [CustomTabsOptions] instance with configuration for Partial Custom Tabs.
+  const CustomTabsOptions.partial({
+    required PartialCustomTabsConfiguration configuration,
     CustomTabsColorSchemes? colorSchemes,
     CustomTabsShareState? shareState,
     bool? showTitle,
@@ -42,7 +42,7 @@ class CustomTabsOptions {
           closeButton: closeButton,
           extraCustomTabs: extraCustomTabs,
           headers: headers,
-          bottomSheetConfiguration: configuration,
+          partialConfiguration: configuration,
         );
 
   /// The visualization configuration.
@@ -72,8 +72,8 @@ class CustomTabsOptions {
   /// Extra HTTP request headers.
   final Map<String, String>? headers;
 
-  /// The bottom sheet configuration.
-  final CustomTabsBottomSheetConfiguration? bottomSheetConfiguration;
+  /// The configuration for Partial Custom Tabs.
+  final PartialCustomTabsConfiguration? partialConfiguration;
 
   /// Converts the [CustomTabsOptions] instance into a [Map] instance for serialization.
   Map<String, dynamic> toMap() {
@@ -90,8 +90,8 @@ class CustomTabsOptions {
         'closeButtonPosition': closeButton!.position!.rawValue,
       if (extraCustomTabs != null) 'extraCustomTabs': extraCustomTabs,
       if (headers != null) 'headers': headers,
-      if (bottomSheetConfiguration != null)
-        'bottomSheet': bottomSheetConfiguration!.toMap(),
+      if (partialConfiguration != null)
+        'partial': partialConfiguration!.toMap(),
     };
   }
 }
@@ -298,10 +298,10 @@ enum CustomTabsShareState {
   final int rawValue;
 }
 
-/// The configuration to show custom tab as a bottom sheet.
+/// The configuration for [Partial Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs/).
 @immutable
-class CustomTabsBottomSheetConfiguration {
-  const CustomTabsBottomSheetConfiguration({
+class PartialCustomTabsConfiguration {
+  const PartialCustomTabsConfiguration({
     required this.initialHeight,
     this.activityHeightResizeBehavior =
         CustomTabsActivityHeightResizeBehavior.defaultBehavior,
