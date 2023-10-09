@@ -50,7 +50,7 @@ void main() {
           'com.microsoft.emmx',
         ],
         headers: {'key': 'value'},
-        bottomSheetConfiguration: CustomTabsBottomSheetConfiguration(
+        partialConfiguration: PartialCustomTabsConfiguration(
           initialHeight: 500,
           activityHeightResizeBehavior:
               CustomTabsActivityHeightResizeBehavior.adjustable,
@@ -94,7 +94,7 @@ void main() {
           'com.microsoft.emmx',
         ],
         'headers': <String, String>{'key': 'value'},
-        'bottomSheet': <String, dynamic>{
+        'partial': <String, dynamic>{
           'initialHeightDp': 500,
           'activityHeightResizeBehavior': 1,
           'cornerRadiusDp': 16,
@@ -131,7 +131,7 @@ void main() {
 
   group('CustomTabsBottomSheetConfiguration', () {
     test('toMap() returns a map with complete options', () {
-      const configuration = CustomTabsBottomSheetConfiguration(
+      const configuration = PartialCustomTabsConfiguration(
         initialHeight: 300,
         activityHeightResizeBehavior:
             CustomTabsActivityHeightResizeBehavior.adjustable,
@@ -145,7 +145,7 @@ void main() {
     });
 
     test('toMap() returns expected a map with default values', () {
-      const configuration = CustomTabsBottomSheetConfiguration(
+      const configuration = PartialCustomTabsConfiguration(
         initialHeight: 200,
       );
       expect(configuration.toMap(), <String, dynamic>{

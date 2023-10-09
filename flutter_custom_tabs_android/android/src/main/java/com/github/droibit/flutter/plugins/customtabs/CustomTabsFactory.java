@@ -46,7 +46,7 @@ class CustomTabsFactory {
     private static final String KEY_ANIMATION_END_ENTER = "endEnter";
     private static final String KEY_ANIMATION_END_EXIT = "endExit";
     private static final String KEY_OPTIONS_EXTRA_CUSTOM_TABS = "extraCustomTabs";
-    private static final String KEY_OPTIONS_BOTTOM_SHEET = "bottomSheet";
+    private static final String KEY_OPTIONS_PARTIAL_CUSTOM_TABS = "partial";
     private static final String KEY_BOTTOM_SHEET_INITIAL_HEIGHT_DP = "initialHeightDp";
     private static final String KEY_BOTTOM_SHEET_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR = "activityHeightResizeBehavior";
     private static final String KEY_BOTTOM_SHEET_CORNER_RADIUS_DP = "cornerRadiusDp";
@@ -102,10 +102,10 @@ class CustomTabsFactory {
             applyAnimations(builder, ((Map<String, String>) options.get(KEY_OPTIONS_ANIMATIONS)));
         }
 
-        if (options.containsKey(KEY_OPTIONS_BOTTOM_SHEET)) {
-            final Map<String, Object> bottomSheetConfig =
-                    ((Map<String, Object>) options.get(KEY_OPTIONS_BOTTOM_SHEET));
-            applyBottomSheetConfiguration(builder, bottomSheetConfig);
+        if (options.containsKey(KEY_OPTIONS_PARTIAL_CUSTOM_TABS)) {
+            final Map<String, Object> partialCustomTabsConfig =
+                    ((Map<String, Object>) options.get(KEY_OPTIONS_PARTIAL_CUSTOM_TABS));
+            applyPartialCustomTabsConfiguration(builder, partialCustomTabsConfig);
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();
@@ -216,7 +216,7 @@ class CustomTabsFactory {
         }
     }
 
-    private void applyBottomSheetConfiguration(
+    private void applyPartialCustomTabsConfiguration(
             @NonNull CustomTabsIntent.Builder builder,
             @NonNull Map<String, Object> configuration
     ) {

@@ -103,8 +103,8 @@ class MyApp extends StatelessWidget {
     try {
       await CustomTabsPlatform.instance.launch(
         'https://flutter.dev',
-        customTabsOptions: CustomTabsOptions.bottomSheet(
-            configuration: CustomTabsBottomSheetConfiguration(
+        customTabsOptions: CustomTabsOptions.partial(
+            configuration: PartialCustomTabsConfiguration(
               initialHeight: mediaQuery.size.height * 0.7,
             ),
             colorSchemes: CustomTabsColorSchemes.theme(
