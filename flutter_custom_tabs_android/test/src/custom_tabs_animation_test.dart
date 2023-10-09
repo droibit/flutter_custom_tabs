@@ -3,7 +3,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('slideIn: create the built-in slide in animation', () {
+  test('slideIn: creates the built-in slide in animation', () {
     expect(
       CustomTabsSystemAnimations.slideIn(),
       const CustomTabsAnimations(
@@ -15,7 +15,7 @@ void main() {
     );
   });
 
-  test('fade: create the built-in fade animation', () {
+  test('fade: creates the built-in fade animation', () {
     expect(
       CustomTabsSystemAnimations.fade(),
       const CustomTabsAnimations(
