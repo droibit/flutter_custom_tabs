@@ -29,7 +29,7 @@ abstract class CustomTabsPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Passes [url] to the underlying platform for handling.
+  /// Passes [url] with options to the underlying platform for launching a custom tab.
   Future<void> launch(
     String urlString, {
     bool prefersDeepLink = false,
