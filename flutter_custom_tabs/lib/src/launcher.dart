@@ -3,23 +3,20 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-/// Open the specified Web URL with Custom Tabs.
+/// Passes [url] with options to the underlying platform for launching a custom tab.
 ///
-/// Custom Tabs is only supported on the Android platform.
-/// Therefore, Open the web page using Safari View Controller ([`SFSafariViewController`]((https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)),
-/// whose appearance can be customized even on iOS.
-///
-/// When Chrome is not installed on Android device, try to start other browsers.
-/// If you want to launch a Custom Tabs compatible browser on a device without Chrome, you can set its package name with `options.extraCustomTabs`.
-/// e.g. Firefox(`org.mozilla.firefox`), Microsoft Edge(`com.microsoft.emmx`).
+/// - On Android, the appearance and behavior of [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) can be customized using the [customTabsOptions] parameter.
+/// - On iOS, the appearance and behavior of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) can be customized using the [safariVCOptions] parameter.
+/// - For web, customization options are not available.
 ///
 /// Example:
 ///
 /// ```dart
+/// final theme = ...;
 /// await launchUrlString(
 ///   'https://flutter.dev',
 ///   customTabsOptions: CustomTabsOptions(
-///     toolbarColor: Theme.of(context).primaryColor,
+///     toolbarColor: theme.surface,
 ///     urlBarHidingEnabled: true,
 ///     showTitle: true,
 ///     closeButton: CustomTabsCloseButton(
@@ -27,10 +24,9 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///     ),
 ///   ),
 ///   safariVCOptions: SafariViewControllerOptions(
-///     preferredBarTintColor: Theme.of(context).primaryColor,
-///     preferredControlTintColor: Colors.white,
+///     preferredBarTintColor: theme.colorScheme.surface,
+///     preferredControlTintColor: theme.colorScheme.onSurface,
 ///     barCollapsingEnabled: true,
-///     entersReaderIfAvailable: false,
 ///     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
 ///   ),
 /// );
@@ -49,23 +45,20 @@ Future<void> launchUrlString(
   );
 }
 
-/// Open the specified Web URL with Custom Tabs.
+/// Passes [url] with options to the underlying platform for launching a custom tab.
 ///
-/// Custom Tabs is only supported on the Android platform.
-/// Therefore, Open the web page using Safari View Controller ([`SFSafariViewController`]((https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)),
-/// whose appearance can be customized even on iOS.
-///
-/// When Chrome is not installed on Android device, try to start other browsers.
-/// If you want to launch a Custom Tabs compatible browser on a device without Chrome, you can set its package name with `options.extraCustomTabs`.
-/// e.g. Firefox(`org.mozilla.firefox`), Microsoft Edge(`com.microsoft.emmx`).
+/// - On Android, the appearance and behavior of [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) can be customized using the [customTabsOptions] parameter.
+/// - On iOS, the appearance and behavior of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) can be customized using the [safariVCOptions] parameter.
+/// - For web, customization options are not available.
 ///
 /// Example:
 ///
 /// ```dart
+/// final theme = ...;
 /// await launchUrl(
-///   'https://flutter.dev',
+///   Uri.parse('https://flutter.dev'),
 ///   customTabsOptions: CustomTabsOptions(
-///     toolbarColor: Theme.of(context).primaryColor,
+///     toolbarColor: theme.surface,
 ///     urlBarHidingEnabled: true,
 ///     showTitle: true,
 ///     closeButton: CustomTabsCloseButton(
@@ -73,10 +66,9 @@ Future<void> launchUrlString(
 ///     ),
 ///   ),
 ///   safariVCOptions: SafariViewControllerOptions(
-///     preferredBarTintColor: Theme.of(context).primaryColor,
-///     preferredControlTintColor: Colors.white,
+///     preferredBarTintColor: theme.colorScheme.surface,
+///     preferredControlTintColor: theme.colorScheme.onSurface,
 ///     barCollapsingEnabled: true,
-///     entersReaderIfAvailable: false,
 ///     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
 ///   ),
 /// );
@@ -102,6 +94,7 @@ Future<void> launchUrl(
   );
 }
 
+// Closes all custom tabs that were opened earlier by "launchUrl" or "launchUrlString".
 Future<void> closeCustomTabs() async {
   await CustomTabsPlatform.instance.closeAllIfPossible();
 }

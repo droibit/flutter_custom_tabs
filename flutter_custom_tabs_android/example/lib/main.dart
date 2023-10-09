@@ -104,15 +104,15 @@ class MyApp extends StatelessWidget {
       await CustomTabsPlatform.instance.launch(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions.bottomSheet(
-          configuration: CustomTabsBottomSheetConfiguration(
-            initialHeight: mediaQuery.size.height * 0.7,
-          ),
-          colorSchemes: CustomTabsColorSchemes.theme(
-            colorScheme: theme.brightness.toColorScheme(),
-            toolbarColor: theme.primaryColor,
-          ),
-          showTitle: true,
-        ),
+            configuration: CustomTabsBottomSheetConfiguration(
+              initialHeight: mediaQuery.size.height * 0.7,
+            ),
+            colorSchemes: CustomTabsColorSchemes.theme(
+              colorScheme: theme.brightness.toColorScheme(),
+              toolbarColor: theme.primaryColor,
+            ),
+            showTitle: true,
+            closeButton: const CustomTabsCloseButton(icon: "ic_round_close")),
         safariVCOptions: SafariViewControllerOptions.pageSheet(
           configuration: const SheetPresentationControllerConfiguration(
             detents: {

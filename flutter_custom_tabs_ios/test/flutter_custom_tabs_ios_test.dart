@@ -20,7 +20,7 @@ void main() {
     customTabs = CustomTabsPluginIOS();
   });
 
-  test('launch: invoke method "launch" with safariVCOptions', () async {
+  test('launch() invoke method "launch" with safariVCOptions', () async {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
@@ -43,7 +43,7 @@ void main() {
     );
   });
 
-  test('closeAllIfPossible: invoke method "closeAllIfPossible"', () async {
+  test('closeAllIfPossible() invoke method "closeAllIfPossible"', () async {
     await customTabs.closeAllIfPossible();
     expect(
       log,

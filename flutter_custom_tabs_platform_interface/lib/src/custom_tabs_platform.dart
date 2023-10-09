@@ -29,7 +29,7 @@ abstract class CustomTabsPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Open the specified Web URL with Custom Tabs or implementation by platform.
+  /// Passes [url] with options to the underlying platform for launching a custom tab.
   Future<void> launch(
     String urlString, {
     bool prefersDeepLink = false,
@@ -39,7 +39,7 @@ abstract class CustomTabsPlatform extends PlatformInterface {
     throw UnimplementedError('launch() has not been implemented.');
   }
 
-  /// Close all the launched implementation by platform if possible.
+  /// Closes all custom tabs that were opened earlier by [launch].
   Future<void> closeAllIfPossible() {
     throw UnimplementedError('closeAllIfPossible() has not been implemented.');
   }

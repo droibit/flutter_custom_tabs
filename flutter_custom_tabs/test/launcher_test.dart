@@ -11,7 +11,7 @@ void main() {
   final mock = _MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launch: with null options', () async {
+  test('launch() launch with null options', () async {
     final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
@@ -24,7 +24,7 @@ void main() {
     verify(mock.launch(url.toString()));
   });
 
-  test('launch: with empty options', () async {
+  test('launch() launch with empty options', () async {
     final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
@@ -48,7 +48,7 @@ void main() {
     ));
   });
 
-  test('launch: with full options', () async {
+  test('launch() launch with complete options', () async {
     final url = Uri.parse('http://example.com/');
     when(mock.launch(
       any,
@@ -101,7 +101,7 @@ void main() {
     ));
   });
 
-  test('launchUrlString: with a url containing a whitespace', () async {
+  test('launchUrlString() launch with a url containing a whitespace', () async {
     const url = ' http://example.com/';
     when(mock.launch(
       any,
@@ -114,7 +114,7 @@ void main() {
     verify(mock.launch(url.trimLeft()));
   });
 
-  test('closeCustomTabs', () async {
+  test('closeCustomTabs() invoke method "closeAllIfPossible"', () async {
     when(mock.closeAllIfPossible()).thenAnswer((_) async {});
 
     await closeCustomTabs();

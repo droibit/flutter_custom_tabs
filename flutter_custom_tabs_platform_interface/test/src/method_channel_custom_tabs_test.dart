@@ -20,7 +20,7 @@ void main() {
     customTabs = MethodChannelCustomTabs();
   });
 
-  test('launch invoke method "launch" with null options', () async {
+  test('launch() invoke method "launch" with null options', () async {
     await customTabs.launch('http://example.com/');
     expect(
       log,
@@ -35,7 +35,7 @@ void main() {
     );
   });
 
-  test('launch invoke method "launch" with options', () async {
+  test('launch() invoke method "launch" with options', () async {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
@@ -63,7 +63,7 @@ void main() {
     );
   });
 
-  test('closeAllIfPossible invoke method "closeAllIfPossible"', () async {
+  test('closeAllIfPossible() invoke method "closeAllIfPossible"', () async {
     await customTabs.closeAllIfPossible();
     expect(
       log,

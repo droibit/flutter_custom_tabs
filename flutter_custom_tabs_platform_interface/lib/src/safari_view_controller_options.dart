@@ -1,15 +1,14 @@
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
-/// Options class for customizing appearance of Safari View Controller.
-/// **This options applied only on iOS platform.**
+/// The Configuration for providing comprehensive options
+/// when launching [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) by specifying a URL.
 ///
 /// See also:
-///
-/// * [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
-///
+/// - [SFSafariViewController.Configuration](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/configuration)
 @immutable
 class SafariViewControllerOptions {
+  /// Creates a [SafariViewControllerOptions] instance with the specified options.
   const SafariViewControllerOptions({
     this.preferredBarTintColor,
     this.preferredControlTintColor,
@@ -20,9 +19,11 @@ class SafariViewControllerOptions {
     this.pageSheetConfiguration,
   });
 
-  /// Availability: iOS15.0+
+  /// Creates a [SafariViewControllerOptions] instance with page sheet configuration.
+  ///
+  /// Availability: **iOS15.0+**
   const SafariViewControllerOptions.pageSheet({
-    required SheetPresentationControllerConfiguration? configuration,
+    required SheetPresentationControllerConfiguration configuration,
     Color? preferredBarTintColor,
     Color? preferredControlTintColor,
     bool? entersReaderIfAvailable,
@@ -38,29 +39,24 @@ class SafariViewControllerOptions {
         );
 
   /// The color to tint the background of the navigation bar and the toolbar.
-  /// - Availability: iOS10.0+
   final Color? preferredBarTintColor;
 
   /// The color to tint the control buttons on the navigation bar and the toolbar.
-  /// - Availability: iOS10.0+
   final Color? preferredControlTintColor;
 
-  /// If enabled, collapses the toolbar when the user scrolls down the page.
-  /// - Availability: iOS11.0+
+  /// A Boolean value that enables the url bar to hide as the user scrolls down the page.
   final bool? barCollapsingEnabled;
 
-  /// A value that specifies whether Safari should enter Reader mode, if it is available.
-  /// - Availability: iOS11.0+
+  /// A Boolean value that specifies whether Safari should enter Reader mode, if it is available.
   final bool? entersReaderIfAvailable;
 
   /// Dismiss button style on the navigation bar.
-  /// - Availability: iOS11.0+
   final SafariViewControllerDismissButtonStyle? dismissButtonStyle;
 
   /// The presentation style for modal view controllers.
   final ViewControllerModalPresentationStyle? modalPresentationStyle;
 
-  /// The bottom sheet configuration.
+  /// The page sheet configuration.
   final SheetPresentationControllerConfiguration? pageSheetConfiguration;
 
   /// Converts the [SafariViewControllerOptions] instance into a [Map] instance for serialization.
@@ -86,11 +82,11 @@ class SafariViewControllerOptions {
   }
 }
 
-/// Dismiss button style on the navigation bar of SafariViewController.
+/// Dismiss button style on the navigation bar of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller).
 ///
 /// See also:
 ///
-/// * [SFSafariViewController.DismissButtonStyle](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/dismissbuttonstyle)
+/// - [SFSafariViewController.DismissButtonStyle](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/dismissbuttonstyle)
 ///
 enum SafariViewControllerDismissButtonStyle {
   done(0),
@@ -108,11 +104,12 @@ enum SafariViewControllerDismissButtonStyle {
 ///
 /// See also:
 ///
-/// * [UIModalPresentationStyle](https://developer.apple.com/documentation/uikit/uimodalpresentationstyle)
+/// - [UIModalPresentationStyle](https://developer.apple.com/documentation/uikit/uimodalpresentationstyle)
 ///
 enum ViewControllerModalPresentationStyle {
   /// The default presentation style chosen by the system.
-  /// - Availability: iOS13.0+
+  ///
+  /// - Availability: **iOS13.0+**
   automatic(-2),
 
   /// A presentation style that indicates no adaptations should be made.
@@ -137,11 +134,12 @@ enum ViewControllerModalPresentationStyle {
   final int rawValue;
 }
 
-/// The configuration to show SFSafariViewController as a bottom sheet.
+/// The configuration to show [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) as a page sheet.
 ///
-/// - Availability: iOS15.0+
+/// - Availability: **iOS15.0+**
 ///
 /// See also:
+///
 /// - [UISheetPresentationController](https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller)
 @immutable
 class SheetPresentationControllerConfiguration {

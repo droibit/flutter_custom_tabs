@@ -19,7 +19,8 @@ void main() {
     plugin = CustomTabsPluginWeb();
   });
 
-  testWidgets('launch: delegate to url_launcher_web', (WidgetTester _) async {
+  testWidgets('launch() delegate to "url_launcher_web"',
+      (WidgetTester _) async {
     when(mock.launch(
       any,
       useSafariVC: anyNamed('useSafariVC'),
