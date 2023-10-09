@@ -1,5 +1,5 @@
-/// Build-in close button icon on custom tab.
+/// Build-in close button icon for custom tabs.
 class CustomTabsCloseButtonIcon {
-  /// Gets the resource identifier of build-in back button icon.
+  /// The resource ID of build-in back arrow button icon.
   static String get back => "fct_ic_arrow_back";
 }

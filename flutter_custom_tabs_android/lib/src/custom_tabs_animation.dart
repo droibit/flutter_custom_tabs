@@ -2,7 +2,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 
 /// Build-in enter and exit animations for Custom Tabs.
 class CustomTabsSystemAnimations {
-  /// Create a built-in slide in animation.
+  /// Creates a built-in slide in animation.
   static CustomTabsAnimations slideIn() {
     _slideIn ??= const CustomTabsAnimations(
       startEnter: 'android:anim/slide_in_right',
@@ -13,7 +13,7 @@ class CustomTabsSystemAnimations {
     return _slideIn!;
   }
 
-  /// Create a built-in fade animation.
+  /// Creates a built-in fade animation.
   static CustomTabsAnimations fade() {
     _fade ??= const CustomTabsAnimations(
       startEnter: 'android:anim/fade_in',
