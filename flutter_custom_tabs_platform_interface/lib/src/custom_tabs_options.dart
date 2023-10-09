@@ -3,15 +3,16 @@ import 'dart:math';
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 
-/// Options class for customizing appearance of Custom Tabs.
-/// **This options applied only on Android platform.**
+/// The Configuration for providing comprehensive options
+/// when launching [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) by specifying a URL.
 ///
 /// See also:
 ///
-/// * [CustomTabsIntent.Builder](https://developer.android.com/reference/android/support/customtabs/CustomTabsIntent.Builder.html)
+/// - [CustomTabsIntent.Builder](https://developer.android.com/reference/androidx/browser/customtabs/CustomTabsIntent.Builder)
 ///
 @immutable
 class CustomTabsOptions {
+  /// Creates a [CustomTabsOptions] instance with the specified options.
   const CustomTabsOptions({
     this.colorSchemes,
     this.urlBarHidingEnabled,
@@ -25,6 +26,7 @@ class CustomTabsOptions {
     this.bottomSheetConfiguration,
   });
 
+  /// Creates a [CustomTabsOptions] instance with bottom sheet configuration.
   const CustomTabsOptions.bottomSheet({
     required CustomTabsBottomSheetConfiguration configuration,
     CustomTabsColorSchemes? colorSchemes,
@@ -46,28 +48,28 @@ class CustomTabsOptions {
   /// The visualization configuration.
   final CustomTabsColorSchemes? colorSchemes;
 
-  /// If enabled, hides the toolbar when the user scrolls down the page.
+  /// A Boolean value that enables the url bar to hide as the user scrolls down the page.
   final bool? urlBarHidingEnabled;
 
-  /// If enabled, default sharing menu is added.
+  /// The share state that should be applied to the custom tab.
   final CustomTabsShareState? shareState;
 
-  /// Show web page title in tool bar.
+  /// A Boolean value that determines whether to show the page title in the toolbar of the custom tab.
   final bool? showTitle;
 
-  /// If enabled, allow custom tab to use [Instant Apps](https://developer.android.com/topic/instant-apps/index.html).
+  /// A Boolean value that indicates whether to enable [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) for this custom tab.
   final bool? instantAppsEnabled;
 
   /// The close button configuration.
   final CustomTabsCloseButton? closeButton;
 
-  ///  Enter and exit animation.
+  /// The enter and exit animations.
   final CustomTabsAnimations? animations;
 
-  ///  Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
+  /// Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
   final List<String>? extraCustomTabs;
 
-  /// Request Headers.
+  /// Extra HTTP request headers.
   final Map<String, String>? headers;
 
   /// The bottom sheet configuration.
@@ -94,7 +96,7 @@ class CustomTabsOptions {
   }
 }
 
-/// Configuration of a custom tab visualization.
+/// The configuration of a custom tab visualization.
 @immutable
 class CustomTabsColorSchemes {
   const CustomTabsColorSchemes({
@@ -118,7 +120,7 @@ class CustomTabsColorSchemes {
           ),
         );
 
-  ///  Desired color scheme.
+  /// Desired color scheme.
   final CustomTabsColorScheme? colorScheme;
 
   /// The [CustomTabsColorSchemeParams] for the light color scheme.
@@ -166,6 +168,7 @@ enum CustomTabsColorScheme {
 /// Contains visual parameters of a custom tab that may depend on the color scheme.
 ///
 /// See also:
+///
 /// - [CustomTabColorSchemeParams](https://developer.android.com/reference/androidx/browser/customtabs/CustomTabColorSchemeParams)
 @immutable
 class CustomTabsColorSchemeParams {
@@ -198,19 +201,18 @@ class CustomTabsColorSchemeParams {
   }
 }
 
-/// Enter and exit animation for Custom Tabs.
-/// **This animation applies only on Android platform.**
+/// The enter and exit animations for the custom tab.
 ///
-/// An animation specification is as follows:
-/// * For application animation resources, only resource file name.
-///  * e.g. `slide_up`
-/// * Otherwise a resource identifier and type `anim` fixed.
-///  * e.g. `android:anim/fade_in`
+/// Specify the Resource ID according to the specifications for the Android platform.
+/// - For resources within the Android app, use the resource name.
+///   - e.g. `slide_up`
+/// - For other cases, provide the complete Resource ID with the type 'anim'.
+///   - e.g. `android:anim/fade_in`
 ///
 /// See also:
 ///
-/// * [View Animation](https://developer.android.com/guide/topics/resources/animation-resource.html#View)
-/// * https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String,%20java.lang.String,%20java.lang.String)
+/// - [View animation](https://developer.android.com/guide/topics/resources/animation-resource.html#View)
+/// - [getIdentifier](https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String,%20java.lang.String,%20java.lang.String))
 ///
 @immutable
 class CustomTabsAnimations {
@@ -221,16 +223,16 @@ class CustomTabsAnimations {
     this.endExit,
   });
 
-  /// Enter animation for the custom tab.
+  /// Resource ID of the start "enter" animation for the custom tab.
   final String? startEnter;
 
-  /// Exit animation for the application.
+  /// Resource ID of the start "exit" animation for the application.
   final String? startExit;
 
-  /// Enter animation for the application.
+  /// Resource ID of the exit "enter" animation for the application.
   final String? endEnter;
 
-  /// Exit animation for the custom tab.
+  /// Resource ID of the exit "exit" animation for the custom tab.
   final String? endExit;
 
   @internal
