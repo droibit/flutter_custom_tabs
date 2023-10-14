@@ -1,12 +1,12 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin for launching URLs with a custom tab, optimized for mobile apps.
+A Flutter plugin for mobile apps to launch URLs in Custom Tabs.
 
 |             | Android | iOS   |  Web  |
 |-------------|---------|-------|-------|
 | **Support** | SDK 19+ | 11.0+ | Any   |
-| **A custom tab** | [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) | [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) | Not supported (delegate to [url_launcher](https://pub.dev/packages/url_launcher)) |
+| Implementation | [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) | [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) | [url_launcher](https://pub.dev/packages/url_launcher) |
 
 ## Getting Started
 Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.

@@ -1,12 +1,14 @@
 # Flutter Custom Tabs Plugin
 
-With the Flutter [Custom Tabs]((https://developer.chrome.com/multidevice/android/customtabs)) Plugin, you can use Custom Tabs as easily as [url_launcher](https://pub.dev/packages/url_launcher).
+A Flutter plugin to launch URLs in Custom Tabs with a similar feel to [url_launcher](https://pub.dev/packages/url_launcher),  
+which allows you to add the browser experience that Custom Tabs provides to your mobile apps.
 
-This plugin is built as federated plugins, see the [flutter_custom_tabs](./flutter_custom_tabs) package for details.
+This plugin is built as federated plugins, see the app facing package [flutter_custom_tabs](./flutter_custom_tabs) for details.
 
 ## License
 
-    Copyright (C) 2021 Shinya Kumagai
+    Copyright (C) 2015 The Android Open Source Project
+    Copyright (C) 2018 Shinya Kumagai
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
