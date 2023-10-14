@@ -1,7 +1,8 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin for mobile apps to launch URLs in Custom Tabs.
+A Flutter plugin for mobile apps to launch a URL in Custom Tabs.  
+This plugin allows you to add the browser experience that Custom Tabs provides to your mobile apps.
 
 |             | Android | iOS   |  Web  |
 |-------------|---------|-------|-------|
