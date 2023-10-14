@@ -17,7 +17,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   await launchUrlString(
 ///     'https://flutter.dev',
 ///     customTabsOptions: CustomTabsOptions(
-///       toolbarColor: theme.surface,
+///       toolbarColor: theme.colorScheme.surface,
 ///       urlBarHidingEnabled: true,
 ///       showTitle: true,
 ///       closeButton: CustomTabsCloseButton(
@@ -63,7 +63,7 @@ Future<void> launchUrlString(
 ///   await launchUrl(
 ///     Uri.parse('https://flutter.dev'),
 ///     customTabsOptions: CustomTabsOptions(
-///       toolbarColor: theme.surface,
+///       toolbarColor: theme.colorScheme.surface,
 ///       urlBarHidingEnabled: true,
 ///       showTitle: true,
 ///       closeButton: CustomTabsCloseButton(
@@ -102,7 +102,12 @@ Future<void> launchUrl(
   );
 }
 
-// Closes all custom tabs that were opened earlier by "launchUrl" or "launchUrlString".
+/// Closes all custom tabs that were opened earlier by "launchUrl" or "launchUrlString".
+/// 
+/// Availability:
+/// - Android: **SDK 23+**
+/// - iOS: Any
+/// - Web: Not supported
 Future<void> closeCustomTabs() async {
   await CustomTabsPlatform.instance.closeAllIfPossible();
 }
