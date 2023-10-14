@@ -103,7 +103,7 @@ Future<void> launchUrl(
 }
 
 /// Closes all custom tabs that were opened earlier by "launchUrl" or "launchUrlString".
-/// 
+///
 /// Availability:
 /// - Android: **SDK 23+**
 /// - iOS: Any
