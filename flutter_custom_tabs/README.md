@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: ElevatedButton(
-            child: const Text('Show Flutter homepage'),
+            child: const Text('Show flutter.dev'),
             onPressed: () => _launchURL(context),
           ),
         ),

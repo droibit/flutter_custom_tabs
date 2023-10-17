@@ -4,6 +4,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 import 'package:meta/meta.dart';
 
 /// The Configuration for providing minimal options for mobile platforms when launching Custom Tabs by specifying a URL.
+@experimental
 class LaunchOptions {
   /// Creates a [LaunchOptions] instance with the specified options.
   const LaunchOptions({
@@ -55,7 +56,7 @@ class LaunchOptions {
       preferredBarTintColor: barColor,
       preferredControlTintColor: onBarColor,
       barCollapsingEnabled: barCollapsingEnabled,
-      dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
     );
   }
 }

@@ -91,7 +91,7 @@ void main() {
       expect(safariVCOptions.barCollapsingEnabled, false);
       expect(
         safariVCOptions.dismissButtonStyle,
-        SafariViewControllerDismissButtonStyle.close,
+        SafariViewControllerDismissButtonStyle.done,
       );
     });
 
@@ -114,8 +114,10 @@ void main() {
         const Color(0xFFFFEBBD),
       );
       expect(safariVCOptions.barCollapsingEnabled, true);
-      expect(safariVCOptions.dismissButtonStyle,
-          SafariViewControllerDismissButtonStyle.close);
+      expect(
+        safariVCOptions.dismissButtonStyle,
+        SafariViewControllerDismissButtonStyle.done,
+      );
     });
 
     test(
@@ -137,8 +139,10 @@ void main() {
         const Color(0xFFFFEBBF),
       );
       expect(safariVCOptions.barCollapsingEnabled, null);
-      expect(safariVCOptions.dismissButtonStyle,
-          SafariViewControllerDismissButtonStyle.close);
+      expect(
+        safariVCOptions.dismissButtonStyle,
+        SafariViewControllerDismissButtonStyle.done,
+      );
     });
 
     test(
@@ -152,7 +156,7 @@ void main() {
       expect(safariVCOptions.barCollapsingEnabled, null);
       expect(
         safariVCOptions.dismissButtonStyle,
-        SafariViewControllerDismissButtonStyle.close,
+        SafariViewControllerDismissButtonStyle.done,
       );
     });
   });

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // ignore:depend_on_referenced_packages
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+// ignore:depend_on_referenced_packages
+import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart' as lite;
 
 void main() => runApp(const MyApp());
 
@@ -33,17 +35,25 @@ class MyApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FilledButton(
-                  onPressed: () => _launchURL(context),
+                  onPressed: () => _launchUrl(context),
                   child: const Text(
-                    'Show Flutter homepage',
+                    'Show flutter.dev',
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextButton(
-                  onPressed: () => _launchURLInBottomSheet(context),
+                  onPressed: () => _launchUrlLite(context),
                   child: const Text(
-                    'Show Flutter homepage(bottom Sheet)',
+                    'Show flutter.dev(lite ver)',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextButton(
+                  onPressed: () => _launchUrlInBottomSheet(context),
+                  child: const Text(
+                    'Show flutter.dev(bottom Sheet)',
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
@@ -55,7 +65,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future<void> _launchURL(BuildContext context) async {
+  Future<void> _launchUrl(BuildContext context) async {
     final theme = Theme.of(context);
     try {
       await launchUrlString(
@@ -87,7 +97,24 @@ class MyApp extends StatelessWidget {
     }
   }
 
-  Future<void> _launchURLInBottomSheet(BuildContext context) async {
+  Future<void> _launchUrlLite(BuildContext context) async {
+    final theme = Theme.of(context);
+    try {
+      await lite.launchUrl(
+        Uri.parse('https://flutter.dev'),
+        options: lite.LaunchOptions(
+          barColor: theme.colorScheme.surface,
+          onBarColor: theme.colorScheme.onSurface,
+          appBarFixed: false,
+        ),
+      );
+    } catch (e) {
+      // An exception is thrown if browser app is not installed on Android device.
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> _launchUrlInBottomSheet(BuildContext context) async {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
     try {
