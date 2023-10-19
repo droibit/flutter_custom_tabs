@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
                   FilledButton(
                     onPressed: () => _launchURL(context),
                     child: const Text(
-                      'Show Flutter homepage',
+                      'Show flutter.dev',
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
                   TextButton(
                     onPressed: () => _launchURLInBottomSheet(context),
                     child: const Text(
-                      'Show Flutter homepage(bottom Sheet)',
+                      'Show flutter.dev(bottom Sheet)',
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
