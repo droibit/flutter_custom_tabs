@@ -105,20 +105,6 @@ void main() {
     }
   });
 
-  test('launchUrlString() launch with a url containing a whitespace', () async {
-    const url = ' http://example.com/';
-    mock.setLaunchExpectations(
-      url: url.trimLeft(),
-      prefersDeepLink: false,
-    );
-
-    try {
-      await launchUrlString(url);
-    } catch (e) {
-      fail(e.toString());
-    }
-  });
-
   test('closeCustomTabs() invoke method "closeAllIfPossible"', () async {
     await closeCustomTabs();
     expect(mock.closeAllIfPossibleCalled, isTrue);
