@@ -11,15 +11,21 @@ class LaunchOptions {
     this.barColor,
     this.onBarColor,
     this.appBarFixed,
+    this.systemNavigationBarColor,
   });
 
-  /// The background color of the app bar and navigation bar.
+  /// The background color of the app bar and bottom bar.
   final Color? barColor;
 
-  /// The color to tint the control buttons on the app bar and navigation bar.
+  /// The color to tint the control buttons on the app bar and bottom bar.
   ///
-  /// **Only for iOS**
+  /// Availability: **Only for iOS**
   final Color? onBarColor;
+
+  /// The color configuration of the system navigation bar.
+  ///
+  /// Availability: **Only for Android**
+  final SystemNavigationBarColor? systemNavigationBarColor;
 
   /// A Boolean value that indicates whether to keep the app bar fixed, even when scrolling through the page.
   final bool? appBarFixed;
@@ -28,9 +34,11 @@ class LaunchOptions {
   @internal
   CustomTabsOptions toCustomTabsOptions() {
     CustomTabsColorSchemes? colorSchemes;
-    if (barColor != null) {
+    if (barColor != null || systemNavigationBarColor != null) {
       colorSchemes = CustomTabsColorSchemes.theme(
         toolbarColor: barColor,
+        navigationBarColor: systemNavigationBarColor?.background,
+        navigationBarDividerColor: systemNavigationBarColor?.divider,
       );
     }
 
@@ -59,4 +67,18 @@ class LaunchOptions {
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
     );
   }
+}
+
+/// The color configuration of the system navigation bar.
+class SystemNavigationBarColor {
+  /// The color of the system navigation bar.
+  final Color background;
+
+  /// The color of the system navigation bar divider.
+  final Color? divider;
+
+  SystemNavigationBarColor({
+    required this.background,
+    this.divider,
+  });
 }
