@@ -70,6 +70,7 @@ class LaunchOptions {
 }
 
 /// The color configuration of the system navigation bar.
+@experimental
 class SystemNavigationBarColor {
   /// The color of the system navigation bar.
   final Color background;
