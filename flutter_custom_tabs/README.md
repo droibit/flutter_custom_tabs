@@ -90,7 +90,7 @@ void _launchURL(BuildContext context) async {
     try {
       await launchUrl(
         Uri.parse('https://flutter.dev'),
-        options: lite.LaunchOptions(
+        options: LaunchOptions(
           barColor: theme.colorScheme.surface,
           onBarColor: theme.colorScheme.onSurface,
           appBarFixed: false,
