@@ -1,7 +1,8 @@
 # flutter_custom_tabs
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
-A Flutter plugin for mobile apps to launch URLs in Custom Tabs.
+A Flutter plugin for mobile apps to launch a URL in Custom Tabs.  
+This plugin allows you to add the browser experience that Custom Tabs provides to your mobile apps.
 
 |             | Android | iOS   |  Web  |
 |-------------|---------|-------|-------|
@@ -15,6 +16,9 @@ Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 dependencies:
   flutter_custom_tabs: ^1.2.1
 ```
+
+> **Note**
+> v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/docs/migration-guides.md) when updating the plugin.
 
 ### Requirements for Android
 - Android Gradle Plugin v7.4.0 and above.
