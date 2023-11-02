@@ -17,7 +17,9 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   await launchUrl(
 ///     Uri.parse('https://flutter.dev'),
 ///     customTabsOptions: CustomTabsOptions(
-///       toolbarColor: theme.colorScheme.surface,
+///       colorSchemes: CustomTabsColorSchemes.defaults(
+///         toolbarColor: theme.colorScheme.surface,
+///       ),
 ///       urlBarHidingEnabled: true,
 ///       showTitle: true,
 ///       closeButton: CustomTabsCloseButton(

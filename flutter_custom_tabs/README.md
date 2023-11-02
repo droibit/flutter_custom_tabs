@@ -54,7 +54,7 @@ void _launchURL(BuildContext context) async {
     await launchUrl(
       Uri.parse('https://flutter.dev'),
       customTabsOptions: CustomTabsOptions(
-        colorSchemes: CustomTabsColorSchemes.theme(
+        colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,
         ),
         shareState: CustomTabsShareState.on,
@@ -123,7 +123,7 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
     Uri.parse('https://www.google.com/maps/@35.6908883,139.7865242,13z'),
     prefersDeepLink: true,
     customTabsOptions: CustomTabsOptions(
-      colorSchemes: CustomTabsColorSchemes.theme(
+      colorSchemes: CustomTabsColorSchemes.defaults(
         toolbarColor: theme.colorScheme.surface,
       ),
     ),
@@ -155,7 +155,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
       configuration: PartialCustomTabsConfiguration(
         initialHeight: mediaQuery.size.height * 0.7,
       ),
-      colorSchemes: CustomTabsColorSchemes.theme(
+      colorSchemes: CustomTabsColorSchemes.defaults(
         toolbarColor: theme.colorScheme.surface,
       ),
     ),
@@ -165,12 +165,9 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
           SheetPresentationControllerDetent.large,
           SheetPresentationControllerDetent.medium,
         },
-        largestUndimmedDetentIdentifier:
-            SheetPresentationControllerDetent.medium,
-        prefersScrollingExpandsWhenScrolledToEdge: false,
+        prefersScrollingExpandsWhenScrolledToEdge: true,
         prefersGrabberVisible: true,
         prefersEdgeAttachedInCompactHeight: true,
-        preferredCornerRadius: 16.0,
       ),
       preferredBarTintColor: theme.colorScheme.surface,
       preferredControlTintColor: theme.colorScheme.onSurface,
