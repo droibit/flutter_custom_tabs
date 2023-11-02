@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       await CustomTabsPlatform.instance.launch(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             toolbarColor: theme.colorScheme.surface,
             navigationBarColor: theme.colorScheme.background,
           ),
@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
           configuration: PartialCustomTabsConfiguration(
             initialHeight: mediaQuery.size.height * 0.7,
           ),
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             toolbarColor: theme.primaryColor,
           ),
           showTitle: true,
@@ -136,7 +136,7 @@ class MyApp extends StatelessWidget {
         'https://maps.apple.com/?q=tokyo+station',
         prefersDeepLink: true,
         customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             toolbarColor: theme.colorScheme.surface,
             navigationBarColor: theme.colorScheme.background,
           ),

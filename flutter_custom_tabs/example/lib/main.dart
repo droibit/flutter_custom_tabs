@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         Uri.parse('https://flutter.dev'),
         prefersDeepLink: true,
         customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             toolbarColor: theme.colorScheme.surface,
             navigationBarColor: theme.colorScheme.background,
           ),
@@ -124,7 +124,7 @@ class MyApp extends StatelessWidget {
           configuration: PartialCustomTabsConfiguration(
             initialHeight: mediaQuery.size.height * 0.7,
           ),
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             colorScheme: theme.brightness.toColorScheme(),
             toolbarColor: theme.primaryColor,
           ),
@@ -136,9 +136,7 @@ class MyApp extends StatelessWidget {
               SheetPresentationControllerDetent.large,
               SheetPresentationControllerDetent.medium,
             },
-            largestUndimmedDetentIdentifier:
-                SheetPresentationControllerDetent.medium,
-            prefersScrollingExpandsWhenScrolledToEdge: false,
+            prefersScrollingExpandsWhenScrolledToEdge: true,
             prefersGrabberVisible: true,
             prefersEdgeAttachedInCompactHeight: true,
             preferredCornerRadius: 16.0,

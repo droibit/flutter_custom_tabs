@@ -53,14 +53,15 @@ To migrate, use the following equivalent options for customizing the toolbar col
 ```dart
 // Before
 CustomTabsOption(
-    toolbarColor: Colors.blue,
-);
+  toolbarColor: Colors.blue,
+)
+
 // After
 CustomTabsOptions(
-    colorSchemes: CustomTabsColorSchemes.theme(
-        toolbarColor: Colors.blue,
-    ),
-);
+  colorSchemes: CustomTabsColorSchemes.defaults(
+      toolbarColor: Colors.blue,
+  ),
+)
 ```
 
 - The method for setting the share state has changed from `enableDefaultShare` to `shareState`:
@@ -69,16 +70,16 @@ CustomTabsOptions(
 ```dart
 // Before:
 CustomTabsOption(
-    enableDefaultShare: true,
-    // or
-    enableDefaultShare: false,
+  enableDefaultShare: true,
+  // or
+  enableDefaultShare: false,
 )
 
 // After:
 CustomTabsOptions(
-    shareState: CustomTabsShareState.on,
-    // or
-    shareState: CustomTabsShareState.off,
+  shareState: CustomTabsShareState.on,
+  // or
+  shareState: CustomTabsShareState.off,
 )
 ```
 

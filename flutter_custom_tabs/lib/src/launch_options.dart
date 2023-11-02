@@ -35,7 +35,7 @@ class LaunchOptions {
   CustomTabsOptions toCustomTabsOptions() {
     CustomTabsColorSchemes? colorSchemes;
     if (barColor != null || systemNavigationBarColor != null) {
-      colorSchemes = CustomTabsColorSchemes.theme(
+      colorSchemes = CustomTabsColorSchemes.defaults(
         toolbarColor: barColor,
         navigationBarColor: systemNavigationBarColor?.background,
         navigationBarDividerColor: systemNavigationBarColor?.divider,

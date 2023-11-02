@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       await CustomTabsPlatform.instance.launch(
         'https://flutter.dev',
         customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             toolbarColor: theme.colorScheme.surface,
             navigationBarColor: theme.colorScheme.background,
           ),
@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
             configuration: PartialCustomTabsConfiguration(
               initialHeight: mediaQuery.size.height * 0.7,
             ),
-            colorSchemes: CustomTabsColorSchemes.theme(
+            colorSchemes: CustomTabsColorSchemes.defaults(
               colorScheme: theme.brightness.toColorScheme(),
               toolbarColor: theme.primaryColor,
             ),
@@ -145,7 +145,7 @@ class MyApp extends StatelessWidget {
         'https://www.google.co.jp/maps/@35.6908883,139.7865242,13.53z',
         prefersDeepLink: true,
         customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.theme(
+          colorSchemes: CustomTabsColorSchemes.defaults(
             toolbarColor: theme.colorScheme.surface,
             navigationBarColor: theme.colorScheme.background,
           ),

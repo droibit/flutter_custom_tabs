@@ -106,11 +106,11 @@ class CustomTabsColorSchemes {
     this.defaultPrams,
   });
 
-  CustomTabsColorSchemes.theme({
+  CustomTabsColorSchemes.defaults({
+    CustomTabsColorScheme? colorScheme,
     Color? toolbarColor,
     Color? navigationBarColor,
     Color? navigationBarDividerColor,
-    CustomTabsColorScheme? colorScheme,
   }) : this(
           colorScheme: colorScheme,
           defaultPrams: CustomTabsColorSchemeParams(
