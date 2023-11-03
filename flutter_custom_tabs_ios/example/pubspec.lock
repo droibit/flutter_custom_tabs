@@ -76,14 +76,15 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "2.0.0-beta"
   flutter_custom_tabs_platform_interface:
     dependency: "direct main"
     description:
-      path: "../../flutter_custom_tabs_platform_interface"
-      relative: true
-    source: path
-    version: "1.2.0"
+      name: flutter_custom_tabs_platform_interface
+      sha256: "39dc3de9c1309f95980fc5a4a67303eb408df4bbcd94f72ae6d0fabcba3cdd12"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0-beta"
   flutter_driver:
     dependency: transitive
     description: flutter
