@@ -83,9 +83,10 @@ CustomTabsOptions(
 )
 ```
 
-- The variable `showPageTitle` has been renamed to `showTitle`.
-- The variable `enableInstantApps` has been renamed to `instantAppsEnabled`.
-- The `CustomTabsAnimation` class has been renamed to `CustomTabsAnimations`, and the variable name has been changed from `animation` to `animations`.
+- The property `showPageTitle` has been renamed to `showTitle`.
+- The property `enableInstantApps` has been renamed to `instantAppsEnabled`.
+- The `CustomTabsAnimation` class has been renamed to `CustomTabsAnimations`, and the property name has been changed from `animation` to `animations`.
+- The `CustomTabsSystemAnimation` class has been renamed to `CustomTabsSystemAnimations`.
 
 #### Lightweight `flutter_custom_tabs`
 
@@ -95,7 +96,7 @@ CustomTabsOptions(
 `flutter_custom_tabs` provides a rich set of customization options for Custom Tabs, but sometimes a minimal appearance customization is enough.  
 The newly introduced `LaunchOptions` provides unified and simple options for Android/iOS.
 
-Start by importing `flutter_custom_tabs_lite.dart`:
+Start by importing the library file:
 ```diff
 -import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 +import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
