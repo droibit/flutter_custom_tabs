@@ -6,16 +6,6 @@ Web platform implementation of [flutter_custom_tabs][1].
 
 ### Import the package
 
-This package is the endorsed implementation of `flutter_custom_tabs` for the web platform since version `1.0.0`, so it gets automatically added to your dependencies by depending on `flutter_custom_tabs: ^1.1.0`.
-
-```yaml
-...
-dependencies:
-  ...
-  flutter_custom_tabs: ^1.1.0
-  ...
-```
-
-Once you have `flutter_custom_tabs` in `pubspec.yaml` you should be able to use `package:flutter_custom_tabs` as normal.
+This package has been the endorsed implementation of `flutter_custom_tabs` for the web platform since version `1.0.0`. This means it will be automatically included in your app when you add it, so you do not need to include it in your `pubspec.yaml`.
 
 [1]: https://pub.dev/packages/flutter_custom_tabs
