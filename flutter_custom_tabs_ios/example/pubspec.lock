@@ -83,7 +83,7 @@ packages:
       path: "../../flutter_custom_tabs_platform_interface"
       relative: true
     source: path
-    version: "1.2.0"
+    version: "2.0.0-beta"
   flutter_driver:
     dependency: transitive
     description: flutter
