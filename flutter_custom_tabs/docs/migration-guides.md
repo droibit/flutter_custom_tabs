@@ -7,11 +7,15 @@ The first major update of `flutter_custom_tabs`, v2.0.0, includes a variety of n
 
 #### API Change: `launch` to `launchUrl`
 The `launch` method has been renamed to `launchUrl` for better clarity and consistency. Additionally, there are changes in the naming and types of some parameters:
-- `CustomTabsOption` class has been renamed to `CustomTabsOptions`.
-- The argument name `customTabsOption` has been renamed to `customTabsOptions`.
-- `SafariViewControllerOption` class has been renamed to SafariViewControllerOptions.
-- The argument name `safariVCOption` has been renamed to `safariVCOptions`.
 
+```diff
+-CustomTabsOption? customTabsOption,
++CustomTabsOptions? customTabsOptions,
+-SafariViewControllerOption? safariVCOption,
++safariViewControllerOptions? safariVCOptions,
+```
+
+New signature:
 ```dart
 // Before:
 Future<void> launch(
@@ -23,33 +27,31 @@ Future<void> launch(
 // After:
 Future<void> launchUrl(
   Uri url, {
+  bool prefersDeepLink,
   CustomTabsOptions? customTabsOptions,
   SafariViewControllerOptions? safariVCOptions,
 }) async;
 ```
 
+Related changes:
+- The method `closeAllIfPossible` has been renamed to `closeCustomTabs`.
+
 #### API Changes in `CustomTabsOptions`
 
 The `CustomTabsOptions` class has undergone several changes:
-- The customization of various colors, including the toolbar color, has been moved to the `CustomTabsColorSchemes` class. The new structure is as follows:
+- The customization of various colors, including the toolbar color, has been moved to the `CustomTabsColorSchemes` class.
 
 ```dart
 // Before:
-class CustomTabsOption {
-  /// Custom tab toolbar color.
-  final Color? toolbarColor;
-  // ...  
-}
+/// Custom tab toolbar color.
+final Color? toolbarColor;
 
 // After:
-class CustomTabsOptions {
-  /// The visualization configuration.
-  final CustomTabsColorSchemes? colorSchemes;
-  // ...
-}
+/// The visualization configuration.
+final CustomTabsColorSchemes? colorSchemes;
 ```
 
-To migrate, use the following equivalent options for customizing the toolbar color:
+To migrate, use the following equivalent options:
 ```dart
 // Before
 CustomTabsOption(
@@ -60,32 +62,51 @@ CustomTabsOption(
 CustomTabsOptions(
   colorSchemes: CustomTabsColorSchemes.defaults(
       toolbarColor: Colors.blue,
+      // and newly added the system navigation colors.
+      // navigationBarColor: any color
+      // navigationBarDividerColor any color
   ),
 )
 ```
 
-- The method for setting the share state has changed from `enableDefaultShare` to `shareState`:
+- The method of specifying the share state has changed from `enableDefaultShare` to `shareState`:
+
+| Before | After |
+| --- | --- |
+| `enableDefaultShare: true` | `shareState: CustomTabsShareState.on` |
+| `enableDefaultShare: false` | `shareState: CustomTabsShareState.off` |
 
 
+- The method of specifying the close button has been changed from `closeButtonPosition` to the enhanced `closeButton`.
+
+To migrate, use the following equivalent options:
 ```dart
 // Before:
-CustomTabsOption(
-  enableDefaultShare: true,
-  // or
-  enableDefaultShare: false,
-)
+closeButtonPosition: CustomTabsCloseButtonPosition.end
 
 // After:
-CustomTabsOptions(
-  shareState: CustomTabsShareState.on,
+closeButton: CustomTabsCloseButton(
+  position: CustomTabsCloseButtonPosition.end,
+  // and newly added the button icon.
+  // icon: CustomTabsCloseButtonIcon.back,
   // or
-  shareState: CustomTabsShareState.off,
+  // icon: "DRAWABLE_RESOURCE_ID_IN_YOUR_ANDROID_PROJECT",
 )
 ```
 
-- The variable `showPageTitle` has been renamed to `showTitle`.
-- The variable `enableInstantApps` has been renamed to `instantAppsEnabled`.
-- The `CustomTabsAnimation` class has been renamed to `CustomTabsAnimations`, and the variable name has been changed from `animation` to `animations`.
+Remaining name changes:
+
+| Change Type | Before | After |
+| --- | --- | --- |
+| Property | `CustomTabsOption.showPageTitle` | `CustomTabsOptions.showTitle` |
+| Property | `CustomTabsOption.enableInstantApps` | `CustomTabsOptions.instantAppsEnabled` |
+| Class | `CustomTabsAnimation` | `CustomTabsAnimations` |
+| Class | `CustomTabsSystemAnimation` | `CustomTabsSystemAnimations` |
+| Property | `CustomTabsOption.animation` | `CustomTabsOptions.animations` |
+
+#### API Changes in `safariViewControllerOptions`
+
+- The property `statusBarBrightness` has been deleted.
 
 #### Lightweight `flutter_custom_tabs`
 
@@ -95,7 +116,7 @@ CustomTabsOptions(
 `flutter_custom_tabs` provides a rich set of customization options for Custom Tabs, but sometimes a minimal appearance customization is enough.  
 The newly introduced `LaunchOptions` provides unified and simple options for Android/iOS.
 
-Start by importing `flutter_custom_tabs_lite.dart`:
+Start by importing the library file:
 ```diff
 -import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 +import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
