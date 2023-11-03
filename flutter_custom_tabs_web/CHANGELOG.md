@@ -1,3 +1,7 @@
+## 2.0.0-beta+1
+
+- Tweak the description of "Import the package" in the README.
+
 ## 2.0.0-beta
 
 - Renames the `CustomTabsPlugin` class to `CustomTabsPluginWeb` to avoid conflicts with other platform packages.
