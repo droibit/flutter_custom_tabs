@@ -3,7 +3,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 
 /// The iOS implementation of [CustomTabsPlatform].
 ///
-/// This class implements the `package:flutter_custom_tabs` functionality for Android.
+/// This class implements the `package:flutter_custom_tabs` functionality for iOS.
 class CustomTabsPluginIOS extends CustomTabsPlatform {
   static const MethodChannel _channel =
       MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
