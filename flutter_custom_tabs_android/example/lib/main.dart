@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
 void main() => runApp(const MyApp());
