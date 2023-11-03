@@ -1,3 +1,10 @@
+## 2.0.0-beta
+
+- Renames the `CustomTabsPlugin` class to `CustomTabsPluginWeb` to avoid conflicts with other platform packages.
+- Updates the package `flutter_custom_tabs_platform_interface` to v2.0.0-beta.
+- Updates the package `url_launcher_web` to v2.0.16.
+- Updates the minimum supported SDK version to Flutter 3.0.0/Dart 2.17.
+
 ## 1.1.0
 
 - Update `flutter_custom_tabs_platform_interface` to v1.1.0.
