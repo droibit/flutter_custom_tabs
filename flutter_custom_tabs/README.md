@@ -14,11 +14,11 @@ Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
 dependencies:
-  flutter_custom_tabs: ^1.2.1
+  flutter_custom_tabs: ^2.0.0-beta
 ```
 
 > **Note**
-> v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/docs/migration-guides.md) when updating the plugin.
+> v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md) when updating the plugin.
 
 ### Requirements for Android
 - Android Gradle Plugin v7.4.0 and above.
@@ -36,7 +36,7 @@ buildscript {
 ```
 
 ## Usage
-You can launch web URLs similar to `url_launcher` and specify options to customize appearance and behavior.
+You can launch a web URL similar to `url_launcher` and specify options to customize appearance and behavior.
 
 | Android | iOS |
 | --- | --- |
