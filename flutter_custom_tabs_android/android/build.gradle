@@ -48,10 +48,7 @@ android {
     }
 
     dependencies {
-        // TODO: Delete Flutter's default compiles sdk version when it reaches 34.
-        api('androidx.browser:browser') {
-            version { strictly "1.5.0" }
-        }
-        api 'com.github.droibit:customtabslauncher:2.0.0-beta01'
+        implementation 'androidx.browser:browser:1.5.0'
+        implementation 'com.github.droibit:customtabslauncher:2.0.0-beta02'
     }
 }
