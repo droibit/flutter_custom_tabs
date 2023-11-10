@@ -78,7 +78,7 @@ packages:
     source: path
     version: "2.0.0-beta"
   flutter_custom_tabs_platform_interface:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_custom_tabs_platform_interface
       sha256: "39dc3de9c1309f95980fc5a4a67303eb408df4bbcd94f72ae6d0fabcba3cdd12"
