@@ -31,6 +31,8 @@
 .pub/
 /build/
 .flutter-plugins-dependencies
+# Remove the following pattern if you wish to check in your lock file
+pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart
