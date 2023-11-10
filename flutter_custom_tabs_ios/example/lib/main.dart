@@ -31,27 +31,30 @@ class MyApp extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FilledButton(
+                FilledButton.tonal(
                   onPressed: () => _launchURL(context),
                   child: const Text(
                     'Show flutter.dev',
-                    style: TextStyle(fontSize: 17),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 TextButton(
                   onPressed: () => _launchURLInBottomSheet(context),
-                  child: const Text(
-                    'Show flutter.dev(bottom Sheet)',
-                    style: TextStyle(fontSize: 17),
+                  child: Text(
+                    'Show flutter.dev in bottom sheet',
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 TextButton(
                   onPressed: () => _launchDeepLinkURL(context),
-                  child: const Text(
-                    'Show Apple Maps(deep linking)',
-                    style: TextStyle(fontSize: 17),
+                  child: Text(
+                    'Deep linking to Apple Maps',
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    ),
                   ),
                 ),
               ],
