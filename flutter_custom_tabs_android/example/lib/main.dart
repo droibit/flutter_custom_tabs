@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
                     child: Text(
                       'Show flutter.dev in bottom sheet',
                       style: TextStyle(
-                        fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
                       ),
                     ),
                   ),
@@ -56,7 +57,8 @@ class MyApp extends StatelessWidget {
                     child: Text(
                       'Deep linking to Google Maps',
                       style: TextStyle(
-                        fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
                       ),
                     ),
                   ),
