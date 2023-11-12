@@ -107,6 +107,28 @@ void _launchURL(BuildContext context) async {
 }
 ```
 
+## Custom Tabs Customization
+
+| Option | Android (`CustomTabsOptions`) | iOS (`SafariViewControllerOptions`) | `LaunchOptions` |
+| --- | :---: | :---: | :---: |
+| Change background color of app/bottom bar | ✅ | ✅ | ✅ |
+| Change color of controls on app/bottom bar | -<br>(Automatically adjusted by Custom Tabs) | ✅ | ✅ |
+| Change background color of system navigation bar | ✅ | - | ✅ |
+| Change color of system navigation divider | ✅ | - | ✅ |
+| Hide(Collapse) the app bar by scrolling | ✅ | ✅ | ✅ |
+| Add sharing action for web pages | ✅ | - | ✅<br>(always added on Android)) |
+| Change visibility of web page title | ✅ | - | ✅<br>(always shown on Android)) |
+| Change the availability of Reader mode | - | ✅ | Not provided |
+| Change appearance of close button | ✅<br>(Icon, position) | ✅<br>(Predefined button styles) | Not provided |
+| Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided | 
+| Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided | 
+| Pass HTTP headers | ✅ | - | Not provided | 
+| Show as a bottom sheet | ✅ | ✅ | Not provided | 
+
+Support status in `flutter_custom_tabs`:
+- ✅: Supported.
+- `-`: Option not provided by Custom Tabs implementation.
+
 ## Advanced Usage
 
 ### Deep Linking
