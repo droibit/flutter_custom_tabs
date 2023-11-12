@@ -116,8 +116,8 @@ void _launchURL(BuildContext context) async {
 | Change background color of system navigation bar | ✅ | - | ✅ |
 | Change color of system navigation divider | ✅ | - | ✅ |
 | Hide(Collapse) the app bar by scrolling | ✅ | ✅ | ✅ |
-| Add sharing action for web pages | ✅ | - | ✅<br>(always added on Android)) |
-| Change visibility of web page title | ✅ | - | ✅<br>(always shown on Android)) |
+| Add sharing action for web pages | ✅ | - | ✅<br>(always added on Android) |
+| Change visibility of web page title | ✅ | - | ✅<br>(always shown on Android) |
 | Change the availability of Reader mode | - | ✅ | Not provided |
 | Change appearance of close button | ✅<br>(Icon, position) | ✅<br>(Predefined button styles) | Not provided |
 | Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided | 
