@@ -16,15 +16,25 @@ The `launch` method has been renamed to `launchUrl` for better clarity and consi
 ```
 
 New signature:
+<table>
+<tr>
+<td>Before</td><td>After</td>
+</tr>
+<tr>
+<td>
+
 ```dart
-// Before:
 Future<void> launch(
   String urlString, {
   CustomTabsOption? customTabsOption,
   SafariViewControllerOption? safariVCOption,
 }) async;
+```
 
-// After:
+</td>
+<td>
+
+```dart
 Future<void> launchUrl(
   Uri url, {
   bool prefersDeepLink,
@@ -32,6 +42,10 @@ Future<void> launchUrl(
   SafariViewControllerOptions? safariVCOptions,
 }) async;
 ```
+
+</td>
+</tr>
+</table>
 
 Related changes:
 - The method `closeAllIfPossible` has been renamed to `closeCustomTabs`.
@@ -41,24 +55,48 @@ Related changes:
 The `CustomTabsOptions` class has undergone several changes:
 - The customization of various colors, including the toolbar color, has been moved to the `CustomTabsColorSchemes` class.
 
+<table>
+<tr>
+<td>Before</td><td>After</td>
+</tr>
+<tr>
+<td>
+
 ```dart
-// Before:
 /// Custom tab toolbar color.
 final Color? toolbarColor;
+```
 
-// After:
+</td>
+<td>
+
+```dart
 /// The visualization configuration.
 final CustomTabsColorSchemes? colorSchemes;
 ```
 
+</td>
+</tr>
+</table>
+
 To migrate, use the following equivalent options:
+<table>
+<tr>
+<td>Before</td><td>After</td>
+</tr>
+<tr>
+<td>
+
 ```dart
-// Before
 CustomTabsOption(
   toolbarColor: Colors.blue,
 )
+```
 
-// After
+</td>
+<td>
+
+```dart
 CustomTabsOptions(
   colorSchemes: CustomTabsColorSchemes.defaults(
       toolbarColor: Colors.blue,
@@ -68,6 +106,10 @@ CustomTabsOptions(
   ),
 )
 ```
+
+</td>
+</tr>
+</table>
 
 - The method of specifying the share state has changed from `enableDefaultShare` to `shareState`:
 
@@ -80,22 +122,39 @@ CustomTabsOptions(
 - The method of specifying the close button has been changed from `closeButtonPosition` to the enhanced `closeButton`.
 
 To migrate, use the following equivalent options:
-```dart
-// Before:
-closeButtonPosition: CustomTabsCloseButtonPosition.end
+<table>
+<tr>
+<td>Before</td><td>After</td>
+</tr>
+<tr>
+<td>
 
-// After:
-closeButton: CustomTabsCloseButton(
-  position: CustomTabsCloseButtonPosition.end,
-  // and newly added the button icon.
-  // icon: CustomTabsCloseButtonIcon.back,
-  // or
-  // icon: "DRAWABLE_RESOURCE_ID_IN_YOUR_ANDROID_PROJECT",
+```dart
+CustomTabsOptions(
+  closeButtonPosition: CustomTabsCloseButtonPosition.end,
 )
 ```
 
-Remaining name changes:
+</td>
+<td>
 
+```dart
+CustomTabsOptions(
+  closeButton: CustomTabsCloseButton(
+    position: CustomTabsCloseButtonPosition.end,
+    // and newly added the button icon.
+    // icon: CustomTabsCloseButtonIcon.back,
+    // or
+    // icon: "DRAWABLE_RESOURCE_ID_IN_YOUR_ANDROID_PROJECT",
+  ),
+)
+```
+
+</td>
+</tr>
+</table>
+
+Remaining name changes:
 | Change Type | Before | After |
 | --- | --- | --- |
 | Property | `CustomTabsOption.showPageTitle` | `CustomTabsOptions.showTitle` |
@@ -124,10 +183,15 @@ Start by importing the library file:
 
 Finally, use `LaunchOptions` to launch a URL.  
 (The following URL launch results in the same outcome):
+<table>
+<tr>
+<td>Before</td><td>After</td>
+</tr>
+<tr>
+<td>
 
 ```dart
 final theme = ...;
-// Before:
 await launch(
   'https://flutter.dev',
   customTabsOptions: CustomTabsOptions(
@@ -142,8 +206,13 @@ await launch(
     barCollapsingEnabled: true,
   ),
 );
+```
 
-// After:
+</td>
+<td>
+
+```dart
+final theme = ...;
 await launchUrl(
   Uri.parse('https://flutter.dev'),
   options: LaunchOptions(
@@ -153,6 +222,10 @@ await launchUrl(
   ),
 );
 ```
+
+</td>
+</tr>
+</table>
 
 ## Migrate `flutter_custom_tabs` to v1.0.0
 
