@@ -31,6 +31,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+# Remove the following pattern if you wish to check in your lock file
+pubspec.lock
 
 # Symbolication related
 app.*.symbols

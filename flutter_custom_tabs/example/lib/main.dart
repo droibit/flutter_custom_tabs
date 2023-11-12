@@ -36,25 +36,26 @@ class MyApp extends StatelessWidget {
               children: [
                 FilledButton(
                   onPressed: () => _launchUrl(context),
-                  child: const Text(
-                    'Show flutter.dev',
-                    style: TextStyle(fontSize: 17),
-                  ),
+                  child: const Text('Show flutter.dev'),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 TextButton(
                   onPressed: () => _launchUrlLite(context),
-                  child: const Text(
+                  child: Text(
                     'Show flutter.dev(lite ver)',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 TextButton(
                   onPressed: () => _launchUrlInBottomSheet(context),
-                  child: const Text(
-                    'Show flutter.dev(bottom Sheet)',
-                    style: TextStyle(fontSize: 17),
+                  child: Text(
+                    'Show flutter.dev in bottom Sheet',
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    ),
                   ),
                 ),
               ],
