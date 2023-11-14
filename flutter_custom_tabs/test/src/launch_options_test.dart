@@ -9,9 +9,9 @@ void main() {
       final launchOptions = LaunchOptions(
         barColor: const Color(0xFFFFEBAA),
         onBarColor: const Color(0xFFFFEBAB),
-        systemNavigationBarColor: SystemNavigationBarColor(
-          background: const Color(0xFFFFEBAC),
-          divider: const Color(0xFFFFEBAD),
+        systemNavigationBarParams: SystemNavigationBarParams(
+          backgroundColor: const Color(0xFFFFEBAC),
+          dividerColor: const Color(0xFFFFEBAD),
         ),
         appBarFixed: true,
       );
@@ -57,12 +57,13 @@ void main() {
       expect(customTabsOptions.showTitle, isTrue);
     });
 
-    test('toCustomTabsOptions() converts options with systemNavigationBarColor',
+    test(
+        'toCustomTabsOptions() converts options with systemNavigationBarParams',
         () {
       final launchOptions = LaunchOptions(
-        systemNavigationBarColor: SystemNavigationBarColor(
-          background: const Color(0xFFFFEBBA),
-          divider: const Color(0xFFFFEBBB),
+        systemNavigationBarParams: SystemNavigationBarParams(
+          backgroundColor: const Color(0xFFFFEBBA),
+          dividerColor: const Color(0xFFFFEBBB),
         ),
       );
 
@@ -123,9 +124,9 @@ void main() {
       final launchOptions = LaunchOptions(
         barColor: const Color(0xFFFFEBAA),
         onBarColor: const Color(0xFFFFEBAB),
-        systemNavigationBarColor: SystemNavigationBarColor(
-          background: const Color(0xFFFFEBAC),
-          divider: const Color(0xFFFFEBAD),
+        systemNavigationBarParams: SystemNavigationBarParams(
+          backgroundColor: const Color(0xFFFFEBAC),
+          dividerColor: const Color(0xFFFFEBAD),
         ),
         appBarFixed: false,
       );
