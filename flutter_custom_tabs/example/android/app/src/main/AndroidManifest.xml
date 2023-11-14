@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="hello_flutter_plugin_example"
+        android:label="flutter_custom_tabs_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
