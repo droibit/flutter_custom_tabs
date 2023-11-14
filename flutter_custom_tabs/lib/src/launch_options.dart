@@ -11,7 +11,7 @@ class LaunchOptions {
     this.barColor,
     this.onBarColor,
     this.appBarFixed,
-    this.systemNavigationBarColor,
+    this.systemNavigationBarParams,
   });
 
   /// The background color of the app bar and bottom bar.
@@ -25,7 +25,7 @@ class LaunchOptions {
   /// The color configuration of the system navigation bar.
   ///
   /// Availability: **Only for Android**
-  final SystemNavigationBarColor? systemNavigationBarColor;
+  final SystemNavigationBarParams? systemNavigationBarParams;
 
   /// A Boolean value that indicates whether to keep the app bar fixed, even when scrolling through the page.
   final bool? appBarFixed;
@@ -34,11 +34,11 @@ class LaunchOptions {
   @internal
   CustomTabsOptions toCustomTabsOptions() {
     CustomTabsColorSchemes? colorSchemes;
-    if (barColor != null || systemNavigationBarColor != null) {
+    if (barColor != null || systemNavigationBarParams != null) {
       colorSchemes = CustomTabsColorSchemes.defaults(
         toolbarColor: barColor,
-        navigationBarColor: systemNavigationBarColor?.background,
-        navigationBarDividerColor: systemNavigationBarColor?.divider,
+        navigationBarColor: systemNavigationBarParams?.backgroundColor,
+        navigationBarDividerColor: systemNavigationBarParams?.dividerColor,
       );
     }
 
@@ -71,15 +71,15 @@ class LaunchOptions {
 
 /// The color configuration of the system navigation bar.
 @experimental
-class SystemNavigationBarColor {
+class SystemNavigationBarParams {
   /// The color of the system navigation bar.
-  final Color background;
+  final Color backgroundColor;
 
   /// The color of the system navigation bar divider.
-  final Color? divider;
+  final Color? dividerColor;
 
-  SystemNavigationBarColor({
-    required this.background,
-    this.divider,
+  SystemNavigationBarParams({
+    required this.backgroundColor,
+    this.dividerColor,
   });
 }
