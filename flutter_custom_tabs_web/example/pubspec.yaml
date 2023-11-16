@@ -8,10 +8,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-dev_dependencies:
   flutter_custom_tabs_web:
     path: ../
+
+dev_dependencies:
   flutter_driver:
     sdk: flutter
   flutter_test:
