@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-// ignore:depend_on_referenced_packages
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-// ignore:depend_on_referenced_packages
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart' as lite;
 
 void main() => runApp(const MyApp());
