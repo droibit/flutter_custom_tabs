@@ -46,6 +46,7 @@ void main() {
           endExit: '_endExit',
         ),
         browser: CustomTabsBrowserConfiguration(
+          prefersDefaultBrowser: false,
           fallbackCustomTabs: [
             'org.mozilla.firefox',
             'com.microsoft.emmx',
@@ -92,6 +93,7 @@ void main() {
           'endExit': '_endExit',
         },
         'browser': {
+          'prefersDefaultBrowser': false,
           'fallbackCustomTabs': [
             'org.mozilla.firefox',
             'com.microsoft.emmx',
@@ -162,6 +164,7 @@ void main() {
   group('CustomTabsBrowserConfiguration', () {
     test('toMap() returns a map with complete options', () {
       const configuration = CustomTabsBrowserConfiguration(
+        prefersDefaultBrowser: true,
         fallbackCustomTabs: [
           'org.mozilla.firefox',
           'com.microsoft.emmx',
@@ -169,6 +172,7 @@ void main() {
         headers: {'key': 'value'},
       );
       expect(configuration.toMap(), <String, dynamic>{
+        'prefersDefaultBrowser': true,
         'fallbackCustomTabs': [
           'org.mozilla.firefox',
           'com.microsoft.emmx',

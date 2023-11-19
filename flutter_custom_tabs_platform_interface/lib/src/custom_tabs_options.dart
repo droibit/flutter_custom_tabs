@@ -344,11 +344,18 @@ enum CustomTabsActivityHeightResizeBehavior {
 }
 
 /// The configuration for the custom tab as browser.
+///
+/// By default, Chrome is used as the custom tab browser.
+/// However, the default browser for the device can be prioritized over Chrome.
 class CustomTabsBrowserConfiguration {
   const CustomTabsBrowserConfiguration({
+    this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
     this.headers,
   });
+
+  /// A Boolean value that determines whether to prioritize the default browser that supports Custom Tabs over Chrome.
+  final bool? prefersDefaultBrowser;
 
   /// Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
   final List<String>? fallbackCustomTabs;
@@ -359,6 +366,8 @@ class CustomTabsBrowserConfiguration {
   @internal
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      if (prefersDefaultBrowser != null)
+        'prefersDefaultBrowser': prefersDefaultBrowser!,
       if (fallbackCustomTabs != null) 'fallbackCustomTabs': fallbackCustomTabs,
       if (headers != null) 'headers': headers,
     };
