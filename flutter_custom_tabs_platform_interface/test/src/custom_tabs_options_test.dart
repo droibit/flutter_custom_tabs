@@ -45,11 +45,13 @@ void main() {
           endEnter: '_endEnter',
           endExit: '_endExit',
         ),
-        extraCustomTabs: <String>[
-          'org.mozilla.firefox',
-          'com.microsoft.emmx',
-        ],
-        headers: {'key': 'value'},
+        browser: CustomTabsBrowserConfiguration(
+          fallbackCustomTabs: [
+            'org.mozilla.firefox',
+            'com.microsoft.emmx',
+          ],
+          headers: {'key': 'value'},
+        ),
         partialConfiguration: PartialCustomTabsConfiguration(
           initialHeight: 500,
           activityHeightResizeBehavior:
@@ -89,11 +91,13 @@ void main() {
           'endEnter': '_endEnter',
           'endExit': '_endExit',
         },
-        'extraCustomTabs': <String>[
-          'org.mozilla.firefox',
-          'com.microsoft.emmx',
-        ],
-        'headers': <String, String>{'key': 'value'},
+        'browser': {
+          'fallbackCustomTabs': [
+            'org.mozilla.firefox',
+            'com.microsoft.emmx',
+          ],
+          'headers': {'key': 'value'},
+        },
         'partial': <String, dynamic>{
           'initialHeightDp': 500,
           'activityHeightResizeBehavior': 1,
@@ -152,6 +156,30 @@ void main() {
         'initialHeightDp': 200,
         'activityHeightResizeBehavior': 0,
       });
+    });
+  });
+
+  group('CustomTabsBrowserConfiguration', () {
+    test('toMap() returns a map with complete options', () {
+      const configuration = CustomTabsBrowserConfiguration(
+        fallbackCustomTabs: [
+          'org.mozilla.firefox',
+          'com.microsoft.emmx',
+        ],
+        headers: {'key': 'value'},
+      );
+      expect(configuration.toMap(), <String, dynamic>{
+        'fallbackCustomTabs': [
+          'org.mozilla.firefox',
+          'com.microsoft.emmx',
+        ],
+        'headers': {'key': 'value'},
+      });
+    });
+
+    test('toMap() returns empty map when option values are null', () {
+      const configuration = CustomTabsBrowserConfiguration();
+      expect(configuration.toMap(), <String, dynamic>{});
     });
   });
 
