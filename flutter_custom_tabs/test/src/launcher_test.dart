@@ -55,7 +55,7 @@ void main() {
     }
   });
 
-  test('launchUrl() launch with complete options', () async {
+  test('launchUrl() launch with basic options', () async {
     final url = Uri.parse('http://example.com/');
     const prefersDeepLink = true;
     const customTabsOptions = CustomTabsOptions(
@@ -74,10 +74,6 @@ void main() {
         endEnter: '_endEnter',
         endExit: '_endExit',
       ),
-      extraCustomTabs: <String>[
-        'org.mozilla.firefox',
-        'com.microsoft.emmx',
-      ],
     );
     const safariVCOptions = SafariViewControllerOptions(
       preferredBarTintColor: Color(0xFFFFEBEE),

@@ -17,10 +17,12 @@ import com.droibit.android.customtabs.launcher.NonChromeCustomTabs;
 import java.util.List;
 import java.util.Map;
 
+import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureChromeCustomTabsPackage;
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureCustomTabsPackage;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveAnimationIdentifier;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveDrawableIdentifier;
+import static java.util.Collections.emptyMap;
 
 @SuppressWarnings({"ConstantConditions", "unchecked"})
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -40,12 +42,14 @@ class CustomTabsFactory {
     private static final String KEY_OPTIONS_ANIMATIONS = "animations";
     private static final String KEY_CLOSE_BUTTON_POSITION = "closeButtonPosition";
     private static final String KEY_CLOSE_BUTTON_ICON = "closeButtonIcon";
-    private static final String KEY_HEADERS = "headers";
     private static final String KEY_ANIMATION_START_ENTER = "startEnter";
     private static final String KEY_ANIMATION_START_EXIT = "startExit";
     private static final String KEY_ANIMATION_END_ENTER = "endEnter";
     private static final String KEY_ANIMATION_END_EXIT = "endExit";
-    private static final String KEY_OPTIONS_EXTRA_CUSTOM_TABS = "extraCustomTabs";
+    private static final String KEY_OPTIONS_BROWSER = "browser";
+    private static final String KEY_OPTIONS_BROWSER_PREFERS_DEFAULT_BROWSER = "prefersDefaultBrowser";
+    private static final String KEY_BROWSER_FALLBACK_CUSTOM_TABS = "fallbackCustomTabs";
+    private static final String KEY_BROWSER_HEADERS = "headers";
     private static final String KEY_OPTIONS_PARTIAL_CUSTOM_TABS = "partial";
     private static final String KEY_BOTTOM_SHEET_INITIAL_HEIGHT_DP = "initialHeightDp";
     private static final String KEY_BOTTOM_SHEET_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR = "activityHeightResizeBehavior";
@@ -109,7 +113,8 @@ class CustomTabsFactory {
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();
-        onPostBuild(customTabsIntent, options);
+        final Map<String, Object> browserOptions = ((Map<String, Object>) options.get(KEY_OPTIONS_BROWSER));
+        onPostBuild(customTabsIntent, browserOptions == null ? emptyMap() : browserOptions);
         return customTabsIntent;
     }
 
@@ -117,8 +122,8 @@ class CustomTabsFactory {
             @NonNull CustomTabsIntent customTabsIntent,
             @NonNull Map<String, Object> options
     ) {
-        if (options.containsKey(KEY_HEADERS)) {
-            final Map<String, String> headers = (Map<String, String>) options.get(KEY_HEADERS);
+        if (options.containsKey(KEY_BROWSER_HEADERS)) {
+            final Map<String, String> headers = (Map<String, String>) options.get(KEY_BROWSER_HEADERS);
             final Bundle bundleHeaders = new Bundle();
             for (Map.Entry<String, String> header : headers.entrySet()) {
                 bundleHeaders.putString(header.getKey(), header.getValue());
@@ -126,20 +131,26 @@ class CustomTabsFactory {
             customTabsIntent.intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
         }
 
-        final List<String> extraCustomTabs;
-        if (options.containsKey(KEY_OPTIONS_EXTRA_CUSTOM_TABS)) {
-            extraCustomTabs = ((List<String>) options.get(KEY_OPTIONS_EXTRA_CUSTOM_TABS));
+        final List<String> fallbackCustomTabs;
+        if (options.containsKey(KEY_BROWSER_FALLBACK_CUSTOM_TABS)) {
+            fallbackCustomTabs = ((List<String>) options.get(KEY_BROWSER_FALLBACK_CUSTOM_TABS));
         } else {
-            extraCustomTabs = null;
+            fallbackCustomTabs = null;
         }
 
         final CustomTabsPackageFallback fallback;
-        if (extraCustomTabs != null && !extraCustomTabs.isEmpty()) {
-            fallback = new NonChromeCustomTabs(extraCustomTabs);
+        if (fallbackCustomTabs != null && !fallbackCustomTabs.isEmpty()) {
+            fallback = new NonChromeCustomTabs(fallbackCustomTabs);
         } else {
             fallback = new NonChromeCustomTabs(context);
         }
-        ensureCustomTabsPackage(customTabsIntent, context, fallback);
+
+        if (options.containsKey(KEY_OPTIONS_BROWSER_PREFERS_DEFAULT_BROWSER) &&
+                ((Boolean) options.get(KEY_OPTIONS_BROWSER_PREFERS_DEFAULT_BROWSER))) {
+            ensureCustomTabsPackage(customTabsIntent, context, fallback);
+        } else {
+            ensureChromeCustomTabsPackage(customTabsIntent, context, fallback);
+        }
     }
 
     void applyColorSchemes(
