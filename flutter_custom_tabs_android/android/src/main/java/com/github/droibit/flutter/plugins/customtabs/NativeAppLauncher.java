@@ -70,18 +70,19 @@ class NativeAppLauncher {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     @NonNull
     private static List<ResolveInfo> queryIntentActivities(@NonNull PackageManager pm, @NonNull Intent intent) {
-        final int flag = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        final int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 ? PackageManager.MATCH_ALL : PackageManager.MATCH_DEFAULT_ONLY;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             return pm.queryIntentActivities(
                     intent,
-                    PackageManager.ResolveInfoFlags.of(flag)
+                    PackageManager.ResolveInfoFlags.of(flags)
             );
         } else {
-            return pm.queryIntentActivities(intent, flag);
+            return pm.queryIntentActivities(intent, flags);
         }
     }
 
