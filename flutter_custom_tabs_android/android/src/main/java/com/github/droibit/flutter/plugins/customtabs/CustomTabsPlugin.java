@@ -5,6 +5,8 @@ import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 
@@ -141,7 +143,8 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
                 }
                 final Intent serviceIntent = new Intent(ACTION_CUSTOM_TABS_CONNECTION)
                         .setPackage(taskInfo.topActivity.getPackageName());
-                if (activity.getPackageManager().resolveService(serviceIntent, 0) != null) {
+
+                if (resolveService(activity.getPackageManager(), serviceIntent, 0) != null) {
                     try {
                         final Intent intent = new Intent(activity, activity.getClass())
                                 .setFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
@@ -153,5 +156,18 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware, MethodCal
             }
         }
         result.success(null);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Nullable
+    private ResolveInfo resolveService(@NonNull PackageManager pm, @NonNull Intent intent, int flags) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return pm.resolveService(
+                    intent,
+                    PackageManager.ResolveInfoFlags.of(flags)
+            );
+        } else {
+            return pm.resolveService(intent, flags);
+        }
     }
 }

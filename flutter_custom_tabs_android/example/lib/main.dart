@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
@@ -48,6 +50,10 @@ class MyApp extends StatelessWidget {
                 FilledButton.tonal(
                   onPressed: () => _launchDeepLinkingURL(context),
                   child: const Text('Deep link to Google Maps'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () => _launchAndCloseManually(context),
+                  child: const Text('Show flutter.dev + close after 5 seconds'),
                 ),
               ],
             ),
@@ -174,6 +180,31 @@ Future<void> _launchDeepLinkingURL(BuildContext context) async {
         barCollapsingEnabled: true,
         entersReaderIfAvailable: false,
         dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchAndCloseManually(BuildContext context) async {
+  final theme = Theme.of(context);
+  try {
+    Timer(const Duration(seconds: 5), () {
+      CustomTabsPlatform.instance.closeAllIfPossible();
+    });
+
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+        ),
+        showTitle: true,
+      ),
+      safariVCOptions: SafariViewControllerOptions(
+        preferredBarTintColor: theme.colorScheme.surface,
+        preferredControlTintColor: theme.colorScheme.onSurface,
       ),
     );
   } catch (e) {
