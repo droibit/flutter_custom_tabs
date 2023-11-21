@@ -64,7 +64,7 @@ The `CustomTabsOptions` class has undergone several changes:
 
 ```dart
 /// Custom tab toolbar color.
-final Color? toolbarColor;
+Color? toolbarColor;
 ```
 
 </td>
@@ -72,7 +72,7 @@ final Color? toolbarColor;
 
 ```dart
 /// The visualization configuration.
-final CustomTabsColorSchemes? colorSchemes;
+CustomTabsColorSchemes? colorSchemes;
 ```
 
 </td>
@@ -130,7 +130,7 @@ To migrate, use the following equivalent options:
 <td>
 
 ```dart
-CustomTabsOptions(
+CustomTabsOption(
   closeButtonPosition: CustomTabsCloseButtonPosition.end,
 )
 ```
@@ -154,6 +154,49 @@ CustomTabsOptions(
 </tr>
 </table>
 
+The following options for customizing the behavior of Custom Tabs as a browser have been consolidated into `CustomTabsBrowserConfiguration`:
+- `headers` property
+- `extraCustomTabs` property
+
+The `extraCustomTabs` property has been renamed to `fallbackCustomTabs`.
+
+To migrate, use the following equivalent options:
+<table>
+<tr>
+<td>Before</td><td>After</td>
+</tr>
+<tr>
+<td>
+
+```dart
+CustomTabsOption(
+  extraCustomTabs: [
+    'org.mozilla.firefox',
+    'com.microsoft.emmx',    
+  ],
+  headers: {'key': 'value'},
+)
+```
+
+</td>
+<td>
+
+```dart
+CustomTabsOptions(
+  browser: CustomTabsBrowserConfiguration(
+    fallbackCustomTabs: [
+      'org.mozilla.firefox',
+      'com.microsoft.emmx',    
+    ],
+    headers: {'key': 'value'},
+  ),
+)
+```
+
+</td>
+</tr>
+</table>
+
 Remaining name changes:
 | Change Type | Before | After |
 | --- | --- | --- |
@@ -163,7 +206,7 @@ Remaining name changes:
 | Class | `CustomTabsSystemAnimation` | `CustomTabsSystemAnimations` |
 | Property | `CustomTabsOption.animation` | `CustomTabsOptions.animations` |
 
-#### API Changes in `safariViewControllerOptions`
+#### API Changes in `SafariViewControllerOptions`
 
 - The property `statusBarBrightness` has been deleted.
 

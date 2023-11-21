@@ -36,7 +36,11 @@ class MyApp extends StatelessWidget {
             children: <Widget>[
               FilledButton(
                 onPressed: () => _launchUrl(context),
-                child: const Text('Show flutter.dev'),
+                child: const Text('Show flutter.dev (Chrome)'),
+              ),
+              FilledButton(
+                onPressed: () => _launchURLInDefaultBrowserOnAndroid(context),
+                child: const Text('Show flutter.dev (prefer default browser)'),
               ),
               FilledButton(
                 onPressed: () => _launchUrlLite(context),
@@ -67,6 +71,28 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _launchURLInDefaultBrowserOnAndroid(BuildContext context) async {
+  final theme = Theme.of(context);
+  try {
+    await launchUrl(
+      Uri.parse('https://flutter.dev'),
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+          navigationBarColor: theme.colorScheme.background,
+        ),
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        browser: const CustomTabsBrowserConfiguration(
+          prefersDefaultBrowser: true,
+        ),
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
   }
 }
 

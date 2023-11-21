@@ -34,7 +34,12 @@ class MyApp extends StatelessWidget {
               children: <Widget>[
                 FilledButton.tonal(
                   onPressed: () => _launchURL(context),
-                  child: const Text('Show flutter.dev'),
+                  child: const Text('Show flutter.dev (Chrome)'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () => _launchURLInDefaultBrowser(context),
+                  child:
+                      const Text('Show flutter.dev (prefer default browser)'),
                 ),
                 FilledButton.tonal(
                   onPressed: () => _launchURLInBottomSheet(context),
@@ -85,6 +90,28 @@ Future<void> _launchURL(BuildContext context) async {
   }
 }
 
+Future<void> _launchURLInDefaultBrowser(BuildContext context) async {
+  final theme = Theme.of(context);
+  try {
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+          navigationBarColor: theme.colorScheme.background,
+        ),
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        browser: const CustomTabsBrowserConfiguration(
+          prefersDefaultBrowser: true,
+        ),
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
 Future<void> _launchURLInBottomSheet(BuildContext context) async {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);
@@ -92,15 +119,16 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',
       customTabsOptions: CustomTabsOptions.partial(
-          configuration: PartialCustomTabsConfiguration(
-            initialHeight: mediaQuery.size.height * 0.7,
-          ),
-          colorSchemes: CustomTabsColorSchemes.defaults(
-            colorScheme: theme.brightness.toColorScheme(),
-            toolbarColor: theme.primaryColor,
-          ),
-          showTitle: true,
-          closeButton: const CustomTabsCloseButton(icon: "ic_round_close")),
+        configuration: PartialCustomTabsConfiguration(
+          initialHeight: mediaQuery.size.height * 0.7,
+        ),
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          colorScheme: theme.brightness.toColorScheme(),
+          toolbarColor: theme.primaryColor,
+        ),
+        showTitle: true,
+        closeButton: const CustomTabsCloseButton(icon: "ic_round_close"),
+      ),
       safariVCOptions: SafariViewControllerOptions.pageSheet(
         configuration: const SheetPresentationControllerConfiguration(
           detents: {

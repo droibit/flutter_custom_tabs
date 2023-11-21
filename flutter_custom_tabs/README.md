@@ -122,6 +122,7 @@ void _launchURL(BuildContext context) async {
 | Change appearance of close button | ✅<br>(Icon, position) | ✅<br>(Predefined button styles) | Not provided |
 | Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided | 
 | Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided | 
+| Prefer default browser over Chrome | ✅ | - | Not provided |
 | Pass HTTP headers | ✅ | - | Not provided | 
 | Show as a bottom sheet | ✅ | ✅ | Not provided | 
 

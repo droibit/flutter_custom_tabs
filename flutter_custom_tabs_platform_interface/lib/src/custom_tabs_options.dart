@@ -21,8 +21,7 @@ class CustomTabsOptions {
     this.instantAppsEnabled,
     this.closeButton,
     this.animations,
-    this.extraCustomTabs,
-    this.headers,
+    this.browser,
     this.partialConfiguration,
   });
 
@@ -33,15 +32,13 @@ class CustomTabsOptions {
     CustomTabsShareState? shareState,
     bool? showTitle,
     CustomTabsCloseButton? closeButton,
-    List<String>? extraCustomTabs,
-    Map<String, String>? headers,
+    CustomTabsBrowserConfiguration? browser,
   }) : this(
           colorSchemes: colorSchemes,
           shareState: shareState,
           showTitle: showTitle,
           closeButton: closeButton,
-          extraCustomTabs: extraCustomTabs,
-          headers: headers,
+          browser: browser,
           partialConfiguration: configuration,
         );
 
@@ -66,11 +63,8 @@ class CustomTabsOptions {
   /// The enter and exit animations.
   final CustomTabsAnimations? animations;
 
-  /// Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
-  final List<String>? extraCustomTabs;
-
-  /// Extra HTTP request headers.
-  final Map<String, String>? headers;
+  /// The configuration for the custom tab as browser.
+  final CustomTabsBrowserConfiguration? browser;
 
   /// The configuration for Partial Custom Tabs.
   final PartialCustomTabsConfiguration? partialConfiguration;
@@ -88,8 +82,7 @@ class CustomTabsOptions {
       if (closeButton?.icon != null) 'closeButtonIcon': closeButton!.icon,
       if (closeButton?.position != null)
         'closeButtonPosition': closeButton!.position!.rawValue,
-      if (extraCustomTabs != null) 'extraCustomTabs': extraCustomTabs,
-      if (headers != null) 'headers': headers,
+      if (browser != null) 'browser': browser!.toMap(),
       if (partialConfiguration != null)
         'partial': partialConfiguration!.toMap(),
     };
@@ -348,4 +341,35 @@ enum CustomTabsActivityHeightResizeBehavior {
 
   @internal
   final int rawValue;
+}
+
+/// The configuration for the custom tab as browser.
+///
+/// By default, Chrome is used as the custom tab browser.
+/// However, the default browser for the device can be prioritized over Chrome.
+class CustomTabsBrowserConfiguration {
+  const CustomTabsBrowserConfiguration({
+    this.prefersDefaultBrowser,
+    this.fallbackCustomTabs,
+    this.headers,
+  });
+
+  /// A Boolean value that determines whether to prioritize the default browser that supports Custom Tabs over Chrome.
+  final bool? prefersDefaultBrowser;
+
+  /// Package list of non-Chrome browsers supporting Custom Tabs. The top of the list is used with the highest priority.
+  final List<String>? fallbackCustomTabs;
+
+  /// Extra HTTP request headers.
+  final Map<String, String>? headers;
+
+  @internal
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      if (prefersDefaultBrowser != null)
+        'prefersDefaultBrowser': prefersDefaultBrowser!,
+      if (fallbackCustomTabs != null) 'fallbackCustomTabs': fallbackCustomTabs,
+      if (headers != null) 'headers': headers,
+    };
+  }
 }
