@@ -1,6 +1,11 @@
+## 2.0.0-beta.1
+
+- Refactor Custom Tabs browser configurations to `CustomTabsBrowserConfiguration`([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
+- Add an option to `CustomTabsBrowserConfiguration` to prioritize the default browser that supports Custom Tabs over Chrome([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
+
 ## 2.0.0-beta
 
-- Launching deep link URL is now supported.
+- Supports the launch of a deep link URL.
 - Renames the `CustomTabsOption` class to `CustomTabsOptions`.
 - Updates `CustomTabsOptions` to improve compatibility with Custom Tabs (`androidx.browser`) v1.5.0.
   - Some options have been renamed.
