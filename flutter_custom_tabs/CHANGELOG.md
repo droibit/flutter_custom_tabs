@@ -1,15 +1,24 @@
+## 2.0.0-beta.1
+
+- Adds support for prioritizing the default browser over Chrome on Android([#143](https://github.com/droibit/flutter_custom_tabs/issues/143), [#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
+- Updates the `flutter_custom_tabs_platform_interface` package to version 2.0.0-beta.1.
+- Updates the `flutter_custom_tabs_platform_android` package to version 2.0.0-beta.1.
+- Updates CocoaPods version to 1.14.2 in example app.
+
+For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md).
+
 ## 2.0.0-beta
 
-* Refactors the signature for launching a URL with Custom Tabs.
-* Refactors the signature for manually closing Custom Tabs.
-* Introduces a lightweight version of URL launching as an experimental feature.
-* Supports the launch of deep link URLs.
-* Supports the launch of Custom Tabs as a bottom sheet.
-* Updates the `flutter_custom_tabs_platform_interface` package to version 2.0.0-beta.
-* Updates the `flutter_custom_tabs_web` plugin package to version 2.0.0-beta+1.
-* Migrates Android platform-specific implementations to the `flutter_custom_tabs_android` package plugin.
-* Migrates iOS platform-specific implementations to the `flutter_custom_tabs_ios` package plugin.
-* Updates the minimum supported SDK version to Flutter 3.0.0/Dart 2.17.
+- Refactors the signature for launching a URL in Custom Tabs.
+- Refactors the signature for manually closing Custom Tabs.
+- Introduces a lightweight version of URL launching as an experimental feature.
+- Supports the launch of a deep link URL.
+- Supports the launch of Custom Tabs as a bottom sheet.
+- Updates the `flutter_custom_tabs_platform_interface` package to version 2.0.0-beta.
+- Updates the `flutter_custom_tabs_web` plugin package to version 2.0.0-beta+1.
+- Migrates Android platform-specific implementations to the `flutter_custom_tabs_android` package plugin.
+- Migrates iOS platform-specific implementations to the `flutter_custom_tabs_ios` package plugin.
+- Updates the minimum supported SDK version to Flutter 3.0.0/Dart 2.17.
 
 For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md).
 
