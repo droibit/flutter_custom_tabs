@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 import 'package:meta/meta.dart';
 
-import 'launch_options.dart';
+import 'types/launch_options.dart';
 
 /// Passes [url] with options to the underlying platform for launching a custom tab.
 ///

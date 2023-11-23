@@ -18,8 +18,8 @@ class CustomTabsPluginWeb extends CustomTabsPlatform {
   Future<void> launch(
     String urlString, {
     bool prefersDeepLink = false,
-    CustomTabsOptions? customTabsOptions,
-    SafariViewControllerOptions? safariVCOptions,
+    PlatformOptions? customTabsOptions,
+    PlatformOptions? safariVCOptions,
   }) {
     final plugin = UrlLauncherPlatform.instance as UrlLauncherPlugin;
     return plugin.launch(urlString).then((_) => null);

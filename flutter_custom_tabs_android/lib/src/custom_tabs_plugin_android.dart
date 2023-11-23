@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
+import 'types/custom_tabs_options.dart';
+
 /// The Android implementation of [CustomTabsPlatform].
 ///
 /// This class implements the `package:flutter_custom_tabs` functionality for Android.
@@ -17,13 +19,16 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
   Future<void> launch(
     String urlString, {
     bool prefersDeepLink = false,
-    CustomTabsOptions? customTabsOptions,
-    SafariViewControllerOptions? safariVCOptions,
+    PlatformOptions? customTabsOptions,
+    PlatformOptions? safariVCOptions,
   }) {
+    final options = (customTabsOptions is CustomTabsOptions)
+        ? customTabsOptions
+        : const CustomTabsOptions();
     final args = <String, dynamic>{
       'url': urlString,
       'prefersDeepLink': prefersDeepLink,
-      'customTabsOptions': customTabsOptions?.toMap() ?? <String, dynamic>{},
+      'customTabsOptions': options.toMap(),
     };
     return _channel.invokeMethod('launch', args);
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/painting.dart';
-import 'package:flutter_custom_tabs/src/launch_options.dart';
-import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
+import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,2 +1,2 @@
-export 'src/launch_options.dart';
+export 'src/types/launch_options.dart';
 export 'src/launcher_lite.dart';

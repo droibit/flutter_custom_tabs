@@ -1,50 +1,35 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
-import 'package:flutter_custom_tabs_platform_interface/src/method_channel_custom_tabs.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late List<MethodCall> log;
-  late MethodChannelCustomTabs customTabs;
+  late CustomTabsPluginAndroid customTabs;
 
   const channel =
       MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-          channel, (methodCall) async => log.add(methodCall));
+    channel,
+    (methodCall) async => log.add(methodCall),
+  );
 
   setUp(() {
     log = <MethodCall>[];
-    customTabs = MethodChannelCustomTabs();
+    customTabs = CustomTabsPluginAndroid();
   });
 
-  test('launch() invoke method "launch" with null options', () async {
-    await customTabs.launch('http://example.com/');
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall('launch', arguments: <String, dynamic>{
-          'url': 'http://example.com/',
-          'prefersDeepLink': false,
-          'customTabsOptions': const <String, dynamic>{},
-          'safariVCOptions': const <String, dynamic>{}
-        }),
-      ],
-    );
-  });
-
-  test('launch() invoke method "launch" with options', () async {
+  test('launch() invoke method "launch" with CustomTabsOptions', () async {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
       customTabsOptions: const CustomTabsOptions(
         urlBarHidingEnabled: true,
       ),
-      safariVCOptions: const SafariViewControllerOptions(
-        barCollapsingEnabled: false,
-      ),
+      safariVCOptions: const _Options(),
     );
     expect(
       log,
@@ -55,9 +40,27 @@ void main() {
           'customTabsOptions': const <String, dynamic>{
             'urlBarHidingEnabled': true,
           },
-          'safariVCOptions': const <String, dynamic>{
-            'barCollapsingEnabled': false
-          }
+        }),
+      ],
+    );
+  });
+
+  test('launch() invoke method "launch" with invalid options', () async {
+    await customTabs.launch(
+      'http://example.com/',
+      prefersDeepLink: true,
+      customTabsOptions: const _Options(
+        urlBarHidingEnabled: true,
+      ),
+      safariVCOptions: const _Options(),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('launch', arguments: <String, dynamic>{
+          'url': 'http://example.com/',
+          'prefersDeepLink': true,
+          'customTabsOptions': const <String, dynamic>{},
         }),
       ],
     );
@@ -72,4 +75,18 @@ void main() {
       ],
     );
   });
+}
+
+class _Options implements PlatformOptions {
+  final bool? urlBarHidingEnabled;
+
+  const _Options({
+    this.urlBarHidingEnabled,
+  });
+
+  @override
+  Map<String, dynamic> toMap() => {
+        if (urlBarHidingEnabled != null)
+          'urlBarHidingEnabled': urlBarHidingEnabled,
+      };
 }

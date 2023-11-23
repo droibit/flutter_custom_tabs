@@ -1,7 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import '../flutter_custom_tabs_platform_interface.dart';
 import 'method_channel_custom_tabs.dart';
+import 'types.dart';
 
 /// The interface that implementations of flutter_custom_tabs must implement.
 ///
@@ -33,8 +33,8 @@ abstract class CustomTabsPlatform extends PlatformInterface {
   Future<void> launch(
     String urlString, {
     bool prefersDeepLink = false,
-    CustomTabsOptions? customTabsOptions,
-    SafariViewControllerOptions? safariVCOptions,
+    PlatformOptions? customTabsOptions,
+    PlatformOptions? safariVCOptions,
   }) {
     throw UnimplementedError('launch() has not been implemented.');
   }

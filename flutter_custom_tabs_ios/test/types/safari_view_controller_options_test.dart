@@ -1,10 +1,8 @@
 import 'package:flutter/painting.dart';
-import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
+import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   group('SafariViewControllerOptions', () {
     test('toMap() returns empty map when option values are null', () {
       const options = SafariViewControllerOptions();
@@ -52,37 +50,6 @@ void main() {
     });
   });
 
-  group('SheetPresentationControllerConfiguration', () {
-    test('toMap() returns a map with complete options', () {
-      const configuration = SheetPresentationControllerConfiguration(
-        detents: {SheetPresentationControllerDetent.large},
-        largestUndimmedDetentIdentifier:
-            SheetPresentationControllerDetent.medium,
-        prefersScrollingExpandsWhenScrolledToEdge: true,
-        prefersGrabberVisible: false,
-        prefersEdgeAttachedInCompactHeight: true,
-        preferredCornerRadius: 8.0,
-      );
-      expect(configuration.toMap(), <String, dynamic>{
-        'detents': ['large'],
-        'largestUndimmedDetentIdentifier': 'medium',
-        'prefersScrollingExpandsWhenScrolledToEdge': true,
-        'prefersGrabberVisible': false,
-        'prefersEdgeAttachedInCompactHeight': true,
-        'preferredCornerRadius': 8.0,
-      });
-    });
-
-    test('toMap() returns expected result with default values', () {
-      const configuration = SheetPresentationControllerConfiguration(
-        detents: {SheetPresentationControllerDetent.large},
-      );
-      expect(configuration.toMap(), <String, dynamic>{
-        'detents': ['large'],
-      });
-    });
-  });
-
   test('DismissButtonStyle returns associated value', () {
     expect(SafariViewControllerDismissButtonStyle.done.rawValue, 0);
     expect(SafariViewControllerDismissButtonStyle.close.rawValue, 1);
@@ -96,10 +63,5 @@ void main() {
     expect(ViewControllerModalPresentationStyle.pageSheet.rawValue, 1);
     expect(ViewControllerModalPresentationStyle.formSheet.rawValue, 2);
     expect(ViewControllerModalPresentationStyle.overFullScreen.rawValue, 5);
-  });
-
-  test('SheetPresentationControllerDetent returns associated value', () {
-    expect(SheetPresentationControllerDetent.large.rawValue, 'large');
-    expect(SheetPresentationControllerDetent.medium.rawValue, 'medium');
   });
 }
