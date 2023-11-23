@@ -13,21 +13,23 @@ void main() {
       MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-          channel, (methodCall) async => log.add(methodCall));
+    channel,
+    (methodCall) async => log.add(methodCall),
+  );
 
   setUp(() {
     log = <MethodCall>[];
     customTabs = CustomTabsPluginAndroid();
   });
 
-  test('launch() invoke method "launch" with customTabsOptions', () async {
+  test('launch() invoke method "launch" with CustomTabsOptions', () async {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
       customTabsOptions: const CustomTabsOptions(
         urlBarHidingEnabled: true,
       ),
-      safariVCOptions: const SafariViewControllerOptions(),
+      safariVCOptions: const _Options(),
     );
     expect(
       log,
@@ -37,7 +39,28 @@ void main() {
           'prefersDeepLink': true,
           'customTabsOptions': const <String, dynamic>{
             'urlBarHidingEnabled': true,
-          }
+          },
+        }),
+      ],
+    );
+  });
+
+  test('launch() invoke method "launch" with invalid options', () async {
+    await customTabs.launch(
+      'http://example.com/',
+      prefersDeepLink: true,
+      customTabsOptions: const _Options(
+        urlBarHidingEnabled: true,
+      ),
+      safariVCOptions: const _Options(),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('launch', arguments: <String, dynamic>{
+          'url': 'http://example.com/',
+          'prefersDeepLink': true,
+          'customTabsOptions': const <String, dynamic>{},
         }),
       ],
     );
@@ -52,4 +75,18 @@ void main() {
       ],
     );
   });
+}
+
+class _Options implements PlatformOptions {
+  final bool? urlBarHidingEnabled;
+
+  const _Options({
+    this.urlBarHidingEnabled,
+  });
+
+  @override
+  Map<String, dynamic> toMap() => {
+        if (urlBarHidingEnabled != null)
+          'urlBarHidingEnabled': urlBarHidingEnabled,
+      };
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/painting.dart';
-import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
+import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   group('CustomTabsOptions', () {
     test('toMap() returns empty map when option values are null', () {
       const options = CustomTabsOptions();
@@ -53,7 +51,7 @@ void main() {
           ],
           headers: {'key': 'value'},
         ),
-        partialConfiguration: PartialCustomTabsConfiguration(
+        partial: PartialCustomTabsConfiguration(
           initialHeight: 500,
           activityHeightResizeBehavior:
               CustomTabsActivityHeightResizeBehavior.adjustable,
@@ -84,8 +82,10 @@ void main() {
         'shareState': 2,
         'showTitle': true,
         'instantAppsEnabled': false,
-        'closeButtonIcon': "icon",
-        'closeButtonPosition': 2,
+        'closeButton': <String, dynamic>{
+          'icon': "icon",
+          'position': 2,
+        },
         'animations': <String, String>{
           'startEnter': '_startEnter',
           'startExit': '_startExit',
@@ -109,104 +109,9 @@ void main() {
     });
   });
 
-  group('CustomTabsAnimations', () {
-    test('CustomTabsAnimations toMap() returns a map with complete options',
-        () {
-      const animations = CustomTabsAnimations(
-        startEnter: 'slide_up',
-        startExit: 'android:anim/fade_out',
-        endEnter: 'android:anim/fade_in',
-        endExit: 'slide_down',
-      );
-
-      expect(animations.toMap(), <String, String>{
-        'startEnter': 'slide_up',
-        'startExit': 'android:anim/fade_out',
-        'endEnter': 'android:anim/fade_in',
-        'endExit': 'slide_down',
-      });
-    });
-
-    test(
-        'CustomTabsAnimations toMap() returns empty map when animation values are null',
-        () {
-      const animations = CustomTabsAnimations();
-      expect(animations.toMap(), <String, String>{});
-    });
-  });
-
-  group('CustomTabsBottomSheetConfiguration', () {
-    test('toMap() returns a map with complete options', () {
-      const configuration = PartialCustomTabsConfiguration(
-        initialHeight: 300,
-        activityHeightResizeBehavior:
-            CustomTabsActivityHeightResizeBehavior.adjustable,
-        cornerRadius: 12,
-      );
-      expect(configuration.toMap(), <String, dynamic>{
-        'initialHeightDp': 300,
-        'activityHeightResizeBehavior': 1,
-        'cornerRadiusDp': 12,
-      });
-    });
-
-    test('toMap() returns expected a map with default values', () {
-      const configuration = PartialCustomTabsConfiguration(
-        initialHeight: 200,
-      );
-      expect(configuration.toMap(), <String, dynamic>{
-        'initialHeightDp': 200,
-        'activityHeightResizeBehavior': 0,
-      });
-    });
-  });
-
-  group('CustomTabsBrowserConfiguration', () {
-    test('toMap() returns a map with complete options', () {
-      const configuration = CustomTabsBrowserConfiguration(
-        prefersDefaultBrowser: true,
-        fallbackCustomTabs: [
-          'org.mozilla.firefox',
-          'com.microsoft.emmx',
-        ],
-        headers: {'key': 'value'},
-      );
-      expect(configuration.toMap(), <String, dynamic>{
-        'prefersDefaultBrowser': true,
-        'fallbackCustomTabs': [
-          'org.mozilla.firefox',
-          'com.microsoft.emmx',
-        ],
-        'headers': {'key': 'value'},
-      });
-    });
-
-    test('toMap() returns empty map when option values are null', () {
-      const configuration = CustomTabsBrowserConfiguration();
-      expect(configuration.toMap(), <String, dynamic>{});
-    });
-  });
-
-  test('CustomTabsColorScheme returns associated value', () {
-    expect(CustomTabsColorScheme.system.rawValue, 0);
-    expect(CustomTabsColorScheme.light.rawValue, 1);
-    expect(CustomTabsColorScheme.dark.rawValue, 2);
-  });
-
-  test('CustomTabsCloseButtonPosition returns associated value', () {
-    expect(CustomTabsCloseButtonPosition.start.rawValue, 1);
-    expect(CustomTabsCloseButtonPosition.end.rawValue, 2);
-  });
-
   test('CustomTabsShareState returns associated value', () {
     expect(CustomTabsShareState.browserDefault.rawValue, 0);
     expect(CustomTabsShareState.on.rawValue, 1);
     expect(CustomTabsShareState.off.rawValue, 2);
-  });
-
-  test('CustomTabsActivityHeightResizeBehavior returns associated value', () {
-    expect(CustomTabsActivityHeightResizeBehavior.defaultBehavior.rawValue, 0);
-    expect(CustomTabsActivityHeightResizeBehavior.adjustable.rawValue, 1);
-    expect(CustomTabsActivityHeightResizeBehavior.fixed.rawValue, 2);
   });
 }

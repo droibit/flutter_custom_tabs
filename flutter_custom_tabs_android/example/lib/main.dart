@@ -82,13 +82,6 @@ Future<void> _launchURL(BuildContext context) async {
           icon: CustomTabsCloseButtonIcon.back,
         ),
       ),
-      safariVCOptions: SafariViewControllerOptions(
-        preferredBarTintColor: theme.colorScheme.surface,
-        preferredControlTintColor: theme.colorScheme.onSurface,
-        barCollapsingEnabled: true,
-        entersReaderIfAvailable: false,
-        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-      ),
     );
   } catch (e) {
     // An exception is thrown if browser app is not installed on Android device.
@@ -135,24 +128,6 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
         showTitle: true,
         closeButton: const CustomTabsCloseButton(icon: "ic_round_close"),
       ),
-      safariVCOptions: SafariViewControllerOptions.pageSheet(
-        configuration: const SheetPresentationControllerConfiguration(
-          detents: {
-            SheetPresentationControllerDetent.large,
-            SheetPresentationControllerDetent.medium,
-          },
-          largestUndimmedDetentIdentifier:
-              SheetPresentationControllerDetent.medium,
-          prefersScrollingExpandsWhenScrolledToEdge: false,
-          prefersGrabberVisible: true,
-          prefersEdgeAttachedInCompactHeight: true,
-          preferredCornerRadius: 16.0,
-        ),
-        preferredBarTintColor: theme.primaryColor,
-        preferredControlTintColor: Colors.white,
-        entersReaderIfAvailable: true,
-        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-      ),
     );
   } catch (e) {
     debugPrint(e.toString());
@@ -174,13 +149,6 @@ Future<void> _launchDeepLinkingURL(BuildContext context) async {
         urlBarHidingEnabled: true,
         showTitle: true,
       ),
-      safariVCOptions: SafariViewControllerOptions(
-        preferredBarTintColor: theme.colorScheme.surface,
-        preferredControlTintColor: theme.colorScheme.onSurface,
-        barCollapsingEnabled: true,
-        entersReaderIfAvailable: false,
-        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-      ),
     );
   } catch (e) {
     debugPrint(e.toString());
@@ -201,10 +169,6 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
           toolbarColor: theme.colorScheme.surface,
         ),
         showTitle: true,
-      ),
-      safariVCOptions: SafariViewControllerOptions(
-        preferredBarTintColor: theme.colorScheme.surface,
-        preferredControlTintColor: theme.colorScheme.onSurface,
       ),
     );
   } catch (e) {
