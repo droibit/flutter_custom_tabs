@@ -39,12 +39,8 @@ void main() {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
-      customTabsOptions: const CustomTabsOptions(
-        urlBarHidingEnabled: true,
-      ),
-      safariVCOptions: const SafariViewControllerOptions(
-        barCollapsingEnabled: false,
-      ),
+      customTabsOptions: _LaunchOptions(),
+      safariVCOptions: _LaunchOptions(),
     );
     expect(
       log,
@@ -52,12 +48,8 @@ void main() {
         isMethodCall('launch', arguments: <String, dynamic>{
           'url': 'http://example.com/',
           'prefersDeepLink': true,
-          'customTabsOptions': const <String, dynamic>{
-            'urlBarHidingEnabled': true,
-          },
-          'safariVCOptions': const <String, dynamic>{
-            'barCollapsingEnabled': false
-          }
+          'customTabsOptions': const <String, dynamic>{},
+          'safariVCOptions': const <String, dynamic>{},
         }),
       ],
     );
@@ -72,4 +64,9 @@ void main() {
       ],
     );
   });
+}
+
+class _LaunchOptions implements PlatformOptions {
+  @override
+  Map<String, dynamic> toMap() => {};
 }
