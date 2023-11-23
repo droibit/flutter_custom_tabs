@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   flutter_custom_tabs_platform_interface: 
     path: ../flutter_custom_tabs_platform_interface
+  meta: ^1.9.1
 
 dev_dependencies:
   flutter_test:

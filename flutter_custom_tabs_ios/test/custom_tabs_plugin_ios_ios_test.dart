@@ -13,18 +13,21 @@ void main() {
       MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-          channel, (methodCall) async => log.add(methodCall));
+    channel,
+    (methodCall) async => log.add(methodCall),
+  );
 
   setUp(() {
     log = <MethodCall>[];
     customTabs = CustomTabsPluginIOS();
   });
 
-  test('launch() invoke method "launch" with safariVCOptions', () async {
+  test('launch() invoke method "launch" with SafariViewControllerOptions',
+      () async {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
-      customTabsOptions: const CustomTabsOptions(),
+      customTabsOptions: const _LaunchOptions(),
       safariVCOptions: const SafariViewControllerOptions(
         barCollapsingEnabled: true,
       ),
@@ -36,8 +39,29 @@ void main() {
           'url': 'http://example.com/',
           'prefersDeepLink': true,
           'safariVCOptions': const <String, dynamic>{
-            'barCollapsingEnabled': true
-          }
+            'barCollapsingEnabled': true,
+          },
+        }),
+      ],
+    );
+  });
+
+  test('launch() invoke method "launch" with invalid options', () async {
+    await customTabs.launch(
+      'http://example.com/',
+      prefersDeepLink: true,
+      customTabsOptions: const _LaunchOptions(),
+      safariVCOptions: const _LaunchOptions(
+        barCollapsingEnabled: true,
+      ),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('launch', arguments: <String, dynamic>{
+          'url': 'http://example.com/',
+          'prefersDeepLink': true,
+          'safariVCOptions': const <String, dynamic>{},
         }),
       ],
     );
@@ -52,4 +76,18 @@ void main() {
       ],
     );
   });
+}
+
+class _LaunchOptions implements PlatformOptions {
+  final bool? barCollapsingEnabled;
+
+  const _LaunchOptions({
+    this.barCollapsingEnabled,
+  });
+
+  @override
+  Map<String, dynamic> toMap() => {
+        if (barCollapsingEnabled != null)
+          'barCollapsingEnabled': barCollapsingEnabled,
+      };
 }

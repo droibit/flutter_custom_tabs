@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
 void main() => runApp(const MyApp());
@@ -54,15 +55,6 @@ Future<void> _launchURL(BuildContext context) async {
   try {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',
-      customTabsOptions: CustomTabsOptions(
-        colorSchemes: CustomTabsColorSchemes.defaults(
-          toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.background,
-        ),
-        shareState: CustomTabsShareState.on,
-        urlBarHidingEnabled: true,
-        showTitle: true,
-      ),
       safariVCOptions: SafariViewControllerOptions(
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,
@@ -78,19 +70,9 @@ Future<void> _launchURL(BuildContext context) async {
 
 Future<void> _launchURLInBottomSheet(BuildContext context) async {
   final theme = Theme.of(context);
-  final mediaQuery = MediaQuery.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',
-      customTabsOptions: CustomTabsOptions.partial(
-        configuration: PartialCustomTabsConfiguration(
-          initialHeight: mediaQuery.size.height * 0.7,
-        ),
-        colorSchemes: CustomTabsColorSchemes.defaults(
-          toolbarColor: theme.primaryColor,
-        ),
-        showTitle: true,
-      ),
       safariVCOptions: SafariViewControllerOptions.pageSheet(
         configuration: const SheetPresentationControllerConfiguration(
           detents: {
@@ -121,15 +103,6 @@ Future<void> _launchDeepLinkingURL(BuildContext context) async {
     await CustomTabsPlatform.instance.launch(
       'https://maps.apple.com/?q=tokyo+station',
       prefersDeepLink: true,
-      customTabsOptions: CustomTabsOptions(
-        colorSchemes: CustomTabsColorSchemes.defaults(
-          toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.background,
-        ),
-        shareState: CustomTabsShareState.on,
-        urlBarHidingEnabled: true,
-        showTitle: true,
-      ),
       safariVCOptions: SafariViewControllerOptions(
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,
