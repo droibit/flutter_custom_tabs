@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart' as lite;
 
@@ -74,28 +73,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<void> _launchURLInDefaultBrowserOnAndroid(BuildContext context) async {
-  final theme = Theme.of(context);
-  try {
-    await launchUrl(
-      Uri.parse('https://flutter.dev'),
-      customTabsOptions: CustomTabsOptions(
-        colorSchemes: CustomTabsColorSchemes.defaults(
-          toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.background,
-        ),
-        urlBarHidingEnabled: true,
-        showTitle: true,
-        browser: const CustomTabsBrowserConfiguration(
-          prefersDefaultBrowser: true,
-        ),
-      ),
-    );
-  } catch (e) {
-    debugPrint(e.toString());
-  }
-}
-
 Future<void> _launchUrl(BuildContext context) async {
   final theme = Theme.of(context);
   try {
@@ -119,6 +96,28 @@ Future<void> _launchUrl(BuildContext context) async {
     );
   } catch (e) {
     // An exception is thrown if browser app is not installed on Android device.
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchURLInDefaultBrowserOnAndroid(BuildContext context) async {
+  final theme = Theme.of(context);
+  try {
+    await launchUrl(
+      Uri.parse('https://flutter.dev'),
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+          navigationBarColor: theme.colorScheme.background,
+        ),
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        browser: const CustomTabsBrowserConfiguration(
+          prefersDefaultBrowser: true,
+        ),
+      ),
+    );
+  } catch (e) {
     debugPrint(e.toString());
   }
 }

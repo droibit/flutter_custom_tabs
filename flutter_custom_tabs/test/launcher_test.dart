@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_custom_tabs/src/launcher.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../mocks/mock_custom_tabs_platform.dart';
+import 'mocks/mock_custom_tabs_platform.dart';
 
 void main() {
   final mock = MockCustomTabsPlatform();

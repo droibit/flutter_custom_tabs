@@ -7,8 +7,8 @@ class MockCustomTabsPlatform extends Fake
     implements CustomTabsPlatform {
   String? url;
   bool? prefersDeepLink;
-  CustomTabsOptions? customTabsOptions;
-  SafariViewControllerOptions? safariVCOptions;
+  PlatformOptions? customTabsOptions;
+  PlatformOptions? safariVCOptions;
 
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
@@ -16,8 +16,8 @@ class MockCustomTabsPlatform extends Fake
   void setLaunchExpectations({
     required String url,
     bool? prefersDeepLink,
-    CustomTabsOptions? customTabsOptions,
-    SafariViewControllerOptions? safariVCOptions,
+    PlatformOptions? customTabsOptions,
+    PlatformOptions? safariVCOptions,
   }) {
     this.url = url;
     this.prefersDeepLink = prefersDeepLink;
@@ -29,8 +29,8 @@ class MockCustomTabsPlatform extends Fake
   Future<void> launch(
     String? urlString, {
     bool? prefersDeepLink,
-    CustomTabsOptions? customTabsOptions,
-    SafariViewControllerOptions? safariVCOptions,
+    PlatformOptions? customTabsOptions,
+    PlatformOptions? safariVCOptions,
   }) async {
     expect(urlString, url);
     expect(prefersDeepLink, this.prefersDeepLink);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
+import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
+import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:meta/meta.dart';
 
 /// The Configuration for providing minimal options for mobile platforms when launching Custom Tabs by specifying a URL.
