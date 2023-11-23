@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:mockito/mockito.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
 import 'package:url_launcher_platform_interface/link.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:web/web.dart' as html;
 
 class MockUrlLauncherPlugin extends Mock
     with MockPlatformInterfaceMixin
@@ -50,7 +50,7 @@ class MockUrlLauncherPlugin extends Mock
   LinkDelegate get linkDelegate => throw UnimplementedError();
 
   @override
-  WindowBase openNewWindow(String url, {String? webOnlyWindowName}) {
+  html.Window? openNewWindow(String url, {String? webOnlyWindowName}) {
     throw UnimplementedError();
   }
 }

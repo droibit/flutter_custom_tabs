@@ -35,9 +35,16 @@ void main() {
     const url = 'https://example.com';
     await plugin.launch(
       url,
-      customTabsOptions: const CustomTabsOptions(),
-      safariVCOptions: const SafariViewControllerOptions(),
+      customTabsOptions: const _Options(),
+      safariVCOptions: const _Options(),
     );
     verify(mock.launch(url));
   });
+}
+
+class _Options implements PlatformOptions {
+  const _Options();
+
+  @override
+  Map<String, dynamic> toMap() => {};
 }
