@@ -19,8 +19,8 @@ class MethodChannelCustomTabs extends CustomTabsPlatform {
     final args = <String, dynamic>{
       'url': urlString,
       'prefersDeepLink': prefersDeepLink,
-      'customTabsOptions': customTabsOptions?.toMap() ?? <String, dynamic>{},
-      'safariVCOptions': safariVCOptions?.toMap() ?? <String, dynamic>{}
+      'customTabsOptions': <String, dynamic>{},
+      'safariVCOptions': <String, dynamic>{},
     };
     return _channel.invokeMethod('launch', args);
   }

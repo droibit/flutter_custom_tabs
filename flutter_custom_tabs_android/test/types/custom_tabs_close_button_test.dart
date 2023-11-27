@@ -1,22 +1,25 @@
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../messages.dart';
+
 void main() {
   group('CustomTabsCloseButton', () {
-    test('toMap() returns a map with complete options', () {
+    test('toMessage() returns empty map when option values are null', () {
       const button = CustomTabsCloseButton();
-      expect(button.toMap(), <String, dynamic>{});
+      final actual = button.toMessage();
+      expect(actual.icon, isNull);
+      expect(actual.position, isNull);
     });
 
-    test('toMap() returns a map with complete options', () {
+    test('toMessage() returns a map with complete options', () {
       const button = CustomTabsCloseButton(
         icon: 'close_icon',
         position: CustomTabsCloseButtonPosition.start,
       );
-      expect(button.toMap(), <String, dynamic>{
-        'icon': 'close_icon',
-        'position': 1,
-      });
+      final actual = button.toMessage();
+      expect(actual.icon, button.icon);
+      expect(actual.position, button.position!.rawValue);
     });
   });
 

@@ -71,8 +71,10 @@ class NativeAppLauncher {
     }
 
     @SuppressWarnings("deprecation")
-    @NonNull
-    private static List<ResolveInfo> queryIntentActivities(@NonNull PackageManager pm, @NonNull Intent intent) {
+    private static @NonNull List<ResolveInfo> queryIntentActivities(
+            @NonNull PackageManager pm,
+            @NonNull Intent intent
+    ) {
         final int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 ? PackageManager.MATCH_ALL : PackageManager.MATCH_DEFAULT_ONLY;
 
@@ -86,8 +88,7 @@ class NativeAppLauncher {
         }
     }
 
-    @NonNull
-    private static Set<String> extractPackageNames(@NonNull List<ResolveInfo> resolveInfo) {
+    private static @NonNull Set<String> extractPackageNames(@NonNull List<ResolveInfo> resolveInfo) {
         final Set<String> packageNames = new HashSet<>(resolveInfo.size());
         for (ResolveInfo info : resolveInfo) {
             packageNames.add(info.activityInfo.packageName);

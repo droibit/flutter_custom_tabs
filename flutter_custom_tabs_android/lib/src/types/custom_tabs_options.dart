@@ -7,8 +7,7 @@ import 'custom_tabs_close_button.dart';
 import 'custom_tabs_color_schemes.dart';
 import 'partial_custom_tabs.dart';
 
-/// The comprehensive options
-/// when launching [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) by specifying a URL.
+/// The comprehensive set of options for launching [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) by specifying a URL.
 ///
 /// See also:
 ///
@@ -75,20 +74,7 @@ class CustomTabsOptions implements PlatformOptions {
 
   /// Converts the [CustomTabsOptions] instance into a [Map] instance for serialization.
   @override
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      if (colorSchemes != null) 'colorSchemes': colorSchemes!.toMap(),
-      if (urlBarHidingEnabled != null)
-        'urlBarHidingEnabled': urlBarHidingEnabled,
-      if (shareState != null) 'shareState': shareState!.rawValue,
-      if (showTitle != null) 'showTitle': showTitle,
-      if (instantAppsEnabled != null) 'instantAppsEnabled': instantAppsEnabled,
-      if (animations != null) 'animations': animations!.toMap(),
-      if (closeButton != null) 'closeButton': closeButton!.toMap(),
-      if (browser != null) 'browser': browser!.toMap(),
-      if (partial != null) 'partial': partial!.toMap(),
-    };
-  }
+  Map<String, dynamic> toMap() => {};
 }
 
 /// The share state that should be applied to the custom tab.

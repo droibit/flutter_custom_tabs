@@ -138,7 +138,7 @@ Future<void> _launchDeepLinkingURL(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
-      'https://www.google.co.jp/maps/@35.6908883,139.7865242,13.53z',
+      'https://www.google.co.jp/maps/@35.681236,139.767125,15z',
       prefersDeepLink: true,
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
