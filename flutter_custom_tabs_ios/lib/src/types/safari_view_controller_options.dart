@@ -4,8 +4,7 @@ import 'package:meta/meta.dart';
 
 import 'sheet_presentation_controller.dart';
 
-/// The comprehensive options
-/// when launching [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) by specifying a URL.
+/// The comprehensive set of options for launching [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) by specifying a URL.
 ///
 /// See also:
 /// - [SFSafariViewController.Configuration](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/configuration)
@@ -19,7 +18,7 @@ class SafariViewControllerOptions implements PlatformOptions {
     this.entersReaderIfAvailable,
     this.dismissButtonStyle,
     this.modalPresentationStyle,
-    this.pageSheetConfiguration,
+    this.pageSheet,
   });
 
   /// Creates a [SafariViewControllerOptions] instance with page sheet configuration.
@@ -38,7 +37,7 @@ class SafariViewControllerOptions implements PlatformOptions {
           dismissButtonStyle: dismissButtonStyle,
           modalPresentationStyle:
               ViewControllerModalPresentationStyle.pageSheet,
-          pageSheetConfiguration: configuration,
+          pageSheet: configuration,
         );
 
   /// The color to tint the background of the navigation bar and the toolbar.
@@ -60,7 +59,7 @@ class SafariViewControllerOptions implements PlatformOptions {
   final ViewControllerModalPresentationStyle? modalPresentationStyle;
 
   /// The page sheet configuration.
-  final SheetPresentationControllerConfiguration? pageSheetConfiguration;
+  final SheetPresentationControllerConfiguration? pageSheet;
 
   /// Converts the [SafariViewControllerOptions] instance into a [Map] instance for serialization.
   @override
@@ -80,8 +79,7 @@ class SafariViewControllerOptions implements PlatformOptions {
         'modalPresentationStyle': modalPresentationStyle!.rawValue,
       if (dismissButtonStyle != null)
         'dismissButtonStyle': dismissButtonStyle!.rawValue,
-      if (pageSheetConfiguration != null)
-        'pageSheet': pageSheetConfiguration!.toMap(),
+      if (pageSheet != null) 'pageSheet': pageSheet!.toMap(),
     };
   }
 }

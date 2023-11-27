@@ -28,12 +28,12 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
     PlatformOptions? safariVCOptions,
   }) {
     final options = (customTabsOptions is CustomTabsOptions)
-        ? customTabsOptions
-        : const CustomTabsOptions();
+        ? customTabsOptions.toMessage()
+        : CustomTabsOptionsMessage();
     return _hostApi.launchUrl(
       urlString,
       prefersDeepLink: prefersDeepLink,
-      options: options.toMessage(),
+      options: options,
     );
   }
 

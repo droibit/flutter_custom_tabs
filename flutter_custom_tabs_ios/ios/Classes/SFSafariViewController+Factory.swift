@@ -2,30 +2,16 @@
 import SafariServices
 import UIKit.UIColor
 
-private let keyPreferredBarTintColor = "preferredBarTintColor"
-private let keyPreferredControlTintColor = "preferredControlTintColor"
-private let keyBarCollapsingEnabled = "barCollapsingEnabled"
-private let keyEntersReaderIfAvailable = "entersReaderIfAvailable"
-private let keyDismissButtonStyle = "dismissButtonStyle"
-private let keyModalPresentationStyle = "modalPresentationStyle"
-private let keyPageSheet = "pageSheet"
-private let keyPageSheetDetents = "detents"
-private let keyPageSheetLargestUndimmedDetentIdentifier = "largestUndimmedDetentIdentifier"
-private let keyPageSheetPrefersScrollingExpandsWhenScrolledToEdge = "prefersScrollingExpandsWhenScrolledToEdge"
-private let keyPageSheetPrefersGrabberVisible = "prefersGrabberVisible"
-private let keyPageSheetPrefersEdgeAttachedInCompactHeight = "prefersEdgeAttachedInCompactHeight"
-private let keyPageSheetPreferredCornerRadius = "preferredCornerRadius"
-
 private let pageSheetDetentMedium = "medium"
 private let pageSheetDetentLarge = "large"
 
 extension SFSafariViewController {
-    static func make(url: URL, options: [String: Any]) -> SFSafariViewController {
+    static func make(url: URL, options: SafariViewControllerOptionsMessage) -> SFSafariViewController {
         let configuration = SFSafariViewController.Configuration()
-        if let barCollapsingEnabled = options[keyBarCollapsingEnabled] as? Bool {
+        if let barCollapsingEnabled = options.barCollapsingEnabled {
             configuration.barCollapsingEnabled = barCollapsingEnabled
         }
-        if let entersReaderIfAvailable = options[keyEntersReaderIfAvailable] as? Bool {
+        if let entersReaderIfAvailable = options.entersReaderIfAvailable {
             configuration.entersReaderIfAvailable = entersReaderIfAvailable
         }
 
@@ -34,34 +20,34 @@ extension SFSafariViewController {
             configuration: configuration
         )
 
-        if let barTintColorHex = options[keyPreferredBarTintColor] as? String,
+        if let barTintColorHex = options.preferredBarTintColor,
            let barTintColor = UIColor(hex: barTintColorHex)
         {
             viewController.preferredBarTintColor = barTintColor
         }
-        if let controlTintColorHex = options[keyPreferredControlTintColor] as? String,
+        if let controlTintColorHex = options.preferredControlTintColor,
            let controlTintColor = UIColor(hex: controlTintColorHex)
         {
             viewController.preferredControlTintColor = controlTintColor
         }
 
-        if let dismissButtonStyleRawValue = options[keyDismissButtonStyle] as? Int,
-           let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: dismissButtonStyleRawValue)
+        if let dismissButtonStyleRawValue = options.dismissButtonStyle,
+           let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: Int(dismissButtonStyleRawValue))
         {
             viewController.dismissButtonStyle = dismissButtonStyle
         }
 
-        if let modalPresentationStyleRawValue = options[keyModalPresentationStyle] as? Int,
-           let modalPresentationStyle = UIModalPresentationStyle(rawValue: modalPresentationStyleRawValue)
+        if let modalPresentationStyleRawValue = options.modalPresentationStyle,
+           let modalPresentationStyle = UIModalPresentationStyle(rawValue: Int(modalPresentationStyleRawValue))
         {
             viewController.modalPresentationStyle = modalPresentationStyle
 
             if #available(iOS 15, *),
                modalPresentationStyle == .pageSheet || modalPresentationStyle == .formSheet,
-               let sheet = viewController.sheetPresentationController,
-               let pageSheetConfig = options[keyPageSheet] as? [String: Any]
+               let sheetPresentationController = viewController.sheetPresentationController,
+               let pageSheetConfiguration = options.pageSheet
             {
-                sheet.configure(with: pageSheetConfig)
+                sheetPresentationController.configure(with: pageSheetConfiguration)
             }
         }
         return viewController
@@ -70,9 +56,9 @@ extension SFSafariViewController {
 
 @available(iOS 15.0, *)
 private extension UISheetPresentationController {
-    func configure(with configuration: [String: Any]) {
-        if let rawDetents = configuration[keyPageSheetDetents] as? [String], !rawDetents.isEmpty {
-            detents = rawDetents.compactMap { detent in
+    func configure(with configuration: SheetPresentationControllerConfigurationMessage) {
+        if !configuration.detents.isEmpty {
+            detents = configuration.detents.compactMap { detent in
                 switch detent {
                 case pageSheetDetentMedium:
                     return .medium()
@@ -83,7 +69,7 @@ private extension UISheetPresentationController {
                 }
             }
         }
-        if let largestUndimmedDetentIdentifier = configuration[keyPageSheetLargestUndimmedDetentIdentifier] as? String {
+        if let largestUndimmedDetentIdentifier = configuration.largestUndimmedDetentIdentifier {
             switch largestUndimmedDetentIdentifier {
             case pageSheetDetentMedium:
                 self.largestUndimmedDetentIdentifier = .medium
@@ -93,16 +79,17 @@ private extension UISheetPresentationController {
                 break
             }
         }
-        if let prefersScrollingExpandsWhenScrolledToEdge = configuration[keyPageSheetPrefersScrollingExpandsWhenScrolledToEdge] as? Bool {
+
+        if let prefersScrollingExpandsWhenScrolledToEdge = configuration.prefersScrollingExpandsWhenScrolledToEdge {
             self.prefersScrollingExpandsWhenScrolledToEdge = prefersScrollingExpandsWhenScrolledToEdge
         }
-        if let prefersGrabberVisible = configuration[keyPageSheetPrefersGrabberVisible] as? Bool {
+        if let prefersGrabberVisible = configuration.prefersGrabberVisible {
             self.prefersGrabberVisible = prefersGrabberVisible
         }
-        if let preferredCornerRadius = configuration[keyPageSheetPreferredCornerRadius] as? Float {
+        if let preferredCornerRadius = configuration.preferredCornerRadius {
             self.preferredCornerRadius = CGFloat(preferredCornerRadius)
         }
-        if let prefersEdgeAttachedInCompactHeight = configuration[keyPageSheetPrefersEdgeAttachedInCompactHeight] as? Bool {
+        if let prefersEdgeAttachedInCompactHeight = configuration.prefersEdgeAttachedInCompactHeight {
             self.prefersEdgeAttachedInCompactHeight = prefersEdgeAttachedInCompactHeight
         }
     }

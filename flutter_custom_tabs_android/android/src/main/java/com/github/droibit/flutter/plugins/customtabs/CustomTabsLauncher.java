@@ -37,7 +37,7 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
 
     @Override
     public void launchUrl(
-            @NonNull String url,
+            @NonNull String urlString,
             @NonNull Boolean prefersDeepLink,
             @NonNull CustomTabsOptionsMessage options
     ) {
@@ -46,7 +46,7 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
             throw new FlutterError(CODE_LAUNCH_ERROR, "Launching a custom tab requires a foreground activity.", null);
         }
 
-        final Uri uri = Uri.parse(url);
+        final Uri uri = Uri.parse(urlString);
         if (prefersDeepLink && NativeAppLauncher.launch(activity, uri)) {
             return;
         }

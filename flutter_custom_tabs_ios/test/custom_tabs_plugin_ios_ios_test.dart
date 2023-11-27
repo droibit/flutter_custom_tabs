@@ -1,87 +1,116 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+import 'messages.dart';
 
-  late List<MethodCall> log;
+void main() {
+  late _MockCustomTabsApi api;
   late CustomTabsPluginIOS customTabs;
 
-  const channel =
-      MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
-  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-      .setMockMethodCallHandler(
-    channel,
-    (methodCall) async => log.add(methodCall),
-  );
-
   setUp(() {
-    log = <MethodCall>[];
-    customTabs = CustomTabsPluginIOS();
+    api = _MockCustomTabsApi();
+    customTabs = CustomTabsPluginIOS(api: api);
+  });
+
+  test('registerWith() registers instance', () {
+    CustomTabsPluginIOS.registerWith();
+    expect(CustomTabsPlatform.instance, isA<CustomTabsPluginIOS>());
   });
 
   test('launch() invoke method "launch" with SafariViewControllerOptions',
       () async {
+    const url = 'http://example.com/';
+    const prefersDeepLink = true;
+    const options = SafariViewControllerOptions(
+      barCollapsingEnabled: true,
+    );
+    api.setLaunchExpectations(
+      url: url,
+      prefersDeepLink: prefersDeepLink,
+      options: options,
+    );
+
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
-      customTabsOptions: const _LaunchOptions(),
+      customTabsOptions: const _Options(),
       safariVCOptions: const SafariViewControllerOptions(
         barCollapsingEnabled: true,
       ),
     );
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall('launch', arguments: <String, dynamic>{
-          'url': 'http://example.com/',
-          'prefersDeepLink': true,
-          'safariVCOptions': const <String, dynamic>{
-            'barCollapsingEnabled': true,
-          },
-        }),
-      ],
-    );
   });
 
   test('launch() invoke method "launch" with invalid options', () async {
-    await customTabs.launch(
-      'http://example.com/',
-      prefersDeepLink: true,
-      customTabsOptions: const _LaunchOptions(),
-      safariVCOptions: const _LaunchOptions(
-        barCollapsingEnabled: true,
-      ),
+    const url = 'http://example.com/';
+    const prefersDeepLink = false;
+    const options = _Options(
+      barCollapsingEnabled: true,
     );
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall('launch', arguments: <String, dynamic>{
-          'url': 'http://example.com/',
-          'prefersDeepLink': true,
-          'safariVCOptions': const <String, dynamic>{},
-        }),
-      ],
+    api.setLaunchExpectations(
+      url: url,
+      prefersDeepLink: prefersDeepLink,
+      options: options,
+    );
+    await customTabs.launch(
+      url,
+      prefersDeepLink: prefersDeepLink,
+      customTabsOptions: const _Options(),
+      safariVCOptions: options,
     );
   });
 
   test('closeAllIfPossible() invoke method "closeAllIfPossible"', () async {
     await customTabs.closeAllIfPossible();
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall('closeAllIfPossible', arguments: null),
-      ],
-    );
+    expect(api.closeAllIfPossibleCalled, isTrue);
   });
 }
 
-class _LaunchOptions implements PlatformOptions {
+class _MockCustomTabsApi implements CustomTabsApi {
+  String? url;
+  bool? prefersDeepLink;
+  PlatformOptions? options;
+  bool launchUrlCalled = false;
+  bool closeAllIfPossibleCalled = false;
+
+  void setLaunchExpectations({
+    required String url,
+    bool? prefersDeepLink,
+    PlatformOptions? options,
+  }) {
+    this.url = url;
+    this.prefersDeepLink = prefersDeepLink;
+    this.options = options;
+  }
+
+  @override
+  Future<void> launchUrl(
+    String url, {
+    required bool prefersDeepLink,
+    required SafariViewControllerOptionsMessage options,
+  }) async {
+    expect(url, this.url);
+    expect(prefersDeepLink, this.prefersDeepLink);
+
+    if (this.options is SafariViewControllerOptions) {
+      final message = (this.options as SafariViewControllerOptions).toMessage();
+      expect(options.barCollapsingEnabled, message.barCollapsingEnabled);
+    } else {
+      expect(options.barCollapsingEnabled, isNull);
+    }
+    launchUrlCalled = true;
+  }
+
+  @override
+  Future<void> closeAllIfPossible() async {
+    closeAllIfPossibleCalled = true;
+  }
+}
+
+class _Options implements PlatformOptions {
   final bool? barCollapsingEnabled;
 
-  const _LaunchOptions({
+  const _Options({
     this.barCollapsingEnabled,
   });
 

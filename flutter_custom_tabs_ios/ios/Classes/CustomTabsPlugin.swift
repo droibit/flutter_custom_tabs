@@ -2,66 +2,55 @@ import Flutter
 import SafariServices
 import UIKit
 
-private let keyURL = "url"
-private let keyPrefersDeepLink = "prefersDeepLink"
-private let keyOptions = "safariVCOptions"
-
-public class CustomTabsPlugin: NSObject, FlutterPlugin {
+public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let plugin = CustomTabsPlugin()
+        CustomTabsApiSetup.setUp(binaryMessenger: registrar.messenger(), api: plugin)
+        registrar.publish(plugin)
+    }
+    
     private var dismissStack = [() -> Void]()
 
-    public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(
-            name: "plugins.flutter.droibit.github.io/custom_tabs",
-            binaryMessenger: registrar.messenger()
-        )
-        let instance = CustomTabsPlugin()
-        registrar.addMethodCallDelegate(instance, channel: channel)
-    }
-
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
-        case "launch":
-            let arguments = call.arguments as! [String: Any]
-            launch(with: arguments, result: result)
-        case "closeAllIfPossible":
-            dismissAllIfPossible(result: result)
-        default:
-            result(FlutterMethodNotImplemented)
-        }
-    }
-
-    private func launch(with arguments: [String: Any], result: @escaping FlutterResult) {
-        let url = URL(string: arguments[keyURL] as! String)!
-        let options = arguments[keyOptions] as! [String: Any]
-        let prefersDeepLink = arguments[keyPrefersDeepLink] as! Bool
+    func launchURL(
+        _ urlString: String,
+        prefersDeepLink: Bool,
+        options: SafariViewControllerOptionsMessage,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let url = URL(string: urlString)!
         if prefersDeepLink {
             UIApplication.shared.open(url, options: [.universalLinksOnly: true]) { [weak self] opened in
                 if !opened {
-                    self?.present(with: url, options: options, result: result)
+                    self?.presentSafariViewController(with: url, options: options, completion: completion)
                 }
             }
         } else {
-            present(with: url, options: options, result: result)
+            presentSafariViewController(with: url, options: options, completion: completion)
         }
     }
 
-    private func present(with url: URL, options: [String: Any], result: @escaping FlutterResult) {
+    func closeAllIfPossible() throws {
+        while let task = dismissStack.popLast() {
+            task()
+        }
+    }
+
+    // MARK: - Private
+
+    private func presentSafariViewController(
+        with url: URL,
+        options: SafariViewControllerOptionsMessage,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
         if let topViewController = UIWindow.keyWindow?.topViewController() {
             let safariViewController = SFSafariViewController.make(url: url, options: options)
             dismissStack.append { [weak safariViewController] in
                 safariViewController?.dismiss(animated: true)
             }
             topViewController.present(safariViewController, animated: true) {
-                result(nil)
+                completion(.success(()))
             }
         }
-    }
-
-    private func dismissAllIfPossible(result: @escaping FlutterResult) {
-        while let task = dismissStack.popLast() {
-            task()
-        }
-        result(nil)
     }
 }
 

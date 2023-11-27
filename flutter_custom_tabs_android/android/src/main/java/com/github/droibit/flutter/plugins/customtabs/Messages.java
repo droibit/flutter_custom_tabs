@@ -867,7 +867,7 @@ public class Messages {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface CustomTabsApi {
 
-    void launchUrl(@NonNull String url, @NonNull Boolean prefersDeepLink, @NonNull CustomTabsOptionsMessage options);
+    void launchUrl(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @NonNull CustomTabsOptionsMessage options);
 
     void closeAllIfPossible();
 
@@ -886,11 +886,11 @@ public class Messages {
               (message, reply) -> {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 ArrayList<Object> args = (ArrayList<Object>) message;
-                String urlArg = (String) args.get(0);
+                String urlStringArg = (String) args.get(0);
                 Boolean prefersDeepLinkArg = (Boolean) args.get(1);
                 CustomTabsOptionsMessage optionsArg = (CustomTabsOptionsMessage) args.get(2);
                 try {
-                  api.launchUrl(urlArg, prefersDeepLinkArg, optionsArg);
+                  api.launchUrl(urlStringArg, prefersDeepLinkArg, optionsArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

@@ -135,6 +135,8 @@ analyzer_rules:
   - unused_import
 included:
   - ios/Classes
+excluded:
+  - ios/Classes/Messages.swift
 
 line_length:
 - 200   # warning

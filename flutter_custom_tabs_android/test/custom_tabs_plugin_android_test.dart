@@ -52,7 +52,7 @@ void main() {
 
     await customTabs.launch(
       'http://example.com/',
-      prefersDeepLink: true,
+      prefersDeepLink: false,
       customTabsOptions: const _Options(
         urlBarHidingEnabled: true,
       ),

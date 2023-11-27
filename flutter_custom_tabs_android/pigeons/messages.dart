@@ -12,7 +12,7 @@ import 'package:pigeon/pigeon.dart';
 @HostApi()
 abstract class CustomTabsApi {
   void launchUrl(
-    String url, {
+    String urlString, {
     required bool prefersDeepLink,
     required CustomTabsOptionsMessage options,
   });
