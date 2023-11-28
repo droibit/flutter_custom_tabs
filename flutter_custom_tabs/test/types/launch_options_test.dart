@@ -85,7 +85,8 @@ void main() {
       expect(customTabsOptions.showTitle, isTrue);
     });
 
-    test('toCustomTabsOptions() converts LaunchOptions with barFixingEnabled true',
+    test(
+        'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled true',
         () {
       const launchOptions = LaunchOptions(
         barFixingEnabled: true,
@@ -97,7 +98,8 @@ void main() {
       expect(customTabsOptions.showTitle, isTrue);
     });
 
-    test('toCustomTabsOptions() converts LaunchOptions with barFixingEnabled false',
+    test(
+        'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled false',
         () {
       const launchOptions = LaunchOptions(
         barFixingEnabled: false,
