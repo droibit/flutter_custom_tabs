@@ -6,5 +6,4 @@ import 'package:meta/meta.dart';
 /// this class.
 ///
 @immutable
-class PlatformOptions {
-}
+class PlatformOptions {}

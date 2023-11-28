@@ -18,8 +18,7 @@ void main() {
     expect(CustomTabsPlatform.instance, isA<CustomTabsPluginIOS>());
   });
 
-  test('launch() invoke method "launch" with valid options',
-      () async {
+  test('launch() invoke method "launch" with valid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
     const options = SafariViewControllerOptions(
