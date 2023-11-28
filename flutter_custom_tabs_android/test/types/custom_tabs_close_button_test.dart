@@ -30,9 +30,9 @@ void main() {
     });
   });
 
-  group('CustomTabsCloseButtonIcon', () {
+  group('CustomTabsCloseButtonIcons', () {
     test('back: gets the resource ID of build-in back arrow button icon', () {
-      expect(CustomTabsCloseButtonIcon.back, 'fct_ic_arrow_back');
+      expect(CustomTabsCloseButtonIcons.back, 'fct_ic_arrow_back');
     });
   });
 }

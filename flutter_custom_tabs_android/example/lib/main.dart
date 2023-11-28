@@ -79,7 +79,7 @@ Future<void> _launchURL(BuildContext context) async {
         showTitle: true,
         animations: CustomTabsSystemAnimations.slideIn(),
         closeButton: CustomTabsCloseButton(
-          icon: CustomTabsCloseButtonIcon.back,
+          icon: CustomTabsCloseButtonIcons.back,
         ),
       ),
     );

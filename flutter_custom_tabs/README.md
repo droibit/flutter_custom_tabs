@@ -61,7 +61,7 @@ void _launchURL(BuildContext context) async {
         urlBarHidingEnabled: true,
         showTitle: true,
         closeButton: CustomTabsCloseButton(
-          icon: CustomTabsCloseButtonIcon.back,
+          icon: CustomTabsCloseButtonIcons.back,
         ),
       ),                    
       safariVCOptions: SafariViewControllerOptions(

@@ -30,8 +30,8 @@ enum CustomTabsCloseButtonPosition {
   final int rawValue;
 }
 
-/// Build-in close button icon for custom tabs.
-class CustomTabsCloseButtonIcon {
+/// Build-in close button icons for the custom tab.
+class CustomTabsCloseButtonIcons {
   /// The resource ID of build-in back arrow button icon.
   static String get back => "fct_ic_arrow_back";
 }

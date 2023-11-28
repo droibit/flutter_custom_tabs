@@ -216,7 +216,7 @@ Future<void> _launchWithCustomCloseButton(BuildContext context) async {
           ),
           showTitle: true,
           closeButton: CustomTabsCloseButton(
-            icon: CustomTabsCloseButtonIcon.back,
+            icon: CustomTabsCloseButtonIcons.back,
           )),
       safariVCOptions: SafariViewControllerOptions(
         preferredBarTintColor: theme.colorScheme.surface,
