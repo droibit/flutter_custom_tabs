@@ -212,7 +212,7 @@ Remaining name changes:
 
 #### Lightweight `flutter_custom_tabs`
 
-> **Note**
+> [!NOTE]  
 > This is an experimental feature in the pre-release phase of v2.0.0.
 
 `flutter_custom_tabs` provides a rich set of customization options for Custom Tabs, but sometimes a minimal appearance customization is enough.  
