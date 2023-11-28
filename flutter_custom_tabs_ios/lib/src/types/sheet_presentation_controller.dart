@@ -35,26 +35,6 @@ class SheetPresentationControllerConfiguration {
 
   /// The corner radius that the sheet attempts to present with.
   final double? preferredCornerRadius;
-
-  @internal
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'detents': detents.map((e) => e.rawValue).toList(),
-      if (largestUndimmedDetentIdentifier != null)
-        'largestUndimmedDetentIdentifier':
-            largestUndimmedDetentIdentifier!.rawValue,
-      if (prefersScrollingExpandsWhenScrolledToEdge != null)
-        'prefersScrollingExpandsWhenScrolledToEdge':
-            prefersScrollingExpandsWhenScrolledToEdge,
-      if (prefersGrabberVisible != null)
-        'prefersGrabberVisible': prefersGrabberVisible,
-      if (prefersEdgeAttachedInCompactHeight != null)
-        'prefersEdgeAttachedInCompactHeight':
-            prefersEdgeAttachedInCompactHeight,
-      if (preferredCornerRadius != null)
-        'preferredCornerRadius': preferredCornerRadius,
-    };
-  }
 }
 
 /// An object that represents a height where a sheet naturally rests.

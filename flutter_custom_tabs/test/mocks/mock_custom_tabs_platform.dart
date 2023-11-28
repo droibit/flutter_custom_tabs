@@ -1,3 +1,4 @@
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -7,8 +8,8 @@ class MockCustomTabsPlatform extends Fake
     implements CustomTabsPlatform {
   String? url;
   bool? prefersDeepLink;
-  PlatformOptions? customTabsOptions;
-  PlatformOptions? safariVCOptions;
+  CustomTabsOptions? customTabsOptions;
+  SafariViewControllerOptions? safariVCOptions;
 
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
@@ -16,8 +17,8 @@ class MockCustomTabsPlatform extends Fake
   void setLaunchExpectations({
     required String url,
     bool? prefersDeepLink,
-    PlatformOptions? customTabsOptions,
-    PlatformOptions? safariVCOptions,
+    CustomTabsOptions? customTabsOptions,
+    SafariViewControllerOptions? safariVCOptions,
   }) {
     this.url = url;
     this.prefersDeepLink = prefersDeepLink;
@@ -34,8 +35,23 @@ class MockCustomTabsPlatform extends Fake
   }) async {
     expect(urlString, url);
     expect(prefersDeepLink, this.prefersDeepLink);
-    expect(customTabsOptions?.toMap(), this.customTabsOptions?.toMap());
-    expect(safariVCOptions?.toMap(), this.safariVCOptions?.toMap());
+
+    if (customTabsOptions is CustomTabsOptions) {
+      expect(
+        customTabsOptions.urlBarHidingEnabled,
+        this.customTabsOptions!.urlBarHidingEnabled,
+      );
+    } else {
+      expect(customTabsOptions, isNull);
+    }
+    if (safariVCOptions is SafariViewControllerOptions) {
+      expect(
+        safariVCOptions.barCollapsingEnabled,
+        this.safariVCOptions!.barCollapsingEnabled,
+      );
+    } else {
+      expect(safariVCOptions, isNull);
+    }
     launchUrlCalled = true;
   }
 

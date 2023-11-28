@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
@@ -41,6 +43,10 @@ class MyApp extends StatelessWidget {
               FilledButton(
                 onPressed: () => _launchDeepLinkingURL(context),
                 child: const Text('Deep link to Apple Maps'),
+              ),
+              FilledButton(
+                onPressed: () => _launchAndCloseManually(context),
+                child: const Text('Show flutter.dev + close after 5 seconds'),
               ),
             ],
           ),
@@ -86,8 +92,8 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
           prefersEdgeAttachedInCompactHeight: true,
           preferredCornerRadius: 16.0,
         ),
-        preferredBarTintColor: theme.primaryColor,
-        preferredControlTintColor: Colors.white,
+        preferredBarTintColor: theme.colorScheme.primaryContainer,
+        preferredControlTintColor: theme.colorScheme.onPrimaryContainer,
         entersReaderIfAvailable: true,
         dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
       ),
@@ -107,8 +113,27 @@ Future<void> _launchDeepLinkingURL(BuildContext context) async {
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,
         barCollapsingEnabled: true,
-        entersReaderIfAvailable: false,
-        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchAndCloseManually(BuildContext context) async {
+  final theme = Theme.of(context);
+  try {
+    Timer(const Duration(seconds: 5), () {
+      CustomTabsPlatform.instance.closeAllIfPossible();
+    });
+
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
+      safariVCOptions: SafariViewControllerOptions(
+        preferredBarTintColor: theme.colorScheme.surface,
+        preferredControlTintColor: theme.colorScheme.onSurface,
+        barCollapsingEnabled: true,
+        modalPresentationStyle: ViewControllerModalPresentationStyle.automatic,
       ),
     );
   } catch (e) {

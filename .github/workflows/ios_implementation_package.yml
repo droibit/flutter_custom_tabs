@@ -27,7 +27,7 @@ jobs:
       run: flutter pub get
       working-directory: ./flutter_custom_tabs_ios
     - name: Check for any formatting issues in the code
-      run: dart format --set-exit-if-changed .
+      run: dart format -o none --set-exit-if-changed $(find ./lib ./test -name "*.dart" -not -name "*.*g.dart")
       working-directory: ./flutter_custom_tabs_ios
     - name: Statically analyze the Dart code for any errors
       run: flutter analyze .

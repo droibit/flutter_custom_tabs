@@ -1,8 +1,18 @@
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../messages.dart';
+
 void main() {
-  test('toMap() returns a map with complete options', () {
+  test('toMessage() returns empty map when option values are null', () {
+    const configuration = CustomTabsBrowserConfiguration();
+    final actual = configuration.toMessage();
+    expect(actual.prefersDefaultBrowser, isNull);
+    expect(actual.fallbackCustomTabs, isNull);
+    expect(actual.headers, isNull);
+  });
+
+  test('toMessage() returns a map with complete options', () {
     const configuration = CustomTabsBrowserConfiguration(
       prefersDefaultBrowser: true,
       fallbackCustomTabs: [
@@ -11,18 +21,9 @@ void main() {
       ],
       headers: {'key': 'value'},
     );
-    expect(configuration.toMap(), <String, dynamic>{
-      'prefersDefaultBrowser': true,
-      'fallbackCustomTabs': [
-        'org.mozilla.firefox',
-        'com.microsoft.emmx',
-      ],
-      'headers': {'key': 'value'},
-    });
-  });
-
-  test('toMap() returns empty map when option values are null', () {
-    const configuration = CustomTabsBrowserConfiguration();
-    expect(configuration.toMap(), <String, dynamic>{});
+    final actual = configuration.toMessage();
+    expect(actual.prefersDefaultBrowser, configuration.prefersDefaultBrowser);
+    expect(actual.fallbackCustomTabs, configuration.fallbackCustomTabs);
+    expect(actual.headers, configuration.headers);
   });
 }

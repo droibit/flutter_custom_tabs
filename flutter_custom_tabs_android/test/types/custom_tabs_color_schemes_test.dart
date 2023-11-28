@@ -3,14 +3,20 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../messages.dart';
+
 void main() {
   group('CustomTabsColorSchemes', () {
-    test('toMap() returns empty map when option values are null', () {
+    test('toMessage() returns empty map when option values are null', () {
       const schemes = CustomTabsColorSchemes();
-      expect(schemes.toMap(), <String, dynamic>{});
+      final actual = schemes.toMessage();
+      expect(actual.colorScheme, isNull);
+      expect(actual.lightParams, isNull);
+      expect(actual.darkParams, isNull);
+      expect(actual.defaultPrams, isNull);
     });
 
-    test('toMap() returns a map with complete options', () {
+    test('toMessage() returns a map with complete options', () {
       const schemes = CustomTabsColorSchemes(
         colorScheme: CustomTabsColorScheme.system,
         lightParams: CustomTabsColorSchemeParams(
@@ -29,44 +35,49 @@ void main() {
           navigationBarDividerColor: Color(0xFFFFDBCC),
         ),
       );
-      expect(schemes.toMap(), <String, dynamic>{
-        'colorScheme': 0,
-        'lightColorSchemeParams': <String, String>{
-          'toolbarColor': '#ffffdbaa',
-          'navigationBarColor': '#ffffdbab',
-          'navigationBarDividerColor': '#ffffdbac',
-        },
-        'darkColorSchemeParams': <String, String>{
-          'toolbarColor': '#ffffdbba',
-          'navigationBarColor': '#ffffdbbb',
-          'navigationBarDividerColor': '#ffffdbbc',
-        },
-        'defaultColorSchemeParams': {
-          'toolbarColor': '#ffffdbca',
-          'navigationBarColor': '#ffffdbcb',
-          'navigationBarDividerColor': '#ffffdbcc',
-        },
-      });
+
+      final actual = schemes.toMessage();
+      expect(actual.colorScheme, schemes.colorScheme!.rawValue);
+      expect(actual.lightParams, isA<CustomTabsColorSchemeParamsMessage>());
+      expect(actual.darkParams, isA<CustomTabsColorSchemeParamsMessage>());
+      expect(actual.defaultPrams, isA<CustomTabsColorSchemeParamsMessage>());
+
+      final actualLightParams = actual.lightParams!;
+      expect(actualLightParams.toolbarColor, '#ffffdbaa');
+      expect(actualLightParams.navigationBarColor, '#ffffdbab');
+      expect(actualLightParams.navigationBarDividerColor, '#ffffdbac');
+
+      final actualDarkParams = actual.darkParams!;
+      expect(actualDarkParams.toolbarColor, '#ffffdbba');
+      expect(actualDarkParams.navigationBarColor, '#ffffdbbb');
+      expect(actualDarkParams.navigationBarDividerColor, '#ffffdbbc');
+
+      final actualDefaultParams = actual.defaultPrams!;
+      expect(actualDefaultParams.toolbarColor, '#ffffdbca');
+      expect(actualDefaultParams.navigationBarColor, '#ffffdbcb');
+      expect(actualDefaultParams.navigationBarDividerColor, '#ffffdbcc');
     });
   });
 
   group('CustomTabsColorSchemeParams', () {
-    test('toMap() returns empty map when option values are null', () {
+    test('toMessage() returns empty map when option values are null', () {
       const params = CustomTabsColorSchemeParams();
-      expect(params.toMap(), <String, dynamic>{});
+      final actual = params.toMessage();
+      expect(actual.toolbarColor, null);
+      expect(actual.navigationBarColor, null);
+      expect(actual.navigationBarDividerColor, null);
     });
 
-    test('toMap() returns a map with complete options', () {
+    test('toMessage() returns a map with complete options', () {
       const params = CustomTabsColorSchemeParams(
         toolbarColor: Color(0xFFFFCBAA),
         navigationBarColor: Color(0xFFFFCBAB),
         navigationBarDividerColor: Color(0xFFFFCBAC),
       );
-      expect(params.toMap(), <String, dynamic>{
-        'toolbarColor': '#ffffcbaa',
-        'navigationBarColor': '#ffffcbab',
-        'navigationBarDividerColor': '#ffffcbac',
-      });
+      final actual = params.toMessage();
+      expect(actual.toolbarColor, '#ffffcbaa');
+      expect(actual.navigationBarColor, '#ffffcbab');
+      expect(actual.navigationBarDividerColor, '#ffffcbac');
     });
   });
 

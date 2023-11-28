@@ -1,30 +1,31 @@
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../messages.dart';
+
 void main() {
   group('CustomTabsAnimations', () {
-    test('CustomTabsAnimations toMap() returns a map with complete options',
-        () {
+    test('toMessage() returns empty map when animation values are null', () {
+      const animations = CustomTabsAnimations();
+      final actual = animations.toMessage();
+      expect(actual.startEnter, isNull);
+      expect(actual.startExit, isNull);
+      expect(actual.endEnter, isNull);
+      expect(actual.endExit, isNull);
+    });
+
+    test('toMessage() returns a map with complete options', () {
       const animations = CustomTabsAnimations(
         startEnter: 'slide_up',
         startExit: 'android:anim/fade_out',
         endEnter: 'android:anim/fade_in',
         endExit: 'slide_down',
       );
-
-      expect(animations.toMap(), <String, String>{
-        'startEnter': 'slide_up',
-        'startExit': 'android:anim/fade_out',
-        'endEnter': 'android:anim/fade_in',
-        'endExit': 'slide_down',
-      });
-    });
-
-    test(
-        'CustomTabsAnimations toMap() returns empty map when animation values are null',
-        () {
-      const animations = CustomTabsAnimations();
-      expect(animations.toMap(), <String, String>{});
+      final actual = animations.toMessage();
+      expect(actual.startEnter, actual.startEnter);
+      expect(actual.startExit, animations.startExit);
+      expect(actual.endEnter, animations.endEnter);
+      expect(actual.endExit, animations.endExit);
     });
   });
 

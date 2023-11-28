@@ -1,14 +1,19 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
+import 'message_converters.dart';
+import 'messages.g.dart';
 import 'types/safari_view_controller_options.dart';
 
 /// The iOS implementation of [CustomTabsPlatform].
 ///
 /// This class implements the `package:flutter_custom_tabs` functionality for iOS.
 class CustomTabsPluginIOS extends CustomTabsPlatform {
-  static const MethodChannel _channel =
-      MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
+  /// Creates a new plugin implementation instance.
+  CustomTabsPluginIOS({
+    CustomTabsApi? api,
+  }) : _hostApi = api ?? CustomTabsApi();
+
+  final CustomTabsApi _hostApi;
 
   /// Registers this class as the default instance of [CustomTabsPlatform].
   static void registerWith() {
@@ -23,18 +28,17 @@ class CustomTabsPluginIOS extends CustomTabsPlatform {
     PlatformOptions? safariVCOptions,
   }) {
     final options = (safariVCOptions is SafariViewControllerOptions)
-        ? safariVCOptions
-        : const SafariViewControllerOptions();
-    final args = <String, dynamic>{
-      'url': urlString,
-      'prefersDeepLink': prefersDeepLink,
-      'safariVCOptions': options.toMap(),
-    };
-    return _channel.invokeMethod('launch', args);
+        ? safariVCOptions.toMessage()
+        : SafariViewControllerOptionsMessage();
+    return _hostApi.launchUrl(
+      urlString,
+      prefersDeepLink: prefersDeepLink,
+      options: options,
+    );
   }
 
   @override
   Future<void> closeAllIfPossible() async {
-    return _channel.invokeMethod('closeAllIfPossible');
+    return _hostApi.closeAllIfPossible();
   }
 }
