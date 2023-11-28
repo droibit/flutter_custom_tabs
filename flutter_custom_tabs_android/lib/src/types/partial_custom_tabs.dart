@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:meta/meta.dart';
 
 /// The configuration for [Partial Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs/).
@@ -24,16 +22,6 @@ class PartialCustomTabsConfiguration {
   ///
   /// *The maximum corner radius is 16dp(lp).
   final int? cornerRadius;
-
-  @internal
-  Map<String, dynamic> toMap() {
-    final dest = <String, dynamic>{
-      'initialHeightDp': initialHeight,
-      'activityHeightResizeBehavior': activityHeightResizeBehavior.rawValue,
-      if (cornerRadius != null) 'cornerRadiusDp': min(cornerRadius!, 16)
-    };
-    return dest;
-  }
 }
 
 /// Desired height behavior for the custom tab.

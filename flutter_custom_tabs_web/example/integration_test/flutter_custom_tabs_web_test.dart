@@ -44,7 +44,4 @@ void main() {
 
 class _Options implements PlatformOptions {
   const _Options();
-
-  @override
-  Map<String, dynamic> toMap() => {};
 }

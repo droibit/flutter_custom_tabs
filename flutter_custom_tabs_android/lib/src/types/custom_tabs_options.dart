@@ -71,10 +71,6 @@ class CustomTabsOptions implements PlatformOptions {
 
   /// The configuration for Partial Custom Tabs.
   final PartialCustomTabsConfiguration? partial;
-
-  /// Converts the [CustomTabsOptions] instance into a [Map] instance for serialization.
-  @override
-  Map<String, dynamic> toMap() => {};
 }
 
 /// The share state that should be applied to the custom tab.

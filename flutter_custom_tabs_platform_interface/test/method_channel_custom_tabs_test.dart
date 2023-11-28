@@ -39,8 +39,8 @@ void main() {
     await customTabs.launch(
       'http://example.com/',
       prefersDeepLink: true,
-      customTabsOptions: _LaunchOptions(),
-      safariVCOptions: _LaunchOptions(),
+      customTabsOptions: _Options(),
+      safariVCOptions: _Options(),
     );
     expect(
       log,
@@ -66,7 +66,4 @@ void main() {
   });
 }
 
-class _LaunchOptions implements PlatformOptions {
-  @override
-  Map<String, dynamic> toMap() => {};
-}
+class _Options implements PlatformOptions {}

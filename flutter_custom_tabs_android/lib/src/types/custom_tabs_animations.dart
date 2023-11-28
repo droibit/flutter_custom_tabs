@@ -31,20 +31,6 @@ class CustomTabsAnimations {
 
   /// Resource ID of the exit "exit" animation for the custom tab.
   final String? endExit;
-
-  @internal
-  Map<String, String> toMap() {
-    final dest = <String, String>{};
-    if (startEnter != null && startExit != null) {
-      dest['startEnter'] = startEnter!;
-      dest['startExit'] = startExit!;
-    }
-    if (endEnter != null && endExit != null) {
-      dest['endEnter'] = endEnter!;
-      dest['endExit'] = endExit!;
-    }
-    return dest;
-  }
 }
 
 /// Build-in enter and exit animations for Custom Tabs.

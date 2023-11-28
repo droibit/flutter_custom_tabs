@@ -60,28 +60,6 @@ class SafariViewControllerOptions implements PlatformOptions {
 
   /// The page sheet configuration.
   final SheetPresentationControllerConfiguration? pageSheet;
-
-  /// Converts the [SafariViewControllerOptions] instance into a [Map] instance for serialization.
-  @override
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      if (preferredBarTintColor != null)
-        'preferredBarTintColor':
-            '#${preferredBarTintColor!.value.toRadixString(16)}',
-      if (preferredControlTintColor != null)
-        'preferredControlTintColor':
-            '#${preferredControlTintColor!.value.toRadixString(16)}',
-      if (barCollapsingEnabled != null)
-        'barCollapsingEnabled': barCollapsingEnabled,
-      if (entersReaderIfAvailable != null)
-        'entersReaderIfAvailable': entersReaderIfAvailable,
-      if (modalPresentationStyle != null)
-        'modalPresentationStyle': modalPresentationStyle!.rawValue,
-      if (dismissButtonStyle != null)
-        'dismissButtonStyle': dismissButtonStyle!.rawValue,
-      if (pageSheet != null) 'pageSheet': pageSheet!.toMap(),
-    };
-  }
 }
 
 /// Dismiss button style on the navigation bar of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller).

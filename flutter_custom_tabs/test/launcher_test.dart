@@ -55,32 +55,14 @@ void main() {
     }
   });
 
-  test('launchUrl() launch with basic options', () async {
+  test('launchUrl() launch with options', () async {
     final url = Uri.parse('http://example.com/');
     const prefersDeepLink = true;
     const customTabsOptions = CustomTabsOptions(
-      colorSchemes: CustomTabsColorSchemes(
-        defaultPrams: CustomTabsColorSchemeParams(
-          toolbarColor: Color(0xFFFFEBEE),
-        ),
-      ),
       urlBarHidingEnabled: true,
-      shareState: CustomTabsShareState.off,
-      showTitle: true,
-      instantAppsEnabled: false,
-      animations: CustomTabsAnimations(
-        startEnter: '_startEnter',
-        startExit: '_startExit',
-        endEnter: '_endEnter',
-        endExit: '_endExit',
-      ),
     );
     const safariVCOptions = SafariViewControllerOptions(
-      preferredBarTintColor: Color(0xFFFFEBEE),
-      preferredControlTintColor: Color(0xFFFFFFFF),
       barCollapsingEnabled: true,
-      entersReaderIfAvailable: false,
-      dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
     );
     mock.setLaunchExpectations(
       url: url.toString(),

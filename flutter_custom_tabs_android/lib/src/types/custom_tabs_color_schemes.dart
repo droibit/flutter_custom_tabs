@@ -40,17 +40,6 @@ class CustomTabsColorSchemes {
   /// If there is no [CustomTabsColorSchemeParams] for the current scheme,
   /// or a particular field of it is null, Custom Tabs will fall back to the defaults provided via [defaultPrams].
   final CustomTabsColorSchemeParams? defaultPrams;
-
-  @internal
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      if (colorScheme != null) 'colorScheme': colorScheme!.rawValue,
-      if (lightParams != null) 'lightColorSchemeParams': lightParams!.toMap(),
-      if (darkParams != null) 'darkColorSchemeParams': darkParams!.toMap(),
-      if (defaultPrams != null)
-        'defaultColorSchemeParams': defaultPrams!.toMap()
-    };
-  }
 }
 
 /// Desired color scheme on a custom tab.
@@ -92,19 +81,6 @@ class CustomTabsColorSchemeParams {
 
   /// Navigation bar divider color.
   final Color? navigationBarDividerColor;
-
-  @internal
-  Map<String, String> toMap() {
-    return <String, String>{
-      if (toolbarColor != null)
-        'toolbarColor': '#${toolbarColor!.value.toRadixString(16)}',
-      if (navigationBarColor != null)
-        'navigationBarColor': '#${navigationBarColor!.value.toRadixString(16)}',
-      if (navigationBarDividerColor != null)
-        'navigationBarDividerColor':
-            '#${navigationBarDividerColor!.value.toRadixString(16)}',
-    };
-  }
 }
 
 extension BrightnessToColorScheme on Brightness {

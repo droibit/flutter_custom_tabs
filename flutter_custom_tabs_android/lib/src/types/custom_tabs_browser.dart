@@ -23,14 +23,4 @@ class CustomTabsBrowserConfiguration {
 
   /// Extra HTTP request headers.
   final Map<String, String>? headers;
-
-  @internal
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      if (prefersDefaultBrowser != null)
-        'prefersDefaultBrowser': prefersDefaultBrowser!,
-      if (fallbackCustomTabs != null) 'fallbackCustomTabs': fallbackCustomTabs,
-      if (headers != null) 'headers': headers,
-    };
-  }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/painting.dart';
 
 import 'types/types.dart';
@@ -78,11 +80,14 @@ extension CustomTabsColorSchemeParamsConverter on CustomTabsColorSchemeParams {
 extension PartialCustomTabsConfigurationConverter
     on PartialCustomTabsConfiguration {
   PartialCustomTabsConfigurationMessage toMessage() {
-    return PartialCustomTabsConfigurationMessage(
+    final message = PartialCustomTabsConfigurationMessage(
       initialHeight: initialHeight,
       activityHeightResizeBehavior: activityHeightResizeBehavior.rawValue,
-      cornerRadius: cornerRadius,
     );
+    if (cornerRadius != null) {
+      message.cornerRadius = min(cornerRadius!, 16);
+    }
+    return message;
   }
 }
 

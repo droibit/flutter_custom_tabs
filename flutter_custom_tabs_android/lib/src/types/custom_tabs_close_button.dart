@@ -13,14 +13,6 @@ class CustomTabsCloseButton {
 
   /// The position of the close button on the custom tab.
   final CustomTabsCloseButtonPosition? position;
-
-  @internal
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      if (icon != null) 'icon': icon,
-      if (position != null) 'position': position!.rawValue,
-    };
-  }
 }
 
 /// The position of the close button on the custom tab.

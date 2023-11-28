@@ -18,7 +18,7 @@ void main() {
     expect(CustomTabsPlatform.instance, isA<CustomTabsPluginIOS>());
   });
 
-  test('launch() invoke method "launch" with SafariViewControllerOptions',
+  test('launch() invoke method "launch" with valid options',
       () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
@@ -32,31 +32,27 @@ void main() {
     );
 
     await customTabs.launch(
-      'http://example.com/',
-      prefersDeepLink: true,
+      url,
+      prefersDeepLink: prefersDeepLink,
       customTabsOptions: const _Options(),
-      safariVCOptions: const SafariViewControllerOptions(
-        barCollapsingEnabled: true,
-      ),
+      safariVCOptions: options,
     );
   });
 
   test('launch() invoke method "launch" with invalid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = false;
-    const options = _Options(
-      barCollapsingEnabled: true,
-    );
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
-      options: options,
     );
     await customTabs.launch(
       url,
       prefersDeepLink: prefersDeepLink,
       customTabsOptions: const _Options(),
-      safariVCOptions: options,
+      safariVCOptions: const _Options(
+        barCollapsingEnabled: true,
+      ),
     );
   });
 
@@ -113,10 +109,4 @@ class _Options implements PlatformOptions {
   const _Options({
     this.barCollapsingEnabled,
   });
-
-  @override
-  Map<String, dynamic> toMap() => {
-        if (barCollapsingEnabled != null)
-          'barCollapsingEnabled': barCollapsingEnabled,
-      };
 }

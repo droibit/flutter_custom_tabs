@@ -41,13 +41,11 @@ void main() {
     }
   });
 
-  test('launchUrl() launch with complete options', () async {
+  test('launchUrl() launch with options', () async {
     final url = Uri.parse('http://example.com/');
     const prefersDeepLink = true;
     const options = LaunchOptions(
-      barColor: Color(0xFFFFFFFF),
-      onBarColor: Color(0xFFFFFFFE),
-      appBarFixed: true,
+      appBarFixed: false,
     );
     mock.setLaunchExpectations(
       url: url.toString(),

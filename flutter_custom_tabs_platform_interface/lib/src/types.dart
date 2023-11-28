@@ -7,6 +7,4 @@ import 'package:meta/meta.dart';
 ///
 @immutable
 class PlatformOptions {
-  /// Converts this instance into a [Map] instance for serialization.
-  Map<String, dynamic> toMap() => {};
 }

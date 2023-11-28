@@ -18,7 +18,7 @@ void main() {
     expect(CustomTabsPlatform.instance, isA<CustomTabsPluginAndroid>());
   });
 
-  test('launch() invoke method "launch" with CustomTabsOptions', () async {
+  test('launch() invoke method "launch" with valid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
     const options = CustomTabsOptions(
@@ -41,18 +41,14 @@ void main() {
   test('launch() invoke method "launch" with invalid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
-    const options = _Options(
-      urlBarHidingEnabled: true,
-    );
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
-      options: options,
     );
 
     await customTabs.launch(
-      'http://example.com/',
-      prefersDeepLink: false,
+      url,
+      prefersDeepLink: prefersDeepLink,
       customTabsOptions: const _Options(
         urlBarHidingEnabled: true,
       ),
@@ -113,10 +109,4 @@ class _Options implements PlatformOptions {
   const _Options({
     this.urlBarHidingEnabled,
   });
-
-  @override
-  Map<String, dynamic> toMap() => {
-        if (urlBarHidingEnabled != null)
-          'urlBarHidingEnabled': urlBarHidingEnabled,
-      };
 }
