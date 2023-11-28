@@ -261,7 +261,7 @@ await launchUrl(
   options: LaunchOptions(
     barColor: theme.colorScheme.surface,
     onBarColor: theme.colorScheme.onSurface,
-    appBarFixed: false,
+    barFixingEnabled: false,
   ),
 );
 ```

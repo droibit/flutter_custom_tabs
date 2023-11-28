@@ -97,7 +97,7 @@ void _launchURL(BuildContext context) async {
         options: LaunchOptions(
           barColor: theme.colorScheme.surface,
           onBarColor: theme.colorScheme.onSurface,
-          appBarFixed: false,
+          barFixingEnabled: false,
         ),
       );
     } catch (e) {

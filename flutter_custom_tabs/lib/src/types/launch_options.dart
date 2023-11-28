@@ -11,8 +11,8 @@ class LaunchOptions {
   const LaunchOptions({
     this.barColor,
     this.onBarColor,
-    this.appBarFixed,
     this.systemNavigationBarParams,
+    this.barFixingEnabled,
   });
 
   /// The background color of the app bar and bottom bar.
@@ -29,7 +29,7 @@ class LaunchOptions {
   final SystemNavigationBarParams? systemNavigationBarParams;
 
   /// A Boolean value that indicates whether to keep the app bar fixed, even when scrolling through the page.
-  final bool? appBarFixed;
+  final bool? barFixingEnabled;
 
   /// Converts to [CustomTabsOptions].
   @internal
@@ -44,8 +44,8 @@ class LaunchOptions {
     }
 
     bool? urlBarHidingEnabled;
-    if (appBarFixed != null) {
-      urlBarHidingEnabled = !(appBarFixed!);
+    if (barFixingEnabled != null) {
+      urlBarHidingEnabled = !(barFixingEnabled!);
     }
     return CustomTabsOptions(
       colorSchemes: colorSchemes,
@@ -58,8 +58,8 @@ class LaunchOptions {
   @internal
   SafariViewControllerOptions toSafariViewControllerOptions() {
     bool? barCollapsingEnabled;
-    if (appBarFixed != null) {
-      barCollapsingEnabled = !(appBarFixed!);
+    if (barFixingEnabled != null) {
+      barCollapsingEnabled = !(barFixingEnabled!);
     }
     return SafariViewControllerOptions(
       preferredBarTintColor: barColor,

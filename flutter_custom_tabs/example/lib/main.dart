@@ -130,7 +130,7 @@ Future<void> _launchUrlLite(BuildContext context) async {
       options: lite.LaunchOptions(
         barColor: theme.colorScheme.surface,
         onBarColor: theme.colorScheme.onSurface,
-        appBarFixed: false,
+        barFixingEnabled: false,
       ),
     );
   } catch (e) {
