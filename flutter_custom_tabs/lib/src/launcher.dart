@@ -25,7 +25,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///       urlBarHidingEnabled: true,
 ///       showTitle: true,
 ///       closeButton: CustomTabsCloseButton(
-///         icon: CustomTabsCloseButtonIcon.back,
+///         icon: CustomTabsCloseButtonIcons.back,
 ///       ),
 ///     ),
 ///     safariVCOptions: SafariViewControllerOptions(

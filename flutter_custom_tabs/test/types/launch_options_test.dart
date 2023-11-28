@@ -13,7 +13,7 @@ void main() {
           backgroundColor: const Color(0xFFFFEBAC),
           dividerColor: const Color(0xFFFFEBAD),
         ),
-        appBarFixed: true,
+        barFixingEnabled: true,
       );
 
       final customTabsOptions = launchOptions.toCustomTabsOptions();
@@ -85,10 +85,11 @@ void main() {
       expect(customTabsOptions.showTitle, isTrue);
     });
 
-    test('toCustomTabsOptions() converts LaunchOptions with appBarFixed true',
+    test(
+        'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled true',
         () {
       const launchOptions = LaunchOptions(
-        appBarFixed: true,
+        barFixingEnabled: true,
       );
 
       final customTabsOptions = launchOptions.toCustomTabsOptions();
@@ -97,10 +98,11 @@ void main() {
       expect(customTabsOptions.showTitle, isTrue);
     });
 
-    test('toCustomTabsOptions() converts LaunchOptions with appBarFixed false',
+    test(
+        'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled false',
         () {
       const launchOptions = LaunchOptions(
-        appBarFixed: false,
+        barFixingEnabled: false,
       );
 
       final customTabsOptions = launchOptions.toCustomTabsOptions();
@@ -128,7 +130,7 @@ void main() {
           backgroundColor: const Color(0xFFFFEBAC),
           dividerColor: const Color(0xFFFFEBAD),
         ),
-        appBarFixed: false,
+        barFixingEnabled: false,
       );
 
       final safariVCOptions = launchOptions.toSafariViewControllerOptions();
@@ -191,12 +193,12 @@ void main() {
     });
 
     test(
-        'toSafariViewControllerOptions() converts LaunchOptions with appBarFixed true',
+        'toSafariViewControllerOptions() converts LaunchOptions with barFixingEnabled true',
         () {
       const launchOptions = LaunchOptions(
         barColor: Color(0xFFFFEBBA),
         onBarColor: Color(0xFFFFEBBB),
-        appBarFixed: true,
+        barFixingEnabled: true,
       );
 
       final safariVCOptions = launchOptions.toSafariViewControllerOptions();
@@ -216,12 +218,12 @@ void main() {
     });
 
     test(
-        'toSafariViewControllerOptions converts LaunchOptions with appBarFixed false',
+        'toSafariViewControllerOptions converts LaunchOptions with barFixingEnabled false',
         () {
       const launchOptions = LaunchOptions(
         barColor: Color(0xFFFFEBBC),
         onBarColor: Color(0xFFFFEBBD),
-        appBarFixed: false,
+        barFixingEnabled: false,
       );
 
       final safariVCOptions = launchOptions.toSafariViewControllerOptions();

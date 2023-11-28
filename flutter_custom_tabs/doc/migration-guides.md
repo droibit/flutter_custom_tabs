@@ -143,7 +143,7 @@ CustomTabsOptions(
   closeButton: CustomTabsCloseButton(
     position: CustomTabsCloseButtonPosition.end,
     // and newly added the button icon.
-    // icon: CustomTabsCloseButtonIcon.back,
+    // icon: CustomTabsCloseButtonIcons.back,
     // or
     // icon: "DRAWABLE_RESOURCE_ID_IN_YOUR_ANDROID_PROJECT",
   ),
@@ -261,7 +261,7 @@ await launchUrl(
   options: LaunchOptions(
     barColor: theme.colorScheme.surface,
     onBarColor: theme.colorScheme.onSurface,
-    appBarFixed: false,
+    barFixingEnabled: false,
   ),
 );
 ```

@@ -45,7 +45,7 @@ void main() {
     final url = Uri.parse('http://example.com/');
     const prefersDeepLink = true;
     const options = LaunchOptions(
-      appBarFixed: false,
+      barFixingEnabled: false,
     );
     mock.setLaunchExpectations(
       url: url.toString(),
