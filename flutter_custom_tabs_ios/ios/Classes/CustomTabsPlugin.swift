@@ -8,7 +8,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         CustomTabsApiSetup.setUp(binaryMessenger: registrar.messenger(), api: plugin)
         registrar.publish(plugin)
     }
-    
+
     private var dismissStack = [() -> Void]()
 
     func launchURL(
