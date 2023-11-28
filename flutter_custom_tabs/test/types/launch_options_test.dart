@@ -1,5 +1,6 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
+import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,6 +12,7 @@ void main() {
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.colorSchemes, isNull);
       expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.shareState, CustomTabsShareState.on);
       expect(actual.showTitle, isTrue);
       expect(actual.browser, isNotNull);
 
@@ -34,6 +36,7 @@ void main() {
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.colorSchemes, isNotNull);
       expect(actual.urlBarHidingEnabled, isFalse);
+      expect(actual.shareState, CustomTabsShareState.on);
       expect(actual.showTitle, isTrue);
       expect(actual.browser!.prefersDefaultBrowser, isTrue);
 
@@ -61,6 +64,7 @@ void main() {
 
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.shareState, isNotNull);
       expect(actual.showTitle, isTrue);
       expect(actual.browser, isNotNull);
       expect(actual.colorSchemes, isNotNull);
@@ -83,6 +87,7 @@ void main() {
 
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.shareState, isNotNull);
       expect(actual.showTitle, isTrue);
       expect(actual.browser, isNotNull);
       expect(actual.colorSchemes, isNotNull);
@@ -109,6 +114,7 @@ void main() {
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.colorSchemes, isNull);
       expect(actual.urlBarHidingEnabled, isFalse);
+      expect(actual.shareState, isNotNull);
       expect(actual.showTitle, isTrue);
       expect(actual.browser, isNotNull);
     });
@@ -123,6 +129,7 @@ void main() {
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.colorSchemes, isNull);
       expect(actual.urlBarHidingEnabled, isTrue);
+      expect(actual.shareState, isNotNull);
       expect(actual.showTitle, isTrue);
       expect(actual.browser, isNotNull);
     });

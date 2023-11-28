@@ -50,6 +50,7 @@ class LaunchOptions {
     return CustomTabsOptions(
       colorSchemes: colorSchemes,
       urlBarHidingEnabled: urlBarHidingEnabled,
+      shareState: CustomTabsShareState.on,
       showTitle: true,
       browser: const CustomTabsBrowserConfiguration(
         prefersDefaultBrowser: true,
