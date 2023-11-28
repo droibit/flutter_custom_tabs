@@ -17,7 +17,7 @@ dependencies:
   flutter_custom_tabs: ^2.0.0-beta
 ```
 
-> **IMPORTANT**
+> [!IMPORTANT]  
 > v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md) when updating the plugin.
 
 ### Requirements for Android
@@ -85,7 +85,7 @@ See the example app for more complex examples.
 This package supports a wide range of Custom Tabs customizations,   
 but we have experimentally introduced a lightweight URL launch for users who don't need as much in v2.0.0.
 
-> **Note**
+> [!TIP]  
 > On Android, **the lightweight version** prioritizes launching the default browser that supports Custom Tabs over Chrome.
 
 ```dart
@@ -207,7 +207,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
 On Android, the default browser to launch is Chrome, which supports all Custom Tabs features.  
 You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
 
-> **NOTE**
+> [!NOTE]  
 > Some browsers may not support the options specified in CustomTabsOptions.
 > - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
 
