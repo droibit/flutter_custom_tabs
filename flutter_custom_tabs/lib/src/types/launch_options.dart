@@ -20,12 +20,12 @@ class LaunchOptions {
 
   /// The color to tint the control buttons on the app bar and bottom bar.
   ///
-  /// Availability: **Only for iOS**
+  /// - Availability: **Only for iOS**
   final Color? onBarColor;
 
   /// The color configuration of the system navigation bar.
   ///
-  /// Availability: **Only for Android**
+  /// - Availability: **Only for Android**
   final SystemNavigationBarParams? systemNavigationBarParams;
 
   /// A Boolean value that indicates whether to keep the app bar fixed, even when scrolling through the page.
@@ -51,6 +51,9 @@ class LaunchOptions {
       colorSchemes: colorSchemes,
       urlBarHidingEnabled: urlBarHidingEnabled,
       showTitle: true,
+      browser: const CustomTabsBrowserConfiguration(
+        prefersDefaultBrowser: true,
+      ),
     );
   }
 

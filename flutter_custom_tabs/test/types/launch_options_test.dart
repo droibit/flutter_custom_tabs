@@ -5,6 +5,21 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('CustomTabsOptions', () {
+    test('toCustomTabsOptions converts LaunchOptions with null values', () {
+      const launchOptions = LaunchOptions();
+
+      final actual = launchOptions.toCustomTabsOptions();
+      expect(actual.colorSchemes, isNull);
+      expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.showTitle, isTrue);
+      expect(actual.browser, isNotNull);
+
+      final actualBrowser = actual.browser!;
+      expect(actualBrowser.prefersDefaultBrowser, isTrue);
+      expect(actualBrowser.fallbackCustomTabs, isNull);
+      expect(actualBrowser.headers, isNull);
+    });
+
     test('toCustomTabsOptions() converts with complete options', () {
       final launchOptions = LaunchOptions(
         barColor: const Color(0xFFFFEBAA),
@@ -16,22 +31,27 @@ void main() {
         barFixingEnabled: true,
       );
 
-      final customTabsOptions = launchOptions.toCustomTabsOptions();
-      expect(customTabsOptions.colorSchemes, isNotNull);
+      final actual = launchOptions.toCustomTabsOptions();
+      expect(actual.colorSchemes, isNotNull);
+      expect(actual.urlBarHidingEnabled, isFalse);
+      expect(actual.showTitle, isTrue);
+      expect(actual.browser!.prefersDefaultBrowser, isTrue);
+
+      final actualDefaultParams = actual.colorSchemes!.defaultPrams!;
+      expect(actualDefaultParams.toolbarColor, launchOptions.barColor);
       expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.toolbarColor,
-        const Color(0xFFFFEBAA),
+        actualDefaultParams.navigationBarColor,
+        launchOptions.systemNavigationBarParams!.backgroundColor,
       );
       expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.navigationBarColor,
-        const Color(0xFFFFEBAC),
+        actualDefaultParams.navigationBarDividerColor,
+        launchOptions.systemNavigationBarParams!.dividerColor,
       );
-      expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.navigationBarDividerColor,
-        const Color(0xFFFFEBAD),
-      );
-      expect(customTabsOptions.urlBarHidingEnabled, isFalse);
-      expect(customTabsOptions.showTitle, isTrue);
+
+      final actualBrowser = actual.browser!;
+      expect(actualBrowser.prefersDefaultBrowser, isTrue);
+      expect(actualBrowser.fallbackCustomTabs, isNull);
+      expect(actualBrowser.headers, isNull);
     });
 
     test('toCustomTabsOptions() converts options with barColor', () {
@@ -39,22 +59,16 @@ void main() {
         barColor: Color(0xFFFFEBAA),
       );
 
-      final customTabsOptions = launchOptions.toCustomTabsOptions();
-      expect(customTabsOptions.colorSchemes, isNotNull);
-      expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.toolbarColor,
-        const Color(0xFFFFEBAA),
-      );
-      expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.navigationBarColor,
-        isNull,
-      );
-      expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.navigationBarDividerColor,
-        isNull,
-      );
-      expect(customTabsOptions.urlBarHidingEnabled, isNull);
-      expect(customTabsOptions.showTitle, isTrue);
+      final actual = launchOptions.toCustomTabsOptions();
+      expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.showTitle, isTrue);
+      expect(actual.browser, isNotNull);
+      expect(actual.colorSchemes, isNotNull);
+
+      final actualDefaultParams = actual.colorSchemes!.defaultPrams!;
+      expect(actualDefaultParams.toolbarColor, launchOptions.barColor);
+      expect(actualDefaultParams.navigationBarColor, isNull);
+      expect(actualDefaultParams.navigationBarDividerColor, isNull);
     });
 
     test(
@@ -67,22 +81,22 @@ void main() {
         ),
       );
 
-      final customTabsOptions = launchOptions.toCustomTabsOptions();
-      expect(customTabsOptions.colorSchemes, isNotNull);
+      final actual = launchOptions.toCustomTabsOptions();
+      expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.showTitle, isTrue);
+      expect(actual.browser, isNotNull);
+      expect(actual.colorSchemes, isNotNull);
+
+      final actualDefaultParams = actual.colorSchemes!.defaultPrams!;
+      expect(actualDefaultParams.toolbarColor, isNull);
       expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.toolbarColor,
-        isNull,
+        actualDefaultParams.navigationBarColor,
+        launchOptions.systemNavigationBarParams!.backgroundColor,
       );
       expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.navigationBarColor,
-        const Color(0xFFFFEBBA),
+        actualDefaultParams.navigationBarDividerColor,
+        launchOptions.systemNavigationBarParams!.dividerColor,
       );
-      expect(
-        customTabsOptions.colorSchemes!.defaultPrams!.navigationBarDividerColor,
-        const Color(0xFFFFEBBB),
-      );
-      expect(customTabsOptions.urlBarHidingEnabled, isNull);
-      expect(customTabsOptions.showTitle, isTrue);
     });
 
     test(
@@ -92,10 +106,11 @@ void main() {
         barFixingEnabled: true,
       );
 
-      final customTabsOptions = launchOptions.toCustomTabsOptions();
-      expect(customTabsOptions.colorSchemes, isNull);
-      expect(customTabsOptions.urlBarHidingEnabled, isFalse);
-      expect(customTabsOptions.showTitle, isTrue);
+      final actual = launchOptions.toCustomTabsOptions();
+      expect(actual.colorSchemes, isNull);
+      expect(actual.urlBarHidingEnabled, isFalse);
+      expect(actual.showTitle, isTrue);
+      expect(actual.browser, isNotNull);
     });
 
     test(
@@ -105,23 +120,30 @@ void main() {
         barFixingEnabled: false,
       );
 
-      final customTabsOptions = launchOptions.toCustomTabsOptions();
-      expect(customTabsOptions.colorSchemes, isNull);
-      expect(customTabsOptions.urlBarHidingEnabled, isTrue);
-      expect(customTabsOptions.showTitle, isTrue);
-    });
-
-    test('toCustomTabsOptions converts LaunchOptions with null values', () {
-      const launchOptions = LaunchOptions();
-
-      final customTabsOptions = launchOptions.toCustomTabsOptions();
-      expect(customTabsOptions.colorSchemes, isNull);
-      expect(customTabsOptions.urlBarHidingEnabled, isNull);
-      expect(customTabsOptions.showTitle, isTrue);
+      final actual = launchOptions.toCustomTabsOptions();
+      expect(actual.colorSchemes, isNull);
+      expect(actual.urlBarHidingEnabled, isTrue);
+      expect(actual.showTitle, isTrue);
+      expect(actual.browser, isNotNull);
     });
   });
 
   group('SafariViewControllerOptions', () {
+    test(
+        'toSafariViewControllerOptions() converts LaunchOptions with null values',
+        () {
+      const launchOptions = LaunchOptions();
+
+      final actual = launchOptions.toSafariViewControllerOptions();
+      expect(actual.preferredBarTintColor, isNull);
+      expect(actual.preferredControlTintColor, isNull);
+      expect(actual.barCollapsingEnabled, isNull);
+      expect(
+        actual.dismissButtonStyle,
+        SafariViewControllerDismissButtonStyle.done,
+      );
+    });
+
     test('toSafariViewControllerOptions() converts with complete options', () {
       final launchOptions = LaunchOptions(
         barColor: const Color(0xFFFFEBAA),
@@ -133,18 +155,12 @@ void main() {
         barFixingEnabled: false,
       );
 
-      final safariVCOptions = launchOptions.toSafariViewControllerOptions();
+      final actual = launchOptions.toSafariViewControllerOptions();
+      expect(actual.preferredBarTintColor, launchOptions.barColor);
+      expect(actual.preferredControlTintColor, launchOptions.onBarColor);
+      expect(actual.barCollapsingEnabled, isTrue);
       expect(
-        safariVCOptions.preferredBarTintColor,
-        const Color(0xFFFFEBAA),
-      );
-      expect(
-        safariVCOptions.preferredControlTintColor,
-        const Color(0xFFFFEBAB),
-      );
-      expect(safariVCOptions.barCollapsingEnabled, isTrue);
-      expect(
-        safariVCOptions.dismissButtonStyle,
+        actual.dismissButtonStyle,
         SafariViewControllerDismissButtonStyle.done,
       );
     });
@@ -154,18 +170,12 @@ void main() {
         barColor: Color(0xFFFFEBAA),
       );
 
-      final safariVCOptions = launchOptions.toSafariViewControllerOptions();
+      final actual = launchOptions.toSafariViewControllerOptions();
+      expect(actual.preferredBarTintColor, launchOptions.barColor);
+      expect(actual.preferredControlTintColor, isNull);
+      expect(actual.barCollapsingEnabled, isNull);
       expect(
-        safariVCOptions.preferredBarTintColor,
-        const Color(0xFFFFEBAA),
-      );
-      expect(
-        safariVCOptions.preferredControlTintColor,
-        isNull,
-      );
-      expect(safariVCOptions.barCollapsingEnabled, isNull);
-      expect(
-        safariVCOptions.dismissButtonStyle,
+        actual.dismissButtonStyle,
         SafariViewControllerDismissButtonStyle.done,
       );
     });
@@ -176,18 +186,12 @@ void main() {
         onBarColor: Color(0xFFFFEBAB),
       );
 
-      final safariVCOptions = launchOptions.toSafariViewControllerOptions();
+      final actual = launchOptions.toSafariViewControllerOptions();
+      expect(actual.preferredBarTintColor, isNull);
+      expect(actual.preferredControlTintColor, launchOptions.onBarColor);
+      expect(actual.barCollapsingEnabled, isNull);
       expect(
-        safariVCOptions.preferredBarTintColor,
-        isNull,
-      );
-      expect(
-        safariVCOptions.preferredControlTintColor,
-        const Color(0xFFFFEBAB),
-      );
-      expect(safariVCOptions.barCollapsingEnabled, isNull);
-      expect(
-        safariVCOptions.dismissButtonStyle,
+        actual.dismissButtonStyle,
         SafariViewControllerDismissButtonStyle.done,
       );
     });
@@ -196,23 +200,15 @@ void main() {
         'toSafariViewControllerOptions() converts LaunchOptions with barFixingEnabled true',
         () {
       const launchOptions = LaunchOptions(
-        barColor: Color(0xFFFFEBBA),
-        onBarColor: Color(0xFFFFEBBB),
         barFixingEnabled: true,
       );
 
-      final safariVCOptions = launchOptions.toSafariViewControllerOptions();
+      final actual = launchOptions.toSafariViewControllerOptions();
+      expect(actual.preferredBarTintColor, isNull);
+      expect(actual.preferredControlTintColor, isNull);
+      expect(actual.barCollapsingEnabled, isFalse);
       expect(
-        safariVCOptions.preferredBarTintColor,
-        const Color(0xFFFFEBBA),
-      );
-      expect(
-        safariVCOptions.preferredControlTintColor,
-        const Color(0xFFFFEBBB),
-      );
-      expect(safariVCOptions.barCollapsingEnabled, isFalse);
-      expect(
-        safariVCOptions.dismissButtonStyle,
+        actual.dismissButtonStyle,
         SafariViewControllerDismissButtonStyle.done,
       );
     });
@@ -221,38 +217,15 @@ void main() {
         'toSafariViewControllerOptions converts LaunchOptions with barFixingEnabled false',
         () {
       const launchOptions = LaunchOptions(
-        barColor: Color(0xFFFFEBBC),
-        onBarColor: Color(0xFFFFEBBD),
         barFixingEnabled: false,
       );
 
-      final safariVCOptions = launchOptions.toSafariViewControllerOptions();
+      final actual = launchOptions.toSafariViewControllerOptions();
+      expect(actual.preferredBarTintColor, isNull);
+      expect(actual.preferredControlTintColor, isNull);
+      expect(actual.barCollapsingEnabled, isTrue);
       expect(
-        safariVCOptions.preferredBarTintColor,
-        const Color(0xFFFFEBBC),
-      );
-      expect(
-        safariVCOptions.preferredControlTintColor,
-        const Color(0xFFFFEBBD),
-      );
-      expect(safariVCOptions.barCollapsingEnabled, isTrue);
-      expect(
-        safariVCOptions.dismissButtonStyle,
-        SafariViewControllerDismissButtonStyle.done,
-      );
-    });
-
-    test(
-        'toSafariViewControllerOptions() converts LaunchOptions with null values',
-        () {
-      const launchOptions = LaunchOptions();
-
-      final safariVCOptions = launchOptions.toSafariViewControllerOptions();
-      expect(safariVCOptions.preferredBarTintColor, isNull);
-      expect(safariVCOptions.preferredControlTintColor, isNull);
-      expect(safariVCOptions.barCollapsingEnabled, isNull);
-      expect(
-        safariVCOptions.dismissButtonStyle,
+        actual.dismissButtonStyle,
         SafariViewControllerDismissButtonStyle.done,
       );
     });

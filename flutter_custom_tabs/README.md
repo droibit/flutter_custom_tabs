@@ -17,7 +17,7 @@ dependencies:
   flutter_custom_tabs: ^2.0.0-beta
 ```
 
-> **Note**
+> **IMPORTANT**
 > v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md) when updating the plugin.
 
 ### Requirements for Android
@@ -85,6 +85,9 @@ See the example app for more complex examples.
 This package supports a wide range of Custom Tabs customizations,   
 but we have experimentally introduced a lightweight URL launch for users who don't need as much in v2.0.0.
 
+> **Note**
+> On Android, **the lightweight version** prioritizes launching the default browser that supports Custom Tabs over Chrome.
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
@@ -122,7 +125,7 @@ void _launchURL(BuildContext context) async {
 | Change appearance of close button | ✅<br>(Icon, position) | ✅<br>(Predefined button styles) | Not provided |
 | Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided | 
 | Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided | 
-| Prefer default browser over Chrome | ✅ | - | Not provided |
+| Prefer the default browser over Chrome | ✅ | - | Not provided |
 | Pass HTTP headers | ✅ | - | Not provided | 
 | Show as a bottom sheet | ✅ | ✅ | Not provided | 
 
@@ -158,7 +161,7 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
 }
 ```
 
-### Launches as a bottom sheet
+### Show as a bottom sheet
 You can launch URLs in Custom Tabs as a bottom sheet.
 
 Requirements:
@@ -195,6 +198,27 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
       preferredBarTintColor: theme.colorScheme.surface,
       preferredControlTintColor: theme.colorScheme.onSurface,
       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+    ),
+  );
+}
+```
+
+### Prefer the default browser over Chrome
+On Android, the default browser to launch is Chrome, which supports all Custom Tabs features.  
+You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
+
+> **NOTE**
+> Some browsers may not support the options specified in CustomTabsOptions.
+> - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
+
+```dart
+Future<void> _launchURLInDefaultBrowserOnAndroid() async {  
+  await launchUrl(
+    Uri.parse('https://flutter.dev'),
+    customTabsOptions: CustomTabsOptions(
+      browser: const CustomTabsBrowserConfiguration(
+        prefersDefaultBrowser: true,
+      ),
     ),
   );
 }
