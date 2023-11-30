@@ -1,6 +1,5 @@
 import Flutter
 import SafariServices
-import UIKit
 
 public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
     public static func register(with registrar: FlutterPluginRegistrar) {
