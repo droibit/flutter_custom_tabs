@@ -35,12 +35,18 @@ class MyApp extends StatelessWidget {
             children: <Widget>[
               FilledButton(
                 onPressed: () => _launchUrl(context),
-                child: const Text('Show flutter.dev (Chrome)'),
+                child: Text(
+                  Platform.isAndroid
+                      ? 'Show flutter.dev (Chrome)'
+                      : 'Show flutter.dev',
+                ),
               ),
-              FilledButton(
-                onPressed: () => _launchURLInDefaultBrowserOnAndroid(context),
-                child: const Text('Show flutter.dev (prefer default browser)'),
-              ),
+              if (Platform.isAndroid)
+                FilledButton(
+                  onPressed: () => _launchURLInDefaultBrowserOnAndroid(context),
+                  child:
+                      const Text('Show flutter.dev (prefer default browser)'),
+                ),
               FilledButton(
                 onPressed: () => _launchUrlLite(context),
                 child: const Text('Show flutter.dev (lite ver)'),
@@ -179,7 +185,7 @@ Future<void> _launchUrlInBottomSheet(BuildContext context) async {
         ),
         colorSchemes: CustomTabsColorSchemes.defaults(
           colorScheme: theme.brightness.toColorScheme(),
-          toolbarColor: theme.primaryColor,
+          toolbarColor: theme.colorScheme.primary,
         ),
         showTitle: true,
       ),
@@ -194,8 +200,8 @@ Future<void> _launchUrlInBottomSheet(BuildContext context) async {
           prefersEdgeAttachedInCompactHeight: true,
           preferredCornerRadius: 16.0,
         ),
-        preferredBarTintColor: theme.primaryColor,
-        preferredControlTintColor: Colors.white,
+        preferredBarTintColor: theme.colorScheme.primary,
+        preferredControlTintColor: theme.colorScheme.onPrimary,
         entersReaderIfAvailable: true,
         dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
       ),
