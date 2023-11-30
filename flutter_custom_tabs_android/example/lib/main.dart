@@ -123,7 +123,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
         ),
         colorSchemes: CustomTabsColorSchemes.defaults(
           colorScheme: theme.brightness.toColorScheme(),
-          toolbarColor: theme.primaryColor,
+          toolbarColor: theme.colorScheme.primaryContainer,
         ),
         showTitle: true,
         closeButton: const CustomTabsCloseButton(icon: "ic_round_close"),

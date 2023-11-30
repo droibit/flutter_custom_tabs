@@ -83,7 +83,7 @@ class SystemNavigationBarParams {
   /// The color of the system navigation bar divider.
   final Color? dividerColor;
 
-  SystemNavigationBarParams({
+  const SystemNavigationBarParams({
     required this.backgroundColor,
     this.dividerColor,
   });

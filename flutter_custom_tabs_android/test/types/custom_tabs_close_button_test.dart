@@ -5,14 +5,14 @@ import '../messages.dart';
 
 void main() {
   group('CustomTabsCloseButton', () {
-    test('toMessage() returns empty map when option values are null', () {
+    test('toMessage() returns empty message when option values are null', () {
       const button = CustomTabsCloseButton();
       final actual = button.toMessage();
       expect(actual.icon, isNull);
       expect(actual.position, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const button = CustomTabsCloseButton(
         icon: 'close_icon',
         position: CustomTabsCloseButtonPosition.start,

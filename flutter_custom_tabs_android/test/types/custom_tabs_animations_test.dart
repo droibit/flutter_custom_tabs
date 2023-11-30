@@ -5,7 +5,8 @@ import '../messages.dart';
 
 void main() {
   group('CustomTabsAnimations', () {
-    test('toMessage() returns empty map when animation values are null', () {
+    test('toMessage() returns empty message when animation values are null',
+        () {
       const animations = CustomTabsAnimations();
       final actual = animations.toMessage();
       expect(actual.startEnter, isNull);
@@ -14,7 +15,7 @@ void main() {
       expect(actual.endExit, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const animations = CustomTabsAnimations(
         startEnter: 'slide_up',
         startExit: 'android:anim/fade_out',

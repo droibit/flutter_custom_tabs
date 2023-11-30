@@ -23,12 +23,12 @@ void main() {
     });
 
     test('toCustomTabsOptions() converts with complete options', () {
-      final launchOptions = LaunchOptions(
-        barColor: const Color(0xFFFFEBAA),
-        onBarColor: const Color(0xFFFFEBAB),
+      const launchOptions = LaunchOptions(
+        barColor: Color(0xFFFFEBAA),
+        onBarColor: Color(0xFFFFEBAB),
         systemNavigationBarParams: SystemNavigationBarParams(
-          backgroundColor: const Color(0xFFFFEBAC),
-          dividerColor: const Color(0xFFFFEBAD),
+          backgroundColor: Color(0xFFFFEBAC),
+          dividerColor: Color(0xFFFFEBAD),
         ),
         barFixingEnabled: true,
       );
@@ -78,10 +78,10 @@ void main() {
     test(
         'toCustomTabsOptions() converts options with systemNavigationBarParams',
         () {
-      final launchOptions = LaunchOptions(
+      const launchOptions = LaunchOptions(
         systemNavigationBarParams: SystemNavigationBarParams(
-          backgroundColor: const Color(0xFFFFEBBA),
-          dividerColor: const Color(0xFFFFEBBB),
+          backgroundColor: Color(0xFFFFEBBA),
+          dividerColor: Color(0xFFFFEBBB),
         ),
       );
 
@@ -152,12 +152,12 @@ void main() {
     });
 
     test('toSafariViewControllerOptions() converts with complete options', () {
-      final launchOptions = LaunchOptions(
-        barColor: const Color(0xFFFFEBAA),
-        onBarColor: const Color(0xFFFFEBAB),
+      const launchOptions = LaunchOptions(
+        barColor: Color(0xFFFFEBAA),
+        onBarColor: Color(0xFFFFEBAB),
         systemNavigationBarParams: SystemNavigationBarParams(
-          backgroundColor: const Color(0xFFFFEBAC),
-          dividerColor: const Color(0xFFFFEBAD),
+          backgroundColor: Color(0xFFFFEBAC),
+          dividerColor: Color(0xFFFFEBAD),
         ),
         barFixingEnabled: false,
       );

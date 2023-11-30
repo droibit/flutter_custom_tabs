@@ -6,7 +6,7 @@ import '../messages.dart';
 
 void main() {
   group('CustomTabsOptions', () {
-    test('toMessage() returns empty map when option values are null', () {
+    test('toMessage() returns empty message when option values are null', () {
       const options = CustomTabsOptions();
       final actual = options.toMessage();
       expect(actual.colorSchemes, isNull);
@@ -20,7 +20,7 @@ void main() {
       expect(actual.partial, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const options = CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes(
           colorScheme: CustomTabsColorScheme.system,
@@ -137,9 +137,11 @@ void main() {
     });
   });
 
-  test('CustomTabsShareState returns associated value', () {
-    expect(CustomTabsShareState.browserDefault.rawValue, 0);
-    expect(CustomTabsShareState.on.rawValue, 1);
-    expect(CustomTabsShareState.off.rawValue, 2);
+  group('CustomTabsShareState', () {
+    test('returns associated value', () {
+      expect(CustomTabsShareState.browserDefault.rawValue, 0);
+      expect(CustomTabsShareState.on.rawValue, 1);
+      expect(CustomTabsShareState.off.rawValue, 2);
+    });
   });
 }
