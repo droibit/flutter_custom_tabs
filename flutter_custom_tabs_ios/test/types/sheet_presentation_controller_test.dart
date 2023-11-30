@@ -5,7 +5,7 @@ import '../messages.dart';
 
 void main() {
   group('SheetPresentationControllerConfiguration', () {
-    test('toMessage() returns expected result with default values', () {
+    test('toMessage() returns expected message with default values', () {
       const configuration = SheetPresentationControllerConfiguration(
         detents: {SheetPresentationControllerDetent.large},
       );
@@ -21,7 +21,7 @@ void main() {
       expect(actual.preferredCornerRadius, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const configuration = SheetPresentationControllerConfiguration(
         detents: {SheetPresentationControllerDetent.large},
         largestUndimmedDetentIdentifier:

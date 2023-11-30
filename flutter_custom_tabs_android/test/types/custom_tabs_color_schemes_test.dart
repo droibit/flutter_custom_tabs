@@ -7,7 +7,7 @@ import '../messages.dart';
 
 void main() {
   group('CustomTabsColorSchemes', () {
-    test('toMessage() returns empty map when option values are null', () {
+    test('toMessage() returns empty message when option values are null', () {
       const schemes = CustomTabsColorSchemes();
       final actual = schemes.toMessage();
       expect(actual.colorScheme, isNull);
@@ -16,7 +16,7 @@ void main() {
       expect(actual.defaultPrams, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const schemes = CustomTabsColorSchemes(
         colorScheme: CustomTabsColorScheme.system,
         lightParams: CustomTabsColorSchemeParams(
@@ -60,7 +60,7 @@ void main() {
   });
 
   group('CustomTabsColorSchemeParams', () {
-    test('toMessage() returns empty map when option values are null', () {
+    test('toMessage() returns empty message when option values are null', () {
       const params = CustomTabsColorSchemeParams();
       final actual = params.toMessage();
       expect(actual.toolbarColor, null);
@@ -68,7 +68,7 @@ void main() {
       expect(actual.navigationBarDividerColor, null);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const params = CustomTabsColorSchemeParams(
         toolbarColor: Color(0xFFFFCBAA),
         navigationBarColor: Color(0xFFFFCBAB),

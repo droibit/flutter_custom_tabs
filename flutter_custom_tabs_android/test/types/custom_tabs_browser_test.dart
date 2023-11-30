@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../messages.dart';
 
 void main() {
-  test('toMessage() returns empty map when option values are null', () {
+  test('toMessage() returns empty message when option values are null', () {
     const configuration = CustomTabsBrowserConfiguration();
     final actual = configuration.toMessage();
     expect(actual.prefersDefaultBrowser, isNull);
@@ -12,7 +12,7 @@ void main() {
     expect(actual.headers, isNull);
   });
 
-  test('toMessage() returns a map with complete options', () {
+  test('toMessage() returns a message with complete options', () {
     const configuration = CustomTabsBrowserConfiguration(
       prefersDefaultBrowser: true,
       fallbackCustomTabs: [

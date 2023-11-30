@@ -6,7 +6,7 @@ import '../messages.dart';
 
 void main() {
   group('SafariViewControllerOptions', () {
-    test('toMessage() returns empty map when option values are null', () {
+    test('toMessage() returns empty message when option values are null', () {
       const options = SafariViewControllerOptions();
       final actual = options.toMessage();
       expect(actual.preferredBarTintColor, isNull);
@@ -18,7 +18,7 @@ void main() {
       expect(actual.pageSheet, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const options = SafariViewControllerOptions(
         preferredBarTintColor: Color(0xFFFFEBEE),
         preferredControlTintColor: Color(0xFFFFFFFF),

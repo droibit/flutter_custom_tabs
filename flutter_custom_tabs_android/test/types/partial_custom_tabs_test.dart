@@ -5,7 +5,7 @@ import '../messages.dart';
 
 void main() {
   group('PartialCustomTabsConfiguration', () {
-    test('toMessage() returns expected a map with default values', () {
+    test('toMessage() returns expected message with default values', () {
       const configuration = PartialCustomTabsConfiguration(
         initialHeight: 200,
       );
@@ -18,7 +18,7 @@ void main() {
       expect(actual.cornerRadius, isNull);
     });
 
-    test('toMessage() returns a map with complete options', () {
+    test('toMessage() returns a message with complete options', () {
       const configuration = PartialCustomTabsConfiguration(
         initialHeight: 300,
         activityHeightResizeBehavior:
