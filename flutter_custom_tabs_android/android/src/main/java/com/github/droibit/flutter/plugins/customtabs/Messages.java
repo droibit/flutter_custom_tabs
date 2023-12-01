@@ -867,7 +867,7 @@ public class Messages {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface CustomTabsApi {
 
-    void launchUrl(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @NonNull CustomTabsOptionsMessage options);
+    void launchUrl(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @Nullable CustomTabsOptionsMessage options);
 
     void closeAllIfPossible();
 

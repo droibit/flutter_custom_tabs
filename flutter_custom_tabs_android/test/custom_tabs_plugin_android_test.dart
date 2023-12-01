@@ -41,6 +41,26 @@ void main() {
   test('launch() invoke method "launch" with invalid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
+    const options = _Options(
+      urlBarHidingEnabled: true,
+    );
+    api.setLaunchExpectations(
+      url: url,
+      prefersDeepLink: prefersDeepLink,
+      options: options,
+    );
+
+    await customTabs.launch(
+      url,
+      prefersDeepLink: prefersDeepLink,
+      customTabsOptions: options,
+      safariVCOptions: const _Options(),
+    );
+  });
+
+  test('launch() invoke method "launch" with no options', () async {
+    const url = 'http://example.com/';
+    const prefersDeepLink = true;
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
@@ -49,10 +69,6 @@ void main() {
     await customTabs.launch(
       url,
       prefersDeepLink: prefersDeepLink,
-      customTabsOptions: const _Options(
-        urlBarHidingEnabled: true,
-      ),
-      safariVCOptions: const _Options(),
     );
   });
 
@@ -83,16 +99,18 @@ class _MockCustomTabsApi implements CustomTabsApi {
   Future<void> launchUrl(
     String url, {
     required bool prefersDeepLink,
-    required CustomTabsOptionsMessage options,
+    CustomTabsOptionsMessage? options,
   }) async {
     expect(url, this.url);
     expect(prefersDeepLink, this.prefersDeepLink);
 
-    if (this.options is CustomTabsOptions) {
-      final message = (this.options as CustomTabsOptions).toMessage();
-      expect(options.urlBarHidingEnabled, message.urlBarHidingEnabled);
+    if (this.options == null) {
+      expect(options, isNull);
+    } else if (this.options is CustomTabsOptions) {
+      final expected = (this.options as CustomTabsOptions).toMessage();
+      expect(options?.urlBarHidingEnabled, expected.urlBarHidingEnabled);
     } else {
-      expect(options.urlBarHidingEnabled, isNull);
+      expect(options, isNotNull);
     }
     launchUrlCalled = true;
   }

@@ -27,13 +27,18 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
     PlatformOptions? customTabsOptions,
     PlatformOptions? safariVCOptions,
   }) {
-    final options = (customTabsOptions is CustomTabsOptions)
-        ? customTabsOptions.toMessage()
-        : CustomTabsOptionsMessage();
+    final CustomTabsOptionsMessage? message;
+    if (customTabsOptions == null) {
+      message = null;
+    } else {
+      message = (customTabsOptions is CustomTabsOptions)
+          ? customTabsOptions.toMessage()
+          : CustomTabsOptionsMessage();
+    }
     return _hostApi.launchUrl(
       urlString,
       prefersDeepLink: prefersDeepLink,
-      options: options,
+      options: message,
     );
   }
 

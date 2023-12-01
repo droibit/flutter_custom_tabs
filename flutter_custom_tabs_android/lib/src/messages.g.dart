@@ -346,7 +346,7 @@ class CustomTabsApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _CustomTabsApiCodec();
 
-  Future<void> launchUrl(String urlString, {required bool prefersDeepLink, required CustomTabsOptionsMessage options,}) async {
+  Future<void> launchUrl(String urlString, {required bool prefersDeepLink, CustomTabsOptionsMessage? options,}) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launchUrl';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,

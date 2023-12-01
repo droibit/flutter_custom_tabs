@@ -14,7 +14,7 @@ abstract class CustomTabsApi {
   void launchUrl(
     String urlString, {
     required bool prefersDeepLink,
-    required CustomTabsOptionsMessage options,
+    CustomTabsOptionsMessage? options,
   });
 
   void closeAllIfPossible();

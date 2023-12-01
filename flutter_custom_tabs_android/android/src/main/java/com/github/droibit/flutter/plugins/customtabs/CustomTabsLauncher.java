@@ -39,7 +39,7 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
     public void launchUrl(
             @NonNull String urlString,
             @NonNull Boolean prefersDeepLink,
-            @NonNull CustomTabsOptionsMessage options
+            @Nullable CustomTabsOptionsMessage options
     ) {
         final Activity activity = this.activity;
         if (activity == null) {
@@ -51,8 +51,14 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
             return;
         }
 
-        final CustomTabsFactory factory = new CustomTabsFactory(activity);
         try {
+            if (options == null) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                activity.startActivity(intent);
+                return;
+            }
+
+            final CustomTabsFactory factory = new CustomTabsFactory(activity);
             final CustomTabsIntent customTabsIntent = factory.createIntent(options);
             if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
                 customTabsIntent.intent.setData(uri);
