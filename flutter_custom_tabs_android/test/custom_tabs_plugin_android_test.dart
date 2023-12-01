@@ -96,7 +96,7 @@ class _MockCustomTabsApi implements CustomTabsApi {
   }
 
   @override
-  Future<void> launchUrl(
+  Future<void> launch(
     String url, {
     required bool prefersDeepLink,
     CustomTabsOptionsMessage? options,

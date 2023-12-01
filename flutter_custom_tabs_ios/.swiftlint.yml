@@ -136,7 +136,7 @@ analyzer_rules:
 included:
   - ios/Classes
 excluded:
-  - ios/Classes/Messages.swift
+  - ios/Classes/messages.g.swift
 
 line_length:
 - 200   # warning

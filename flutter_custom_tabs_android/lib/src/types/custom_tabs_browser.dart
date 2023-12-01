@@ -13,7 +13,14 @@ class CustomTabsBrowserConfiguration {
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
     this.headers,
-  });
+  }) : prefersExternalBrowser = false;
+
+  @internal
+  const CustomTabsBrowserConfiguration.externalBrowser({
+    required this.headers,
+  })  : prefersDefaultBrowser = null,
+        fallbackCustomTabs = null,
+        prefersExternalBrowser = true;
 
   /// A Boolean value that determines whether to prioritize the default browser that supports Custom Tabs over Chrome.
   final bool? prefersDefaultBrowser;
@@ -23,4 +30,7 @@ class CustomTabsBrowserConfiguration {
 
   /// Extra HTTP request headers.
   final Map<String, String>? headers;
+
+  @internal
+  final bool prefersExternalBrowser;
 }

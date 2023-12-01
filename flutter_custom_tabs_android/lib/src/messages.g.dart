@@ -124,10 +124,13 @@ class CustomTabsAnimationsMessage {
 
 class CustomTabsBrowserConfigurationMessage {
   CustomTabsBrowserConfigurationMessage({
+    required this.prefersExternalBrowser,
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
     this.headers,
   });
+
+  bool prefersExternalBrowser;
 
   bool? prefersDefaultBrowser;
 
@@ -137,6 +140,7 @@ class CustomTabsBrowserConfigurationMessage {
 
   Object encode() {
     return <Object?>[
+      prefersExternalBrowser,
       prefersDefaultBrowser,
       fallbackCustomTabs,
       headers,
@@ -146,9 +150,10 @@ class CustomTabsBrowserConfigurationMessage {
   static CustomTabsBrowserConfigurationMessage decode(Object result) {
     result as List<Object?>;
     return CustomTabsBrowserConfigurationMessage(
-      prefersDefaultBrowser: result[0] as bool?,
-      fallbackCustomTabs: (result[1] as List<Object?>?)?.cast<String?>(),
-      headers: (result[2] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      prefersExternalBrowser: result[0]! as bool,
+      prefersDefaultBrowser: result[1] as bool?,
+      fallbackCustomTabs: (result[2] as List<Object?>?)?.cast<String?>(),
+      headers: (result[3] as Map<Object?, Object?>?)?.cast<String?, String?>(),
     );
   }
 }
@@ -346,8 +351,8 @@ class CustomTabsApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _CustomTabsApiCodec();
 
-  Future<void> launchUrl(String urlString, {required bool prefersDeepLink, CustomTabsOptionsMessage? options,}) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launchUrl';
+  Future<void> launch(String urlString, {required bool prefersDeepLink, CustomTabsOptionsMessage? options,}) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launch';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,

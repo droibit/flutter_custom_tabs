@@ -3,6 +3,8 @@ package com.github.droibit.flutter.plugins.customtabs;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsApi;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -13,7 +15,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding binding) {
         api = new CustomTabsLauncher();
-        Messages.CustomTabsApi.setUp(binding.getBinaryMessenger(), api);
+        CustomTabsApi.setUp(binding.getBinaryMessenger(), api);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class CustomTabsPlugin implements FlutterPlugin, ActivityAware {
             return;
         }
 
-        Messages.CustomTabsApi.setUp(binding.getBinaryMessenger(), null);
+        CustomTabsApi.setUp(binding.getBinaryMessenger(), null);
         api = null;
     }
 

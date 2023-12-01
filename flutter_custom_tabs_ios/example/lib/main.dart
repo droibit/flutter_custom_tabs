@@ -48,6 +48,10 @@ class MyApp extends StatelessWidget {
                 onPressed: () => _launchAndCloseManually(context),
                 child: const Text('Show flutter.dev + close after 5 seconds'),
               ),
+              FilledButton(
+                onPressed: () => _launchInExternalBrowser(),
+                child: const Text('Show flutter.dev in external browser'),
+              ),
             ],
           ),
         ),
@@ -135,6 +139,16 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
         barCollapsingEnabled: true,
         modalPresentationStyle: ViewControllerModalPresentationStyle.automatic,
       ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchInExternalBrowser() async {
+  try {
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
     );
   } catch (e) {
     debugPrint(e.toString());

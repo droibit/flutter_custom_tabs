@@ -41,6 +41,25 @@ void main() {
   test('launch() invoke method "launch" with invalid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = false;
+    const options = _Options(
+      barCollapsingEnabled: true,
+    );
+    api.setLaunchExpectations(
+      url: url,
+      prefersDeepLink: prefersDeepLink,
+      options: options,
+    );
+    await customTabs.launch(
+      url,
+      prefersDeepLink: prefersDeepLink,
+      customTabsOptions: const _Options(),
+      safariVCOptions: options,
+    );
+  });
+
+  test('launch() invoke method "launch" with no options', () async {
+    const url = 'http://example.com/';
+    const prefersDeepLink = false;
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
@@ -48,10 +67,6 @@ void main() {
     await customTabs.launch(
       url,
       prefersDeepLink: prefersDeepLink,
-      customTabsOptions: const _Options(),
-      safariVCOptions: const _Options(
-        barCollapsingEnabled: true,
-      ),
     );
   });
 
@@ -79,19 +94,22 @@ class _MockCustomTabsApi implements CustomTabsApi {
   }
 
   @override
-  Future<void> launchUrl(
+  Future<void> launch(
     String url, {
     required bool prefersDeepLink,
-    required SafariViewControllerOptionsMessage options,
+    SafariViewControllerOptionsMessage? options,
   }) async {
     expect(url, this.url);
     expect(prefersDeepLink, this.prefersDeepLink);
 
-    if (this.options is SafariViewControllerOptions) {
-      final message = (this.options as SafariViewControllerOptions).toMessage();
-      expect(options.barCollapsingEnabled, message.barCollapsingEnabled);
+    if (this.options == null) {
+      expect(options, isNull);
+    } else if (this.options is SafariViewControllerOptions) {
+      final expected =
+          (this.options as SafariViewControllerOptions).toMessage();
+      expect(options?.barCollapsingEnabled, expected.barCollapsingEnabled);
     } else {
-      expect(options.barCollapsingEnabled, isNull);
+      expect(options, isNotNull);
     }
     launchUrlCalled = true;
   }

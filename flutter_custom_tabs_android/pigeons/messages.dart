@@ -11,7 +11,7 @@ import 'package:pigeon/pigeon.dart';
 ))
 @HostApi()
 abstract class CustomTabsApi {
-  void launchUrl(
+  void launch(
     String urlString, {
     required bool prefersDeepLink,
     CustomTabsOptionsMessage? options,
@@ -60,11 +60,13 @@ class CustomTabsAnimationsMessage {
 
 class CustomTabsBrowserConfigurationMessage {
   const CustomTabsBrowserConfigurationMessage({
+    required this.prefersExternalBrowser,
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
     this.headers,
   });
 
+  final bool prefersExternalBrowser;
   final bool? prefersDefaultBrowser;
   final List<String?>? fallbackCustomTabs;
   final Map<String?, String?>? headers;

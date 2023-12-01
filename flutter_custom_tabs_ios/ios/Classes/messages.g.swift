@@ -3,210 +3,208 @@
 
 import Foundation
 #if os(iOS)
-    import Flutter
+import Flutter
 #elseif os(macOS)
-    import FlutterMacOS
+import FlutterMacOS
 #else
-    #error("Unsupported platform.")
+#error("Unsupported platform.")
 #endif
 
 private func wrapResult(_ result: Any?) -> [Any?] {
-    [result]
+  return [result]
 }
 
 private func wrapError(_ error: Any) -> [Any?] {
-    if let flutterError = error as? FlutterError {
-        return [
-            flutterError.code,
-            flutterError.message,
-            flutterError.details,
-        ]
-    }
+  if let flutterError = error as? FlutterError {
     return [
-        "\(error)",
-        "\(type(of: error))",
-        "Stacktrace: \(Thread.callStackSymbols)",
+      flutterError.code,
+      flutterError.message,
+      flutterError.details
     ]
+  }
+  return [
+    "\(error)",
+    "\(type(of: error))",
+    "Stacktrace: \(Thread.callStackSymbols)"
+  ]
 }
 
 private func isNullish(_ value: Any?) -> Bool {
-    value is NSNull || value == nil
+  return value is NSNull || value == nil
 }
 
 private func nilOrValue<T>(_ value: Any?) -> T? {
-    if value is NSNull { return nil }
-    return value as! T?
+  if value is NSNull { return nil }
+  return value as! T?
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
 struct SafariViewControllerOptionsMessage {
-    var preferredBarTintColor: String?
-    var preferredControlTintColor: String?
-    var barCollapsingEnabled: Bool?
-    var entersReaderIfAvailable: Bool?
-    var dismissButtonStyle: Int64?
-    var modalPresentationStyle: Int64?
-    var pageSheet: SheetPresentationControllerConfigurationMessage?
+  var preferredBarTintColor: String? = nil
+  var preferredControlTintColor: String? = nil
+  var barCollapsingEnabled: Bool? = nil
+  var entersReaderIfAvailable: Bool? = nil
+  var dismissButtonStyle: Int64? = nil
+  var modalPresentationStyle: Int64? = nil
+  var pageSheet: SheetPresentationControllerConfigurationMessage? = nil
 
-    static func fromList(_ list: [Any?]) -> SafariViewControllerOptionsMessage? {
-        let preferredBarTintColor: String? = nilOrValue(list[0])
-        let preferredControlTintColor: String? = nilOrValue(list[1])
-        let barCollapsingEnabled: Bool? = nilOrValue(list[2])
-        let entersReaderIfAvailable: Bool? = nilOrValue(list[3])
-        let dismissButtonStyle: Int64? = isNullish(list[4]) ? nil : (list[4] is Int64? ? list[4] as! Int64? : Int64(list[4] as! Int32))
-        let modalPresentationStyle: Int64? = isNullish(list[5]) ? nil : (list[5] is Int64? ? list[5] as! Int64? : Int64(list[5] as! Int32))
-        var pageSheet: SheetPresentationControllerConfigurationMessage?
-        if let pageSheetList: [Any?] = nilOrValue(list[6]) {
-            pageSheet = SheetPresentationControllerConfigurationMessage.fromList(pageSheetList)
-        }
-
-        return SafariViewControllerOptionsMessage(
-            preferredBarTintColor: preferredBarTintColor,
-            preferredControlTintColor: preferredControlTintColor,
-            barCollapsingEnabled: barCollapsingEnabled,
-            entersReaderIfAvailable: entersReaderIfAvailable,
-            dismissButtonStyle: dismissButtonStyle,
-            modalPresentationStyle: modalPresentationStyle,
-            pageSheet: pageSheet
-        )
+  static func fromList(_ list: [Any?]) -> SafariViewControllerOptionsMessage? {
+    let preferredBarTintColor: String? = nilOrValue(list[0])
+    let preferredControlTintColor: String? = nilOrValue(list[1])
+    let barCollapsingEnabled: Bool? = nilOrValue(list[2])
+    let entersReaderIfAvailable: Bool? = nilOrValue(list[3])
+    let dismissButtonStyle: Int64? = isNullish(list[4]) ? nil : (list[4] is Int64? ? list[4] as! Int64? : Int64(list[4] as! Int32))
+    let modalPresentationStyle: Int64? = isNullish(list[5]) ? nil : (list[5] is Int64? ? list[5] as! Int64? : Int64(list[5] as! Int32))
+    var pageSheet: SheetPresentationControllerConfigurationMessage? = nil
+    if let pageSheetList: [Any?] = nilOrValue(list[6]) {
+      pageSheet = SheetPresentationControllerConfigurationMessage.fromList(pageSheetList)
     }
 
-    func toList() -> [Any?] {
-        [
-            preferredBarTintColor,
-            preferredControlTintColor,
-            barCollapsingEnabled,
-            entersReaderIfAvailable,
-            dismissButtonStyle,
-            modalPresentationStyle,
-            pageSheet?.toList(),
-        ]
-    }
+    return SafariViewControllerOptionsMessage(
+      preferredBarTintColor: preferredBarTintColor,
+      preferredControlTintColor: preferredControlTintColor,
+      barCollapsingEnabled: barCollapsingEnabled,
+      entersReaderIfAvailable: entersReaderIfAvailable,
+      dismissButtonStyle: dismissButtonStyle,
+      modalPresentationStyle: modalPresentationStyle,
+      pageSheet: pageSheet
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      preferredBarTintColor,
+      preferredControlTintColor,
+      barCollapsingEnabled,
+      entersReaderIfAvailable,
+      dismissButtonStyle,
+      modalPresentationStyle,
+      pageSheet?.toList(),
+    ]
+  }
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
 struct SheetPresentationControllerConfigurationMessage {
-    var detents: [String?]
-    var largestUndimmedDetentIdentifier: String?
-    var prefersScrollingExpandsWhenScrolledToEdge: Bool?
-    var prefersGrabberVisible: Bool?
-    var prefersEdgeAttachedInCompactHeight: Bool?
-    var preferredCornerRadius: Double?
+  var detents: [String?]
+  var largestUndimmedDetentIdentifier: String? = nil
+  var prefersScrollingExpandsWhenScrolledToEdge: Bool? = nil
+  var prefersGrabberVisible: Bool? = nil
+  var prefersEdgeAttachedInCompactHeight: Bool? = nil
+  var preferredCornerRadius: Double? = nil
 
-    static func fromList(_ list: [Any?]) -> SheetPresentationControllerConfigurationMessage? {
-        let detents = list[0] as! [String?]
-        let largestUndimmedDetentIdentifier: String? = nilOrValue(list[1])
-        let prefersScrollingExpandsWhenScrolledToEdge: Bool? = nilOrValue(list[2])
-        let prefersGrabberVisible: Bool? = nilOrValue(list[3])
-        let prefersEdgeAttachedInCompactHeight: Bool? = nilOrValue(list[4])
-        let preferredCornerRadius: Double? = nilOrValue(list[5])
+  static func fromList(_ list: [Any?]) -> SheetPresentationControllerConfigurationMessage? {
+    let detents = list[0] as! [String?]
+    let largestUndimmedDetentIdentifier: String? = nilOrValue(list[1])
+    let prefersScrollingExpandsWhenScrolledToEdge: Bool? = nilOrValue(list[2])
+    let prefersGrabberVisible: Bool? = nilOrValue(list[3])
+    let prefersEdgeAttachedInCompactHeight: Bool? = nilOrValue(list[4])
+    let preferredCornerRadius: Double? = nilOrValue(list[5])
 
-        return SheetPresentationControllerConfigurationMessage(
-            detents: detents,
-            largestUndimmedDetentIdentifier: largestUndimmedDetentIdentifier,
-            prefersScrollingExpandsWhenScrolledToEdge: prefersScrollingExpandsWhenScrolledToEdge,
-            prefersGrabberVisible: prefersGrabberVisible,
-            prefersEdgeAttachedInCompactHeight: prefersEdgeAttachedInCompactHeight,
-            preferredCornerRadius: preferredCornerRadius
-        )
-    }
-
-    func toList() -> [Any?] {
-        [
-            detents,
-            largestUndimmedDetentIdentifier,
-            prefersScrollingExpandsWhenScrolledToEdge,
-            prefersGrabberVisible,
-            prefersEdgeAttachedInCompactHeight,
-            preferredCornerRadius,
-        ]
-    }
+    return SheetPresentationControllerConfigurationMessage(
+      detents: detents,
+      largestUndimmedDetentIdentifier: largestUndimmedDetentIdentifier,
+      prefersScrollingExpandsWhenScrolledToEdge: prefersScrollingExpandsWhenScrolledToEdge,
+      prefersGrabberVisible: prefersGrabberVisible,
+      prefersEdgeAttachedInCompactHeight: prefersEdgeAttachedInCompactHeight,
+      preferredCornerRadius: preferredCornerRadius
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      detents,
+      largestUndimmedDetentIdentifier,
+      prefersScrollingExpandsWhenScrolledToEdge,
+      prefersGrabberVisible,
+      prefersEdgeAttachedInCompactHeight,
+      preferredCornerRadius,
+    ]
+  }
 }
 
 private class CustomTabsApiCodecReader: FlutterStandardReader {
-    override func readValue(ofType type: UInt8) -> Any? {
-        switch type {
-        case 128:
-            return SafariViewControllerOptionsMessage.fromList(readValue() as! [Any?])
-        case 129:
-            return SheetPresentationControllerConfigurationMessage.fromList(readValue() as! [Any?])
-        default:
-            return super.readValue(ofType: type)
-        }
+  override func readValue(ofType type: UInt8) -> Any? {
+    switch type {
+      case 128:
+        return SafariViewControllerOptionsMessage.fromList(self.readValue() as! [Any?])
+      case 129:
+        return SheetPresentationControllerConfigurationMessage.fromList(self.readValue() as! [Any?])
+      default:
+        return super.readValue(ofType: type)
     }
+  }
 }
 
 private class CustomTabsApiCodecWriter: FlutterStandardWriter {
-    override func writeValue(_ value: Any) {
-        if let value = value as? SafariViewControllerOptionsMessage {
-            super.writeByte(128)
-            super.writeValue(value.toList())
-        } else if let value = value as? SheetPresentationControllerConfigurationMessage {
-            super.writeByte(129)
-            super.writeValue(value.toList())
-        } else {
-            super.writeValue(value)
-        }
+  override func writeValue(_ value: Any) {
+    if let value = value as? SafariViewControllerOptionsMessage {
+      super.writeByte(128)
+      super.writeValue(value.toList())
+    } else if let value = value as? SheetPresentationControllerConfigurationMessage {
+      super.writeByte(129)
+      super.writeValue(value.toList())
+    } else {
+      super.writeValue(value)
     }
+  }
 }
 
 private class CustomTabsApiCodecReaderWriter: FlutterStandardReaderWriter {
-    override func reader(with data: Data) -> FlutterStandardReader {
-        CustomTabsApiCodecReader(data: data)
-    }
+  override func reader(with data: Data) -> FlutterStandardReader {
+    return CustomTabsApiCodecReader(data: data)
+  }
 
-    override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-        CustomTabsApiCodecWriter(data: data)
-    }
+  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
+    return CustomTabsApiCodecWriter(data: data)
+  }
 }
 
 class CustomTabsApiCodec: FlutterStandardMessageCodec {
-    static let shared = CustomTabsApiCodec(readerWriter: CustomTabsApiCodecReaderWriter())
+  static let shared = CustomTabsApiCodec(readerWriter: CustomTabsApiCodecReaderWriter())
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol CustomTabsApi {
-    func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SafariViewControllerOptionsMessage, completion: @escaping (Result<Void, Error>) -> Void)
-    func closeAllIfPossible() throws
+  func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SafariViewControllerOptionsMessage?, completion: @escaping (Result<Void, Error>) -> Void)
+  func closeAllIfPossible() throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-enum CustomTabsApiSetup {
-    /// The codec used by CustomTabsApi.
-    static var codec: FlutterStandardMessageCodec { CustomTabsApiCodec.shared }
-    /// Sets up an instance of `CustomTabsApi` to handle messages through the `binaryMessenger`.
-    static func setUp(binaryMessenger: FlutterBinaryMessenger, api: CustomTabsApi?) {
-        let launchUrlChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.launchUrl", binaryMessenger: binaryMessenger, codec: codec)
-        if let api = api {
-            launchUrlChannel.setMessageHandler { message, reply in
-                let args = message as! [Any?]
-                let urlStringArg = args[0] as! String
-                let prefersDeepLinkArg = args[1] as! Bool
-                let optionsArg = args[2] as! SafariViewControllerOptionsMessage
-                api.launchURL(urlStringArg, prefersDeepLink: prefersDeepLinkArg, options: optionsArg) { result in
-                    switch result {
-                    case .success:
-                        reply(wrapResult(nil))
-                    case let .failure(error):
-                        reply(wrapError(error))
-                    }
-                }
-            }
-        } else {
-            launchUrlChannel.setMessageHandler(nil)
+class CustomTabsApiSetup {
+  /// The codec used by CustomTabsApi.
+  static var codec: FlutterStandardMessageCodec { CustomTabsApiCodec.shared }
+  /// Sets up an instance of `CustomTabsApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: CustomTabsApi?) {
+    let launchChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.launch", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      launchChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let urlStringArg = args[0] as! String
+        let prefersDeepLinkArg = args[1] as! Bool
+        let optionsArg: SafariViewControllerOptionsMessage? = nilOrValue(args[2])
+        api.launchURL(urlStringArg, prefersDeepLink: prefersDeepLinkArg, options: optionsArg) { result in
+          switch result {
+            case .success:
+              reply(wrapResult(nil))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
         }
-        let closeAllIfPossibleChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.closeAllIfPossible", binaryMessenger: binaryMessenger, codec: codec)
-        if let api = api {
-            closeAllIfPossibleChannel.setMessageHandler { _, reply in
-                do {
-                    try api.closeAllIfPossible()
-                    reply(wrapResult(nil))
-                } catch {
-                    reply(wrapError(error))
-                }
-            }
-        } else {
-            closeAllIfPossibleChannel.setMessageHandler(nil)
-        }
+      }
+    } else {
+      launchChannel.setMessageHandler(nil)
     }
+    let closeAllIfPossibleChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.closeAllIfPossible", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      closeAllIfPossibleChannel.setMessageHandler { _, reply in
+        do {
+          try api.closeAllIfPossible()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      closeAllIfPossibleChannel.setMessageHandler(nil)
+    }
+  }
 }

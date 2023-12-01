@@ -35,7 +35,7 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
           ? customTabsOptions.toMessage()
           : CustomTabsOptionsMessage();
     }
-    return _hostApi.launchUrl(
+    return _hostApi.launch(
       urlString,
       prefersDeepLink: prefersDeepLink,
       options: message,

@@ -45,6 +45,14 @@ class CustomTabsOptions implements PlatformOptions {
           partial: configuration,
         );
 
+  /// Creates a [CustomTabsOptions] instance with HTTP headers for an external browser.
+  CustomTabsOptions.externalBrowser({
+    required Map<String, String> headers,
+  }) : this(
+          browser:
+              CustomTabsBrowserConfiguration.externalBrowser(headers: headers),
+        );
+
   /// The visualization configuration.
   final CustomTabsColorSchemes? colorSchemes;
 

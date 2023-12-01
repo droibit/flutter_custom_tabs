@@ -27,13 +27,19 @@ class CustomTabsPluginIOS extends CustomTabsPlatform {
     PlatformOptions? customTabsOptions,
     PlatformOptions? safariVCOptions,
   }) {
-    final options = (safariVCOptions is SafariViewControllerOptions)
-        ? safariVCOptions.toMessage()
-        : SafariViewControllerOptionsMessage();
-    return _hostApi.launchUrl(
+    final SafariViewControllerOptionsMessage? message;
+    if (safariVCOptions == null) {
+      message = null;
+    } else {
+      message = (safariVCOptions is SafariViewControllerOptions)
+          ? safariVCOptions.toMessage()
+          : SafariViewControllerOptionsMessage();
+    }
+
+    return _hostApi.launch(
       urlString,
       prefersDeepLink: prefersDeepLink,
-      options: options,
+      options: message,
     );
   }
 

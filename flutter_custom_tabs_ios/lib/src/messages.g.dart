@@ -152,8 +152,8 @@ class CustomTabsApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _CustomTabsApiCodec();
 
-  Future<void> launchUrl(String urlString, {required bool prefersDeepLink, required SafariViewControllerOptionsMessage options,}) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.launchUrl';
+  Future<void> launch(String urlString, {required bool prefersDeepLink, SafariViewControllerOptionsMessage? options,}) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.launch';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
