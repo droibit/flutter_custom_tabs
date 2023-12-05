@@ -71,6 +71,10 @@ class MyApp extends StatelessWidget {
                 onPressed: () => _launchAndCloseManually(context),
                 child: const Text('Show flutter.dev + close after 5 seconds'),
               ),
+              FilledButton(
+                onPressed: () => _launchInExternalBrowser(),
+                child: const Text('Show flutter.dev in external browser'),
+              ),
             ],
           ),
         ),
@@ -277,6 +281,17 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,
       ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchInExternalBrowser() async {
+  try {
+    await launchUrl(
+      Uri.parse('https://flutter.dev'),
+      prefersDeepLink: false,
     );
   } catch (e) {
     debugPrint(e.toString());

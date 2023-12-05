@@ -11,7 +11,9 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// - On iOS, the appearance and behavior of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) can be customized using the [safariVCOptions] parameter.
 /// - For web, customization options are not available.
 ///
-/// Example:
+/// If [customTabsOptions] or [safariVCOptions] are `null`, the URL will be launched in an external browser on mobile platforms.
+///
+/// Example of launching Custom Tabs:
 ///
 /// ```dart
 /// final theme = ...;
@@ -35,6 +37,16 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///       dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
 ///     ),
 ///   );
+/// } catch (e) {
+///   // An exception is thrown if browser app is not installed on Android device.
+/// }
+/// ```
+///
+/// Example of launching an external browser:
+///
+/// ```dart
+/// try {
+///   await launchUrl(Uri.parse('https://flutter.dev'));
 /// } catch (e) {
 ///   // An exception is thrown if browser app is not installed on Android device.
 /// }
