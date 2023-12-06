@@ -2,7 +2,7 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
   swiftOut: 'ios/Classes/messages.g.swift',
-  dartOut: 'lib/src/messages.g.dart',
+  dartOut: 'lib/src/messages/messages.g.dart',
 ))
 @HostApi()
 abstract class CustomTabsApi {

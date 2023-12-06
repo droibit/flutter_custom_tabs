@@ -1,7 +1,6 @@
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-import 'message_converters.dart';
-import 'messages.g.dart';
+import 'messages/messages.dart';
 import 'types/types.dart';
 
 /// The Android implementation of [CustomTabsPlatform].
