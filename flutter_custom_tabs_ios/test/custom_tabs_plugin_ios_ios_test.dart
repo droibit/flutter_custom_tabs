@@ -1,8 +1,7 @@
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
+import 'package:flutter_custom_tabs_ios/src/messages/messages.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'messages.dart';
 
 void main() {
   late _MockCustomTabsApi api;

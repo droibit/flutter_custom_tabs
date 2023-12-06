@@ -1,8 +1,7 @@
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-import 'message_converters.dart';
-import 'messages.g.dart';
-import 'types/safari_view_controller_options.dart';
+import 'messages/messages.dart';
+import 'types/types.dart';
 
 /// The iOS implementation of [CustomTabsPlatform].
 ///

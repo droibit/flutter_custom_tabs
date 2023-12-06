@@ -1,7 +1,7 @@
 import 'package:flutter/painting.dart';
 
-import 'types/types.dart';
 import 'messages.g.dart';
+import '../types/types.dart';
 
 extension SafariViewControllerOptionsConverter on SafariViewControllerOptions {
   SafariViewControllerOptionsMessage toMessage() {
