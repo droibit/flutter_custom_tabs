@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
+import 'package:flutter_custom_tabs_android/src/messages/messages.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../messages.dart';
 
 void main() {
   group('CustomTabsColorSchemes', () {

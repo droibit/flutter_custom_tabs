@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/painting.dart';
 
-import 'types/types.dart';
 import 'messages.g.dart';
+import '../types/types.dart';
 
 extension CustomTabsOptionsConverter on CustomTabsOptions {
   CustomTabsOptionsMessage toMessage() {

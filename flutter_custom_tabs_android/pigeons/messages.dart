@@ -7,7 +7,7 @@ import 'package:pigeon/pigeon.dart';
     className: 'Messages',
     package: 'com.github.droibit.flutter.plugins.customtabs',
   ),
-  dartOut: 'lib/src/messages.g.dart',
+  dartOut: 'lib/src/messages/messages.g.dart',
 ))
 @HostApi()
 abstract class CustomTabsApi {
