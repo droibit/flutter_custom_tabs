@@ -48,12 +48,16 @@ class MyApp extends StatelessWidget {
                   child: const Text('Show flutter.dev in bottom sheet'),
                 ),
                 FilledButton.tonal(
-                  onPressed: () => _launchDeepLinkingURL(context),
+                  onPressed: () => _launchDeepLinkURL(context),
                   child: const Text('Deep link to Google Maps'),
                 ),
                 FilledButton.tonal(
                   onPressed: () => _launchAndCloseManually(context),
                   child: const Text('Show flutter.dev + close after 5 seconds'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () => _launchInExternalBrowser(),
+                  child: const Text('Show flutter.dev in external browser'),
                 ),
               ],
             ),
@@ -134,7 +138,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
   }
 }
 
-Future<void> _launchDeepLinkingURL(BuildContext context) async {
+Future<void> _launchDeepLinkURL(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -170,6 +174,16 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
         ),
         showTitle: true,
       ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchInExternalBrowser() async {
+  try {
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
     );
   } catch (e) {
     debugPrint(e.toString());

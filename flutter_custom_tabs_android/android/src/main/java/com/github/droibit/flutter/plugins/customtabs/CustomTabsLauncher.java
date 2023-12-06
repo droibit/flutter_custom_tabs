@@ -4,6 +4,7 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX;
 import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
+import static java.util.Objects.requireNonNull;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -36,10 +37,10 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
     }
 
     @Override
-    public void launchUrl(
+    public void launch(
             @NonNull String urlString,
             @NonNull Boolean prefersDeepLink,
-            @NonNull CustomTabsOptionsMessage options
+            @Nullable CustomTabsOptionsMessage options
     ) {
         final Activity activity = this.activity;
         if (activity == null) {
@@ -51,9 +52,16 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
             return;
         }
 
-        final CustomTabsFactory factory = new CustomTabsFactory(activity);
         try {
-            final CustomTabsIntent customTabsIntent = factory.createIntent(options);
+            final CustomTabsFactory factory = new CustomTabsFactory(activity);
+            final Intent externalBrowserIntent = factory.createExternalBrowserIntent(options);
+            if (externalBrowserIntent != null) {
+                externalBrowserIntent.setData(uri);
+                activity.startActivity(externalBrowserIntent);
+                return;
+            }
+
+            final CustomTabsIntent customTabsIntent = factory.createCustomTabsIntent(requireNonNull(options));
             if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
                 customTabsIntent.intent.setData(uri);
                 activity.startActivityForResult(customTabsIntent.intent, REQUEST_CODE_CUSTOM_TABS);

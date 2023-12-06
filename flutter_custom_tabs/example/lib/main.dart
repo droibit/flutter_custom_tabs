@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
                 child: const Text('Show flutter.dev (lite ver)'),
               ),
               FilledButton(
-                onPressed: () => _launchDeepLinkingURL(context),
+                onPressed: () => _launchDeepLinkURL(context),
                 child: const Text('Deep link to platform maps'),
               ),
               FilledButton(
@@ -70,6 +70,10 @@ class MyApp extends StatelessWidget {
               FilledButton(
                 onPressed: () => _launchAndCloseManually(context),
                 child: const Text('Show flutter.dev + close after 5 seconds'),
+              ),
+              FilledButton(
+                onPressed: () => _launchInExternalBrowser(),
+                child: const Text('Show flutter.dev in external browser'),
               ),
             ],
           ),
@@ -145,7 +149,7 @@ Future<void> _launchUrlLite(BuildContext context) async {
   }
 }
 
-Future<void> _launchDeepLinkingURL(BuildContext context) async {
+Future<void> _launchDeepLinkURL(BuildContext context) async {
   final theme = Theme.of(context);
   final uri = Platform.isIOS
       ? 'https://maps.apple.com/?q=tokyo+station'
@@ -277,6 +281,17 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,
       ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchInExternalBrowser() async {
+  try {
+    await launchUrl(
+      Uri.parse('https://flutter.dev'),
+      prefersDeepLink: false,
     );
   } catch (e) {
     debugPrint(e.toString());

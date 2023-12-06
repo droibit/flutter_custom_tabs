@@ -10,6 +10,7 @@ void main() {
     expect(actual.prefersDefaultBrowser, isNull);
     expect(actual.fallbackCustomTabs, isNull);
     expect(actual.headers, isNull);
+    expect(actual.prefersExternalBrowser, isFalse);
   });
 
   test('toMessage() returns a message with complete options', () {
@@ -25,5 +26,17 @@ void main() {
     expect(actual.prefersDefaultBrowser, configuration.prefersDefaultBrowser);
     expect(actual.fallbackCustomTabs, configuration.fallbackCustomTabs);
     expect(actual.headers, configuration.headers);
+    expect(actual.prefersExternalBrowser, isFalse);
+  });
+
+  test('toMessage() returns a message with external browser options', () {
+    const configuration = CustomTabsBrowserConfiguration.externalBrowser(
+      headers: {'key': 'value'},
+    );
+    final actual = configuration.toMessage();
+    expect(actual.prefersDefaultBrowser, isNull);
+    expect(actual.fallbackCustomTabs, isNull);
+    expect(actual.headers, configuration.headers);
+    expect(actual.prefersExternalBrowser, isTrue);
   });
 }

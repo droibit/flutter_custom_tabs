@@ -9,12 +9,14 @@ import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.reso
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveDrawableIdentifier;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Browser;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -40,8 +42,28 @@ class CustomTabsFactory {
         this.context = context;
     }
 
+    @Nullable
+    Intent createExternalBrowserIntent(@Nullable CustomTabsOptionsMessage options) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (options == null) {
+            return intent;
+        }
+
+        final CustomTabsBrowserConfigurationMessage browserOptions = options.getBrowser();
+        if (browserOptions == null || !browserOptions.getPrefersExternalBrowser()) {
+            return null;
+        }
+
+        final Map<String, String> headers = browserOptions.getHeaders();
+        if (headers != null) {
+            final Bundle bundleHeaders = extractBundle(headers);
+            intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
+        }
+        return intent;
+    }
+
     @NonNull
-    CustomTabsIntent createIntent(@NonNull CustomTabsOptionsMessage options) {
+    CustomTabsIntent createCustomTabsIntent(@NonNull CustomTabsOptionsMessage options) {
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         final CustomTabsColorSchemesMessage colorSchemes = options.getColorSchemes();
         if (colorSchemes != null) {
@@ -92,7 +114,6 @@ class CustomTabsFactory {
         }
         applyBrowserConfiguration(customTabsIntent, browserConfiguration);
         return customTabsIntent;
-
     }
 
     void applyColorSchemes(
@@ -101,6 +122,7 @@ class CustomTabsFactory {
     ) {
         final Long colorScheme = colorSchemes.getColorScheme();
         if (colorScheme != null) {
+
             builder.setColorScheme(colorScheme.intValue());
         }
 
@@ -210,10 +232,7 @@ class CustomTabsFactory {
     ) {
         final Map<String, String> headers = options.getHeaders();
         if (headers != null) {
-            final Bundle bundleHeaders = new Bundle();
-            for (Map.Entry<String, String> header : headers.entrySet()) {
-                bundleHeaders.putString(header.getKey(), header.getValue());
-            }
+            final Bundle bundleHeaders = extractBundle(headers);
             customTabsIntent.intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
         }
 
@@ -237,5 +256,13 @@ class CustomTabsFactory {
         } else {
             ensureChromeCustomTabsPackage(customTabsIntent, context, fallback);
         }
+    }
+
+    private @NonNull Bundle extractBundle(@NonNull Map<String, String> headers) {
+        final Bundle dest = new Bundle(headers.size());
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            dest.putString(entry.getKey(), entry.getValue());
+        }
+        return dest;
     }
 }

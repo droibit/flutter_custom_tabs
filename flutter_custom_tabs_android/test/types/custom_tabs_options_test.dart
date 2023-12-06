@@ -125,6 +125,7 @@ void main() {
         expectedBrowser.fallbackCustomTabs,
       );
       expect(actualBrowser.headers, options.browser!.headers);
+      expect(actualBrowser.prefersExternalBrowser, isFalse);
 
       final expectedPartial = options.partial!;
       final actualPartial = actual.partial!;
@@ -134,6 +135,28 @@ void main() {
         expectedPartial.activityHeightResizeBehavior.rawValue,
       );
       expect(actualPartial.cornerRadius, expectedPartial.cornerRadius);
+    });
+
+    test('toMessage() returns a message with external browser options', () {
+      final options = CustomTabsOptions.externalBrowser(headers: const {
+        'key': 'value',
+      });
+      final actual = options.toMessage();
+      expect(actual.colorSchemes, isNull);
+      expect(actual.urlBarHidingEnabled, isNull);
+      expect(actual.shareState, isNull);
+      expect(actual.showTitle, isNull);
+      expect(actual.instantAppsEnabled, isNull);
+      expect(actual.animations, isNull);
+      expect(actual.closeButton, isNull);
+      expect(actual.browser, isNotNull);
+      expect(actual.partial, isNull);
+
+      final actualBrowser = actual.browser!;
+      expect(actualBrowser.prefersExternalBrowser, isTrue);
+      expect(actualBrowser.prefersDefaultBrowser, isNull);
+      expect(actualBrowser.fallbackCustomTabs, isNull);
+      expect(actualBrowser.headers, options.browser!.headers);
     });
   });
 

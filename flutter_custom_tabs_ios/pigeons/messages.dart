@@ -8,10 +8,10 @@ import 'package:pigeon/pigeon.dart';
 abstract class CustomTabsApi {
   @async
   @SwiftFunction('launchURL(_:prefersDeepLink:options:)')
-  void launchUrl(
+  void launch(
     String urlString, {
     required bool prefersDeepLink,
-    required SafariViewControllerOptionsMessage options,
+    SafariViewControllerOptionsMessage? options,
   });
 
   void closeAllIfPossible();

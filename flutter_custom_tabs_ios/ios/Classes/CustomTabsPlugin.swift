@@ -13,18 +13,18 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
     func launchURL(
         _ urlString: String,
         prefersDeepLink: Bool,
-        options: SafariViewControllerOptionsMessage,
+        options: SafariViewControllerOptionsMessage?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         let url = URL(string: urlString)!
         if prefersDeepLink {
             UIApplication.shared.open(url, options: [.universalLinksOnly: true]) { [weak self] opened in
                 if !opened {
-                    self?.presentSafariViewController(with: url, options: options, completion: completion)
+                    self?.launchURL(url, options: options, completion: completion)
                 }
             }
         } else {
-            presentSafariViewController(with: url, options: options, completion: completion)
+            launchURL(url, options: options, completion: completion)
         }
     }
 
@@ -36,11 +36,18 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
 
     // MARK: - Private
 
-    private func presentSafariViewController(
-        with url: URL,
-        options: SafariViewControllerOptionsMessage,
+    private func launchURL(
+        _ url: URL,
+        options: SafariViewControllerOptionsMessage?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
+        guard let options else {
+            UIApplication.shared.open(url) { _ in
+                completion(.success(()))
+            }
+            return
+        }
+
         if let topViewController = UIWindow.keyWindow?.topViewController() {
             let safariViewController = SFSafariViewController.make(url: url, options: options)
             dismissStack.append { [weak safariViewController] in

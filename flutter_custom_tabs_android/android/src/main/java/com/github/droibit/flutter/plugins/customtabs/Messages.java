@@ -376,6 +376,19 @@ public class Messages {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static final class CustomTabsBrowserConfigurationMessage {
+    private @NonNull Boolean prefersExternalBrowser;
+
+    public @NonNull Boolean getPrefersExternalBrowser() {
+      return prefersExternalBrowser;
+    }
+
+    public void setPrefersExternalBrowser(@NonNull Boolean setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"prefersExternalBrowser\" is null.");
+      }
+      this.prefersExternalBrowser = setterArg;
+    }
+
     private @Nullable Boolean prefersDefaultBrowser;
 
     public @Nullable Boolean getPrefersDefaultBrowser() {
@@ -406,7 +419,17 @@ public class Messages {
       this.headers = setterArg;
     }
 
+    /** Constructor is non-public to enforce null safety; use Builder. */
+    CustomTabsBrowserConfigurationMessage() {}
+
     public static final class Builder {
+
+      private @Nullable Boolean prefersExternalBrowser;
+
+      public @NonNull Builder setPrefersExternalBrowser(@NonNull Boolean setterArg) {
+        this.prefersExternalBrowser = setterArg;
+        return this;
+      }
 
       private @Nullable Boolean prefersDefaultBrowser;
 
@@ -431,6 +454,7 @@ public class Messages {
 
       public @NonNull CustomTabsBrowserConfigurationMessage build() {
         CustomTabsBrowserConfigurationMessage pigeonReturn = new CustomTabsBrowserConfigurationMessage();
+        pigeonReturn.setPrefersExternalBrowser(prefersExternalBrowser);
         pigeonReturn.setPrefersDefaultBrowser(prefersDefaultBrowser);
         pigeonReturn.setFallbackCustomTabs(fallbackCustomTabs);
         pigeonReturn.setHeaders(headers);
@@ -440,7 +464,8 @@ public class Messages {
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(3);
+      ArrayList<Object> toListResult = new ArrayList<Object>(4);
+      toListResult.add(prefersExternalBrowser);
       toListResult.add(prefersDefaultBrowser);
       toListResult.add(fallbackCustomTabs);
       toListResult.add(headers);
@@ -449,11 +474,13 @@ public class Messages {
 
     static @NonNull CustomTabsBrowserConfigurationMessage fromList(@NonNull ArrayList<Object> list) {
       CustomTabsBrowserConfigurationMessage pigeonResult = new CustomTabsBrowserConfigurationMessage();
-      Object prefersDefaultBrowser = list.get(0);
+      Object prefersExternalBrowser = list.get(0);
+      pigeonResult.setPrefersExternalBrowser((Boolean) prefersExternalBrowser);
+      Object prefersDefaultBrowser = list.get(1);
       pigeonResult.setPrefersDefaultBrowser((Boolean) prefersDefaultBrowser);
-      Object fallbackCustomTabs = list.get(1);
+      Object fallbackCustomTabs = list.get(2);
       pigeonResult.setFallbackCustomTabs((List<String>) fallbackCustomTabs);
-      Object headers = list.get(2);
+      Object headers = list.get(3);
       pigeonResult.setHeaders((Map<String, String>) headers);
       return pigeonResult;
     }
@@ -867,7 +894,7 @@ public class Messages {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface CustomTabsApi {
 
-    void launchUrl(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @NonNull CustomTabsOptionsMessage options);
+    void launch(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @Nullable CustomTabsOptionsMessage options);
 
     void closeAllIfPossible();
 
@@ -880,7 +907,7 @@ public class Messages {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launchUrl", getCodec());
+                binaryMessenger, "dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launch", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {
@@ -890,7 +917,7 @@ public class Messages {
                 Boolean prefersDeepLinkArg = (Boolean) args.get(1);
                 CustomTabsOptionsMessage optionsArg = (CustomTabsOptionsMessage) args.get(2);
                 try {
-                  api.launchUrl(urlStringArg, prefersDeepLinkArg, optionsArg);
+                  api.launch(urlStringArg, prefersDeepLinkArg, optionsArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

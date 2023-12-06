@@ -40,6 +40,7 @@ extension CustomTabsBrowserConfigurationConverter
     on CustomTabsBrowserConfiguration {
   CustomTabsBrowserConfigurationMessage toMessage() {
     return CustomTabsBrowserConfigurationMessage(
+      prefersExternalBrowser: prefersExternalBrowser,
       prefersDefaultBrowser: prefersDefaultBrowser,
       fallbackCustomTabs: fallbackCustomTabs,
       headers: headers,

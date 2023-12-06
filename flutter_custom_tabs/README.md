@@ -2,7 +2,11 @@
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
 A Flutter plugin for mobile apps to launch a URL in Custom Tabs.  
-This plugin allows you to add the browser experience that Custom Tabs provides to your mobile apps.
+The plugin allows you to add the browser experience that Custom Tabs provides to your mobile apps.
+
+In version 2.0, the plugin expands the support for launching a URL in mobile apps:
+- Launch a URL in an external browser.
+- Launch a deep link URL.
 
 |             | Android | iOS   |  Web  |
 |-------------|---------|-------|-------|
@@ -24,7 +28,7 @@ dependencies:
 - Android Gradle Plugin v7.4.0 and above.
 - Kotlin v1.7.0 and above.
 
-```diff
+```groovy
 // your-project/android/build.gradle
 buildscript {
     ext.kotlin_version = '1.7.0' // and above if explicitly depending on Kotlin.
@@ -52,7 +56,7 @@ void _launchURL(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await launchUrl(
-      Uri.parse('https://flutter.dev'),
+      Uri.parse('https://flutter.dev'),      
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,
@@ -85,8 +89,8 @@ See the example app for more complex examples.
 This package supports a wide range of Custom Tabs customizations,   
 but we have experimentally introduced a lightweight URL launch for users who don't need as much in v2.0.0.
 
-> [!TIP]  
-> On Android, **the lightweight version** prioritizes launching the default browser that supports Custom Tabs over Chrome.
+> [!NOTE]  
+> On Android, **the lightweight version** prefers launching the default browser that supports Custom Tabs over Chrome.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -136,12 +140,13 @@ Support status in `flutter_custom_tabs`:
 ## Advanced Usage
 
 ### Deep Linking
-Supports launching deep link URLs.  
+Supports launching a deep link URL.  
 (If a native app that responds to the deep link URL is installed, it will directly launch it. otherwise, it will launch a custom tab.)
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+// or import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
 
 Future<void> _launchDeepLinkURL(BuildContext context) async {
   final theme = Theme.of(context);
@@ -161,8 +166,22 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
 }
 ```
 
+## Launch in an external browser
+By default, if no mobile platform-specific options are specified, a URL will be launched in an external browser.
+
+> [!TIP]  
+> Android: `CustomTabsOptions.externalBrowser` supports HTTP request headers.
+
+```dart
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+
+Future<void> _launchInExternalBrowser() async {
+  await launchUrl(Uri.parse('https://flutter.dev'));
+}
+```
+
 ### Show as a bottom sheet
-You can launch URLs in Custom Tabs as a bottom sheet.
+You can launch a URL in Custom Tabs as a bottom sheet.
 
 Requirements:
 - Android: Chrome v107 and above or [other browsers](https://developer.chrome.com/docs/android/custom-tabs/browser-support/#setinitialactivityheightpx)
@@ -204,7 +223,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
 ```
 
 ### Prefer the default browser over Chrome
-On Android, the default browser to launch is Chrome, which supports all Custom Tabs features.  
+On Android, the plugin defaults to launching Chrome, which supports all Custom Tabs features.   
 You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
 
 > [!NOTE]  
@@ -212,6 +231,8 @@ You can prioritize launching the default browser on the device that supports Cus
 > - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
 
 ```dart
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+
 Future<void> _launchURLInDefaultBrowserOnAndroid() async {  
   await launchUrl(
     Uri.parse('https://flutter.dev'),
