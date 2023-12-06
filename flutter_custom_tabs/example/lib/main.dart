@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
                 child: const Text('Show flutter.dev (lite ver)'),
               ),
               FilledButton(
-                onPressed: () => _launchDeepLinkingURL(context),
+                onPressed: () => _launchDeepLinkURL(context),
                 child: const Text('Deep link to platform maps'),
               ),
               FilledButton(
@@ -149,7 +149,7 @@ Future<void> _launchUrlLite(BuildContext context) async {
   }
 }
 
-Future<void> _launchDeepLinkingURL(BuildContext context) async {
+Future<void> _launchDeepLinkURL(BuildContext context) async {
   final theme = Theme.of(context);
   final uri = Platform.isIOS
       ? 'https://maps.apple.com/?q=tokyo+station'

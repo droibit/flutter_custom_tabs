@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                   child: const Text('Show flutter.dev in bottom sheet'),
                 ),
                 FilledButton.tonal(
-                  onPressed: () => _launchDeepLinkingURL(context),
+                  onPressed: () => _launchDeepLinkURL(context),
                   child: const Text('Deep link to Google Maps'),
                 ),
                 FilledButton.tonal(
@@ -138,7 +138,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
   }
 }
 
-Future<void> _launchDeepLinkingURL(BuildContext context) async {
+Future<void> _launchDeepLinkURL(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
