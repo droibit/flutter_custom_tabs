@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:meta/meta.dart';
 
 /// The Configuration for providing minimal options for mobile platforms when launching Custom Tabs by specifying a URL.
 @experimental
+@immutable
 class LaunchOptions {
   /// Creates a [LaunchOptions] instance with the specified options.
   const LaunchOptions({
