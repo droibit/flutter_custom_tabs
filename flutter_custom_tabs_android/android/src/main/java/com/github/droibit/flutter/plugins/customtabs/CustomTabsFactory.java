@@ -2,8 +2,8 @@ package com.github.droibit.flutter.plugins.customtabs;
 
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
-import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureChromeCustomTabsPackage;
-import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.ensureCustomTabsPackage;
+import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setChromeCustomTabsPackage;
+import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setCustomTabsPackage;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveAnimationIdentifier;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveDrawableIdentifier;
@@ -252,9 +252,9 @@ class CustomTabsFactory {
 
         final Boolean prefersDefaultBrowser = options.getPrefersDefaultBrowser();
         if (prefersDefaultBrowser != null && prefersDefaultBrowser) {
-            ensureCustomTabsPackage(customTabsIntent, context, fallback);
+            setCustomTabsPackage(customTabsIntent, context, fallback);
         } else {
-            ensureChromeCustomTabsPackage(customTabsIntent, context, fallback);
+            setChromeCustomTabsPackage(customTabsIntent, context, fallback);
         }
     }
 
