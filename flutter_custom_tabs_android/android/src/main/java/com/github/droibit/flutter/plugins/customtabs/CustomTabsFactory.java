@@ -36,11 +36,6 @@ import java.util.Map;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class CustomTabsFactory {
-    private final Context context;
-
-    CustomTabsFactory(@NonNull Context context) {
-        this.context = context;
-    }
 
     @Nullable
     Intent createExternalBrowserIntent(@Nullable CustomTabsOptionsMessage options) {
@@ -63,7 +58,10 @@ class CustomTabsFactory {
     }
 
     @NonNull
-    CustomTabsIntent createCustomTabsIntent(@NonNull CustomTabsOptionsMessage options) {
+    CustomTabsIntent createCustomTabsIntent(
+            @NonNull Context context,
+            @NonNull CustomTabsOptionsMessage options
+    ) {
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         final CustomTabsColorSchemesMessage colorSchemes = options.getColorSchemes();
         if (colorSchemes != null) {
@@ -72,7 +70,7 @@ class CustomTabsFactory {
 
         final CustomTabsCloseButtonMessage closeButton = options.getCloseButton();
         if (closeButton != null) {
-            applyCloseButton(builder, closeButton);
+            applyCloseButton(context, builder, closeButton);
         }
 
         final Boolean urlBarHidingEnabled = options.getUrlBarHidingEnabled();
@@ -97,12 +95,12 @@ class CustomTabsFactory {
 
         final CustomTabsAnimationsMessage animations = options.getAnimations();
         if (animations != null) {
-            applyAnimations(builder, animations);
+            applyAnimations(context, builder, animations);
         }
 
         final PartialCustomTabsConfigurationMessage partial = options.getPartial();
         if (partial != null) {
-            applyPartialCustomTabsConfiguration(builder, partial);
+            applyPartialCustomTabsConfiguration(context, builder, partial);
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();
@@ -112,7 +110,7 @@ class CustomTabsFactory {
         } else {
             browserConfiguration = new CustomTabsBrowserConfigurationMessage();
         }
-        applyBrowserConfiguration(customTabsIntent, browserConfiguration);
+        applyBrowserConfiguration(context, customTabsIntent, browserConfiguration);
         return customTabsIntent;
     }
 
@@ -164,6 +162,7 @@ class CustomTabsFactory {
     }
 
     private void applyCloseButton(
+            @NonNull Context context,
             @NonNull CustomTabsIntent.Builder builder,
             @NonNull CustomTabsCloseButtonMessage closeButton
     ) {
@@ -185,6 +184,7 @@ class CustomTabsFactory {
     }
 
     private void applyAnimations(
+            @NonNull Context context,
             @NonNull CustomTabsIntent.Builder builder,
             @NonNull CustomTabsAnimationsMessage animations
     ) {
@@ -209,6 +209,7 @@ class CustomTabsFactory {
     }
 
     private void applyPartialCustomTabsConfiguration(
+            @NonNull Context context,
             @NonNull CustomTabsIntent.Builder builder,
             @NonNull PartialCustomTabsConfigurationMessage configuration
     ) {
@@ -227,6 +228,7 @@ class CustomTabsFactory {
     }
 
     private void applyBrowserConfiguration(
+            @NonNull Context context,
             @NonNull CustomTabsIntent customTabsIntent,
             @NonNull CustomTabsBrowserConfigurationMessage options
     ) {

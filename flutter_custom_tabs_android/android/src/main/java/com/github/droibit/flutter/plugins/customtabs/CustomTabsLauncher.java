@@ -30,7 +30,16 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
     private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
     private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
+    private final @NonNull CustomTabsFactory customTabsFactory;
     private @Nullable Activity activity;
+
+    public CustomTabsLauncher() {
+        this(new CustomTabsFactory());
+    }
+
+    public CustomTabsLauncher(@NonNull CustomTabsFactory customTabsFactory) {
+        this.customTabsFactory = customTabsFactory;
+    }
 
     void setActivity(@Nullable Activity activity) {
         this.activity = activity;
@@ -53,15 +62,15 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
         }
 
         try {
-            final CustomTabsFactory factory = new CustomTabsFactory(activity);
-            final Intent externalBrowserIntent = factory.createExternalBrowserIntent(options);
+            final Intent externalBrowserIntent = customTabsFactory.createExternalBrowserIntent(options);
             if (externalBrowserIntent != null) {
                 externalBrowserIntent.setData(uri);
                 activity.startActivity(externalBrowserIntent);
                 return;
             }
 
-            final CustomTabsIntent customTabsIntent = factory.createCustomTabsIntent(requireNonNull(options));
+            final CustomTabsIntent customTabsIntent = customTabsFactory
+                    .createCustomTabsIntent(activity, requireNonNull(options));
             if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
                 customTabsIntent.intent.setData(uri);
                 activity.startActivityForResult(customTabsIntent.intent, REQUEST_CODE_CUSTOM_TABS);
