@@ -28,10 +28,8 @@ class ResourceFactory {
     // https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String, java.lang.String, java.lang.String)
     private static final Pattern fullIdentifierPattern = Pattern.compile("^.+:.+/");
 
-    static @Nullable Bitmap getBitmap(
-            @NonNull Context context,
-            @DrawableRes int drawableResId
-    ) {
+    @Nullable
+    Bitmap getBitmap(@NonNull Context context, @DrawableRes int drawableResId) {
         Drawable drawable = ContextCompat.getDrawable(context, drawableResId);
         if (drawable == null) {
             return null;
@@ -57,22 +55,19 @@ class ResourceFactory {
         return bitmap;
     }
 
-    static @DrawableRes int resolveDrawableIdentifier(
-            @NonNull Context context,
-            @Nullable String identifier
-    ) {
+    @DrawableRes
+    int getDrawableIdentifier(@NonNull Context context, @Nullable String identifier) {
         return resolveIdentifier(context, "drawable", identifier);
     }
 
-    static @AnimRes int resolveAnimationIdentifier(
-            @NonNull Context context,
-            @Nullable String identifier
-    ) {
+    @AnimRes
+    int getAnimationIdentifier(@NonNull Context context, @Nullable String identifier) {
         return resolveIdentifier(context, "anim", identifier);
     }
 
     @SuppressLint("DiscouragedApi")
-    private static @AnyRes int resolveIdentifier(
+    @AnyRes
+    private int resolveIdentifier(
             @NonNull Context context,
             @NonNull String defType,
             @Nullable String identifier

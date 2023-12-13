@@ -5,8 +5,6 @@ import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setChromeCustomTabsPackage;
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setCustomTabsPackage;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
-import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveAnimationIdentifier;
-import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveDrawableIdentifier;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +16,7 @@ import android.provider.Browser;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
+import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 
@@ -36,6 +35,16 @@ import java.util.Map;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class CustomTabsFactory {
+    private final @NonNull ResourceFactory resources;
+
+    CustomTabsFactory() {
+        this(new ResourceFactory());
+    }
+
+    @VisibleForTesting
+    CustomTabsFactory(@NonNull ResourceFactory resources) {
+        this.resources = resources;
+    }
 
     @Nullable
     Intent createExternalBrowserIntent(@Nullable CustomTabsOptionsMessage options) {
@@ -114,7 +123,7 @@ class CustomTabsFactory {
         return customTabsIntent;
     }
 
-    void applyColorSchemes(
+    private void applyColorSchemes(
             @NonNull CustomTabsIntent.Builder builder,
             @NonNull CustomTabsColorSchemesMessage colorSchemes
     ) {
@@ -168,9 +177,9 @@ class CustomTabsFactory {
     ) {
         final String icon = closeButton.getIcon();
         if (icon != null) {
-            final int closeButtonIconId = resolveDrawableIdentifier(context, icon);
+            final int closeButtonIconId = resources.getDrawableIdentifier(context, icon);
             if (closeButtonIconId != INVALID_RESOURCE_ID) {
-                final Bitmap closeButtonIcon = ResourceFactory.getBitmap(context, closeButtonIconId);
+                final Bitmap closeButtonIcon = resources.getBitmap(context, closeButtonIconId);
                 if (closeButtonIcon != null) {
                     builder.setCloseButtonIcon(closeButtonIcon);
                 }
@@ -189,13 +198,13 @@ class CustomTabsFactory {
             @NonNull CustomTabsAnimationsMessage animations
     ) {
         final int startEnterAnimationId =
-                resolveAnimationIdentifier(context, animations.getStartEnter());
+                resources.getAnimationIdentifier(context, animations.getStartEnter());
         final int startExitAnimationId =
-                resolveAnimationIdentifier(context, animations.getStartExit());
+                resources.getAnimationIdentifier(context, animations.getStartExit());
         final int endEnterAnimationId =
-                resolveAnimationIdentifier(context, animations.getEndEnter());
+                resources.getAnimationIdentifier(context, animations.getEndEnter());
         final int endExitAnimationId =
-                resolveAnimationIdentifier(context, animations.getEndExit());
+                resources.getAnimationIdentifier(context, animations.getEndExit());
 
         if (startEnterAnimationId != INVALID_RESOURCE_ID
                 && startExitAnimationId != INVALID_RESOURCE_ID) {
