@@ -31,14 +31,19 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
     private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
     private final @NonNull CustomTabsFactory customTabsFactory;
+    private final @NonNull NativeAppLauncher nativeAppLauncher;
     private @Nullable Activity activity;
 
     public CustomTabsLauncher() {
-        this(new CustomTabsFactory());
+        this(new CustomTabsFactory(), new NativeAppLauncher());
     }
 
-    public CustomTabsLauncher(@NonNull CustomTabsFactory customTabsFactory) {
+    public CustomTabsLauncher(
+            @NonNull CustomTabsFactory customTabsFactory,
+            @NonNull NativeAppLauncher nativeAppLauncher
+    ) {
         this.customTabsFactory = customTabsFactory;
+        this.nativeAppLauncher = nativeAppLauncher;
     }
 
     void setActivity(@Nullable Activity activity) {
@@ -57,7 +62,7 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
         }
 
         final Uri uri = Uri.parse(urlString);
-        if (prefersDeepLink && NativeAppLauncher.launch(activity, uri)) {
+        if (prefersDeepLink && nativeAppLauncher.launch(activity, uri)) {
             return;
         }
 

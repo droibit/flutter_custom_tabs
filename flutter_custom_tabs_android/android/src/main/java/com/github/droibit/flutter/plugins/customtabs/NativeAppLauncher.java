@@ -21,14 +21,14 @@ import java.util.Set;
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class NativeAppLauncher {
-    static boolean launch(@NonNull Context context, @NonNull Uri uri) {
+    boolean launch(@NonNull Context context, @NonNull Uri uri) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ?
                 launchNativeApi30(context, uri) :
                 launchNativeBeforeApi30(context, uri);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private static boolean launchNativeApi30(@NonNull Context context, @NonNull Uri uri) {
+    private boolean launchNativeApi30(@NonNull Context context, @NonNull Uri uri) {
         final Intent nativeAppIntent = new Intent(Intent.ACTION_VIEW, uri)
                 .addCategory(Intent.CATEGORY_BROWSABLE)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REQUIRE_NON_BROWSER);
@@ -40,7 +40,7 @@ class NativeAppLauncher {
         }
     }
 
-    private static boolean launchNativeBeforeApi30(@NonNull Context context, @NonNull Uri uri) {
+    private boolean launchNativeBeforeApi30(@NonNull Context context, @NonNull Uri uri) {
         final PackageManager pm = context.getPackageManager();
 
         // Get all Apps that resolve a generic url
