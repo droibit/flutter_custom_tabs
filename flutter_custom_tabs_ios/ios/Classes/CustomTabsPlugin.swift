@@ -13,7 +13,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
     func launchURL(
         _ urlString: String,
         prefersDeepLink: Bool,
-        options: SafariViewControllerOptionsMessage?,
+        options: SFSafariViewControllerOptions?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         let url = URL(string: urlString)!
@@ -38,7 +38,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
 
     private func launchURL(
         _ url: URL,
-        options: SafariViewControllerOptionsMessage?,
+        options: SFSafariViewControllerOptions?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         guard let options else {

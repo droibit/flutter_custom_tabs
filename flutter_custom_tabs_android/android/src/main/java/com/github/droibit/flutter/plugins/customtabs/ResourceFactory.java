@@ -11,9 +11,11 @@ import android.os.Build;
 
 import androidx.annotation.AnimRes;
 import androidx.annotation.AnyRes;
+import androidx.annotation.Dimension;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.Px;
 import androidx.annotation.RestrictTo;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -29,7 +31,12 @@ class ResourceFactory {
     private static final Pattern fullIdentifierPattern = Pattern.compile("^.+:.+/");
 
     @Nullable
-    Bitmap getBitmap(@NonNull Context context, @DrawableRes int drawableResId) {
+    Bitmap getBitmap(@NonNull Context context, @Nullable String drawableIdentifier) {
+        final int drawableResId = resolveIdentifier(context, "drawable", drawableIdentifier);
+        if (drawableResId == INVALID_RESOURCE_ID) {
+            return null;
+        }
+
         Drawable drawable = ContextCompat.getDrawable(context, drawableResId);
         if (drawable == null) {
             return null;
@@ -55,11 +62,6 @@ class ResourceFactory {
         return bitmap;
     }
 
-    @DrawableRes
-    int getDrawableIdentifier(@NonNull Context context, @Nullable String identifier) {
-        return resolveIdentifier(context, "drawable", identifier);
-    }
-
     @AnimRes
     int getAnimationIdentifier(@NonNull Context context, @Nullable String identifier) {
         return resolveIdentifier(context, "anim", identifier);
@@ -80,5 +82,11 @@ class ResourceFactory {
         } else {
             return context.getResources().getIdentifier(identifier, defType, context.getPackageName());
         }
+    }
+
+    @Px
+    int convertToPx(@NonNull Context context, double dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5);
     }
 }

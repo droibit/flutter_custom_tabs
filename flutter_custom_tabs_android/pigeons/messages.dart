@@ -14,14 +14,14 @@ abstract class CustomTabsApi {
   void launch(
     String urlString, {
     required bool prefersDeepLink,
-    CustomTabsOptionsMessage? options,
+    CustomTabsIntentOptions? options,
   });
 
   void closeAllIfPossible();
 }
 
-class CustomTabsOptionsMessage {
-  const CustomTabsOptionsMessage({
+class CustomTabsIntentOptions {
+  const CustomTabsIntentOptions({
     this.colorSchemes,
     this.urlBarHidingEnabled,
     this.shareState,
@@ -33,19 +33,19 @@ class CustomTabsOptionsMessage {
     this.partial,
   });
 
-  final CustomTabsColorSchemesMessage? colorSchemes;
+  final ColorSchemes? colorSchemes;
   final bool? urlBarHidingEnabled;
   final int? shareState;
   final bool? showTitle;
   final bool? instantAppsEnabled;
-  final CustomTabsCloseButtonMessage? closeButton;
-  final CustomTabsAnimationsMessage? animations;
-  final CustomTabsBrowserConfigurationMessage? browser;
-  final PartialCustomTabsConfigurationMessage? partial;
+  final CloseButton? closeButton;
+  final Animations? animations;
+  final BrowserConfiguration? browser;
+  final PartialConfiguration? partial;
 }
 
-class CustomTabsAnimationsMessage {
-  const CustomTabsAnimationsMessage({
+class Animations {
+  const Animations({
     this.startEnter,
     this.startExit,
     this.endEnter,
@@ -58,8 +58,8 @@ class CustomTabsAnimationsMessage {
   final String? endExit;
 }
 
-class CustomTabsBrowserConfigurationMessage {
-  const CustomTabsBrowserConfigurationMessage({
+class BrowserConfiguration {
+  const BrowserConfiguration({
     required this.prefersExternalBrowser,
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
@@ -72,8 +72,8 @@ class CustomTabsBrowserConfigurationMessage {
   final Map<String?, String?>? headers;
 }
 
-class CustomTabsCloseButtonMessage {
-  const CustomTabsCloseButtonMessage({
+class CloseButton {
+  const CloseButton({
     this.icon,
     this.position,
   });
@@ -82,8 +82,8 @@ class CustomTabsCloseButtonMessage {
   final int? position;
 }
 
-class CustomTabsColorSchemesMessage {
-  const CustomTabsColorSchemesMessage({
+class ColorSchemes {
+  const ColorSchemes({
     this.colorScheme,
     this.lightParams,
     this.darkParams,
@@ -91,13 +91,13 @@ class CustomTabsColorSchemesMessage {
   });
 
   final int? colorScheme;
-  final CustomTabsColorSchemeParamsMessage? lightParams;
-  final CustomTabsColorSchemeParamsMessage? darkParams;
-  final CustomTabsColorSchemeParamsMessage? defaultPrams;
+  final ColorSchemeParams? lightParams;
+  final ColorSchemeParams? darkParams;
+  final ColorSchemeParams? defaultPrams;
 }
 
-class CustomTabsColorSchemeParamsMessage {
-  const CustomTabsColorSchemeParamsMessage({
+class ColorSchemeParams {
+  const ColorSchemeParams({
     this.toolbarColor,
     this.navigationBarColor,
     this.navigationBarDividerColor,
@@ -108,8 +108,8 @@ class CustomTabsColorSchemeParamsMessage {
   final int? navigationBarDividerColor;
 }
 
-class PartialCustomTabsConfigurationMessage {
-  const PartialCustomTabsConfigurationMessage({
+class PartialConfiguration {
+  const PartialConfiguration({
     required this.initialHeight,
     required this.activityHeightResizeBehavior,
     this.cornerRadius,

@@ -26,13 +26,13 @@ class CustomTabsPluginIOS extends CustomTabsPlatform {
     PlatformOptions? customTabsOptions,
     PlatformOptions? safariVCOptions,
   }) {
-    final SafariViewControllerOptionsMessage? message;
+    final SFSafariViewControllerOptions? message;
     if (safariVCOptions == null) {
       message = null;
     } else {
       message = (safariVCOptions is SafariViewControllerOptions)
           ? safariVCOptions.toMessage()
-          : SafariViewControllerOptionsMessage();
+          : SFSafariViewControllerOptions();
     }
 
     return _hostApi.launch(

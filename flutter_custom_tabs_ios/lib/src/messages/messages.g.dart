@@ -15,8 +15,8 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-class SafariViewControllerOptionsMessage {
-  SafariViewControllerOptionsMessage({
+class SFSafariViewControllerOptions {
+  SFSafariViewControllerOptions({
     this.preferredBarTintColor,
     this.preferredControlTintColor,
     this.barCollapsingEnabled,
@@ -38,7 +38,7 @@ class SafariViewControllerOptionsMessage {
 
   int? modalPresentationStyle;
 
-  SheetPresentationControllerConfigurationMessage? pageSheet;
+  UISheetPresentationControllerConfiguration? pageSheet;
 
   Object encode() {
     return <Object?>[
@@ -52,9 +52,9 @@ class SafariViewControllerOptionsMessage {
     ];
   }
 
-  static SafariViewControllerOptionsMessage decode(Object result) {
+  static SFSafariViewControllerOptions decode(Object result) {
     result as List<Object?>;
-    return SafariViewControllerOptionsMessage(
+    return SFSafariViewControllerOptions(
       preferredBarTintColor: result[0] as int?,
       preferredControlTintColor: result[1] as int?,
       barCollapsingEnabled: result[2] as bool?,
@@ -62,14 +62,14 @@ class SafariViewControllerOptionsMessage {
       dismissButtonStyle: result[4] as int?,
       modalPresentationStyle: result[5] as int?,
       pageSheet: result[6] != null
-          ? SheetPresentationControllerConfigurationMessage.decode(result[6]! as List<Object?>)
+          ? UISheetPresentationControllerConfiguration.decode(result[6]! as List<Object?>)
           : null,
     );
   }
 }
 
-class SheetPresentationControllerConfigurationMessage {
-  SheetPresentationControllerConfigurationMessage({
+class UISheetPresentationControllerConfiguration {
+  UISheetPresentationControllerConfiguration({
     required this.detents,
     this.largestUndimmedDetentIdentifier,
     this.prefersScrollingExpandsWhenScrolledToEdge,
@@ -101,9 +101,9 @@ class SheetPresentationControllerConfigurationMessage {
     ];
   }
 
-  static SheetPresentationControllerConfigurationMessage decode(Object result) {
+  static UISheetPresentationControllerConfiguration decode(Object result) {
     result as List<Object?>;
-    return SheetPresentationControllerConfigurationMessage(
+    return UISheetPresentationControllerConfiguration(
       detents: (result[0] as List<Object?>?)!.cast<String?>(),
       largestUndimmedDetentIdentifier: result[1] as String?,
       prefersScrollingExpandsWhenScrolledToEdge: result[2] as bool?,
@@ -118,10 +118,10 @@ class _CustomTabsApiCodec extends StandardMessageCodec {
   const _CustomTabsApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is SafariViewControllerOptionsMessage) {
+    if (value is SFSafariViewControllerOptions) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
-    } else if (value is SheetPresentationControllerConfigurationMessage) {
+    } else if (value is UISheetPresentationControllerConfiguration) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
@@ -133,9 +133,9 @@ class _CustomTabsApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return SafariViewControllerOptionsMessage.decode(readValue(buffer)!);
+        return SFSafariViewControllerOptions.decode(readValue(buffer)!);
       case 129: 
-        return SheetPresentationControllerConfigurationMessage.decode(readValue(buffer)!);
+        return UISheetPresentationControllerConfiguration.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -152,7 +152,7 @@ class CustomTabsApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _CustomTabsApiCodec();
 
-  Future<void> launch(String urlString, {required bool prefersDeepLink, SafariViewControllerOptionsMessage? options,}) async {
+  Future<void> launch(String urlString, {required bool prefersDeepLink, SFSafariViewControllerOptions? options,}) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.launch';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,

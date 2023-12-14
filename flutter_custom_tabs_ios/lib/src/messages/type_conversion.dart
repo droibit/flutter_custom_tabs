@@ -2,8 +2,8 @@ import 'messages.g.dart';
 import '../types/types.dart';
 
 extension SafariViewControllerOptionsConverter on SafariViewControllerOptions {
-  SafariViewControllerOptionsMessage toMessage() {
-    return SafariViewControllerOptionsMessage(
+  SFSafariViewControllerOptions toMessage() {
+    return SFSafariViewControllerOptions(
       preferredBarTintColor: preferredBarTintColor?.value,
       preferredControlTintColor: preferredControlTintColor?.value,
       barCollapsingEnabled: barCollapsingEnabled,
@@ -17,8 +17,8 @@ extension SafariViewControllerOptionsConverter on SafariViewControllerOptions {
 
 extension SheetPresentationControllerConfigurationConverter
     on SheetPresentationControllerConfiguration {
-  SheetPresentationControllerConfigurationMessage toMessage() {
-    return SheetPresentationControllerConfigurationMessage(
+  UISheetPresentationControllerConfiguration toMessage() {
+    return UISheetPresentationControllerConfiguration(
       detents: detents.map((e) => e.rawValue).toList(),
       largestUndimmedDetentIdentifier:
           largestUndimmedDetentIdentifier?.rawValue,

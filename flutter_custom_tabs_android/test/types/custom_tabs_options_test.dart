@@ -74,11 +74,11 @@ void main() {
       expect(actual.shareState, options.shareState!.rawValue);
       expect(actual.showTitle, options.showTitle);
       expect(actual.instantAppsEnabled, options.instantAppsEnabled);
-      expect(actual.colorSchemes, isA<CustomTabsColorSchemesMessage>());
-      expect(actual.animations, isA<CustomTabsAnimationsMessage>());
-      expect(actual.closeButton, isA<CustomTabsCloseButtonMessage>());
-      expect(actual.browser, isA<CustomTabsBrowserConfigurationMessage>());
-      expect(actual.partial, isA<PartialCustomTabsConfigurationMessage>());
+      expect(actual.colorSchemes, isA<ColorSchemes>());
+      expect(actual.animations, isA<Animations>());
+      expect(actual.closeButton, isA<CloseButton>());
+      expect(actual.browser, isA<BrowserConfiguration>());
+      expect(actual.partial, isA<PartialConfiguration>());
 
       final actualColorSchemes = actual.colorSchemes!;
       expect(

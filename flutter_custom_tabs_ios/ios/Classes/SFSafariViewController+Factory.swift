@@ -6,7 +6,7 @@ private let pageSheetDetentMedium = "medium"
 private let pageSheetDetentLarge = "large"
 
 extension SFSafariViewController {
-    static func make(url: URL, options: SafariViewControllerOptionsMessage) -> SFSafariViewController {
+    static func make(url: URL, options: SFSafariViewControllerOptions) -> SFSafariViewController {
         let configuration = SFSafariViewController.Configuration()
         if let barCollapsingEnabled = options.barCollapsingEnabled {
             configuration.barCollapsingEnabled = barCollapsingEnabled
@@ -52,7 +52,7 @@ extension SFSafariViewController {
 
 @available(iOS 15.0, *)
 private extension UISheetPresentationController {
-    func configure(with configuration: SheetPresentationControllerConfigurationMessage) {
+    func configure(with configuration: UISheetPresentationControllerConfiguration) {
         if !configuration.detents.isEmpty {
             detents = configuration.detents.compactMap { detent in
                 switch detent {

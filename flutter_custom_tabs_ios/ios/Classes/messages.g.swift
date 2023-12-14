@@ -39,28 +39,28 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct SafariViewControllerOptionsMessage {
+struct SFSafariViewControllerOptions {
   var preferredBarTintColor: Int64? = nil
   var preferredControlTintColor: Int64? = nil
   var barCollapsingEnabled: Bool? = nil
   var entersReaderIfAvailable: Bool? = nil
   var dismissButtonStyle: Int64? = nil
   var modalPresentationStyle: Int64? = nil
-  var pageSheet: SheetPresentationControllerConfigurationMessage? = nil
+  var pageSheet: UISheetPresentationControllerConfiguration? = nil
 
-  static func fromList(_ list: [Any?]) -> SafariViewControllerOptionsMessage? {
+  static func fromList(_ list: [Any?]) -> SFSafariViewControllerOptions? {
     let preferredBarTintColor: Int64? = isNullish(list[0]) ? nil : (list[0] is Int64? ? list[0] as! Int64? : Int64(list[0] as! Int32))
     let preferredControlTintColor: Int64? = isNullish(list[1]) ? nil : (list[1] is Int64? ? list[1] as! Int64? : Int64(list[1] as! Int32))
     let barCollapsingEnabled: Bool? = nilOrValue(list[2])
     let entersReaderIfAvailable: Bool? = nilOrValue(list[3])
     let dismissButtonStyle: Int64? = isNullish(list[4]) ? nil : (list[4] is Int64? ? list[4] as! Int64? : Int64(list[4] as! Int32))
     let modalPresentationStyle: Int64? = isNullish(list[5]) ? nil : (list[5] is Int64? ? list[5] as! Int64? : Int64(list[5] as! Int32))
-    var pageSheet: SheetPresentationControllerConfigurationMessage? = nil
+    var pageSheet: UISheetPresentationControllerConfiguration? = nil
     if let pageSheetList: [Any?] = nilOrValue(list[6]) {
-      pageSheet = SheetPresentationControllerConfigurationMessage.fromList(pageSheetList)
+      pageSheet = UISheetPresentationControllerConfiguration.fromList(pageSheetList)
     }
 
-    return SafariViewControllerOptionsMessage(
+    return SFSafariViewControllerOptions(
       preferredBarTintColor: preferredBarTintColor,
       preferredControlTintColor: preferredControlTintColor,
       barCollapsingEnabled: barCollapsingEnabled,
@@ -84,7 +84,7 @@ struct SafariViewControllerOptionsMessage {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct SheetPresentationControllerConfigurationMessage {
+struct UISheetPresentationControllerConfiguration {
   var detents: [String?]
   var largestUndimmedDetentIdentifier: String? = nil
   var prefersScrollingExpandsWhenScrolledToEdge: Bool? = nil
@@ -92,7 +92,7 @@ struct SheetPresentationControllerConfigurationMessage {
   var prefersEdgeAttachedInCompactHeight: Bool? = nil
   var preferredCornerRadius: Double? = nil
 
-  static func fromList(_ list: [Any?]) -> SheetPresentationControllerConfigurationMessage? {
+  static func fromList(_ list: [Any?]) -> UISheetPresentationControllerConfiguration? {
     let detents = list[0] as! [String?]
     let largestUndimmedDetentIdentifier: String? = nilOrValue(list[1])
     let prefersScrollingExpandsWhenScrolledToEdge: Bool? = nilOrValue(list[2])
@@ -100,7 +100,7 @@ struct SheetPresentationControllerConfigurationMessage {
     let prefersEdgeAttachedInCompactHeight: Bool? = nilOrValue(list[4])
     let preferredCornerRadius: Double? = nilOrValue(list[5])
 
-    return SheetPresentationControllerConfigurationMessage(
+    return UISheetPresentationControllerConfiguration(
       detents: detents,
       largestUndimmedDetentIdentifier: largestUndimmedDetentIdentifier,
       prefersScrollingExpandsWhenScrolledToEdge: prefersScrollingExpandsWhenScrolledToEdge,
@@ -125,9 +125,9 @@ private class CustomTabsApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
       case 128:
-        return SafariViewControllerOptionsMessage.fromList(self.readValue() as! [Any?])
+        return SFSafariViewControllerOptions.fromList(self.readValue() as! [Any?])
       case 129:
-        return SheetPresentationControllerConfigurationMessage.fromList(self.readValue() as! [Any?])
+        return UISheetPresentationControllerConfiguration.fromList(self.readValue() as! [Any?])
       default:
         return super.readValue(ofType: type)
     }
@@ -136,10 +136,10 @@ private class CustomTabsApiCodecReader: FlutterStandardReader {
 
 private class CustomTabsApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? SafariViewControllerOptionsMessage {
+    if let value = value as? SFSafariViewControllerOptions {
       super.writeByte(128)
       super.writeValue(value.toList())
-    } else if let value = value as? SheetPresentationControllerConfigurationMessage {
+    } else if let value = value as? UISheetPresentationControllerConfiguration {
       super.writeByte(129)
       super.writeValue(value.toList())
     } else {
@@ -164,7 +164,7 @@ class CustomTabsApiCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol CustomTabsApi {
-  func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SafariViewControllerOptionsMessage?, completion: @escaping (Result<Void, Error>) -> Void)
+  func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SFSafariViewControllerOptions?, completion: @escaping (Result<Void, Error>) -> Void)
   func closeAllIfPossible() throws
 }
 
@@ -180,7 +180,7 @@ class CustomTabsApiSetup {
         let args = message as! [Any?]
         let urlStringArg = args[0] as! String
         let prefersDeepLinkArg = args[1] as! Bool
-        let optionsArg: SafariViewControllerOptionsMessage? = nilOrValue(args[2])
+        let optionsArg: SFSafariViewControllerOptions? = nilOrValue(args[2])
         api.launchURL(urlStringArg, prefersDeepLink: prefersDeepLinkArg, options: optionsArg) { result in
           switch result {
             case .success:

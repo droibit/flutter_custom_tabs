@@ -51,7 +51,7 @@ void main() {
       );
       expect(
         actual.pageSheet,
-        isA<SheetPresentationControllerConfigurationMessage>(),
+        isA<UISheetPresentationControllerConfiguration>(),
       );
 
       final expectedPageSheet = options.pageSheet!;

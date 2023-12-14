@@ -37,9 +37,9 @@ void main() {
 
       final actual = schemes.toMessage();
       expect(actual.colorScheme, schemes.colorScheme!.rawValue);
-      expect(actual.lightParams, isA<CustomTabsColorSchemeParamsMessage>());
-      expect(actual.darkParams, isA<CustomTabsColorSchemeParamsMessage>());
-      expect(actual.defaultPrams, isA<CustomTabsColorSchemeParamsMessage>());
+      expect(actual.lightParams, isA<ColorSchemeParams>());
+      expect(actual.darkParams, isA<ColorSchemeParams>());
+      expect(actual.defaultPrams, isA<ColorSchemeParams>());
 
       final actualLightParams = actual.lightParams!;
       expect(actualLightParams.toolbarColor, 0xFFFFDBAA);
