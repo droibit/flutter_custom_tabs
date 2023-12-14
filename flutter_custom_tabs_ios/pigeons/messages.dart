@@ -28,8 +28,8 @@ class SafariViewControllerOptionsMessage {
     this.pageSheet,
   });
 
-  final String? preferredBarTintColor;
-  final String? preferredControlTintColor;
+  final int? preferredBarTintColor;
+  final int? preferredControlTintColor;
   final bool? barCollapsingEnabled;
   final bool? entersReaderIfAvailable;
   final int? dismissButtonStyle;

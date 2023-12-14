@@ -26,9 +26,9 @@ class SafariViewControllerOptionsMessage {
     this.pageSheet,
   });
 
-  String? preferredBarTintColor;
+  int? preferredBarTintColor;
 
-  String? preferredControlTintColor;
+  int? preferredControlTintColor;
 
   bool? barCollapsingEnabled;
 
@@ -55,8 +55,8 @@ class SafariViewControllerOptionsMessage {
   static SafariViewControllerOptionsMessage decode(Object result) {
     result as List<Object?>;
     return SafariViewControllerOptionsMessage(
-      preferredBarTintColor: result[0] as String?,
-      preferredControlTintColor: result[1] as String?,
+      preferredBarTintColor: result[0] as int?,
+      preferredControlTintColor: result[1] as int?,
       barCollapsingEnabled: result[2] as bool?,
       entersReaderIfAvailable: result[3] as bool?,
       dismissButtonStyle: result[4] as int?,

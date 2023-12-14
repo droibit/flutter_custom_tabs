@@ -103,9 +103,9 @@ class CustomTabsColorSchemeParamsMessage {
     this.navigationBarDividerColor,
   });
 
-  final String? toolbarColor;
-  final String? navigationBarColor;
-  final String? navigationBarDividerColor;
+  final int? toolbarColor;
+  final int? navigationBarColor;
+  final int? navigationBarDividerColor;
 }
 
 class PartialCustomTabsConfigurationMessage {

@@ -1,13 +1,11 @@
-import 'package:flutter/painting.dart';
-
 import 'messages.g.dart';
 import '../types/types.dart';
 
 extension SafariViewControllerOptionsConverter on SafariViewControllerOptions {
   SafariViewControllerOptionsMessage toMessage() {
     return SafariViewControllerOptionsMessage(
-      preferredBarTintColor: preferredBarTintColor?.toHexString(),
-      preferredControlTintColor: preferredControlTintColor?.toHexString(),
+      preferredBarTintColor: preferredBarTintColor?.value,
+      preferredControlTintColor: preferredControlTintColor?.value,
       barCollapsingEnabled: barCollapsingEnabled,
       entersReaderIfAvailable: entersReaderIfAvailable,
       dismissButtonStyle: dismissButtonStyle?.rawValue,
@@ -30,11 +28,5 @@ extension SheetPresentationControllerConfigurationConverter
       prefersEdgeAttachedInCompactHeight: prefersEdgeAttachedInCompactHeight,
       preferredCornerRadius: preferredCornerRadius,
     );
-  }
-}
-
-extension _StringConveter on Color {
-  String toHexString() {
-    return '#${value.toRadixString(16)}';
   }
 }

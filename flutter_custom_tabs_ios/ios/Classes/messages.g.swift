@@ -40,8 +40,8 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 
 /// Generated class from Pigeon that represents data sent in messages.
 struct SafariViewControllerOptionsMessage {
-  var preferredBarTintColor: String? = nil
-  var preferredControlTintColor: String? = nil
+  var preferredBarTintColor: Int64? = nil
+  var preferredControlTintColor: Int64? = nil
   var barCollapsingEnabled: Bool? = nil
   var entersReaderIfAvailable: Bool? = nil
   var dismissButtonStyle: Int64? = nil
@@ -49,8 +49,8 @@ struct SafariViewControllerOptionsMessage {
   var pageSheet: SheetPresentationControllerConfigurationMessage? = nil
 
   static func fromList(_ list: [Any?]) -> SafariViewControllerOptionsMessage? {
-    let preferredBarTintColor: String? = nilOrValue(list[0])
-    let preferredControlTintColor: String? = nilOrValue(list[1])
+    let preferredBarTintColor: Int64? = isNullish(list[0]) ? nil : (list[0] is Int64? ? list[0] as! Int64? : Int64(list[0] as! Int32))
+    let preferredControlTintColor: Int64? = isNullish(list[1]) ? nil : (list[1] is Int64? ? list[1] as! Int64? : Int64(list[1] as! Int32))
     let barCollapsingEnabled: Bool? = nilOrValue(list[2])
     let entersReaderIfAvailable: Bool? = nilOrValue(list[3])
     let dismissButtonStyle: Int64? = isNullish(list[4]) ? nil : (list[4] is Int64? ? list[4] as! Int64? : Int64(list[4] as! Int32))

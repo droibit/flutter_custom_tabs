@@ -71,9 +71,9 @@ extension CustomTabsColorSchemesConverter on CustomTabsColorSchemes {
 extension CustomTabsColorSchemeParamsConverter on CustomTabsColorSchemeParams {
   CustomTabsColorSchemeParamsMessage toMessage() {
     return CustomTabsColorSchemeParamsMessage(
-      toolbarColor: toolbarColor?.toHexString(),
-      navigationBarColor: navigationBarColor?.toHexString(),
-      navigationBarDividerColor: navigationBarDividerColor?.toHexString(),
+      toolbarColor: toolbarColor?.value,
+      navigationBarColor: navigationBarColor?.value,
+      navigationBarDividerColor: navigationBarDividerColor?.value,
     );
   }
 }
@@ -89,11 +89,5 @@ extension PartialCustomTabsConfigurationConverter
       message.cornerRadius = min(cornerRadius!, 16);
     }
     return message;
-  }
-}
-
-extension _StringConveter on Color {
-  String toHexString() {
-    return '#${value.toRadixString(16)}';
   }
 }

@@ -86,17 +86,17 @@ void main() {
         options.colorSchemes!.colorScheme!.rawValue,
       );
       final actualLightParams = actualColorSchemes.lightParams!;
-      expect(actualLightParams.toolbarColor, '#ffffebaa');
-      expect(actualLightParams.navigationBarColor, '#ffffebab');
-      expect(actualLightParams.navigationBarDividerColor, '#ffffebac');
+      expect(actualLightParams.toolbarColor, 0xFFFFEBAA);
+      expect(actualLightParams.navigationBarColor, 0xFFFFEBAB);
+      expect(actualLightParams.navigationBarDividerColor, 0xFFFFEBAC);
       final actualDarkParams = actualColorSchemes.darkParams!;
-      expect(actualDarkParams.toolbarColor, '#ffffebba');
-      expect(actualDarkParams.navigationBarColor, '#ffffebbb');
-      expect(actualDarkParams.navigationBarDividerColor, '#ffffebbc');
+      expect(actualDarkParams.toolbarColor, 0xFFFFEBBA);
+      expect(actualDarkParams.navigationBarColor, 0xFFFFEBBB);
+      expect(actualDarkParams.navigationBarDividerColor, 0xFFFFEBBC);
       final actualDefaultParams = actualColorSchemes.defaultPrams!;
-      expect(actualDefaultParams.toolbarColor, '#ffffebca');
-      expect(actualDefaultParams.navigationBarColor, '#ffffebcb');
-      expect(actualDefaultParams.navigationBarDividerColor, '#ffffebcc');
+      expect(actualDefaultParams.toolbarColor, 0xFFFFEBCA);
+      expect(actualDefaultParams.navigationBarColor, 0xFFFFEBCB);
+      expect(actualDefaultParams.navigationBarDividerColor, 0xFFFFEBCC);
 
       final expectedAnimations = options.animations!;
       final actualAnimations = actual.animations!;

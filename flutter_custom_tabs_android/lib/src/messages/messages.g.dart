@@ -233,11 +233,11 @@ class CustomTabsColorSchemeParamsMessage {
     this.navigationBarDividerColor,
   });
 
-  String? toolbarColor;
+  int? toolbarColor;
 
-  String? navigationBarColor;
+  int? navigationBarColor;
 
-  String? navigationBarDividerColor;
+  int? navigationBarDividerColor;
 
   Object encode() {
     return <Object?>[
@@ -250,9 +250,9 @@ class CustomTabsColorSchemeParamsMessage {
   static CustomTabsColorSchemeParamsMessage decode(Object result) {
     result as List<Object?>;
     return CustomTabsColorSchemeParamsMessage(
-      toolbarColor: result[0] as String?,
-      navigationBarColor: result[1] as String?,
-      navigationBarDividerColor: result[2] as String?,
+      toolbarColor: result[0] as int?,
+      navigationBarColor: result[1] as int?,
+      navigationBarDividerColor: result[2] as int?,
     );
   }
 }
