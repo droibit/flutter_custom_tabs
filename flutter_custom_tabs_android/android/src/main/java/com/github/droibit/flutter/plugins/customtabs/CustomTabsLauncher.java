@@ -12,6 +12,7 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
@@ -34,11 +35,12 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
     private final @NonNull NativeAppLauncher nativeAppLauncher;
     private @Nullable Activity activity;
 
-    public CustomTabsLauncher() {
+    CustomTabsLauncher() {
         this(new CustomTabsFactory(), new NativeAppLauncher());
     }
 
-    public CustomTabsLauncher(
+    @VisibleForTesting
+    CustomTabsLauncher(
             @NonNull CustomTabsFactory customTabsFactory,
             @NonNull NativeAppLauncher nativeAppLauncher
     ) {
@@ -76,9 +78,11 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
 
             final CustomTabsIntent customTabsIntent = customTabsFactory
                     .createCustomTabsIntent(activity, requireNonNull(options));
-            if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
-                customTabsIntent.intent.setData(uri);
-                activity.startActivityForResult(customTabsIntent.intent, REQUEST_CODE_CUSTOM_TABS);
+            final Intent rawIntent = customTabsIntent.intent;
+            if (rawIntent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
+                rawIntent.setData(uri);
+                // ref. https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs
+                activity.startActivityForResult(rawIntent, REQUEST_CODE_CUSTOM_TABS);
             } else {
                 customTabsIntent.launchUrl(activity, uri);
             }
@@ -93,29 +97,30 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
         if (activity == null) {
             return;
         }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final ActivityManager am = ContextCompat.getSystemService(activity, ActivityManager.class);
-            final ComponentName selfActivityName = new ComponentName(activity, activity.getClass());
-            //noinspection DataFlowIssue
-            for (ActivityManager.AppTask appTask : am.getAppTasks()) {
-                final ActivityManager.RecentTaskInfo taskInfo = appTask.getTaskInfo();
-                if (!Objects.equals(selfActivityName, taskInfo.baseActivity) ||
-                        taskInfo.topActivity == null) {
-                    continue;
-                }
-                final Intent serviceIntent = new Intent(ACTION_CUSTOM_TABS_CONNECTION)
-                        .setPackage(taskInfo.topActivity.getPackageName());
+        final ActivityManager am = ContextCompat.getSystemService(activity, ActivityManager.class);
+        final ComponentName selfActivityName = new ComponentName(activity, activity.getClass());
+        //noinspection DataFlowIssue
+        for (ActivityManager.AppTask appTask : am.getAppTasks()) {
+            final ActivityManager.RecentTaskInfo taskInfo = appTask.getTaskInfo();
+            if (!Objects.equals(selfActivityName, taskInfo.baseActivity) ||
+                    taskInfo.topActivity == null) {
+                continue;
+            }
+            final Intent serviceIntent = new Intent(ACTION_CUSTOM_TABS_CONNECTION)
+                    .setPackage(taskInfo.topActivity.getPackageName());
 
-                if (resolveService(activity.getPackageManager(), serviceIntent, 0) != null) {
-                    try {
-                        final Intent intent = new Intent(activity, activity.getClass())
-                                .setFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
-                        activity.startActivity(intent);
-                    } catch (ActivityNotFoundException ignored) {
-                    }
-                    break;
+            if (resolveService(activity.getPackageManager(), serviceIntent, 0) != null) {
+                try {
+                    final Intent intent = new Intent(activity, activity.getClass())
+                            .setFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
+                    activity.startActivity(intent);
+                } catch (ActivityNotFoundException ignored) {
                 }
+                break;
             }
         }
     }

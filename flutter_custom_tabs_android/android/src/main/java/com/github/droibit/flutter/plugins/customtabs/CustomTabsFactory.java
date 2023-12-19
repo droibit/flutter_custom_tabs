@@ -8,7 +8,6 @@ import android.provider.Browser;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RestrictTo;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -32,7 +31,6 @@ import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.set
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setCustomTabsPackage;
 import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
 
-@RestrictTo(RestrictTo.Scope.LIBRARY)
 class CustomTabsFactory {
     private final @NonNull ResourceFactory resources;
 
@@ -48,6 +46,7 @@ class CustomTabsFactory {
     @Nullable
     Intent createExternalBrowserIntent(@Nullable CustomTabsIntentOptions options) {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
+        // External browser launched without HTTP headers if options is null.
         if (options == null) {
             return intent;
         }
@@ -66,10 +65,7 @@ class CustomTabsFactory {
     }
 
     @NonNull
-    CustomTabsIntent createCustomTabsIntent(
-            @NonNull Context context,
-            @NonNull CustomTabsIntentOptions options
-    ) {
+    CustomTabsIntent createCustomTabsIntent(@NonNull Context context, @NonNull CustomTabsIntentOptions options) {
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         final ColorSchemes colorSchemes = options.getColorSchemes();
         if (colorSchemes != null) {
@@ -123,10 +119,7 @@ class CustomTabsFactory {
     }
 
     @VisibleForTesting
-    void applyColorSchemes(
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull ColorSchemes colorSchemes
-    ) {
+    void applyColorSchemes(@NonNull CustomTabsIntent.Builder builder, @NonNull ColorSchemes colorSchemes) {
         final Long colorScheme = colorSchemes.getColorScheme();
         if (colorScheme != null) {
             builder.setColorScheme(colorScheme.intValue());
@@ -148,9 +141,7 @@ class CustomTabsFactory {
         }
     }
 
-    private @NonNull CustomTabColorSchemeParams buildColorSchemeParams(
-            @NonNull ColorSchemeParams params
-    ) {
+    private @NonNull CustomTabColorSchemeParams buildColorSchemeParams(@NonNull ColorSchemeParams params) {
         final CustomTabColorSchemeParams.Builder builder = new CustomTabColorSchemeParams.Builder();
         final Long toolbarColor = params.getToolbarColor();
         if (toolbarColor != null) {
@@ -170,11 +161,7 @@ class CustomTabsFactory {
     }
 
     @VisibleForTesting
-    void applyCloseButton(
-            @NonNull Context context,
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull CloseButton closeButton
-    ) {
+    void applyCloseButton(@NonNull Context context, @NonNull CustomTabsIntent.Builder builder, @NonNull CloseButton closeButton) {
         final String icon = closeButton.getIcon();
         if (icon != null) {
             final Bitmap closeButtonIcon = resources.getBitmap(context, icon);
@@ -190,43 +177,26 @@ class CustomTabsFactory {
     }
 
     @VisibleForTesting
-    void applyAnimations(
-            @NonNull Context context,
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull Animations animations
-    ) {
-        final int startEnterAnimationId =
-                resources.getAnimationIdentifier(context, animations.getStartEnter());
-        final int startExitAnimationId =
-                resources.getAnimationIdentifier(context, animations.getStartExit());
-        final int endEnterAnimationId =
-                resources.getAnimationIdentifier(context, animations.getEndEnter());
-        final int endExitAnimationId =
-                resources.getAnimationIdentifier(context, animations.getEndExit());
+    void applyAnimations(@NonNull Context context, @NonNull CustomTabsIntent.Builder builder, @NonNull Animations animations) {
+        final int startEnterAnimationId = resources.getAnimationIdentifier(context, animations.getStartEnter());
+        final int startExitAnimationId = resources.getAnimationIdentifier(context, animations.getStartExit());
+        final int endEnterAnimationId = resources.getAnimationIdentifier(context, animations.getEndEnter());
+        final int endExitAnimationId = resources.getAnimationIdentifier(context, animations.getEndExit());
 
-        if (startEnterAnimationId != INVALID_RESOURCE_ID
-                && startExitAnimationId != INVALID_RESOURCE_ID) {
+        if (startEnterAnimationId != INVALID_RESOURCE_ID && startExitAnimationId != INVALID_RESOURCE_ID) {
             builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId);
         }
 
-        if (endEnterAnimationId != INVALID_RESOURCE_ID
-                && endExitAnimationId != INVALID_RESOURCE_ID) {
+        if (endEnterAnimationId != INVALID_RESOURCE_ID && endExitAnimationId != INVALID_RESOURCE_ID) {
             builder.setExitAnimations(context, endEnterAnimationId, endExitAnimationId);
         }
     }
 
     @VisibleForTesting
-    void applyPartialCustomTabsConfiguration(
-            @NonNull Context context,
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull PartialConfiguration configuration
-    ) {
+    void applyPartialCustomTabsConfiguration(@NonNull Context context, @NonNull CustomTabsIntent.Builder builder, @NonNull PartialConfiguration configuration) {
         final double initialHeightDp = configuration.getInitialHeight();
         final int resizeBehavior = configuration.getActivityHeightResizeBehavior().intValue();
-        builder.setInitialActivityHeightPx(
-                resources.convertToPx(context, initialHeightDp),
-                resizeBehavior
-        );
+        builder.setInitialActivityHeightPx(resources.convertToPx(context, initialHeightDp), resizeBehavior);
 
         final Long cornerRadius = configuration.getCornerRadius();
         if (cornerRadius != null) {
@@ -235,11 +205,7 @@ class CustomTabsFactory {
     }
 
     @VisibleForTesting
-    void applyBrowserConfiguration(
-            @NonNull Context context,
-            @NonNull CustomTabsIntent customTabsIntent,
-            @NonNull BrowserConfiguration options
-    ) {
+    void applyBrowserConfiguration(@NonNull Context context, @NonNull CustomTabsIntent customTabsIntent, @NonNull BrowserConfiguration options) {
         final Map<String, String> headers = options.getHeaders();
         if (headers != null) {
             final Bundle bundleHeaders = extractBundle(headers);

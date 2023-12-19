@@ -11,18 +11,14 @@ import android.os.Build;
 
 import androidx.annotation.AnimRes;
 import androidx.annotation.AnyRes;
-import androidx.annotation.Dimension;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
-import androidx.annotation.RestrictTo;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.util.regex.Pattern;
 
-@RestrictTo(RestrictTo.Scope.LIBRARY)
 class ResourceFactory {
     static final int INVALID_RESOURCE_ID = 0;
 
