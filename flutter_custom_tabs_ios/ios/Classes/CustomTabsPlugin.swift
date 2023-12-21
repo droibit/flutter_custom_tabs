@@ -23,7 +23,9 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         let url = URL(string: urlString)!
         if prefersDeepLink {
             launcher.open(url, options: [.universalLinksOnly: true]) { [weak self] opened in
-                if !opened {
+                if opened {
+                    completion(.success(()))
+                } else {
                     self?.launchURL(url, options: options, completion: completion)
                 }
             }
@@ -51,7 +53,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         }
 
         let safariViewController = SFSafariViewController.make(url: url, options: options)
-        launcher.present(safariViewController, animated: true) {
+        launcher.present(safariViewController) {
             completion(.success(()))
         }
     }
