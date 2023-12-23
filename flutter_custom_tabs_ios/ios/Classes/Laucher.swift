@@ -37,22 +37,20 @@ private extension UIWindow {
     }
 
     func topViewController() -> UIViewController? {
-        var topViewController: UIViewController? = rootViewController
-        while true {
-            if let navigationController = topViewController as? UINavigationController {
-                topViewController = navigationController.visibleViewController
-                continue
-            } else if let tabBarController = topViewController as? UITabBarController,
-                      let selected = tabBarController.selectedViewController
-            {
-                topViewController = selected
-                continue
-            } else if let presentedViewController = topViewController?.presentedViewController {
-                topViewController = presentedViewController
-            } else {
-                break
-            }
+        recursivelyFindTopViewController(from: rootViewController)
+    }
+
+    private func recursivelyFindTopViewController(from viewController: UIViewController?) -> UIViewController? {
+        if let navigationController = viewController as? UINavigationController {
+            return recursivelyFindTopViewController(from: navigationController.visibleViewController)
+        } else if let tabBarController = viewController as? UITabBarController,
+                  let selected = tabBarController.selectedViewController
+        {
+            return recursivelyFindTopViewController(from: selected)
+        } else if let presentedViewController = viewController?.presentedViewController {
+            return recursivelyFindTopViewController(from: presentedViewController)
+        } else {
+            return viewController
         }
-        return topViewController
     }
 }
