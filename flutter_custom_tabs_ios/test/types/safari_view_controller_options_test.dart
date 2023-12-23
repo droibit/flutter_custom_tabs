@@ -40,8 +40,8 @@ void main() {
       );
 
       final actual = options.toMessage();
-      expect(actual.preferredBarTintColor, '#ffffebee');
-      expect(actual.preferredControlTintColor, '#ffffffff');
+      expect(actual.preferredBarTintColor, 0xFFFFEBEE);
+      expect(actual.preferredControlTintColor, 0xFFFFFFFF);
       expect(actual.barCollapsingEnabled, options.barCollapsingEnabled);
       expect(actual.entersReaderIfAvailable, options.entersReaderIfAvailable);
       expect(actual.dismissButtonStyle, options.dismissButtonStyle!.rawValue);
@@ -51,7 +51,7 @@ void main() {
       );
       expect(
         actual.pageSheet,
-        isA<SheetPresentationControllerConfigurationMessage>(),
+        isA<UISheetPresentationControllerConfiguration>(),
       );
 
       final expectedPageSheet = options.pageSheet!;

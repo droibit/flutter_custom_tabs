@@ -58,14 +58,14 @@ public class Messages {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CustomTabsOptionsMessage {
-    private @Nullable CustomTabsColorSchemesMessage colorSchemes;
+  public static final class CustomTabsIntentOptions {
+    private @Nullable ColorSchemes colorSchemes;
 
-    public @Nullable CustomTabsColorSchemesMessage getColorSchemes() {
+    public @Nullable ColorSchemes getColorSchemes() {
       return colorSchemes;
     }
 
-    public void setColorSchemes(@Nullable CustomTabsColorSchemesMessage setterArg) {
+    public void setColorSchemes(@Nullable ColorSchemes setterArg) {
       this.colorSchemes = setterArg;
     }
 
@@ -109,51 +109,51 @@ public class Messages {
       this.instantAppsEnabled = setterArg;
     }
 
-    private @Nullable CustomTabsCloseButtonMessage closeButton;
+    private @Nullable CloseButton closeButton;
 
-    public @Nullable CustomTabsCloseButtonMessage getCloseButton() {
+    public @Nullable CloseButton getCloseButton() {
       return closeButton;
     }
 
-    public void setCloseButton(@Nullable CustomTabsCloseButtonMessage setterArg) {
+    public void setCloseButton(@Nullable CloseButton setterArg) {
       this.closeButton = setterArg;
     }
 
-    private @Nullable CustomTabsAnimationsMessage animations;
+    private @Nullable Animations animations;
 
-    public @Nullable CustomTabsAnimationsMessage getAnimations() {
+    public @Nullable Animations getAnimations() {
       return animations;
     }
 
-    public void setAnimations(@Nullable CustomTabsAnimationsMessage setterArg) {
+    public void setAnimations(@Nullable Animations setterArg) {
       this.animations = setterArg;
     }
 
-    private @Nullable CustomTabsBrowserConfigurationMessage browser;
+    private @Nullable BrowserConfiguration browser;
 
-    public @Nullable CustomTabsBrowserConfigurationMessage getBrowser() {
+    public @Nullable BrowserConfiguration getBrowser() {
       return browser;
     }
 
-    public void setBrowser(@Nullable CustomTabsBrowserConfigurationMessage setterArg) {
+    public void setBrowser(@Nullable BrowserConfiguration setterArg) {
       this.browser = setterArg;
     }
 
-    private @Nullable PartialCustomTabsConfigurationMessage partial;
+    private @Nullable PartialConfiguration partial;
 
-    public @Nullable PartialCustomTabsConfigurationMessage getPartial() {
+    public @Nullable PartialConfiguration getPartial() {
       return partial;
     }
 
-    public void setPartial(@Nullable PartialCustomTabsConfigurationMessage setterArg) {
+    public void setPartial(@Nullable PartialConfiguration setterArg) {
       this.partial = setterArg;
     }
 
     public static final class Builder {
 
-      private @Nullable CustomTabsColorSchemesMessage colorSchemes;
+      private @Nullable ColorSchemes colorSchemes;
 
-      public @NonNull Builder setColorSchemes(@Nullable CustomTabsColorSchemesMessage setterArg) {
+      public @NonNull Builder setColorSchemes(@Nullable ColorSchemes setterArg) {
         this.colorSchemes = setterArg;
         return this;
       }
@@ -186,36 +186,36 @@ public class Messages {
         return this;
       }
 
-      private @Nullable CustomTabsCloseButtonMessage closeButton;
+      private @Nullable CloseButton closeButton;
 
-      public @NonNull Builder setCloseButton(@Nullable CustomTabsCloseButtonMessage setterArg) {
+      public @NonNull Builder setCloseButton(@Nullable CloseButton setterArg) {
         this.closeButton = setterArg;
         return this;
       }
 
-      private @Nullable CustomTabsAnimationsMessage animations;
+      private @Nullable Animations animations;
 
-      public @NonNull Builder setAnimations(@Nullable CustomTabsAnimationsMessage setterArg) {
+      public @NonNull Builder setAnimations(@Nullable Animations setterArg) {
         this.animations = setterArg;
         return this;
       }
 
-      private @Nullable CustomTabsBrowserConfigurationMessage browser;
+      private @Nullable BrowserConfiguration browser;
 
-      public @NonNull Builder setBrowser(@Nullable CustomTabsBrowserConfigurationMessage setterArg) {
+      public @NonNull Builder setBrowser(@Nullable BrowserConfiguration setterArg) {
         this.browser = setterArg;
         return this;
       }
 
-      private @Nullable PartialCustomTabsConfigurationMessage partial;
+      private @Nullable PartialConfiguration partial;
 
-      public @NonNull Builder setPartial(@Nullable PartialCustomTabsConfigurationMessage setterArg) {
+      public @NonNull Builder setPartial(@Nullable PartialConfiguration setterArg) {
         this.partial = setterArg;
         return this;
       }
 
-      public @NonNull CustomTabsOptionsMessage build() {
-        CustomTabsOptionsMessage pigeonReturn = new CustomTabsOptionsMessage();
+      public @NonNull CustomTabsIntentOptions build() {
+        CustomTabsIntentOptions pigeonReturn = new CustomTabsIntentOptions();
         pigeonReturn.setColorSchemes(colorSchemes);
         pigeonReturn.setUrlBarHidingEnabled(urlBarHidingEnabled);
         pigeonReturn.setShareState(shareState);
@@ -244,10 +244,10 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull CustomTabsOptionsMessage fromList(@NonNull ArrayList<Object> list) {
-      CustomTabsOptionsMessage pigeonResult = new CustomTabsOptionsMessage();
+    static @NonNull CustomTabsIntentOptions fromList(@NonNull ArrayList<Object> list) {
+      CustomTabsIntentOptions pigeonResult = new CustomTabsIntentOptions();
       Object colorSchemes = list.get(0);
-      pigeonResult.setColorSchemes((colorSchemes == null) ? null : CustomTabsColorSchemesMessage.fromList((ArrayList<Object>) colorSchemes));
+      pigeonResult.setColorSchemes((colorSchemes == null) ? null : ColorSchemes.fromList((ArrayList<Object>) colorSchemes));
       Object urlBarHidingEnabled = list.get(1);
       pigeonResult.setUrlBarHidingEnabled((Boolean) urlBarHidingEnabled);
       Object shareState = list.get(2);
@@ -257,19 +257,19 @@ public class Messages {
       Object instantAppsEnabled = list.get(4);
       pigeonResult.setInstantAppsEnabled((Boolean) instantAppsEnabled);
       Object closeButton = list.get(5);
-      pigeonResult.setCloseButton((closeButton == null) ? null : CustomTabsCloseButtonMessage.fromList((ArrayList<Object>) closeButton));
+      pigeonResult.setCloseButton((closeButton == null) ? null : CloseButton.fromList((ArrayList<Object>) closeButton));
       Object animations = list.get(6);
-      pigeonResult.setAnimations((animations == null) ? null : CustomTabsAnimationsMessage.fromList((ArrayList<Object>) animations));
+      pigeonResult.setAnimations((animations == null) ? null : Animations.fromList((ArrayList<Object>) animations));
       Object browser = list.get(7);
-      pigeonResult.setBrowser((browser == null) ? null : CustomTabsBrowserConfigurationMessage.fromList((ArrayList<Object>) browser));
+      pigeonResult.setBrowser((browser == null) ? null : BrowserConfiguration.fromList((ArrayList<Object>) browser));
       Object partial = list.get(8);
-      pigeonResult.setPartial((partial == null) ? null : PartialCustomTabsConfigurationMessage.fromList((ArrayList<Object>) partial));
+      pigeonResult.setPartial((partial == null) ? null : PartialConfiguration.fromList((ArrayList<Object>) partial));
       return pigeonResult;
     }
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CustomTabsAnimationsMessage {
+  public static final class Animations {
     private @Nullable String startEnter;
 
     public @Nullable String getStartEnter() {
@@ -340,8 +340,8 @@ public class Messages {
         return this;
       }
 
-      public @NonNull CustomTabsAnimationsMessage build() {
-        CustomTabsAnimationsMessage pigeonReturn = new CustomTabsAnimationsMessage();
+      public @NonNull Animations build() {
+        Animations pigeonReturn = new Animations();
         pigeonReturn.setStartEnter(startEnter);
         pigeonReturn.setStartExit(startExit);
         pigeonReturn.setEndEnter(endEnter);
@@ -360,8 +360,8 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull CustomTabsAnimationsMessage fromList(@NonNull ArrayList<Object> list) {
-      CustomTabsAnimationsMessage pigeonResult = new CustomTabsAnimationsMessage();
+    static @NonNull Animations fromList(@NonNull ArrayList<Object> list) {
+      Animations pigeonResult = new Animations();
       Object startEnter = list.get(0);
       pigeonResult.setStartEnter((String) startEnter);
       Object startExit = list.get(1);
@@ -375,7 +375,7 @@ public class Messages {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CustomTabsBrowserConfigurationMessage {
+  public static final class BrowserConfiguration {
     private @NonNull Boolean prefersExternalBrowser;
 
     public @NonNull Boolean getPrefersExternalBrowser() {
@@ -420,7 +420,7 @@ public class Messages {
     }
 
     /** Constructor is non-public to enforce null safety; use Builder. */
-    CustomTabsBrowserConfigurationMessage() {}
+    BrowserConfiguration() {}
 
     public static final class Builder {
 
@@ -452,8 +452,8 @@ public class Messages {
         return this;
       }
 
-      public @NonNull CustomTabsBrowserConfigurationMessage build() {
-        CustomTabsBrowserConfigurationMessage pigeonReturn = new CustomTabsBrowserConfigurationMessage();
+      public @NonNull BrowserConfiguration build() {
+        BrowserConfiguration pigeonReturn = new BrowserConfiguration();
         pigeonReturn.setPrefersExternalBrowser(prefersExternalBrowser);
         pigeonReturn.setPrefersDefaultBrowser(prefersDefaultBrowser);
         pigeonReturn.setFallbackCustomTabs(fallbackCustomTabs);
@@ -472,8 +472,8 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull CustomTabsBrowserConfigurationMessage fromList(@NonNull ArrayList<Object> list) {
-      CustomTabsBrowserConfigurationMessage pigeonResult = new CustomTabsBrowserConfigurationMessage();
+    static @NonNull BrowserConfiguration fromList(@NonNull ArrayList<Object> list) {
+      BrowserConfiguration pigeonResult = new BrowserConfiguration();
       Object prefersExternalBrowser = list.get(0);
       pigeonResult.setPrefersExternalBrowser((Boolean) prefersExternalBrowser);
       Object prefersDefaultBrowser = list.get(1);
@@ -487,7 +487,7 @@ public class Messages {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CustomTabsCloseButtonMessage {
+  public static final class CloseButton {
     private @Nullable String icon;
 
     public @Nullable String getIcon() {
@@ -524,8 +524,8 @@ public class Messages {
         return this;
       }
 
-      public @NonNull CustomTabsCloseButtonMessage build() {
-        CustomTabsCloseButtonMessage pigeonReturn = new CustomTabsCloseButtonMessage();
+      public @NonNull CloseButton build() {
+        CloseButton pigeonReturn = new CloseButton();
         pigeonReturn.setIcon(icon);
         pigeonReturn.setPosition(position);
         return pigeonReturn;
@@ -540,8 +540,8 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull CustomTabsCloseButtonMessage fromList(@NonNull ArrayList<Object> list) {
-      CustomTabsCloseButtonMessage pigeonResult = new CustomTabsCloseButtonMessage();
+    static @NonNull CloseButton fromList(@NonNull ArrayList<Object> list) {
+      CloseButton pigeonResult = new CloseButton();
       Object icon = list.get(0);
       pigeonResult.setIcon((String) icon);
       Object position = list.get(1);
@@ -551,7 +551,7 @@ public class Messages {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CustomTabsColorSchemesMessage {
+  public static final class ColorSchemes {
     private @Nullable Long colorScheme;
 
     public @Nullable Long getColorScheme() {
@@ -562,33 +562,33 @@ public class Messages {
       this.colorScheme = setterArg;
     }
 
-    private @Nullable CustomTabsColorSchemeParamsMessage lightParams;
+    private @Nullable ColorSchemeParams lightParams;
 
-    public @Nullable CustomTabsColorSchemeParamsMessage getLightParams() {
+    public @Nullable ColorSchemeParams getLightParams() {
       return lightParams;
     }
 
-    public void setLightParams(@Nullable CustomTabsColorSchemeParamsMessage setterArg) {
+    public void setLightParams(@Nullable ColorSchemeParams setterArg) {
       this.lightParams = setterArg;
     }
 
-    private @Nullable CustomTabsColorSchemeParamsMessage darkParams;
+    private @Nullable ColorSchemeParams darkParams;
 
-    public @Nullable CustomTabsColorSchemeParamsMessage getDarkParams() {
+    public @Nullable ColorSchemeParams getDarkParams() {
       return darkParams;
     }
 
-    public void setDarkParams(@Nullable CustomTabsColorSchemeParamsMessage setterArg) {
+    public void setDarkParams(@Nullable ColorSchemeParams setterArg) {
       this.darkParams = setterArg;
     }
 
-    private @Nullable CustomTabsColorSchemeParamsMessage defaultPrams;
+    private @Nullable ColorSchemeParams defaultPrams;
 
-    public @Nullable CustomTabsColorSchemeParamsMessage getDefaultPrams() {
+    public @Nullable ColorSchemeParams getDefaultPrams() {
       return defaultPrams;
     }
 
-    public void setDefaultPrams(@Nullable CustomTabsColorSchemeParamsMessage setterArg) {
+    public void setDefaultPrams(@Nullable ColorSchemeParams setterArg) {
       this.defaultPrams = setterArg;
     }
 
@@ -601,29 +601,29 @@ public class Messages {
         return this;
       }
 
-      private @Nullable CustomTabsColorSchemeParamsMessage lightParams;
+      private @Nullable ColorSchemeParams lightParams;
 
-      public @NonNull Builder setLightParams(@Nullable CustomTabsColorSchemeParamsMessage setterArg) {
+      public @NonNull Builder setLightParams(@Nullable ColorSchemeParams setterArg) {
         this.lightParams = setterArg;
         return this;
       }
 
-      private @Nullable CustomTabsColorSchemeParamsMessage darkParams;
+      private @Nullable ColorSchemeParams darkParams;
 
-      public @NonNull Builder setDarkParams(@Nullable CustomTabsColorSchemeParamsMessage setterArg) {
+      public @NonNull Builder setDarkParams(@Nullable ColorSchemeParams setterArg) {
         this.darkParams = setterArg;
         return this;
       }
 
-      private @Nullable CustomTabsColorSchemeParamsMessage defaultPrams;
+      private @Nullable ColorSchemeParams defaultPrams;
 
-      public @NonNull Builder setDefaultPrams(@Nullable CustomTabsColorSchemeParamsMessage setterArg) {
+      public @NonNull Builder setDefaultPrams(@Nullable ColorSchemeParams setterArg) {
         this.defaultPrams = setterArg;
         return this;
       }
 
-      public @NonNull CustomTabsColorSchemesMessage build() {
-        CustomTabsColorSchemesMessage pigeonReturn = new CustomTabsColorSchemesMessage();
+      public @NonNull ColorSchemes build() {
+        ColorSchemes pigeonReturn = new ColorSchemes();
         pigeonReturn.setColorScheme(colorScheme);
         pigeonReturn.setLightParams(lightParams);
         pigeonReturn.setDarkParams(darkParams);
@@ -642,77 +642,77 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull CustomTabsColorSchemesMessage fromList(@NonNull ArrayList<Object> list) {
-      CustomTabsColorSchemesMessage pigeonResult = new CustomTabsColorSchemesMessage();
+    static @NonNull ColorSchemes fromList(@NonNull ArrayList<Object> list) {
+      ColorSchemes pigeonResult = new ColorSchemes();
       Object colorScheme = list.get(0);
       pigeonResult.setColorScheme((colorScheme == null) ? null : ((colorScheme instanceof Integer) ? (Integer) colorScheme : (Long) colorScheme));
       Object lightParams = list.get(1);
-      pigeonResult.setLightParams((lightParams == null) ? null : CustomTabsColorSchemeParamsMessage.fromList((ArrayList<Object>) lightParams));
+      pigeonResult.setLightParams((lightParams == null) ? null : ColorSchemeParams.fromList((ArrayList<Object>) lightParams));
       Object darkParams = list.get(2);
-      pigeonResult.setDarkParams((darkParams == null) ? null : CustomTabsColorSchemeParamsMessage.fromList((ArrayList<Object>) darkParams));
+      pigeonResult.setDarkParams((darkParams == null) ? null : ColorSchemeParams.fromList((ArrayList<Object>) darkParams));
       Object defaultPrams = list.get(3);
-      pigeonResult.setDefaultPrams((defaultPrams == null) ? null : CustomTabsColorSchemeParamsMessage.fromList((ArrayList<Object>) defaultPrams));
+      pigeonResult.setDefaultPrams((defaultPrams == null) ? null : ColorSchemeParams.fromList((ArrayList<Object>) defaultPrams));
       return pigeonResult;
     }
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CustomTabsColorSchemeParamsMessage {
-    private @Nullable String toolbarColor;
+  public static final class ColorSchemeParams {
+    private @Nullable Long toolbarColor;
 
-    public @Nullable String getToolbarColor() {
+    public @Nullable Long getToolbarColor() {
       return toolbarColor;
     }
 
-    public void setToolbarColor(@Nullable String setterArg) {
+    public void setToolbarColor(@Nullable Long setterArg) {
       this.toolbarColor = setterArg;
     }
 
-    private @Nullable String navigationBarColor;
+    private @Nullable Long navigationBarColor;
 
-    public @Nullable String getNavigationBarColor() {
+    public @Nullable Long getNavigationBarColor() {
       return navigationBarColor;
     }
 
-    public void setNavigationBarColor(@Nullable String setterArg) {
+    public void setNavigationBarColor(@Nullable Long setterArg) {
       this.navigationBarColor = setterArg;
     }
 
-    private @Nullable String navigationBarDividerColor;
+    private @Nullable Long navigationBarDividerColor;
 
-    public @Nullable String getNavigationBarDividerColor() {
+    public @Nullable Long getNavigationBarDividerColor() {
       return navigationBarDividerColor;
     }
 
-    public void setNavigationBarDividerColor(@Nullable String setterArg) {
+    public void setNavigationBarDividerColor(@Nullable Long setterArg) {
       this.navigationBarDividerColor = setterArg;
     }
 
     public static final class Builder {
 
-      private @Nullable String toolbarColor;
+      private @Nullable Long toolbarColor;
 
-      public @NonNull Builder setToolbarColor(@Nullable String setterArg) {
+      public @NonNull Builder setToolbarColor(@Nullable Long setterArg) {
         this.toolbarColor = setterArg;
         return this;
       }
 
-      private @Nullable String navigationBarColor;
+      private @Nullable Long navigationBarColor;
 
-      public @NonNull Builder setNavigationBarColor(@Nullable String setterArg) {
+      public @NonNull Builder setNavigationBarColor(@Nullable Long setterArg) {
         this.navigationBarColor = setterArg;
         return this;
       }
 
-      private @Nullable String navigationBarDividerColor;
+      private @Nullable Long navigationBarDividerColor;
 
-      public @NonNull Builder setNavigationBarDividerColor(@Nullable String setterArg) {
+      public @NonNull Builder setNavigationBarDividerColor(@Nullable Long setterArg) {
         this.navigationBarDividerColor = setterArg;
         return this;
       }
 
-      public @NonNull CustomTabsColorSchemeParamsMessage build() {
-        CustomTabsColorSchemeParamsMessage pigeonReturn = new CustomTabsColorSchemeParamsMessage();
+      public @NonNull ColorSchemeParams build() {
+        ColorSchemeParams pigeonReturn = new ColorSchemeParams();
         pigeonReturn.setToolbarColor(toolbarColor);
         pigeonReturn.setNavigationBarColor(navigationBarColor);
         pigeonReturn.setNavigationBarDividerColor(navigationBarDividerColor);
@@ -729,20 +729,20 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull CustomTabsColorSchemeParamsMessage fromList(@NonNull ArrayList<Object> list) {
-      CustomTabsColorSchemeParamsMessage pigeonResult = new CustomTabsColorSchemeParamsMessage();
+    static @NonNull ColorSchemeParams fromList(@NonNull ArrayList<Object> list) {
+      ColorSchemeParams pigeonResult = new ColorSchemeParams();
       Object toolbarColor = list.get(0);
-      pigeonResult.setToolbarColor((String) toolbarColor);
+      pigeonResult.setToolbarColor((toolbarColor == null) ? null : ((toolbarColor instanceof Integer) ? (Integer) toolbarColor : (Long) toolbarColor));
       Object navigationBarColor = list.get(1);
-      pigeonResult.setNavigationBarColor((String) navigationBarColor);
+      pigeonResult.setNavigationBarColor((navigationBarColor == null) ? null : ((navigationBarColor instanceof Integer) ? (Integer) navigationBarColor : (Long) navigationBarColor));
       Object navigationBarDividerColor = list.get(2);
-      pigeonResult.setNavigationBarDividerColor((String) navigationBarDividerColor);
+      pigeonResult.setNavigationBarDividerColor((navigationBarDividerColor == null) ? null : ((navigationBarDividerColor instanceof Integer) ? (Integer) navigationBarDividerColor : (Long) navigationBarDividerColor));
       return pigeonResult;
     }
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class PartialCustomTabsConfigurationMessage {
+  public static final class PartialConfiguration {
     private @NonNull Double initialHeight;
 
     public @NonNull Double getInitialHeight() {
@@ -780,7 +780,7 @@ public class Messages {
     }
 
     /** Constructor is non-public to enforce null safety; use Builder. */
-    PartialCustomTabsConfigurationMessage() {}
+    PartialConfiguration() {}
 
     public static final class Builder {
 
@@ -805,8 +805,8 @@ public class Messages {
         return this;
       }
 
-      public @NonNull PartialCustomTabsConfigurationMessage build() {
-        PartialCustomTabsConfigurationMessage pigeonReturn = new PartialCustomTabsConfigurationMessage();
+      public @NonNull PartialConfiguration build() {
+        PartialConfiguration pigeonReturn = new PartialConfiguration();
         pigeonReturn.setInitialHeight(initialHeight);
         pigeonReturn.setActivityHeightResizeBehavior(activityHeightResizeBehavior);
         pigeonReturn.setCornerRadius(cornerRadius);
@@ -823,8 +823,8 @@ public class Messages {
       return toListResult;
     }
 
-    static @NonNull PartialCustomTabsConfigurationMessage fromList(@NonNull ArrayList<Object> list) {
-      PartialCustomTabsConfigurationMessage pigeonResult = new PartialCustomTabsConfigurationMessage();
+    static @NonNull PartialConfiguration fromList(@NonNull ArrayList<Object> list) {
+      PartialConfiguration pigeonResult = new PartialConfiguration();
       Object initialHeight = list.get(0);
       pigeonResult.setInitialHeight((Double) initialHeight);
       Object activityHeightResizeBehavior = list.get(1);
@@ -844,19 +844,19 @@ public class Messages {
     protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
       switch (type) {
         case (byte) 128:
-          return CustomTabsAnimationsMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return Animations.fromList((ArrayList<Object>) readValue(buffer));
         case (byte) 129:
-          return CustomTabsBrowserConfigurationMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return BrowserConfiguration.fromList((ArrayList<Object>) readValue(buffer));
         case (byte) 130:
-          return CustomTabsCloseButtonMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return CloseButton.fromList((ArrayList<Object>) readValue(buffer));
         case (byte) 131:
-          return CustomTabsColorSchemeParamsMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return ColorSchemeParams.fromList((ArrayList<Object>) readValue(buffer));
         case (byte) 132:
-          return CustomTabsColorSchemesMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return ColorSchemes.fromList((ArrayList<Object>) readValue(buffer));
         case (byte) 133:
-          return CustomTabsOptionsMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return CustomTabsIntentOptions.fromList((ArrayList<Object>) readValue(buffer));
         case (byte) 134:
-          return PartialCustomTabsConfigurationMessage.fromList((ArrayList<Object>) readValue(buffer));
+          return PartialConfiguration.fromList((ArrayList<Object>) readValue(buffer));
         default:
           return super.readValueOfType(type, buffer);
       }
@@ -864,27 +864,27 @@ public class Messages {
 
     @Override
     protected void writeValue(@NonNull ByteArrayOutputStream stream, Object value) {
-      if (value instanceof CustomTabsAnimationsMessage) {
+      if (value instanceof Animations) {
         stream.write(128);
-        writeValue(stream, ((CustomTabsAnimationsMessage) value).toList());
-      } else if (value instanceof CustomTabsBrowserConfigurationMessage) {
+        writeValue(stream, ((Animations) value).toList());
+      } else if (value instanceof BrowserConfiguration) {
         stream.write(129);
-        writeValue(stream, ((CustomTabsBrowserConfigurationMessage) value).toList());
-      } else if (value instanceof CustomTabsCloseButtonMessage) {
+        writeValue(stream, ((BrowserConfiguration) value).toList());
+      } else if (value instanceof CloseButton) {
         stream.write(130);
-        writeValue(stream, ((CustomTabsCloseButtonMessage) value).toList());
-      } else if (value instanceof CustomTabsColorSchemeParamsMessage) {
+        writeValue(stream, ((CloseButton) value).toList());
+      } else if (value instanceof ColorSchemeParams) {
         stream.write(131);
-        writeValue(stream, ((CustomTabsColorSchemeParamsMessage) value).toList());
-      } else if (value instanceof CustomTabsColorSchemesMessage) {
+        writeValue(stream, ((ColorSchemeParams) value).toList());
+      } else if (value instanceof ColorSchemes) {
         stream.write(132);
-        writeValue(stream, ((CustomTabsColorSchemesMessage) value).toList());
-      } else if (value instanceof CustomTabsOptionsMessage) {
+        writeValue(stream, ((ColorSchemes) value).toList());
+      } else if (value instanceof CustomTabsIntentOptions) {
         stream.write(133);
-        writeValue(stream, ((CustomTabsOptionsMessage) value).toList());
-      } else if (value instanceof PartialCustomTabsConfigurationMessage) {
+        writeValue(stream, ((CustomTabsIntentOptions) value).toList());
+      } else if (value instanceof PartialConfiguration) {
         stream.write(134);
-        writeValue(stream, ((PartialCustomTabsConfigurationMessage) value).toList());
+        writeValue(stream, ((PartialConfiguration) value).toList());
       } else {
         super.writeValue(stream, value);
       }
@@ -894,7 +894,7 @@ public class Messages {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface CustomTabsApi {
 
-    void launch(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @Nullable CustomTabsOptionsMessage options);
+    void launch(@NonNull String urlString, @NonNull Boolean prefersDeepLink, @Nullable CustomTabsIntentOptions options);
 
     void closeAllIfPossible();
 
@@ -915,7 +915,7 @@ public class Messages {
                 ArrayList<Object> args = (ArrayList<Object>) message;
                 String urlStringArg = (String) args.get(0);
                 Boolean prefersDeepLinkArg = (Boolean) args.get(1);
-                CustomTabsOptionsMessage optionsArg = (CustomTabsOptionsMessage) args.get(2);
+                CustomTabsIntentOptions optionsArg = (CustomTabsIntentOptions) args.get(2);
                 try {
                   api.launch(urlStringArg, prefersDeepLinkArg, optionsArg);
                   wrapped.add(0, null);

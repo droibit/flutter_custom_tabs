@@ -6,7 +6,7 @@ private let pageSheetDetentMedium = "medium"
 private let pageSheetDetentLarge = "large"
 
 extension SFSafariViewController {
-    static func make(url: URL, options: SafariViewControllerOptionsMessage) -> SFSafariViewController {
+    static func make(url: URL, options: SFSafariViewControllerOptions) -> SFSafariViewController {
         let configuration = SFSafariViewController.Configuration()
         if let barCollapsingEnabled = options.barCollapsingEnabled {
             configuration.barCollapsingEnabled = barCollapsingEnabled
@@ -20,15 +20,11 @@ extension SFSafariViewController {
             configuration: configuration
         )
 
-        if let barTintColorHex = options.preferredBarTintColor,
-           let barTintColor = UIColor(hex: barTintColorHex)
-        {
-            viewController.preferredBarTintColor = barTintColor
+        if let barTintColorHex = options.preferredBarTintColor {
+            viewController.preferredBarTintColor = UIColor(barTintColorHex)
         }
-        if let controlTintColorHex = options.preferredControlTintColor,
-           let controlTintColor = UIColor(hex: controlTintColorHex)
-        {
-            viewController.preferredControlTintColor = controlTintColor
+        if let controlTintColorHex = options.preferredControlTintColor {
+            viewController.preferredControlTintColor = UIColor(controlTintColorHex)
         }
 
         if let dismissButtonStyleRawValue = options.dismissButtonStyle,
@@ -56,7 +52,7 @@ extension SFSafariViewController {
 
 @available(iOS 15.0, *)
 private extension UISheetPresentationController {
-    func configure(with configuration: SheetPresentationControllerConfigurationMessage) {
+    func configure(with configuration: UISheetPresentationControllerConfiguration) {
         if !configuration.detents.isEmpty {
             detents = configuration.detents.compactMap { detent in
                 switch detent {
@@ -96,28 +92,11 @@ private extension UISheetPresentationController {
 }
 
 private extension UIColor {
-    convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
-
-        if hex.hasPrefix("#") {
-            let start = hex.index(hex.startIndex, offsetBy: 1)
-            let hexColor = String(hex[start...])
-
-            if hexColor.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-
-                if scanner.scanHexInt64(&hexNumber) {
-                    a = CGFloat((hexNumber & 0xFF00_0000) >> 24) / 255
-                    r = CGFloat((hexNumber & 0x00FF_0000) >> 16) / 255
-                    g = CGFloat((hexNumber & 0x0000_FF00) >> 8) / 255
-                    b = CGFloat(hexNumber & 0x0000_00FF) / 255
-
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
-            }
-        }
-        return nil
+    convenience init(_ hex: Int64) {
+        let a = CGFloat((hex & 0xFF00_0000) >> 24) / 255
+        let r = CGFloat((hex & 0x00FF_0000) >> 16) / 255
+        let g = CGFloat((hex & 0x0000_FF00) >> 8) / 255
+        let b = CGFloat(hex & 0x0000_00FF) / 255
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }

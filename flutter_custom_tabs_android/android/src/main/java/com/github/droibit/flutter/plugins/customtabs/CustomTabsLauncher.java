@@ -1,11 +1,5 @@
 package com.github.droibit.flutter.plugins.customtabs;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
-import static androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX;
-import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
-import static java.util.Objects.requireNonNull;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
@@ -18,19 +12,41 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsOptionsMessage;
+import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.Messages.FlutterError;
 
 import java.util.Objects;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+import static androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX;
+import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
+import static java.util.Objects.requireNonNull;
 
 class CustomTabsLauncher implements Messages.CustomTabsApi {
     private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
     private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
+    private final @NonNull CustomTabsFactory customTabsFactory;
+    private final @NonNull NativeAppLauncher nativeAppLauncher;
     private @Nullable Activity activity;
+
+    CustomTabsLauncher() {
+        this(new CustomTabsFactory(), new NativeAppLauncher());
+    }
+
+    @VisibleForTesting
+    CustomTabsLauncher(
+            @NonNull CustomTabsFactory customTabsFactory,
+            @NonNull NativeAppLauncher nativeAppLauncher
+    ) {
+        this.customTabsFactory = customTabsFactory;
+        this.nativeAppLauncher = nativeAppLauncher;
+    }
 
     void setActivity(@Nullable Activity activity) {
         this.activity = activity;
@@ -40,7 +56,7 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
     public void launch(
             @NonNull String urlString,
             @NonNull Boolean prefersDeepLink,
-            @Nullable CustomTabsOptionsMessage options
+            @Nullable CustomTabsIntentOptions options
     ) {
         final Activity activity = this.activity;
         if (activity == null) {
@@ -48,23 +64,25 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
         }
 
         final Uri uri = Uri.parse(urlString);
-        if (prefersDeepLink && NativeAppLauncher.launch(activity, uri)) {
+        if (prefersDeepLink && nativeAppLauncher.launch(activity, uri)) {
             return;
         }
 
         try {
-            final CustomTabsFactory factory = new CustomTabsFactory(activity);
-            final Intent externalBrowserIntent = factory.createExternalBrowserIntent(options);
+            final Intent externalBrowserIntent = customTabsFactory.createExternalBrowserIntent(options);
             if (externalBrowserIntent != null) {
                 externalBrowserIntent.setData(uri);
                 activity.startActivity(externalBrowserIntent);
                 return;
             }
 
-            final CustomTabsIntent customTabsIntent = factory.createCustomTabsIntent(requireNonNull(options));
-            if (customTabsIntent.intent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
-                customTabsIntent.intent.setData(uri);
-                activity.startActivityForResult(customTabsIntent.intent, REQUEST_CODE_CUSTOM_TABS);
+            final CustomTabsIntent customTabsIntent = customTabsFactory
+                    .createCustomTabsIntent(activity, requireNonNull(options));
+            final Intent rawIntent = customTabsIntent.intent;
+            if (rawIntent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
+                rawIntent.setData(uri);
+                // ref. https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs
+                activity.startActivityForResult(rawIntent, REQUEST_CODE_CUSTOM_TABS);
             } else {
                 customTabsIntent.launchUrl(activity, uri);
             }
@@ -79,29 +97,30 @@ class CustomTabsLauncher implements Messages.CustomTabsApi {
         if (activity == null) {
             return;
         }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final ActivityManager am = ContextCompat.getSystemService(activity, ActivityManager.class);
-            final ComponentName selfActivityName = new ComponentName(activity, activity.getClass());
-            //noinspection DataFlowIssue
-            for (ActivityManager.AppTask appTask : am.getAppTasks()) {
-                final ActivityManager.RecentTaskInfo taskInfo = appTask.getTaskInfo();
-                if (!Objects.equals(selfActivityName, taskInfo.baseActivity) ||
-                        taskInfo.topActivity == null) {
-                    continue;
-                }
-                final Intent serviceIntent = new Intent(ACTION_CUSTOM_TABS_CONNECTION)
-                        .setPackage(taskInfo.topActivity.getPackageName());
+        final ActivityManager am = ContextCompat.getSystemService(activity, ActivityManager.class);
+        final ComponentName selfActivityName = new ComponentName(activity, activity.getClass());
+        //noinspection DataFlowIssue
+        for (ActivityManager.AppTask appTask : am.getAppTasks()) {
+            final ActivityManager.RecentTaskInfo taskInfo = appTask.getTaskInfo();
+            if (!Objects.equals(selfActivityName, taskInfo.baseActivity) ||
+                    taskInfo.topActivity == null) {
+                continue;
+            }
+            final Intent serviceIntent = new Intent(ACTION_CUSTOM_TABS_CONNECTION)
+                    .setPackage(taskInfo.topActivity.getPackageName());
 
-                if (resolveService(activity.getPackageManager(), serviceIntent, 0) != null) {
-                    try {
-                        final Intent intent = new Intent(activity, activity.getClass())
-                                .setFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
-                        activity.startActivity(intent);
-                    } catch (ActivityNotFoundException ignored) {
-                    }
-                    break;
+            if (resolveService(activity.getPackageManager(), serviceIntent, 0) != null) {
+                try {
+                    final Intent intent = new Intent(activity, activity.getClass())
+                            .setFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
+                    activity.startActivity(intent);
+                } catch (ActivityNotFoundException ignored) {
                 }
+                break;
             }
         }
     }

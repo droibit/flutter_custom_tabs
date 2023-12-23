@@ -8,18 +8,24 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         registrar.publish(plugin)
     }
 
-    private var dismissStack = [() -> Void]()
+    private let launcher: Launcher
+
+    init(launcher: Launcher = Launcher()) {
+        self.launcher = launcher
+    }
 
     func launchURL(
         _ urlString: String,
         prefersDeepLink: Bool,
-        options: SafariViewControllerOptionsMessage?,
+        options: SFSafariViewControllerOptions?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         let url = URL(string: urlString)!
         if prefersDeepLink {
-            UIApplication.shared.open(url, options: [.universalLinksOnly: true]) { [weak self] opened in
-                if !opened {
+            launcher.open(url, options: [.universalLinksOnly: true]) { [weak self] opened in
+                if opened {
+                    completion(.success(()))
+                } else {
                     self?.launchURL(url, options: options, completion: completion)
                 }
             }
@@ -29,62 +35,26 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
     }
 
     func closeAllIfPossible() throws {
-        while let task = dismissStack.popLast() {
-            task()
-        }
+        launcher.dismissAll()
     }
 
     // MARK: - Private
 
     private func launchURL(
         _ url: URL,
-        options: SafariViewControllerOptionsMessage?,
+        options: SFSafariViewControllerOptions?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         guard let options else {
-            UIApplication.shared.open(url) { _ in
+            launcher.open(url) { _ in
                 completion(.success(()))
             }
             return
         }
 
-        if let topViewController = UIWindow.keyWindow?.topViewController() {
-            let safariViewController = SFSafariViewController.make(url: url, options: options)
-            dismissStack.append { [weak safariViewController] in
-                safariViewController?.dismiss(animated: true)
-            }
-            topViewController.present(safariViewController, animated: true) {
-                completion(.success(()))
-            }
+        let safariViewController = SFSafariViewController.make(url: url, options: options)
+        launcher.present(safariViewController) {
+            completion(.success(()))
         }
-    }
-}
-
-private extension UIWindow {
-    static var keyWindow: UIWindow? {
-        guard let delegate = UIApplication.shared.delegate as? FlutterAppDelegate else {
-            return UIApplication.shared.windows.first { $0.isKeyWindow }
-        }
-        return delegate.window
-    }
-
-    func topViewController() -> UIViewController? {
-        var topViewController: UIViewController? = rootViewController
-        while true {
-            if let navigationController = topViewController as? UINavigationController {
-                topViewController = navigationController.visibleViewController
-                continue
-            } else if let tabBarController = topViewController as? UITabBarController,
-                      let selected = tabBarController.selectedViewController
-            {
-                topViewController = selected
-                continue
-            } else if let presentedViewController = topViewController?.presentedViewController {
-                topViewController = presentedViewController
-            } else {
-                break
-            }
-        }
-        return topViewController
     }
 }

@@ -11,14 +11,14 @@ abstract class CustomTabsApi {
   void launch(
     String urlString, {
     required bool prefersDeepLink,
-    SafariViewControllerOptionsMessage? options,
+    SFSafariViewControllerOptions? options,
   });
 
   void closeAllIfPossible();
 }
 
-class SafariViewControllerOptionsMessage {
-  const SafariViewControllerOptionsMessage({
+class SFSafariViewControllerOptions {
+  const SFSafariViewControllerOptions({
     this.preferredBarTintColor,
     this.preferredControlTintColor,
     this.barCollapsingEnabled,
@@ -28,17 +28,17 @@ class SafariViewControllerOptionsMessage {
     this.pageSheet,
   });
 
-  final String? preferredBarTintColor;
-  final String? preferredControlTintColor;
+  final int? preferredBarTintColor;
+  final int? preferredControlTintColor;
   final bool? barCollapsingEnabled;
   final bool? entersReaderIfAvailable;
   final int? dismissButtonStyle;
   final int? modalPresentationStyle;
-  final SheetPresentationControllerConfigurationMessage? pageSheet;
+  final UISheetPresentationControllerConfiguration? pageSheet;
 }
 
-class SheetPresentationControllerConfigurationMessage {
-  const SheetPresentationControllerConfigurationMessage({
+class UISheetPresentationControllerConfiguration {
+  const UISheetPresentationControllerConfiguration({
     required this.detents,
     this.largestUndimmedDetentIdentifier,
     this.prefersScrollingExpandsWhenScrolledToEdge,

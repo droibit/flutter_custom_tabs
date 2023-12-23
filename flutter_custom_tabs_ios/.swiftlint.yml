@@ -64,7 +64,7 @@ opt_in_rules:
   - ibinspectable_in_extension
   - identical_operands
   - implicit_return
-  - implicitly_unwrapped_optional
+  # - implicitly_unwrapped_optional
   # - indentation_width
   - joined_default_parameter
   - last_where
@@ -75,7 +75,7 @@ opt_in_rules:
   - lower_acl_than_parent
   # - missing_docs
   - modifier_order  
-  - nimble_operator
+  # - nimble_operator
   - number_separator  
   - nslocalizedstring_key
   - nslocalizedstring_require_bundle
@@ -87,7 +87,7 @@ opt_in_rules:
   - overridden_super_call
   - override_in_extension
   - pattern_matching_keywords
-  - prefer_nimble
+  # - prefer_nimble
   - prefer_self_in_static_references
   - prefer_self_type_over_type_of_self
   - prefer_zero_over_explicit_init
@@ -135,9 +135,9 @@ analyzer_rules:
   - unused_import
 included:
   - ios/Classes
+  - example/ios/RunnerTests
 excluded:
   - ios/Classes/messages.g.swift
-
 line_length:
 - 200   # warning
 - 300   # error

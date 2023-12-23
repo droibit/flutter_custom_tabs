@@ -1,55 +1,57 @@
 package com.github.droibit.flutter.plugins.customtabs;
 
-import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
-import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
-import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setChromeCustomTabsPackage;
-import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setCustomTabsPackage;
-import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
-import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveAnimationIdentifier;
-import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.resolveDrawableIdentifier;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Browser;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RestrictTo;
+import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.droibit.android.customtabs.launcher.CustomTabsPackageFallback;
 import com.droibit.android.customtabs.launcher.NonChromeCustomTabs;
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsAnimationsMessage;
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsBrowserConfigurationMessage;
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsCloseButtonMessage;
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsColorSchemeParamsMessage;
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsColorSchemesMessage;
-import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsOptionsMessage;
-import com.github.droibit.flutter.plugins.customtabs.Messages.PartialCustomTabsConfigurationMessage;
+import com.github.droibit.flutter.plugins.customtabs.Messages.Animations;
+import com.github.droibit.flutter.plugins.customtabs.Messages.BrowserConfiguration;
+import com.github.droibit.flutter.plugins.customtabs.Messages.CloseButton;
+import com.github.droibit.flutter.plugins.customtabs.Messages.ColorSchemeParams;
+import com.github.droibit.flutter.plugins.customtabs.Messages.ColorSchemes;
+import com.github.droibit.flutter.plugins.customtabs.Messages.CustomTabsIntentOptions;
+import com.github.droibit.flutter.plugins.customtabs.Messages.PartialConfiguration;
 
 import java.util.List;
 import java.util.Map;
 
-@RestrictTo(RestrictTo.Scope.LIBRARY)
-class CustomTabsFactory {
-    private final Context context;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
+import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setChromeCustomTabsPackage;
+import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.setCustomTabsPackage;
+import static com.github.droibit.flutter.plugins.customtabs.ResourceFactory.INVALID_RESOURCE_ID;
 
-    CustomTabsFactory(@NonNull Context context) {
-        this.context = context;
+class CustomTabsFactory {
+    private final @NonNull ResourceFactory resources;
+
+    CustomTabsFactory() {
+        this(new ResourceFactory());
+    }
+
+    @VisibleForTesting
+    CustomTabsFactory(@NonNull ResourceFactory resources) {
+        this.resources = resources;
     }
 
     @Nullable
-    Intent createExternalBrowserIntent(@Nullable CustomTabsOptionsMessage options) {
+    Intent createExternalBrowserIntent(@Nullable CustomTabsIntentOptions options) {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
+        // External browser launched without HTTP headers if options is null.
         if (options == null) {
             return intent;
         }
 
-        final CustomTabsBrowserConfigurationMessage browserOptions = options.getBrowser();
+        final BrowserConfiguration browserOptions = options.getBrowser();
         if (browserOptions == null || !browserOptions.getPrefersExternalBrowser()) {
             return null;
         }
@@ -63,16 +65,16 @@ class CustomTabsFactory {
     }
 
     @NonNull
-    CustomTabsIntent createCustomTabsIntent(@NonNull CustomTabsOptionsMessage options) {
+    CustomTabsIntent createCustomTabsIntent(@NonNull Context context, @NonNull CustomTabsIntentOptions options) {
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        final CustomTabsColorSchemesMessage colorSchemes = options.getColorSchemes();
+        final ColorSchemes colorSchemes = options.getColorSchemes();
         if (colorSchemes != null) {
             applyColorSchemes(builder, colorSchemes);
         }
 
-        final CustomTabsCloseButtonMessage closeButton = options.getCloseButton();
+        final CloseButton closeButton = options.getCloseButton();
         if (closeButton != null) {
-            applyCloseButton(builder, closeButton);
+            applyCloseButton(context, builder, closeButton);
         }
 
         final Boolean urlBarHidingEnabled = options.getUrlBarHidingEnabled();
@@ -95,86 +97,76 @@ class CustomTabsFactory {
             builder.setInstantAppsEnabled(instantAppsEnabled);
         }
 
-        final CustomTabsAnimationsMessage animations = options.getAnimations();
+        final Animations animations = options.getAnimations();
         if (animations != null) {
-            applyAnimations(builder, animations);
+            applyAnimations(context, builder, animations);
         }
 
-        final PartialCustomTabsConfigurationMessage partial = options.getPartial();
+        final PartialConfiguration partial = options.getPartial();
         if (partial != null) {
-            applyPartialCustomTabsConfiguration(builder, partial);
+            applyPartialCustomTabsConfiguration(context, builder, partial);
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();
-        final CustomTabsBrowserConfigurationMessage browserConfiguration;
+        final BrowserConfiguration browserConfiguration;
         if (options.getBrowser() != null) {
             browserConfiguration = options.getBrowser();
         } else {
-            browserConfiguration = new CustomTabsBrowserConfigurationMessage();
+            browserConfiguration = new BrowserConfiguration();
         }
-        applyBrowserConfiguration(customTabsIntent, browserConfiguration);
+        applyBrowserConfiguration(context, customTabsIntent, browserConfiguration);
         return customTabsIntent;
     }
 
-    void applyColorSchemes(
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull CustomTabsColorSchemesMessage colorSchemes
-    ) {
+    @VisibleForTesting
+    void applyColorSchemes(@NonNull CustomTabsIntent.Builder builder, @NonNull ColorSchemes colorSchemes) {
         final Long colorScheme = colorSchemes.getColorScheme();
         if (colorScheme != null) {
-
             builder.setColorScheme(colorScheme.intValue());
         }
 
-        final CustomTabsColorSchemeParamsMessage lightParams = colorSchemes.getLightParams();
+        final ColorSchemeParams lightParams = colorSchemes.getLightParams();
         if (lightParams != null) {
             builder.setColorSchemeParams(COLOR_SCHEME_LIGHT, buildColorSchemeParams(lightParams));
         }
 
-        final CustomTabsColorSchemeParamsMessage darkParams = colorSchemes.getDarkParams();
+        final ColorSchemeParams darkParams = colorSchemes.getDarkParams();
         if (darkParams != null) {
             builder.setColorSchemeParams(COLOR_SCHEME_DARK, buildColorSchemeParams(darkParams));
         }
 
-        final CustomTabsColorSchemeParamsMessage defaultPrams = colorSchemes.getDefaultPrams();
+        final ColorSchemeParams defaultPrams = colorSchemes.getDefaultPrams();
         if (defaultPrams != null) {
             builder.setDefaultColorSchemeParams(buildColorSchemeParams(defaultPrams));
         }
     }
 
-    private @NonNull CustomTabColorSchemeParams buildColorSchemeParams(
-            @NonNull CustomTabsColorSchemeParamsMessage params
-    ) {
+    private @NonNull CustomTabColorSchemeParams buildColorSchemeParams(@NonNull ColorSchemeParams params) {
         final CustomTabColorSchemeParams.Builder builder = new CustomTabColorSchemeParams.Builder();
-        final String colorString = params.getToolbarColor();
-        if (colorString != null) {
-            builder.setToolbarColor(Color.parseColor(colorString));
+        final Long toolbarColor = params.getToolbarColor();
+        if (toolbarColor != null) {
+            builder.setToolbarColor(toolbarColor.intValue());
         }
 
-        final String navigationBarColor = params.getNavigationBarColor();
+        final Long navigationBarColor = params.getNavigationBarColor();
         if (navigationBarColor != null) {
-            builder.setNavigationBarColor(Color.parseColor(navigationBarColor));
+            builder.setNavigationBarColor(navigationBarColor.intValue());
         }
 
-        final String navigationBarDividerColor = params.getNavigationBarDividerColor();
+        final Long navigationBarDividerColor = params.getNavigationBarDividerColor();
         if (navigationBarDividerColor != null) {
-            builder.setNavigationBarDividerColor(Color.parseColor(navigationBarDividerColor));
+            builder.setNavigationBarDividerColor(navigationBarDividerColor.intValue());
         }
         return builder.build();
     }
 
-    private void applyCloseButton(
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull CustomTabsCloseButtonMessage closeButton
-    ) {
+    @VisibleForTesting
+    void applyCloseButton(@NonNull Context context, @NonNull CustomTabsIntent.Builder builder, @NonNull CloseButton closeButton) {
         final String icon = closeButton.getIcon();
         if (icon != null) {
-            final int closeButtonIconId = resolveDrawableIdentifier(context, icon);
-            if (closeButtonIconId != INVALID_RESOURCE_ID) {
-                final Bitmap closeButtonIcon = ResourceFactory.getBitmap(context, closeButtonIconId);
-                if (closeButtonIcon != null) {
-                    builder.setCloseButtonIcon(closeButtonIcon);
-                }
+            final Bitmap closeButtonIcon = resources.getBitmap(context, icon);
+            if (closeButtonIcon != null) {
+                builder.setCloseButtonIcon(closeButtonIcon);
             }
         }
 
@@ -184,41 +176,27 @@ class CustomTabsFactory {
         }
     }
 
-    private void applyAnimations(
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull CustomTabsAnimationsMessage animations
-    ) {
-        final int startEnterAnimationId =
-                resolveAnimationIdentifier(context, animations.getStartEnter());
-        final int startExitAnimationId =
-                resolveAnimationIdentifier(context, animations.getStartExit());
-        final int endEnterAnimationId =
-                resolveAnimationIdentifier(context, animations.getEndEnter());
-        final int endExitAnimationId =
-                resolveAnimationIdentifier(context, animations.getEndExit());
+    @VisibleForTesting
+    void applyAnimations(@NonNull Context context, @NonNull CustomTabsIntent.Builder builder, @NonNull Animations animations) {
+        final int startEnterAnimationId = resources.getAnimationIdentifier(context, animations.getStartEnter());
+        final int startExitAnimationId = resources.getAnimationIdentifier(context, animations.getStartExit());
+        final int endEnterAnimationId = resources.getAnimationIdentifier(context, animations.getEndEnter());
+        final int endExitAnimationId = resources.getAnimationIdentifier(context, animations.getEndExit());
 
-        if (startEnterAnimationId != INVALID_RESOURCE_ID
-                && startExitAnimationId != INVALID_RESOURCE_ID) {
+        if (startEnterAnimationId != INVALID_RESOURCE_ID && startExitAnimationId != INVALID_RESOURCE_ID) {
             builder.setStartAnimations(context, startEnterAnimationId, startExitAnimationId);
         }
 
-        if (endEnterAnimationId != INVALID_RESOURCE_ID
-                && endExitAnimationId != INVALID_RESOURCE_ID) {
+        if (endEnterAnimationId != INVALID_RESOURCE_ID && endExitAnimationId != INVALID_RESOURCE_ID) {
             builder.setExitAnimations(context, endEnterAnimationId, endExitAnimationId);
         }
     }
 
-    private void applyPartialCustomTabsConfiguration(
-            @NonNull CustomTabsIntent.Builder builder,
-            @NonNull PartialCustomTabsConfigurationMessage configuration
-    ) {
+    @VisibleForTesting
+    void applyPartialCustomTabsConfiguration(@NonNull Context context, @NonNull CustomTabsIntent.Builder builder, @NonNull PartialConfiguration configuration) {
         final double initialHeightDp = configuration.getInitialHeight();
-        final float scale = context.getResources().getDisplayMetrics().density;
         final int resizeBehavior = configuration.getActivityHeightResizeBehavior().intValue();
-        builder.setInitialActivityHeightPx(
-                (int) (initialHeightDp * scale + 0.5),
-                resizeBehavior
-        );
+        builder.setInitialActivityHeightPx(resources.convertToPx(context, initialHeightDp), resizeBehavior);
 
         final Long cornerRadius = configuration.getCornerRadius();
         if (cornerRadius != null) {
@@ -226,10 +204,8 @@ class CustomTabsFactory {
         }
     }
 
-    private void applyBrowserConfiguration(
-            @NonNull CustomTabsIntent customTabsIntent,
-            @NonNull CustomTabsBrowserConfigurationMessage options
-    ) {
+    @VisibleForTesting
+    void applyBrowserConfiguration(@NonNull Context context, @NonNull CustomTabsIntent customTabsIntent, @NonNull BrowserConfiguration options) {
         final Map<String, String> headers = options.getHeaders();
         if (headers != null) {
             final Bundle bundleHeaders = extractBundle(headers);

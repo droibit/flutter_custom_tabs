@@ -1,13 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/painting.dart';
-
 import 'messages.g.dart';
 import '../types/types.dart';
 
 extension CustomTabsOptionsConverter on CustomTabsOptions {
-  CustomTabsOptionsMessage toMessage() {
-    return CustomTabsOptionsMessage(
+  CustomTabsIntentOptions toMessage() {
+    return CustomTabsIntentOptions(
       colorSchemes: colorSchemes?.toMessage(),
       urlBarHidingEnabled: urlBarHidingEnabled,
       shareState: shareState?.rawValue,
@@ -22,8 +20,8 @@ extension CustomTabsOptionsConverter on CustomTabsOptions {
 }
 
 extension CustomTabsAnimationsConverter on CustomTabsAnimations {
-  CustomTabsAnimationsMessage toMessage() {
-    final message = CustomTabsAnimationsMessage();
+  Animations toMessage() {
+    final message = Animations();
     if (startEnter != null && startExit != null) {
       message.startEnter = startEnter;
       message.startExit = startExit;
@@ -38,8 +36,8 @@ extension CustomTabsAnimationsConverter on CustomTabsAnimations {
 
 extension CustomTabsBrowserConfigurationConverter
     on CustomTabsBrowserConfiguration {
-  CustomTabsBrowserConfigurationMessage toMessage() {
-    return CustomTabsBrowserConfigurationMessage(
+  BrowserConfiguration toMessage() {
+    return BrowserConfiguration(
       prefersExternalBrowser: prefersExternalBrowser,
       prefersDefaultBrowser: prefersDefaultBrowser,
       fallbackCustomTabs: fallbackCustomTabs,
@@ -49,8 +47,8 @@ extension CustomTabsBrowserConfigurationConverter
 }
 
 extension CustomTabsCloseButtonConverter on CustomTabsCloseButton {
-  CustomTabsCloseButtonMessage toMessage() {
-    return CustomTabsCloseButtonMessage(
+  CloseButton toMessage() {
+    return CloseButton(
       icon: icon,
       position: position?.rawValue,
     );
@@ -58,8 +56,8 @@ extension CustomTabsCloseButtonConverter on CustomTabsCloseButton {
 }
 
 extension CustomTabsColorSchemesConverter on CustomTabsColorSchemes {
-  CustomTabsColorSchemesMessage toMessage() {
-    return CustomTabsColorSchemesMessage(
+  ColorSchemes toMessage() {
+    return ColorSchemes(
       colorScheme: colorScheme?.rawValue,
       lightParams: lightParams?.toMessage(),
       darkParams: darkParams?.toMessage(),
@@ -69,19 +67,19 @@ extension CustomTabsColorSchemesConverter on CustomTabsColorSchemes {
 }
 
 extension CustomTabsColorSchemeParamsConverter on CustomTabsColorSchemeParams {
-  CustomTabsColorSchemeParamsMessage toMessage() {
-    return CustomTabsColorSchemeParamsMessage(
-      toolbarColor: toolbarColor?.toHexString(),
-      navigationBarColor: navigationBarColor?.toHexString(),
-      navigationBarDividerColor: navigationBarDividerColor?.toHexString(),
+  ColorSchemeParams toMessage() {
+    return ColorSchemeParams(
+      toolbarColor: toolbarColor?.value,
+      navigationBarColor: navigationBarColor?.value,
+      navigationBarDividerColor: navigationBarDividerColor?.value,
     );
   }
 }
 
 extension PartialCustomTabsConfigurationConverter
     on PartialCustomTabsConfiguration {
-  PartialCustomTabsConfigurationMessage toMessage() {
-    final message = PartialCustomTabsConfigurationMessage(
+  PartialConfiguration toMessage() {
+    final message = PartialConfiguration(
       initialHeight: initialHeight,
       activityHeightResizeBehavior: activityHeightResizeBehavior.rawValue,
     );
@@ -89,11 +87,5 @@ extension PartialCustomTabsConfigurationConverter
       message.cornerRadius = min(cornerRadius!, 16);
     }
     return message;
-  }
-}
-
-extension _StringConveter on Color {
-  String toHexString() {
-    return '#${value.toRadixString(16)}';
   }
 }

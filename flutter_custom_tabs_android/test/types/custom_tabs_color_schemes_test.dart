@@ -37,24 +37,24 @@ void main() {
 
       final actual = schemes.toMessage();
       expect(actual.colorScheme, schemes.colorScheme!.rawValue);
-      expect(actual.lightParams, isA<CustomTabsColorSchemeParamsMessage>());
-      expect(actual.darkParams, isA<CustomTabsColorSchemeParamsMessage>());
-      expect(actual.defaultPrams, isA<CustomTabsColorSchemeParamsMessage>());
+      expect(actual.lightParams, isA<ColorSchemeParams>());
+      expect(actual.darkParams, isA<ColorSchemeParams>());
+      expect(actual.defaultPrams, isA<ColorSchemeParams>());
 
       final actualLightParams = actual.lightParams!;
-      expect(actualLightParams.toolbarColor, '#ffffdbaa');
-      expect(actualLightParams.navigationBarColor, '#ffffdbab');
-      expect(actualLightParams.navigationBarDividerColor, '#ffffdbac');
+      expect(actualLightParams.toolbarColor, 0xFFFFDBAA);
+      expect(actualLightParams.navigationBarColor, 0xFFFFDBAB);
+      expect(actualLightParams.navigationBarDividerColor, 0xFFFFDBAC);
 
       final actualDarkParams = actual.darkParams!;
-      expect(actualDarkParams.toolbarColor, '#ffffdbba');
-      expect(actualDarkParams.navigationBarColor, '#ffffdbbb');
-      expect(actualDarkParams.navigationBarDividerColor, '#ffffdbbc');
+      expect(actualDarkParams.toolbarColor, 0xFFFFDBBA);
+      expect(actualDarkParams.navigationBarColor, 0xFFFFDBBB);
+      expect(actualDarkParams.navigationBarDividerColor, 0xFFFFDBBC);
 
       final actualDefaultParams = actual.defaultPrams!;
-      expect(actualDefaultParams.toolbarColor, '#ffffdbca');
-      expect(actualDefaultParams.navigationBarColor, '#ffffdbcb');
-      expect(actualDefaultParams.navigationBarDividerColor, '#ffffdbcc');
+      expect(actualDefaultParams.toolbarColor, 0xFFFFDBCA);
+      expect(actualDefaultParams.navigationBarColor, 0xFFFFDBCB);
+      expect(actualDefaultParams.navigationBarDividerColor, 0xFFFFDBCC);
     });
   });
 
@@ -74,9 +74,9 @@ void main() {
         navigationBarDividerColor: Color(0xFFFFCBAC),
       );
       final actual = params.toMessage();
-      expect(actual.toolbarColor, '#ffffcbaa');
-      expect(actual.navigationBarColor, '#ffffcbab');
-      expect(actual.navigationBarDividerColor, '#ffffcbac');
+      expect(actual.toolbarColor, 0xFFFFCBAA);
+      expect(actual.navigationBarColor, 0xFFFFCBAB);
+      expect(actual.navigationBarDividerColor, 0xFFFFCBAC);
     });
   });
 

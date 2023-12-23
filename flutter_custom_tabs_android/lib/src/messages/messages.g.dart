@@ -15,8 +15,8 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-class CustomTabsOptionsMessage {
-  CustomTabsOptionsMessage({
+class CustomTabsIntentOptions {
+  CustomTabsIntentOptions({
     this.colorSchemes,
     this.urlBarHidingEnabled,
     this.shareState,
@@ -28,7 +28,7 @@ class CustomTabsOptionsMessage {
     this.partial,
   });
 
-  CustomTabsColorSchemesMessage? colorSchemes;
+  ColorSchemes? colorSchemes;
 
   bool? urlBarHidingEnabled;
 
@@ -38,13 +38,13 @@ class CustomTabsOptionsMessage {
 
   bool? instantAppsEnabled;
 
-  CustomTabsCloseButtonMessage? closeButton;
+  CloseButton? closeButton;
 
-  CustomTabsAnimationsMessage? animations;
+  Animations? animations;
 
-  CustomTabsBrowserConfigurationMessage? browser;
+  BrowserConfiguration? browser;
 
-  PartialCustomTabsConfigurationMessage? partial;
+  PartialConfiguration? partial;
 
   Object encode() {
     return <Object?>[
@@ -60,34 +60,34 @@ class CustomTabsOptionsMessage {
     ];
   }
 
-  static CustomTabsOptionsMessage decode(Object result) {
+  static CustomTabsIntentOptions decode(Object result) {
     result as List<Object?>;
-    return CustomTabsOptionsMessage(
+    return CustomTabsIntentOptions(
       colorSchemes: result[0] != null
-          ? CustomTabsColorSchemesMessage.decode(result[0]! as List<Object?>)
+          ? ColorSchemes.decode(result[0]! as List<Object?>)
           : null,
       urlBarHidingEnabled: result[1] as bool?,
       shareState: result[2] as int?,
       showTitle: result[3] as bool?,
       instantAppsEnabled: result[4] as bool?,
       closeButton: result[5] != null
-          ? CustomTabsCloseButtonMessage.decode(result[5]! as List<Object?>)
+          ? CloseButton.decode(result[5]! as List<Object?>)
           : null,
       animations: result[6] != null
-          ? CustomTabsAnimationsMessage.decode(result[6]! as List<Object?>)
+          ? Animations.decode(result[6]! as List<Object?>)
           : null,
       browser: result[7] != null
-          ? CustomTabsBrowserConfigurationMessage.decode(result[7]! as List<Object?>)
+          ? BrowserConfiguration.decode(result[7]! as List<Object?>)
           : null,
       partial: result[8] != null
-          ? PartialCustomTabsConfigurationMessage.decode(result[8]! as List<Object?>)
+          ? PartialConfiguration.decode(result[8]! as List<Object?>)
           : null,
     );
   }
 }
 
-class CustomTabsAnimationsMessage {
-  CustomTabsAnimationsMessage({
+class Animations {
+  Animations({
     this.startEnter,
     this.startExit,
     this.endEnter,
@@ -111,9 +111,9 @@ class CustomTabsAnimationsMessage {
     ];
   }
 
-  static CustomTabsAnimationsMessage decode(Object result) {
+  static Animations decode(Object result) {
     result as List<Object?>;
-    return CustomTabsAnimationsMessage(
+    return Animations(
       startEnter: result[0] as String?,
       startExit: result[1] as String?,
       endEnter: result[2] as String?,
@@ -122,8 +122,8 @@ class CustomTabsAnimationsMessage {
   }
 }
 
-class CustomTabsBrowserConfigurationMessage {
-  CustomTabsBrowserConfigurationMessage({
+class BrowserConfiguration {
+  BrowserConfiguration({
     required this.prefersExternalBrowser,
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
@@ -147,9 +147,9 @@ class CustomTabsBrowserConfigurationMessage {
     ];
   }
 
-  static CustomTabsBrowserConfigurationMessage decode(Object result) {
+  static BrowserConfiguration decode(Object result) {
     result as List<Object?>;
-    return CustomTabsBrowserConfigurationMessage(
+    return BrowserConfiguration(
       prefersExternalBrowser: result[0]! as bool,
       prefersDefaultBrowser: result[1] as bool?,
       fallbackCustomTabs: (result[2] as List<Object?>?)?.cast<String?>(),
@@ -158,8 +158,8 @@ class CustomTabsBrowserConfigurationMessage {
   }
 }
 
-class CustomTabsCloseButtonMessage {
-  CustomTabsCloseButtonMessage({
+class CloseButton {
+  CloseButton({
     this.icon,
     this.position,
   });
@@ -175,17 +175,17 @@ class CustomTabsCloseButtonMessage {
     ];
   }
 
-  static CustomTabsCloseButtonMessage decode(Object result) {
+  static CloseButton decode(Object result) {
     result as List<Object?>;
-    return CustomTabsCloseButtonMessage(
+    return CloseButton(
       icon: result[0] as String?,
       position: result[1] as int?,
     );
   }
 }
 
-class CustomTabsColorSchemesMessage {
-  CustomTabsColorSchemesMessage({
+class ColorSchemes {
+  ColorSchemes({
     this.colorScheme,
     this.lightParams,
     this.darkParams,
@@ -194,11 +194,11 @@ class CustomTabsColorSchemesMessage {
 
   int? colorScheme;
 
-  CustomTabsColorSchemeParamsMessage? lightParams;
+  ColorSchemeParams? lightParams;
 
-  CustomTabsColorSchemeParamsMessage? darkParams;
+  ColorSchemeParams? darkParams;
 
-  CustomTabsColorSchemeParamsMessage? defaultPrams;
+  ColorSchemeParams? defaultPrams;
 
   Object encode() {
     return <Object?>[
@@ -209,35 +209,35 @@ class CustomTabsColorSchemesMessage {
     ];
   }
 
-  static CustomTabsColorSchemesMessage decode(Object result) {
+  static ColorSchemes decode(Object result) {
     result as List<Object?>;
-    return CustomTabsColorSchemesMessage(
+    return ColorSchemes(
       colorScheme: result[0] as int?,
       lightParams: result[1] != null
-          ? CustomTabsColorSchemeParamsMessage.decode(result[1]! as List<Object?>)
+          ? ColorSchemeParams.decode(result[1]! as List<Object?>)
           : null,
       darkParams: result[2] != null
-          ? CustomTabsColorSchemeParamsMessage.decode(result[2]! as List<Object?>)
+          ? ColorSchemeParams.decode(result[2]! as List<Object?>)
           : null,
       defaultPrams: result[3] != null
-          ? CustomTabsColorSchemeParamsMessage.decode(result[3]! as List<Object?>)
+          ? ColorSchemeParams.decode(result[3]! as List<Object?>)
           : null,
     );
   }
 }
 
-class CustomTabsColorSchemeParamsMessage {
-  CustomTabsColorSchemeParamsMessage({
+class ColorSchemeParams {
+  ColorSchemeParams({
     this.toolbarColor,
     this.navigationBarColor,
     this.navigationBarDividerColor,
   });
 
-  String? toolbarColor;
+  int? toolbarColor;
 
-  String? navigationBarColor;
+  int? navigationBarColor;
 
-  String? navigationBarDividerColor;
+  int? navigationBarDividerColor;
 
   Object encode() {
     return <Object?>[
@@ -247,18 +247,18 @@ class CustomTabsColorSchemeParamsMessage {
     ];
   }
 
-  static CustomTabsColorSchemeParamsMessage decode(Object result) {
+  static ColorSchemeParams decode(Object result) {
     result as List<Object?>;
-    return CustomTabsColorSchemeParamsMessage(
-      toolbarColor: result[0] as String?,
-      navigationBarColor: result[1] as String?,
-      navigationBarDividerColor: result[2] as String?,
+    return ColorSchemeParams(
+      toolbarColor: result[0] as int?,
+      navigationBarColor: result[1] as int?,
+      navigationBarDividerColor: result[2] as int?,
     );
   }
 }
 
-class PartialCustomTabsConfigurationMessage {
-  PartialCustomTabsConfigurationMessage({
+class PartialConfiguration {
+  PartialConfiguration({
     required this.initialHeight,
     required this.activityHeightResizeBehavior,
     this.cornerRadius,
@@ -278,9 +278,9 @@ class PartialCustomTabsConfigurationMessage {
     ];
   }
 
-  static PartialCustomTabsConfigurationMessage decode(Object result) {
+  static PartialConfiguration decode(Object result) {
     result as List<Object?>;
-    return PartialCustomTabsConfigurationMessage(
+    return PartialConfiguration(
       initialHeight: result[0]! as double,
       activityHeightResizeBehavior: result[1]! as int,
       cornerRadius: result[2] as int?,
@@ -292,25 +292,25 @@ class _CustomTabsApiCodec extends StandardMessageCodec {
   const _CustomTabsApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is CustomTabsAnimationsMessage) {
+    if (value is Animations) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
-    } else if (value is CustomTabsBrowserConfigurationMessage) {
+    } else if (value is BrowserConfiguration) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
-    } else if (value is CustomTabsCloseButtonMessage) {
+    } else if (value is CloseButton) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
-    } else if (value is CustomTabsColorSchemeParamsMessage) {
+    } else if (value is ColorSchemeParams) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    } else if (value is CustomTabsColorSchemesMessage) {
+    } else if (value is ColorSchemes) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
-    } else if (value is CustomTabsOptionsMessage) {
+    } else if (value is CustomTabsIntentOptions) {
       buffer.putUint8(133);
       writeValue(buffer, value.encode());
-    } else if (value is PartialCustomTabsConfigurationMessage) {
+    } else if (value is PartialConfiguration) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
     } else {
@@ -322,19 +322,19 @@ class _CustomTabsApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return CustomTabsAnimationsMessage.decode(readValue(buffer)!);
+        return Animations.decode(readValue(buffer)!);
       case 129: 
-        return CustomTabsBrowserConfigurationMessage.decode(readValue(buffer)!);
+        return BrowserConfiguration.decode(readValue(buffer)!);
       case 130: 
-        return CustomTabsCloseButtonMessage.decode(readValue(buffer)!);
+        return CloseButton.decode(readValue(buffer)!);
       case 131: 
-        return CustomTabsColorSchemeParamsMessage.decode(readValue(buffer)!);
+        return ColorSchemeParams.decode(readValue(buffer)!);
       case 132: 
-        return CustomTabsColorSchemesMessage.decode(readValue(buffer)!);
+        return ColorSchemes.decode(readValue(buffer)!);
       case 133: 
-        return CustomTabsOptionsMessage.decode(readValue(buffer)!);
+        return CustomTabsIntentOptions.decode(readValue(buffer)!);
       case 134: 
-        return PartialCustomTabsConfigurationMessage.decode(readValue(buffer)!);
+        return PartialConfiguration.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -351,7 +351,7 @@ class CustomTabsApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _CustomTabsApiCodec();
 
-  Future<void> launch(String urlString, {required bool prefersDeepLink, CustomTabsOptionsMessage? options,}) async {
+  Future<void> launch(String urlString, {required bool prefersDeepLink, CustomTabsIntentOptions? options,}) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launch';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,

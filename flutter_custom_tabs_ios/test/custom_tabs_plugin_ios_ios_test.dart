@@ -96,7 +96,7 @@ class _MockCustomTabsApi implements CustomTabsApi {
   Future<void> launch(
     String url, {
     required bool prefersDeepLink,
-    SafariViewControllerOptionsMessage? options,
+    SFSafariViewControllerOptions? options,
   }) async {
     expect(url, this.url);
     expect(prefersDeepLink, this.prefersDeepLink);

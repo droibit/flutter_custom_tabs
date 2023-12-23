@@ -74,11 +74,11 @@ void main() {
       expect(actual.shareState, options.shareState!.rawValue);
       expect(actual.showTitle, options.showTitle);
       expect(actual.instantAppsEnabled, options.instantAppsEnabled);
-      expect(actual.colorSchemes, isA<CustomTabsColorSchemesMessage>());
-      expect(actual.animations, isA<CustomTabsAnimationsMessage>());
-      expect(actual.closeButton, isA<CustomTabsCloseButtonMessage>());
-      expect(actual.browser, isA<CustomTabsBrowserConfigurationMessage>());
-      expect(actual.partial, isA<PartialCustomTabsConfigurationMessage>());
+      expect(actual.colorSchemes, isA<ColorSchemes>());
+      expect(actual.animations, isA<Animations>());
+      expect(actual.closeButton, isA<CloseButton>());
+      expect(actual.browser, isA<BrowserConfiguration>());
+      expect(actual.partial, isA<PartialConfiguration>());
 
       final actualColorSchemes = actual.colorSchemes!;
       expect(
@@ -86,17 +86,17 @@ void main() {
         options.colorSchemes!.colorScheme!.rawValue,
       );
       final actualLightParams = actualColorSchemes.lightParams!;
-      expect(actualLightParams.toolbarColor, '#ffffebaa');
-      expect(actualLightParams.navigationBarColor, '#ffffebab');
-      expect(actualLightParams.navigationBarDividerColor, '#ffffebac');
+      expect(actualLightParams.toolbarColor, 0xFFFFEBAA);
+      expect(actualLightParams.navigationBarColor, 0xFFFFEBAB);
+      expect(actualLightParams.navigationBarDividerColor, 0xFFFFEBAC);
       final actualDarkParams = actualColorSchemes.darkParams!;
-      expect(actualDarkParams.toolbarColor, '#ffffebba');
-      expect(actualDarkParams.navigationBarColor, '#ffffebbb');
-      expect(actualDarkParams.navigationBarDividerColor, '#ffffebbc');
+      expect(actualDarkParams.toolbarColor, 0xFFFFEBBA);
+      expect(actualDarkParams.navigationBarColor, 0xFFFFEBBB);
+      expect(actualDarkParams.navigationBarDividerColor, 0xFFFFEBBC);
       final actualDefaultParams = actualColorSchemes.defaultPrams!;
-      expect(actualDefaultParams.toolbarColor, '#ffffebca');
-      expect(actualDefaultParams.navigationBarColor, '#ffffebcb');
-      expect(actualDefaultParams.navigationBarDividerColor, '#ffffebcc');
+      expect(actualDefaultParams.toolbarColor, 0xFFFFEBCA);
+      expect(actualDefaultParams.navigationBarColor, 0xFFFFEBCB);
+      expect(actualDefaultParams.navigationBarDividerColor, 0xFFFFEBCC);
 
       final expectedAnimations = options.animations!;
       final actualAnimations = actual.animations!;
