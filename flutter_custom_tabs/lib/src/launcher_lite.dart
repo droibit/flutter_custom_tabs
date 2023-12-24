@@ -22,7 +22,7 @@ import 'types/launch_options.dart';
 ///     ),
 ///   );
 /// } catch (e) {
-///   // An exception is thrown if browser app is not installed on Android device.
+///   // If the URL launch fails, an exception will be thrown. (For example, if no browser app is installed on the Android device.)
 /// }
 @experimental
 Future<void> launchUrl(

@@ -28,7 +28,8 @@ import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_C
 import static java.util.Objects.requireNonNull;
 
 class CustomTabsLauncher implements Messages.CustomTabsApi {
-    private static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
+    @VisibleForTesting
+    static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
     private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
     private final @NonNull CustomTabsFactory customTabsFactory;

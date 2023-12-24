@@ -46,15 +46,35 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         guard let options else {
-            launcher.open(url) { _ in
-                completion(.success(()))
+            launcher.open(url) { opened in
+                if opened {
+                    completion(.success(()))
+                } else {
+                    completion(.failure(
+                        FlutterError(message: "Failed to launch external browser.")
+                    ))
+                }
             }
             return
         }
 
         let safariViewController = SFSafariViewController.make(url: url, options: options)
-        launcher.present(safariViewController) {
-            completion(.success(()))
+        launcher.present(safariViewController) { presented in
+            if presented {
+                completion(.success(()))
+            } else {
+                completion(.failure(
+                    FlutterError(message: "Failed to launch SFSafariViewController.")
+                ))
+            }
         }
     }
+}
+
+extension FlutterError: Error {
+    convenience init(message: String) {
+        self.init(code: Self.erorCode, message: message, details: nil)
+    }
+
+    static let erorCode = "LAUNCH_ERROR"
 }
