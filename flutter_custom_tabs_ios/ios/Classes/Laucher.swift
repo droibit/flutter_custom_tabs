@@ -11,13 +11,17 @@ open class Launcher {
         UIApplication.shared.open(url, options: options, completionHandler: completion)
     }
 
-    open func present(_ viewControllerToPresent: UIViewController, completion: (() -> Void)? = nil) {
+    open func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
         if let topViewController = UIWindow.keyWindow?.topViewController() {
             dismissStack.append { [weak viewControllerToPresent] in
                 viewControllerToPresent?.dismiss(animated: true)
             }
             topViewController
-                .present(viewControllerToPresent, animated: true, completion: completion)
+                .present(viewControllerToPresent, animated: true) {
+                    completion?(true)
+                }
+        } else {
+            completion?(false)
         }
     }
 

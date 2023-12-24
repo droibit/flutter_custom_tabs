@@ -59,6 +59,9 @@ public class CustomTabsLauncherTest {
             fail("error");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(FlutterError.class);
+
+            final FlutterError actualError = ((FlutterError) e);
+            assertThat(actualError.code).isEqualTo(CustomTabsLauncher.CODE_LAUNCH_ERROR);
         }
     }
 
@@ -122,6 +125,9 @@ public class CustomTabsLauncherTest {
             fail("error");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(FlutterError.class);
+
+            final FlutterError actualError = ((FlutterError) e);
+            assertThat(actualError.code).isEqualTo(CustomTabsLauncher.CODE_LAUNCH_ERROR);
         }
     }
 
@@ -198,6 +204,9 @@ public class CustomTabsLauncherTest {
             fail("error");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(FlutterError.class);
+
+            final FlutterError actualError = ((FlutterError) e);
+            assertThat(actualError.code).isEqualTo(CustomTabsLauncher.CODE_LAUNCH_ERROR);
         }
     }
 }

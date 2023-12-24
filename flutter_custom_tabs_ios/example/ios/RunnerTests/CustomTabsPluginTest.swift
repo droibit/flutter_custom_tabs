@@ -19,10 +19,33 @@ final class CustomTabsPluginTest: XCTestCase {
     }
 
     func testPresentSFSafariViewController() {
+        launcher.setPresentCompletionHandlerResults(true)
+
         let url = URL(string: "https://example.com")!
         let options = SFSafariViewControllerOptions()
         plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: options) { result in
             if case .failure = result {
+                XCTFail("error")
+            }
+        }
+        XCTAssertTrue(launcher.openArgumentStack.isEmpty)
+        XCTAssertEqual(launcher.presentArgumentStack.count, 1)
+
+        let actualArgment = launcher.presentArgumentStack.first!
+        XCTAssertTrue(actualArgment.viewControllerToPresent is SFSafariViewController)
+    }
+
+    func testFailedToPresentSFSafariViewController() {
+        launcher.setPresentCompletionHandlerResults(false)
+
+        let url = URL(string: "https://example.com")!
+        let options = SFSafariViewControllerOptions()
+        plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: options) { result in
+            if case let .failure(error) = result {
+                XCTAssertTrue(error is FlutterError)
+                let actualError = error as! FlutterError
+                XCTAssertEqual(actualError.code, FlutterError.erorCode)
+            } else {
                 XCTFail("error")
             }
         }
@@ -39,6 +62,24 @@ final class CustomTabsPluginTest: XCTestCase {
         let url = URL(string: "https://example.com")!
         plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: nil) { result in
             if case .failure = result {
+                XCTFail("error")
+            }
+        }
+        XCTAssertEqual(launcher.openArgumentStack, [
+            .init(url: url, options: [:]),
+        ])
+    }
+
+    func testFailedToOpenExternalBrowser() throws {
+        launcher.setOpenCompletionHandlerResults(false)
+
+        let url = URL(string: "https://example.com")!
+        plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: nil) { result in
+            if case let .failure(error) = result {
+                XCTAssertTrue(error is FlutterError)
+                let actualError = error as! FlutterError
+                XCTAssertEqual(actualError.code, FlutterError.erorCode)
+            } else {
                 XCTFail("error")
             }
         }
@@ -82,6 +123,7 @@ final class CustomTabsPluginTest: XCTestCase {
 
     func testFallBackToSFSfariViewController() throws {
         launcher.setOpenCompletionHandlerResults(false)
+        launcher.setPresentCompletionHandlerResults(true)
 
         let url = URL(string: "https://example.com")!
         let options = SFSafariViewControllerOptions()

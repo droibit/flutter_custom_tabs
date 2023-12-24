@@ -4,6 +4,7 @@ import Foundation
 
 class MockLauncher: Launcher {
     private var openCompletionHandlerResults = [Bool]()
+    private var presentCompletionHandlerResults = [Bool]()
     private(set) var openArgumentStack = [OpenArgument]()
     private(set) var presentArgumentStack = [PresentArgument]()
 
@@ -11,6 +12,10 @@ class MockLauncher: Launcher {
 
     func setOpenCompletionHandlerResults(_ values: Bool...) {
         openCompletionHandlerResults.append(contentsOf: values)
+    }
+
+    func setPresentCompletionHandlerResults(_ values: Bool...) {
+        presentCompletionHandlerResults.append(contentsOf: values)
     }
 
     override func open(
@@ -24,11 +29,13 @@ class MockLauncher: Launcher {
         completion?(opened)
     }
 
-    override func present(_ viewControllerToPresent: UIViewController, completion: (() -> Void)? = nil) {
+    override func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
         presentArgumentStack.append(
             .init(viewControllerToPresent: viewControllerToPresent)
         )
-        completion?()
+
+        let presented = presentCompletionHandlerResults.removeFirst()
+        completion?(presented)
     }
 }
 
