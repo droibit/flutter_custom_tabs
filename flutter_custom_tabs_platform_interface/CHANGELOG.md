@@ -1,7 +1,13 @@
+## 2.0.0-beta.2
+
+- Adds `PlatformOptions` as a base option for platform packages.
+- Moves `CustomTabsOptions` to the `flutter_custom_tabs_android` package plugin.
+- Moves `SafariViewControllerOptions` to the `flutter_custom_tabs_ios` package plugin.
+
 ## 2.0.0-beta.1
 
-- Refactor Custom Tabs browser configurations to `CustomTabsBrowserConfiguration`([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
-- Add an option to `CustomTabsBrowserConfiguration` to prioritize the default browser that supports Custom Tabs over Chrome([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
+- Refactors Custom Tabs browser configurations to `CustomTabsBrowserConfiguration`([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
+- Adds an option to `CustomTabsBrowserConfiguration` to prioritize the default browser that supports Custom Tabs over Chrome([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
 
 ## 2.0.0-beta
 
