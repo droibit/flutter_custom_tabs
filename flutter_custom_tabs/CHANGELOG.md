@@ -1,3 +1,20 @@
+## 2.0.0-beta.2
+
+- Supports launching a URL in an external browser ([#157](https://github.com/droibit/flutter_custom_tabs/pull/157)).
+- Makes `LaunchOptions` class immutable ([#158](https://github.com/droibit/flutter_custom_tabs/pull/158)).
+- Renames `appBarFixed` property to `barFixingEnabled` in `LaunchOptions` class ([#152](https://github.com/droibit/flutter_custom_tabs/pull/152)).
+- Renames `CustomTabsCloseButtonIcon` class to `CustomTabsCloseButtonIcons`.
+- Makes `SystemNavigationBarParams` class constructor a constant constructor ([#156](https://github.com/droibit/flutter_custom_tabs/pull/156))
+- Fixes a bug where the share action is not added when using the lightweight version on Android ([#155](https://github.com/droibit/flutter_custom_tabs/pull/155)).
+- The lightweight version of `flutter_custom_tabs` prioritizes launching the default browser that supports Custom Tabs over Chrome ([#153](https://github.com/droibit/flutter_custom_tabs/pull/153)).
+- Updates the `flutter_custom_tabs_platform_interface` package to version 2.0.0-beta.2.
+- Updates the `flutter_custom_tabs_platform_android` package to version 2.0.0-beta.2.
+- Updates the `flutter_custom_tabs_platform_ios` package to version 2.0.0-beta.1.
+- Updates the `flutter_custom_tabs_platform_web` package to version 2.0.0-beta.1.
+
+For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md).
+
+
 ## 2.0.0-beta.1
 
 - Adds support for prioritizing the default browser over Chrome on Android([#143](https://github.com/droibit/flutter_custom_tabs/issues/143), [#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).
