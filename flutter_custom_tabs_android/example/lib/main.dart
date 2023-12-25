@@ -88,7 +88,6 @@ Future<void> _launchURL(BuildContext context) async {
       ),
     );
   } catch (e) {
-    // An exception is thrown if browser app is not installed on Android device.
     debugPrint(e.toString());
   }
 }
