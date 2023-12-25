@@ -1,6 +1,10 @@
+## 2.0.0-beta.1
+
+- Updates `flutter_custom_tabs_platform_interface` to v2.0.0-beta.2.
+
 ## 2.0.0-beta+1
 
-- Tweak the description of "Import the package" in the README.
+- Tweaks the description of "Import the package" in the README.
 
 ## 2.0.0-beta
 
