@@ -1,6 +1,6 @@
 name: flutter_custom_tabs_platform_interface
 description: A common platform interface for the flutter_custom_tabs plugin.
-version: 2.0.0-beta.1
+version: 2.0.0-beta.2
 repository: https://github.com/droibit/flutter_custom_tabs/tree/flutter_custom_tabs_2.0/flutter_custom_tabs_platform_interface
 
 environment:
