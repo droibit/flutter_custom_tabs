@@ -73,8 +73,8 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
 
 extension FlutterError: Error {
     convenience init(message: String) {
-        self.init(code: Self.erorCode, message: message, details: nil)
+        self.init(code: Self.errorCode, message: message, details: nil)
     }
 
-    static let erorCode = "LAUNCH_ERROR"
+    static let errorCode = "LAUNCH_ERROR"
 }

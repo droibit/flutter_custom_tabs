@@ -71,7 +71,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
 
         if #available(iOS 15, *) {
             XCTAssertNotNil(actual.sheetPresentationController)
-            // Validation of the rest of testMakeWithCompleteSheetConfinuration's test.
+            // Validation of the rest of `testMakeWithCompleteSheetConfinuration`.
             XCTAssertEqual(
                 actual.sheetPresentationController!.largestUndimmedDetentIdentifier,
                 .medium
@@ -80,7 +80,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
     }
 
     @available(iOS 15, *)
-    func testMakeWithMinimumSheetConfinuration() {
+    func testMakeWithMinimumSheetConfiguration() {
         let actualViewController = SFSafariViewController.make(
             url: URL(string: "https://example.com")!,
             options: .init(
@@ -102,7 +102,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
     }
 
     @available(iOS 15, *)
-    func testMakeWithCompleteSheetConfinuration() {
+    func testMakeWithCompleteSheetConfiguration() {
         let srcSheet = UISheetPresentationControllerConfiguration(
             detents: ["large", "medium"],
             largestUndimmedDetentIdentifier: "large",

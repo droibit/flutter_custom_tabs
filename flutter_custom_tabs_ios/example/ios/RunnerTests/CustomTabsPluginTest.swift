@@ -31,8 +31,8 @@ final class CustomTabsPluginTest: XCTestCase {
         XCTAssertTrue(launcher.openArgumentStack.isEmpty)
         XCTAssertEqual(launcher.presentArgumentStack.count, 1)
 
-        let actualArgment = launcher.presentArgumentStack.first!
-        XCTAssertTrue(actualArgment.viewControllerToPresent is SFSafariViewController)
+        let actualArgument = launcher.presentArgumentStack.first!
+        XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
     }
 
     func testFailedToPresentSFSafariViewController() {
@@ -44,7 +44,7 @@ final class CustomTabsPluginTest: XCTestCase {
             if case let .failure(error) = result {
                 XCTAssertTrue(error is FlutterError)
                 let actualError = error as! FlutterError
-                XCTAssertEqual(actualError.code, FlutterError.erorCode)
+                XCTAssertEqual(actualError.code, FlutterError.errorCode)
             } else {
                 XCTFail("error")
             }
@@ -52,8 +52,8 @@ final class CustomTabsPluginTest: XCTestCase {
         XCTAssertTrue(launcher.openArgumentStack.isEmpty)
         XCTAssertEqual(launcher.presentArgumentStack.count, 1)
 
-        let actualArgment = launcher.presentArgumentStack.first!
-        XCTAssertTrue(actualArgment.viewControllerToPresent is SFSafariViewController)
+        let actualArgument = launcher.presentArgumentStack.first!
+        XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
     }
 
     func testOpenExternalBrowser() throws {
@@ -78,7 +78,7 @@ final class CustomTabsPluginTest: XCTestCase {
             if case let .failure(error) = result {
                 XCTAssertTrue(error is FlutterError)
                 let actualError = error as! FlutterError
-                XCTAssertEqual(actualError.code, FlutterError.erorCode)
+                XCTAssertEqual(actualError.code, FlutterError.errorCode)
             } else {
                 XCTFail("error")
             }
@@ -105,7 +105,7 @@ final class CustomTabsPluginTest: XCTestCase {
         XCTAssertTrue(launcher.presentArgumentStack.isEmpty)
     }
 
-    func testlFallBackToExternalBrowser() throws {
+    func testFallBackToExternalBrowser() throws {
         launcher.setOpenCompletionHandlerResults(false, true)
 
         let url = URL(string: "https://example.com")!
@@ -121,7 +121,7 @@ final class CustomTabsPluginTest: XCTestCase {
         XCTAssertTrue(launcher.presentArgumentStack.isEmpty)
     }
 
-    func testFallBackToSFSfariViewController() throws {
+    func testFallBackToSFSafariViewController() throws {
         launcher.setOpenCompletionHandlerResults(false)
         launcher.setPresentCompletionHandlerResults(true)
 
@@ -137,7 +137,7 @@ final class CustomTabsPluginTest: XCTestCase {
         ])
         XCTAssertEqual(launcher.presentArgumentStack.count, 1)
 
-        let actualArgment = launcher.presentArgumentStack.first!
-        XCTAssertTrue(actualArgment.viewControllerToPresent is SFSafariViewController)
+        let actualArgument = launcher.presentArgumentStack.first!
+        XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
     }
 }
