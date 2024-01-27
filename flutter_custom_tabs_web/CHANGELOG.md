@@ -1,3 +1,7 @@
+## 2.0.0
+
+- Fixes the LICENSE file.
+
 ## 2.0.0-beta.1
 
 - Updates `flutter_custom_tabs_platform_interface` to v2.0.0-beta.2.
