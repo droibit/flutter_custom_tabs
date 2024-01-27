@@ -1,3 +1,7 @@
+## 2.0.0+1
+
+- Fixes the LICENSE file.
+
 ## 2.0.0
 
 - No changes except for version bump.
