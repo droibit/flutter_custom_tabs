@@ -1,3 +1,7 @@
+## 2.0.0
+
+- No changes except for version bump.
+
 ## 2.0.0-beta.2
 
 - Supports launching a URL in an external browser ([#157](https://github.com/droibit/flutter_custom_tabs/pull/157)).
