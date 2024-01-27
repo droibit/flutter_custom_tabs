@@ -87,7 +87,7 @@ See the example app for more complex examples.
 ### Usage of the lightweight version
 
 This package supports a wide range of Custom Tabs customizations,   
-but we have experimentally introduced a lightweight URL launch for users who don't need as much in v2.0.0.
+but we have introduced a lightweight URL launch for users who don't need as much in v2.0.0.
 
 > [!NOTE]  
 > On Android, **the lightweight version** prefers launching the default browser that supports Custom Tabs over Chrome.
