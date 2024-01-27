@@ -1,3 +1,7 @@
+## 2.0.0
+
+- No changes except for version bump.
+
 ## 2.0.0-beta.2
 
 - Adds `PlatformOptions` as a base option for platform packages ([#150](https://github.com/droibit/flutter_custom_tabs/pull/150)).
