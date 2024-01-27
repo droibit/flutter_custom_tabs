@@ -1,3 +1,18 @@
+## 2.0.0
+
+Highlights of changes from v1.x:
+- Refactors the signature for launching a URL in Custom Tabs.
+- Refactors the signature for manually closing Custom Tabs.
+- Supports the launch of a deep link URL.
+- Supports the launch of Custom Tabs as a bottom sheet.
+- Supports launching a URL in an external browser.
+- Introduces a lightweight version of URL launching.
+- Updates the minimum supported SDK version to Flutter 3.0.0/Dart 2.17.
+
+**NOTE:**  
+Version 2.0.0 includes many breaking changes from version 1.x. For more information, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md#migrate-flutter_custom_tabs-from-v1x-to-v200).
+
+
 ## 2.0.0-beta.2
 
 - Supports launching a URL in an external browser ([#157](https://github.com/droibit/flutter_custom_tabs/pull/157)).
@@ -12,8 +27,7 @@
 - Updates the `flutter_custom_tabs_platform_ios` package to version 2.0.0-beta.1.
 - Updates the `flutter_custom_tabs_platform_web` package to version 2.0.0-beta.1.
 
-For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md).
-
+For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md#migrate-flutter_custom_tabs-from-v1x-to-v200).
 
 ## 2.0.0-beta.1
 
@@ -22,7 +36,7 @@ For details on the changes, please refer to the [migration guide](https://github
 - Updates the `flutter_custom_tabs_platform_android` package to version 2.0.0-beta.1.
 - Updates CocoaPods version to 1.14.2 in example app.
 
-For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md).
+For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md#migrate-flutter_custom_tabs-from-v1x-to-v200).
 
 ## 2.0.0-beta
 
@@ -37,7 +51,7 @@ For details on the changes, please refer to the [migration guide](https://github
 - Migrates iOS platform-specific implementations to the `flutter_custom_tabs_ios` package plugin.
 - Updates the minimum supported SDK version to Flutter 3.0.0/Dart 2.17.
 
-For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/flutter_custom_tabs_2.0/flutter_custom_tabs/doc/migration-guides.md).
+For details on the changes, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md).
 
 ## 1.2.1
 
