@@ -4,7 +4,6 @@ import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:meta/meta.dart';
 
 /// The Configuration for providing minimal options for mobile platforms when launching Custom Tabs by specifying a URL.
-@experimental
 @immutable
 class LaunchOptions {
   /// Creates a [LaunchOptions] instance with the specified options.
@@ -75,7 +74,6 @@ class LaunchOptions {
 }
 
 /// The color configuration of the system navigation bar.
-@experimental
 @immutable
 class SystemNavigationBarParams {
   /// The color of the system navigation bar.

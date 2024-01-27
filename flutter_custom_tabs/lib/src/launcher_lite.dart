@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
-import 'package:meta/meta.dart';
 
 import 'types/launch_options.dart';
 
@@ -24,7 +23,6 @@ import 'types/launch_options.dart';
 /// } catch (e) {
 ///   // If the URL launch fails, an exception will be thrown. (For example, if no browser app is installed on the Android device.)
 /// }
-@experimental
 Future<void> launchUrl(
   Uri url, {
   bool prefersDeepLink = false,
