@@ -1,3 +1,7 @@
+## 2.0.0
+
+- Fixes the LICENSE file.
+
 ## 2.0.0-beta.1
 
 - Supports launching a URL in an external browser ([#157](https://github.com/droibit/flutter_custom_tabs/pull/157)).

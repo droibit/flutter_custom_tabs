@@ -1,7 +1,7 @@
 name: flutter_custom_tabs_ios
 description: iOS platform implementation of flutter_custom_tabs.
-version: 2.0.0-beta.1
-repository: https://github.com/droibit/flutter_custom_tabs/tree/flutter_custom_tabs_2.0/flutter_custom_tabs_ios
+version: 2.0.0
+repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_ios
 
 environment:
   sdk: '>=2.17.0 <4.0.0'
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_custom_tabs_platform_interface: ^2.0.0-beta.2
+  flutter_custom_tabs_platform_interface: ^2.0.0
   meta: ^1.9.1
 
 dev_dependencies:
