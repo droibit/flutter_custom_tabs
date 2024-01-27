@@ -1,3 +1,7 @@
+## 2.0.0+1
+
+- Updates README.md with stable version dependency.
+
 ## 2.0.0
 
 Highlights of changes from v1.x:
