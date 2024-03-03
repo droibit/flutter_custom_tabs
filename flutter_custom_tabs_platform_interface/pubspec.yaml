@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  plugin_platform_interface: ^2.1.5
-  meta: ^1.9.1
+  meta: ^1.10.0
+  plugin_platform_interface: ^2.1.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.4.2
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.1

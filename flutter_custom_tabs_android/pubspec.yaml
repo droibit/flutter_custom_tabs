@@ -23,10 +23,10 @@ dependencies:
   # flutter_custom_tabs_platform_interface: ^2.0.0
   flutter_custom_tabs_platform_interface:
     path: ../flutter_custom_tabs_platform_interface
-  meta: ^1.9.1
+  meta: ^1.10.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.1
   pigeon: ^17.0.0
