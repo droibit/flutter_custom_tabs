@@ -16,10 +16,9 @@ open class Launcher {
             dismissStack.append { [weak viewControllerToPresent] in
                 viewControllerToPresent?.dismiss(animated: true)
             }
-            topViewController
-                .present(viewControllerToPresent, animated: true) {
-                    completion?(true)
-                }
+            topViewController.present(viewControllerToPresent, animated: true) {
+                completion?(true)
+            }
         } else {
             completion?(false)
         }
