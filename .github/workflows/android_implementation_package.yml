@@ -7,20 +7,25 @@ on:
       - main
       - develop
     paths:
-      - 'flutter_custom_tabs_android/**'      
+      - 'flutter_custom_tabs_android/**'
+      - '!**.md'
   pull_request:
     paths:
       - 'flutter_custom_tabs_android/**'
+      - '!**.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-java@v4
+    - name: Setup JDK
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: 17    
+        java-version: 17
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
