@@ -8,9 +8,11 @@ on:
       - develop
     paths:
       - 'flutter_custom_tabs_ios/**'
+      - '!**.md'
   pull_request:
     paths:
       - 'flutter_custom_tabs_ios/**'
+      - '!**.md'
 
 jobs:
   build:

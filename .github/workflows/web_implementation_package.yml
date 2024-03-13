@@ -7,10 +7,12 @@ on:
       - main
       - develop
     paths:
-      - 'flutter_custom_tabs_web/**'      
+      - 'flutter_custom_tabs_web/**'
+      - '!**.md'
   pull_request:
     paths:
       - 'flutter_custom_tabs_web/**'
+      - '!**.md'
 
 jobs:
   build:
