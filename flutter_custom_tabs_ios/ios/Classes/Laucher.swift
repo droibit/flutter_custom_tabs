@@ -1,8 +1,7 @@
+import SafariServices
 import UIKit
 
 open class Launcher {
-    private var dismissStack = [() -> Void]()
-
     open func open(
         _ url: URL,
         options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:],
@@ -13,9 +12,6 @@ open class Launcher {
 
     open func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
         if let topViewController = UIWindow.keyWindow?.topViewController() {
-            dismissStack.append { [weak viewControllerToPresent] in
-                viewControllerToPresent?.dismiss(animated: true)
-            }
             topViewController.present(viewControllerToPresent, animated: true) {
                 completion?(true)
             }
@@ -24,10 +20,25 @@ open class Launcher {
         }
     }
 
-    open func dismissAll() {
-        while let task = dismissStack.popLast() {
-            task()
+    open func dismissAll(completion: (() -> Void)? = nil) {
+        guard let rootViewController = UIWindow.keyWindow?.rootViewController else {
+            completion?()
+            return
         }
+
+        var presentedViewController = rootViewController.presentedViewController
+        var presentedViewControllers = [UIViewController]()
+        while presentedViewController != nil {
+            if presentedViewController is SFSafariViewController {
+                presentedViewControllers.append(presentedViewController!)
+            }
+            presentedViewController = presentedViewController!.presentedViewController
+        }
+        recursivelyDismissViewControllers(
+            presentedViewControllers,
+            animated: true,
+            completion: completion
+        )
     }
 }
 
@@ -42,18 +53,38 @@ private extension UIWindow {
     func topViewController() -> UIViewController? {
         recursivelyFindTopViewController(from: rootViewController)
     }
+}
 
-    private func recursivelyFindTopViewController(from viewController: UIViewController?) -> UIViewController? {
-        if let navigationController = viewController as? UINavigationController {
-            return recursivelyFindTopViewController(from: navigationController.visibleViewController)
-        } else if let tabBarController = viewController as? UITabBarController,
-                  let selected = tabBarController.selectedViewController
-        {
-            return recursivelyFindTopViewController(from: selected)
-        } else if let presentedViewController = viewController?.presentedViewController {
-            return recursivelyFindTopViewController(from: presentedViewController)
+private func recursivelyFindTopViewController(from viewController: UIViewController?) -> UIViewController? {
+    if let navigationController = viewController as? UINavigationController {
+        return recursivelyFindTopViewController(from: navigationController.visibleViewController)
+    } else if let tabBarController = viewController as? UITabBarController,
+              let selected = tabBarController.selectedViewController
+    {
+        return recursivelyFindTopViewController(from: selected)
+    } else if let presentedViewController = viewController?.presentedViewController {
+        return recursivelyFindTopViewController(from: presentedViewController)
+    } else {
+        return viewController
+    }
+}
+
+private func recursivelyDismissViewControllers(
+    _ viewControllers: [UIViewController],
+    animated flag: Bool,
+    completion: (() -> Void)? = nil
+) {
+    var viewControllers = viewControllers
+    guard let vc = viewControllers.popLast() else {
+        completion?()
+        return
+    }
+
+    vc.dismiss(animated: flag) {
+        if viewControllers.isEmpty {
+            completion?()
         } else {
-            return viewController
+            recursivelyDismissViewControllers(viewControllers, animated: flag, completion: completion)
         }
     }
 }

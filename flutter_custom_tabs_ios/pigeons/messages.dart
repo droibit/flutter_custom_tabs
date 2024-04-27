@@ -14,6 +14,7 @@ abstract class CustomTabsApi {
     SFSafariViewControllerOptions? options,
   });
 
+  @async
   void closeAllIfPossible();
 }
 
