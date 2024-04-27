@@ -227,7 +227,7 @@ On Android, the plugin defaults to launching Chrome, which supports all Custom T
 You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
 
 > [!NOTE]  
-> Some browsers may not support the options specified in CustomTabsOptions.
+> Some browsers may not support the options specified in `CustomTabsOptions`.
 > - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
 
 ```dart
@@ -242,6 +242,18 @@ Future<void> _launchURLInDefaultBrowserOnAndroid() async {
       ),
     ),
   );
+}
+```
+
+### Close the Custom Tabs
+
+You can manually close the Custom Tabs.
+
+```dart
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+
+Future<void> _closeCustomTabsManually() async {
+  await closeCustomTabs();
 }
 ```
 

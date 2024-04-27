@@ -34,8 +34,10 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         }
     }
 
-    func closeAllIfPossible() throws {
-        launcher.dismissAll()
+    func closeAllIfPossible(completion: @escaping (Result<Void, any Error>) -> Void) {
+        launcher.dismissAll {
+            completion(.success(()))
+        }
     }
 
     // MARK: - Private

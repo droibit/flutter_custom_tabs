@@ -166,7 +166,7 @@ class CustomTabsApiCodec: FlutterStandardMessageCodec {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol CustomTabsApi {
   func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SFSafariViewControllerOptions?, completion: @escaping (Result<Void, Error>) -> Void)
-  func closeAllIfPossible() throws
+  func closeAllIfPossible(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -197,11 +197,13 @@ class CustomTabsApiSetup {
     let closeAllIfPossibleChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.closeAllIfPossible", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       closeAllIfPossibleChannel.setMessageHandler { _, reply in
-        do {
-          try api.closeAllIfPossible()
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
+        api.closeAllIfPossible { result in
+          switch result {
+          case .success:
+            reply(wrapResult(nil))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
         }
       }
     } else {
