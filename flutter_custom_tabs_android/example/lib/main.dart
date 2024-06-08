@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
@@ -12,17 +11,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
+    return MaterialApp(
       builder: (lightDynamic, darkDynamic) => MaterialApp(
         title: 'Flutter Custom Tabs Example',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: lightDynamic,
+          colorSchemeSeed: Colors.blue,
           brightness: Brightness.light,
         ),
         darkTheme: ThemeData(
           useMaterial3: true,
-          colorScheme: darkDynamic,
+          colorSchemeSeed: Colors.blue,
           brightness: Brightness.dark,
         ),
         themeMode: ThemeMode.system,
