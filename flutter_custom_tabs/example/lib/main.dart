@@ -91,7 +91,7 @@ Future<void> _launchUrl(BuildContext context) async {
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.background,
+          navigationBarColor: theme.colorScheme.surface,
         ),
         shareState: CustomTabsShareState.on,
         urlBarHidingEnabled: true,
@@ -118,7 +118,7 @@ Future<void> _launchURLInDefaultBrowserOnAndroid(BuildContext context) async {
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.background,
+          navigationBarColor: theme.colorScheme.surface,
         ),
         urlBarHidingEnabled: true,
         showTitle: true,
@@ -161,7 +161,7 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.background,
+          navigationBarColor: theme.colorScheme.surface,
         ),
         urlBarHidingEnabled: true,
         showTitle: true,
