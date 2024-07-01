@@ -1,0 +1,42 @@
+# Extended Markdownlint configuration in doc/.markdownlint/
+# See https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md for explanations of each rule
+config:
+  # First, set the default
+  default: true
+
+  # MD001
+  heading-increment: false
+  # MD004
+  ul-style:
+    style: dash
+  # MD013
+  line-length: false
+  # MD024
+  no-duplicate-heading:
+    siblings_only: true
+  # MD025
+  single-title: false
+  # MD026
+  no-trailing-punctuation:
+    punctuation: ".,;:!。，；：！？"
+  # MD029
+  ol-prefix:
+    style: one
+  # MD033
+  no-inline-html:
+    allowed_elements:
+      - br
+      - table
+      - tr
+      - td
+  # MD035
+  hr-style:
+    style: "---"
+  # MD41  
+  first-line-h1: false
+  # MD046
+  code-block-style:
+   style: fenced
+ignores:
+  - LICENSE
+  - "**/.symlinks/**"
