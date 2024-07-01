@@ -1,3 +1,10 @@
+## 2.1.0
+
+- Updates minimum supported SDK version to Flutter 3.10/Dart 3 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
+- Updates minimum required `flutter_custom_tabs_android/ios/web` version to 2.1.0.
+- Update navigationBarColor in `CustomTabsOptions` to use surface instead of deprecated background ([#194](https://github.com/droibit/flutter_custom_tabs/pull/191)).
+- Adds instructions for manually closing Custom Tabs to the README ([#194](https://github.com/droibit/flutter_custom_tabs/pull/191)).
+
 ## 2.0.0+1
 
 - Updates README.md with stable version dependency.
