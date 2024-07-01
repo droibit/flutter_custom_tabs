@@ -1,3 +1,11 @@
+## 2.1.0
+
+- Updates minimum supported SDK version to Flutter 3.10/Dart 3 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.1.0.
+- Updates minimum required `pigeon` version to 17.0.0 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
+- Removes the `dynamic_color` package from the example to improve maintainability ([#192](https://github.com/droibit/flutter_custom_tabs/pull/192)).
+- Update navigationBarColor in `CustomTabsOptions` to use surface instead of deprecated background ([#193](https://github.com/droibit/flutter_custom_tabs/pull/193)).
+
 ## 2.0.0+1
 
 - Fixes the LICENSE file.

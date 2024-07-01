@@ -1,3 +1,7 @@
+## 2.1.0
+
+- Updates minimum supported SDK version to Flutter 3.10/Dart 3 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
+
 ## 2.0.0
 
 - No changes except for version bump.

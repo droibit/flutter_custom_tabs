@@ -21,7 +21,7 @@ Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
 dependencies:
-  flutter_custom_tabs: ^2.0.0
+  flutter_custom_tabs: ^2.1.0
 ```
 
 > [!IMPORTANT]  
