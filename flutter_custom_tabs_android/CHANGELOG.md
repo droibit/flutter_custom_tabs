@@ -14,7 +14,6 @@
 - Updates CustomTabsLauncher to [v2.0.0-rc01](https://github.com/droibit/CustomTabsLauncher/releases/tag/2.0.0-rc01)([#160](https://github.com/droibit/flutter_custom_tabs/pull/160)).
 - Adds unit tests for android platform ([#162](https://github.com/droibit/flutter_custom_tabs/pull/162)).
 
-
 ## 2.0.0-beta.1
 
 - Adds support for prioritizing the default browser over Chrome on Android([#145](https://github.com/droibit/flutter_custom_tabs/pull/145)).

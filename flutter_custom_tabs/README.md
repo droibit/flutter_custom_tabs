@@ -1,10 +1,12 @@
 # flutter_custom_tabs
+
 [![pub package](https://img.shields.io/pub/v/flutter_custom_tabs.svg)](https://pub.dartlang.org/packages/flutter_custom_tabs)
 
 A Flutter plugin for mobile apps to launch a URL in Custom Tabs.  
 The plugin allows you to add the browser experience that Custom Tabs provides to your mobile apps.
 
 In version 2.0, the plugin expands the support for launching a URL in mobile apps:
+
 - Launch a URL in an external browser.
 - Launch a deep link URL.
 
@@ -14,6 +16,7 @@ In version 2.0, the plugin expands the support for launching a URL in mobile app
 | Implementation | [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) | [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) | [url_launcher](https://pub.dev/packages/url_launcher) |
 
 ## Getting Started
+
 Add `flutter_custom_tabs` to the dependencies of your `pubspec.yaml`.
 
 ``` yaml
@@ -25,6 +28,7 @@ dependencies:
 > v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md) when updating the plugin.
 
 ### Requirements for Android
+
 - Android Gradle Plugin v7.4.0 and above.
 - Kotlin v1.7.0 and above.
 
@@ -40,6 +44,7 @@ buildscript {
 ```
 
 ## Usage
+
 You can launch a web URL similar to `url_launcher` and specify options to customize appearance and behavior.
 
 | Android | iOS |
@@ -86,7 +91,7 @@ See the example app for more complex examples.
 
 ### Usage of the lightweight version
 
-This package supports a wide range of Custom Tabs customizations,   
+This package supports a wide range of Custom Tabs customizations,  
 but we have introduced a lightweight URL launch for users who don't need as much in v2.0.0.
 
 > [!NOTE]  
@@ -127,19 +132,21 @@ void _launchURL(BuildContext context) async {
 | Change visibility of web page title | ✅ | - | ✅<br>(always shown on Android) |
 | Change the availability of Reader mode | - | ✅ | Not provided |
 | Change appearance of close button | ✅<br>(Icon, position) | ✅<br>(Predefined button styles) | Not provided |
-| Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided | 
-| Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided | 
+| Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided |
+| Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided |
 | Prefer the default browser over Chrome | ✅ | - | Not provided |
-| Pass HTTP headers | ✅ | - | Not provided | 
-| Show as a bottom sheet | ✅ | ✅ | Not provided | 
+| Pass HTTP headers | ✅ | - | Not provided |
+| Show as a bottom sheet | ✅ | ✅ | Not provided |
 
 Support status in `flutter_custom_tabs`:
+
 - ✅: Supported.
 - `-`: Option not provided by Custom Tabs implementation.
 
 ## Advanced Usage
 
 ### Deep Linking
+
 Supports launching a deep link URL.  
 (If a native app that responds to the deep link URL is installed, it will directly launch it. otherwise, it will launch a custom tab.)
 
@@ -167,6 +174,7 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
 ```
 
 ## Launch in an external browser
+
 By default, if no mobile platform-specific options are specified, a URL will be launched in an external browser.
 
 > [!TIP]  
@@ -181,11 +189,13 @@ Future<void> _launchInExternalBrowser() async {
 ```
 
 ### Show as a bottom sheet
+
 You can launch a URL in Custom Tabs as a bottom sheet.
 
 Requirements:
+
 - Android: Chrome v107 and above or [other browsers](https://developer.chrome.com/docs/android/custom-tabs/browser-support/#setinitialactivityheightpx)
-- iOS: 15.0+ 
+- iOS: 15.0+
 
 ```dart
 import 'package:flutter/material.dart';
@@ -223,11 +233,13 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
 ```
 
 ### Prefer the default browser over Chrome
-On Android, the plugin defaults to launching Chrome, which supports all Custom Tabs features.   
+
+On Android, the plugin defaults to launching Chrome, which supports all Custom Tabs features.
 You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
 
 > [!NOTE]  
 > Some browsers may not support the options specified in `CustomTabsOptions`.
+>
 > - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
 
 ```dart
@@ -256,20 +268,3 @@ Future<void> _closeCustomTabsManually() async {
   await closeCustomTabs();
 }
 ```
-
-## License
-
-    Copyright (C) 2015 The Android Open Source Project
-    Copyright (C) 2018 Shinya Kumagai
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.

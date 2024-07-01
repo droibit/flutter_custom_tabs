@@ -1,11 +1,13 @@
 # Migration Guides
 
 ## Migrate `flutter_custom_tabs` from v1.x to v2.0.0
+
 The first major update of `flutter_custom_tabs`, v2.0.0, includes a variety of new features and improvements, as well as some breaking changes.
 
 ### Breaking Changes
 
 #### API Change: `launch` to `launchUrl`
+
 The `launch` method has been renamed to `launchUrl` for better clarity and consistency. Additionally, there are changes in the naming and types of some parameters:
 
 ```diff
@@ -48,11 +50,13 @@ Future<void> launchUrl(
 </table>
 
 Related changes:
+
 - The method `closeAllIfPossible` has been renamed to `closeCustomTabs`.
 
 #### API Changes in `CustomTabsOptions`
 
 The `CustomTabsOptions` class has undergone several changes:
+
 - The customization of various colors, including the toolbar color, has been moved to the `CustomTabsColorSchemes` class.
 
 <table>
@@ -118,7 +122,6 @@ CustomTabsOptions(
 | `enableDefaultShare: true` | `shareState: CustomTabsShareState.on` |
 | `enableDefaultShare: false` | `shareState: CustomTabsShareState.off` |
 
-
 - The method of specifying the close button has been changed from `closeButtonPosition` to the enhanced `closeButton`.
 
 To migrate, use the following equivalent options:
@@ -155,6 +158,7 @@ CustomTabsOptions(
 </table>
 
 The following options for customizing the behavior of Custom Tabs as a browser have been consolidated into `CustomTabsBrowserConfiguration`:
+
 - `headers` property
 - `extraCustomTabs` property
 
@@ -216,6 +220,7 @@ Remaining name changes:
 The newly introduced `LaunchOptions` provides unified and simple options for Android/iOS.
 
 Start by importing the library file:
+
 ```diff
 -import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 +import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
@@ -270,12 +275,14 @@ await launchUrl(
 ## Migrate `flutter_custom_tabs` to v1.0.0
 
 flutter_custom_tabs v1.0.0 is the first major release and has been updated to include several breaking changes.
+
 - Migrate to federated plugins
 - Improved customization on iOS
 - Web support
 
 ### API Changes
-* `launch` function now accepts two options.
+
+- `launch` function now accepts two options.
   - `customTabsOption`: for Android(optional)
   - `safariVCOption`: for iOS(optional)
 
@@ -288,7 +295,7 @@ await launch(
 );
 ```  
 
-* The built-in animation for CustomTabs `CustomTabsAnimation` is now `CustomTabsSystemAnimation`
+- The built-in animation for CustomTabs `CustomTabsAnimation` is now `CustomTabsSystemAnimation`
   - This clarifies the use of OS-supplied animations via plug-ins.
 
 ```diff

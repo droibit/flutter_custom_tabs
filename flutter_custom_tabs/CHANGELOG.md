@@ -5,6 +5,7 @@
 ## 2.0.0
 
 Highlights of changes from v1.x:
+
 - Refactors the signature for launching a URL in Custom Tabs.
 - Refactors the signature for manually closing Custom Tabs.
 - Supports the launch of a deep link URL.
@@ -15,7 +16,6 @@ Highlights of changes from v1.x:
 
 **NOTE:**  
 Version 2.0.0 includes many breaking changes from version 1.x. For more information, please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md#migrate-flutter_custom_tabs-from-v1x-to-v200).
-
 
 ## 2.0.0-beta.2
 
@@ -84,7 +84,7 @@ For details on the changes, please refer to the [migration guide](https://github
 
 - Update to Android CustomTabsLauncher 1.0.6([#62](https://github.com/droibit/flutter_custom_tabs/pull/62)).
 
-## 1.0.3,
+## 1.0.3
 
 - Migrate from deprecated gradle getGenerateBuildConfig to buildFeatures([#49](https://github.com/droibit/flutter_custom_tabs/pull/49)).
 - Avoiding app crashes caused by URLs containing whitespaces([#50](https://github.com/droibit/flutter_custom_tabs/issues/50), [#52](https://github.com/droibit/flutter_custom_tabs/pull/52)).

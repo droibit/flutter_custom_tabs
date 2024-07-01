@@ -10,7 +10,6 @@
 - Adds unit tests for iOS platform ([#162](https://github.com/droibit/flutter_custom_tabs/pull/162)).
 - Properly callback URL launch results ([#164](https://github.com/droibit/flutter_custom_tabs/pull/164)).
 
-
 ## 2.0.0-beta
 
 - Initial release of the `flutter_custom_tabs` iOS implementation.

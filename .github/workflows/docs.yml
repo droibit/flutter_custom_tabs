@@ -1,0 +1,21 @@
+name: CI for all of docs
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - '**.md'
+  pull_request:
+    paths:
+      - '**.md'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4 
+    - uses: DavidAnson/markdownlint-cli2-action@v16
+      with:
+        globs: '**/*.md'
