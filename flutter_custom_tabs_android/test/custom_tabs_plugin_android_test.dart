@@ -98,7 +98,7 @@ class _MockCustomTabsApi implements CustomTabsApi {
   Future<void> launch(
     String url, {
     required bool prefersDeepLink,
-    CustomTabsIntentOptions? options,
+    Map<String?, Object?>? options,
   }) async {
     expect(url, this.url);
     expect(prefersDeepLink, this.prefersDeepLink);
@@ -107,7 +107,7 @@ class _MockCustomTabsApi implements CustomTabsApi {
       expect(options, isNull);
     } else if (this.options is CustomTabsOptions) {
       final expected = (this.options as CustomTabsOptions).toMessage();
-      expect(options?.urlBarHidingEnabled, expected.urlBarHidingEnabled);
+      expect(options?['urlBarHidingEnabled'], expected['urlBarHidingEnabled']);
     } else {
       expect(options, isNotNull);
     }
