@@ -8,11 +8,15 @@ on:
       - develop
     paths:
       - 'flutter_custom_tabs_ios/**'
+      - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
   pull_request:
     paths:
       - 'flutter_custom_tabs_ios/**'
+      - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
+env:
+  DEVELOPER_DIR: /Applications/Xcode_15.4.app
 
 jobs:
   build:
@@ -37,9 +41,12 @@ jobs:
     - name: Statically analyze the Swift code for any errors
       run: make lint
       working-directory: ./flutter_custom_tabs_ios
-    - name: Run unit tests
+    - name: Run flutter unit tests
       run: flutter test
       working-directory: ./flutter_custom_tabs_ios
     - name: Build example iOS app
       run: flutter build ios --no-codesign
       working-directory: ./flutter_custom_tabs_ios/example
+    - name: Run iOS unit tests
+      run: make test
+      working-directory: ./flutter_custom_tabs_ios/example  
