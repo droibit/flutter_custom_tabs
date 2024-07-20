@@ -15,6 +15,8 @@ on:
       - 'flutter_custom_tabs_ios/**'
       - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
+env:
+  DEVELOPER_DIR: /Applications/Xcode_15.4.app
 
 jobs:
   build:
