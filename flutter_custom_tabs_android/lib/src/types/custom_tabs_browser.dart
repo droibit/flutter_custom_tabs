@@ -13,7 +13,7 @@ class CustomTabsBrowserConfiguration {
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
     this.headers,
-  }) : prefersExternalBrowser = false;
+  }) : prefersExternalBrowser = null;
 
   @internal
   const CustomTabsBrowserConfiguration.externalBrowser({
@@ -32,5 +32,5 @@ class CustomTabsBrowserConfiguration {
   final Map<String, String>? headers;
 
   @internal
-  final bool prefersExternalBrowser;
+  final bool? prefersExternalBrowser;
 }

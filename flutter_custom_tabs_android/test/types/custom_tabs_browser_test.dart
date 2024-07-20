@@ -6,10 +6,7 @@ void main() {
   test('toMessage() returns empty message when option values are null', () {
     const configuration = CustomTabsBrowserConfiguration();
     final actual = configuration.toMessage();
-    expect(actual.prefersDefaultBrowser, isNull);
-    expect(actual.fallbackCustomTabs, isNull);
-    expect(actual.headers, isNull);
-    expect(actual.prefersExternalBrowser, isFalse);
+    expect(actual, isEmpty);
   });
 
   test('toMessage() returns a message with complete options', () {
@@ -22,10 +19,11 @@ void main() {
       headers: {'key': 'value'},
     );
     final actual = configuration.toMessage();
-    expect(actual.prefersDefaultBrowser, configuration.prefersDefaultBrowser);
-    expect(actual.fallbackCustomTabs, configuration.fallbackCustomTabs);
-    expect(actual.headers, configuration.headers);
-    expect(actual.prefersExternalBrowser, isFalse);
+    expect(actual, <String, Object>{
+      'prefersDefaultBrowser': configuration.prefersDefaultBrowser!,
+      'fallbackCustomTabs': configuration.fallbackCustomTabs!,
+      'headers': configuration.headers!,
+    });
   });
 
   test('toMessage() returns a message with external browser options', () {
@@ -33,9 +31,9 @@ void main() {
       headers: {'key': 'value'},
     );
     final actual = configuration.toMessage();
-    expect(actual.prefersDefaultBrowser, isNull);
-    expect(actual.fallbackCustomTabs, isNull);
-    expect(actual.headers, configuration.headers);
-    expect(actual.prefersExternalBrowser, isTrue);
+    expect(actual, <String, Object>{
+      'headers': configuration.headers!,
+      'prefersExternalBrowser': true,
+    });
   });
 }

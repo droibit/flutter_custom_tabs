@@ -8,10 +8,7 @@ void main() {
         () {
       const animations = CustomTabsAnimations();
       final actual = animations.toMessage();
-      expect(actual.startEnter, isNull);
-      expect(actual.startExit, isNull);
-      expect(actual.endEnter, isNull);
-      expect(actual.endExit, isNull);
+      expect(actual, isEmpty);
     });
 
     test('toMessage() returns a message with complete options', () {
@@ -22,36 +19,37 @@ void main() {
         endExit: 'slide_down',
       );
       final actual = animations.toMessage();
-      expect(actual.startEnter, actual.startEnter);
-      expect(actual.startExit, animations.startExit);
-      expect(actual.endEnter, animations.endEnter);
-      expect(actual.endExit, animations.endExit);
+      expect(actual, <String, String>{
+        'startEnter': animations.startEnter!,
+        'startExit': animations.startExit!,
+        'endEnter': animations.endEnter!,
+        'endExit': animations.endExit!,
+      });
     });
   });
 
   group('CustomTabsSystemAnimations', () {
     test('slideIn: creates the built-in slide in animation', () {
+      final actual = CustomTabsSystemAnimations.slideIn().toMessage();
       expect(
-        CustomTabsSystemAnimations.slideIn(),
-        const CustomTabsAnimations(
-          startEnter: 'android:anim/slide_in_right',
-          startExit: 'android:anim/slide_out_left',
-          endEnter: 'android:anim/slide_in_left',
-          endExit: 'android:anim/slide_out_right',
-        ),
+        actual,
+        <String, String>{
+          'startEnter': 'android:anim/slide_in_right',
+          'startExit': 'android:anim/slide_out_left',
+          'endEnter': 'android:anim/slide_in_left',
+          'endExit': 'android:anim/slide_out_right',
+        },
       );
     });
 
     test('fade: creates the built-in fade animation', () {
-      expect(
-        CustomTabsSystemAnimations.fade(),
-        const CustomTabsAnimations(
-          startEnter: 'android:anim/fade_in',
-          startExit: 'android:anim/fade_out',
-          endEnter: 'android:anim/fade_in',
-          endExit: 'android:anim/fade_out',
-        ),
-      );
+      final actual = CustomTabsSystemAnimations.fade().toMessage();
+      expect(actual, <String, String>{
+        'startEnter': 'android:anim/fade_in',
+        'startExit': 'android:anim/fade_out',
+        'endEnter': 'android:anim/fade_in',
+        'endExit': 'android:anim/fade_out',
+      });
     });
   });
 }
