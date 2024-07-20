@@ -2,14 +2,14 @@ name: CI for all of docs
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [ main ]
     paths:
       - '**.md'
+      - '.github/workflows/docs.yml'
   pull_request:
     paths:
       - '**.md'
+      - '.github/workflows/docs.yml'
 
 jobs:
   lint:
