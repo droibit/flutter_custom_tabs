@@ -3,15 +3,15 @@ name: CI for android implementation package
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [ main ]
     paths:
       - 'flutter_custom_tabs_android/**'
+      - '.github/workflows/android_implementation_package.yml'
       - '!**.md'
   pull_request:
     paths:
       - 'flutter_custom_tabs_android/**'
+      - '.github/workflows/android_implementation_package.yml'
       - '!**.md'
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         distribution: 'zulu'
         java-version: 17
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
+      uses: gradle/actions/setup-gradle@v3
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
@@ -38,9 +38,12 @@ jobs:
     - name: Statically analyze the Dart code for any errors
       run: flutter analyze .
       working-directory: ./flutter_custom_tabs_android
-    - name: Run unit tests
+    - name: Run Flutter unit tests
       run: flutter test
       working-directory: ./flutter_custom_tabs_android
+    - name: Run Android unit tests
+      run: ./gradlew :flutter_custom_tabs_android:testDebugUnitTest
+      working-directory: ./flutter_custom_tabs_android/example
     - name: Build example android app
       run: flutter build apk --release
-      working-directory: ./flutter_custom_tabs_android/example      
+      working-directory: ./flutter_custom_tabs_android/example
