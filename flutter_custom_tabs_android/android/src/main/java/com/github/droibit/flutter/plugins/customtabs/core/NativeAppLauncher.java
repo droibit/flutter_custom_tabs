@@ -1,4 +1,4 @@
-package com.github.droibit.flutter.plugins.customtabs;
+package com.github.droibit.flutter.plugins.customtabs.core;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -18,8 +18,8 @@ import java.util.Set;
 /**
  * ref. <a href="https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-native-apps/">Let native applications handle the content</a>
  */
-class NativeAppLauncher {
-    boolean launch(@NonNull Context context, @NonNull Uri uri) {
+public class NativeAppLauncher {
+    public boolean launch(@NonNull Context context, @NonNull Uri uri) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ?
                 launchNativeApi30(context, uri) :
                 launchNativeBeforeApi30(context, uri);
