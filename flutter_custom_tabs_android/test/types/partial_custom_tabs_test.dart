@@ -9,12 +9,11 @@ void main() {
         initialHeight: 200,
       );
       final actual = configuration.toMessage();
-      expect(actual.initialHeight, configuration.initialHeight);
-      expect(
-        actual.activityHeightResizeBehavior,
-        configuration.activityHeightResizeBehavior.rawValue,
-      );
-      expect(actual.cornerRadius, isNull);
+      expect(actual, <String, Object>{
+        'initialHeight': configuration.initialHeight,
+        'activityHeightResizeBehavior':
+            configuration.activityHeightResizeBehavior.rawValue,
+      });
     });
 
     test('toMessage() returns a message with complete options', () {
@@ -22,15 +21,17 @@ void main() {
         initialHeight: 300,
         activityHeightResizeBehavior:
             CustomTabsActivityHeightResizeBehavior.adjustable,
-        cornerRadius: 12,
+        cornerRadius: 15,
       );
+
       final actual = configuration.toMessage();
-      expect(actual.initialHeight, configuration.initialHeight);
-      expect(
-        actual.activityHeightResizeBehavior,
-        configuration.activityHeightResizeBehavior.rawValue,
-      );
-      expect(actual.cornerRadius, configuration.cornerRadius);
+
+      expect(actual, <String, Object?>{
+        'initialHeight': configuration.initialHeight,
+        'activityHeightResizeBehavior':
+            configuration.activityHeightResizeBehavior.rawValue,
+        'cornerRadius': configuration.cornerRadius,
+      });
     });
   });
 

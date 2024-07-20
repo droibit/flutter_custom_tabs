@@ -5,6 +5,7 @@ import 'custom_tabs_animations.dart';
 import 'custom_tabs_browser.dart';
 import 'custom_tabs_close_button.dart';
 import 'custom_tabs_color_schemes.dart';
+import 'custom_tabs_share_state.dart';
 import 'partial_custom_tabs.dart';
 
 /// The comprehensive set of options for launching [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) by specifying a URL.
@@ -79,22 +80,4 @@ class CustomTabsOptions implements PlatformOptions {
 
   /// The configuration for Partial Custom Tabs.
   final PartialCustomTabsConfiguration? partial;
-}
-
-/// The share state that should be applied to the custom tab.
-enum CustomTabsShareState {
-  /// Applies the default share settings depending on the browser.
-  browserDefault(0),
-
-  /// Explicitly does not show a share option in the tab.
-  on(1),
-
-  /// Shows a share option in the tab.
-  off(2);
-
-  @internal
-  const CustomTabsShareState(this.rawValue);
-
-  @internal
-  final int rawValue;
 }

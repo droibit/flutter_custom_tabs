@@ -9,10 +9,7 @@ void main() {
     test('toMessage() returns empty message when option values are null', () {
       const schemes = CustomTabsColorSchemes();
       final actual = schemes.toMessage();
-      expect(actual.colorScheme, isNull);
-      expect(actual.lightParams, isNull);
-      expect(actual.darkParams, isNull);
-      expect(actual.defaultPrams, isNull);
+      expect(actual, isEmpty);
     });
 
     test('toMessage() returns a message with complete options', () {
@@ -36,25 +33,24 @@ void main() {
       );
 
       final actual = schemes.toMessage();
-      expect(actual.colorScheme, schemes.colorScheme!.rawValue);
-      expect(actual.lightParams, isA<ColorSchemeParams>());
-      expect(actual.darkParams, isA<ColorSchemeParams>());
-      expect(actual.defaultPrams, isA<ColorSchemeParams>());
-
-      final actualLightParams = actual.lightParams!;
-      expect(actualLightParams.toolbarColor, 0xFFFFDBAA);
-      expect(actualLightParams.navigationBarColor, 0xFFFFDBAB);
-      expect(actualLightParams.navigationBarDividerColor, 0xFFFFDBAC);
-
-      final actualDarkParams = actual.darkParams!;
-      expect(actualDarkParams.toolbarColor, 0xFFFFDBBA);
-      expect(actualDarkParams.navigationBarColor, 0xFFFFDBBB);
-      expect(actualDarkParams.navigationBarDividerColor, 0xFFFFDBBC);
-
-      final actualDefaultParams = actual.defaultPrams!;
-      expect(actualDefaultParams.toolbarColor, 0xFFFFDBCA);
-      expect(actualDefaultParams.navigationBarColor, 0xFFFFDBCB);
-      expect(actualDefaultParams.navigationBarDividerColor, 0xFFFFDBCC);
+      expect(actual, <String, Object>{
+        'colorScheme': 0,
+        'lightParams': <String, String>{
+          'toolbarColor': '#ffffdbaa',
+          'navigationBarColor': '#ffffdbab',
+          'navigationBarDividerColor': '#ffffdbac',
+        },
+        'darkParams': <String, String>{
+          'toolbarColor': '#ffffdbba',
+          'navigationBarColor': '#ffffdbbb',
+          'navigationBarDividerColor': '#ffffdbbc',
+        },
+        'defaultParams': {
+          'toolbarColor': '#ffffdbca',
+          'navigationBarColor': '#ffffdbcb',
+          'navigationBarDividerColor': '#ffffdbcc',
+        },
+      });
     });
   });
 
@@ -62,9 +58,7 @@ void main() {
     test('toMessage() returns empty message when option values are null', () {
       const params = CustomTabsColorSchemeParams();
       final actual = params.toMessage();
-      expect(actual.toolbarColor, null);
-      expect(actual.navigationBarColor, null);
-      expect(actual.navigationBarDividerColor, null);
+      expect(actual, {});
     });
 
     test('toMessage() returns a message with complete options', () {
@@ -74,9 +68,11 @@ void main() {
         navigationBarDividerColor: Color(0xFFFFCBAC),
       );
       final actual = params.toMessage();
-      expect(actual.toolbarColor, 0xFFFFCBAA);
-      expect(actual.navigationBarColor, 0xFFFFCBAB);
-      expect(actual.navigationBarDividerColor, 0xFFFFCBAC);
+      expect(actual, <String, String>{
+        'toolbarColor': '#ffffcbaa',
+        'navigationBarColor': '#ffffcbab',
+        'navigationBarDividerColor': '#ffffcbac',
+      });
     });
   });
 

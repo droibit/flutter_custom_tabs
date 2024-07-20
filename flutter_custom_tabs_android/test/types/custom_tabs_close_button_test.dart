@@ -7,8 +7,7 @@ void main() {
     test('toMessage() returns empty message when option values are null', () {
       const button = CustomTabsCloseButton();
       final actual = button.toMessage();
-      expect(actual.icon, isNull);
-      expect(actual.position, isNull);
+      expect(actual, isEmpty);
     });
 
     test('toMessage() returns a message with complete options', () {
@@ -17,8 +16,10 @@ void main() {
         position: CustomTabsCloseButtonPosition.start,
       );
       final actual = button.toMessage();
-      expect(actual.icon, button.icon);
-      expect(actual.position, button.position!.rawValue);
+      expect(actual, <String, Object?>{
+        'icon': button.icon,
+        'position': button.position!.rawValue,
+      });
     });
   });
 

@@ -1,4 +1,4 @@
-package com.github.droibit.flutter.plugins.customtabs;
+package com.github.droibit.flutter.plugins.customtabs.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
