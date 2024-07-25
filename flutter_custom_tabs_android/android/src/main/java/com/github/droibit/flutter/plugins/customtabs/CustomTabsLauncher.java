@@ -139,6 +139,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     /**
      * @noinspection SameParameterValue
      */
+    @SuppressWarnings("deprecation")
     private static @Nullable ResolveInfo resolveService(
             @NonNull PackageManager pm,
             @NonNull Intent intent,
@@ -150,7 +151,6 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
                     PackageManager.ResolveInfoFlags.of(flags)
             );
         } else {
-            //noinspection deprecation
             return pm.resolveService(intent, flags);
         }
     }

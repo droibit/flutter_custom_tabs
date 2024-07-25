@@ -62,8 +62,9 @@ public class BrowserConfiguration {
         }
 
         /**
-         * @noinspection DataFlowIssue, unchecked
+         * @noinspection DataFlowIssue
          */
+        @SuppressWarnings("unchecked")
         public @NonNull Builder setOptions(@Nullable Map<String, Object> options) {
             if (options == null) {
                 return this;

@@ -100,8 +100,9 @@ public class CustomTabsIntentOptions {
         }
 
         /**
-         * @noinspection unchecked, DataFlowIssue
+         * @noinspection DataFlowIssue
          */
+        @SuppressWarnings("unchecked")
         public @NonNull Builder setOptions(@NonNull Map<String, Object> options) {
             if (options.containsKey(KEY_COLOR_SCHEMES)) {
                 colorSchemes = new CustomTabsColorSchemes.Builder()
