@@ -1,3 +1,7 @@
+## 2.2.0-dev.1
+
+- Enhances the plugin reusability and reduce pigeon dependency([#198](https://github.com/droibit/flutter_custom_tabs/pull/198)).
+
 ## 2.1.0
 
 - Updates minimum supported SDK version to Flutter 3.10/Dart 3 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
