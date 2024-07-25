@@ -60,9 +60,7 @@ public class CustomTabsColorSchemes {
         public Builder() {
         }
 
-        /**
-         * @noinspection unchecked
-         */
+        @SuppressWarnings("unchecked")
         public @NonNull Builder setOptions(@NonNull Map<String, Object> options) {
             if (options.containsKey(KEY_COLOR_SCHEME)) {
                 colorScheme = (Integer) options.get(KEY_COLOR_SCHEME);
