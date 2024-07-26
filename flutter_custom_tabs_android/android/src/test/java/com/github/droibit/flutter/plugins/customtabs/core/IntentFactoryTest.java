@@ -38,6 +38,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 
@@ -74,6 +75,7 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.annotation.Config;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
@@ -588,5 +590,17 @@ public class IntentFactoryTest {
                     setCustomTabsPackage(any(), any(), isNotNull(NonChromeCustomTabs.class))
             );
         }
+    }
+
+    @Test
+    public void createCustomTabsIntentOptions_nullOptions() {
+        final CustomTabsIntentOptions options = intentFactory.createCustomTabsIntentOptions(null);
+        assertThat(options).isNull();
+    }
+
+    @Test
+    public void createCustomTabsIntentOptions_notNullOptions() {
+        final CustomTabsIntentOptions options = intentFactory.createCustomTabsIntentOptions(emptyMap());
+        assertThat(options).isNotNull();
     }
 }

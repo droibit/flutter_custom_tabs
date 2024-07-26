@@ -252,4 +252,14 @@ public class IntentFactory {
         }
         return dest;
     }
+
+    public @Nullable CustomTabsIntentOptions createCustomTabsIntentOptions(@Nullable Map<String, Object> options) {
+        if (options == null) {
+            return null;
+        } else {
+            return new CustomTabsIntentOptions.Builder()
+                    .setOptions(options)
+                    .build();
+        }
+    }
 }
