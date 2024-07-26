@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -25,6 +26,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.github.droibit.flutter.plugins.customtabs.Messages.FlutterError;
 import com.github.droibit.flutter.plugins.customtabs.core.IntentFactory;
 import com.github.droibit.flutter.plugins.customtabs.core.NativeAppLauncher;
+import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,7 +48,7 @@ public class CustomTabsLauncherTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
-    private IntentFactory customTabsFactory;
+    private IntentFactory intentFactory;
 
     @Mock
     private NativeAppLauncher nativeAppLauncher;
@@ -85,8 +87,8 @@ public class CustomTabsLauncherTest {
             fail(e.getMessage());
         }
 
-        verify(customTabsFactory, never()).createExternalBrowserIntent(any());
-        verify(customTabsFactory, never()).createCustomTabsIntent(any(), any());
+        verify(intentFactory, never()).createExternalBrowserIntent(any());
+        verify(intentFactory, never()).createCustomTabsIntent(any(), any());
     }
 
     @Test
@@ -94,8 +96,9 @@ public class CustomTabsLauncherTest {
         final Activity activity = mock(Activity.class);
         launcher.setActivity(activity);
 
+        when(intentFactory.createCustomTabsIntentOptions(any())).thenReturn(null);
         final Intent externalBrowserIntent = new Intent();
-        when(customTabsFactory.createExternalBrowserIntent(any())).thenReturn(externalBrowserIntent);
+        when(intentFactory.createExternalBrowserIntent(any())).thenReturn(externalBrowserIntent);
 
         try {
             final String expUrl = "https://example.com";
@@ -106,11 +109,11 @@ public class CustomTabsLauncherTest {
 
             final Intent actualIntent = intentCaptor.getValue();
             assertThat(actualIntent).hasData(Uri.parse(expUrl));
+
+            verify(intentFactory, never()).createCustomTabsIntent(any(), any());
         } catch (Exception e) {
             fail(e.getMessage());
         }
-
-        verify(customTabsFactory, never()).createCustomTabsIntent(any(), any());
     }
 
     @Test
@@ -118,8 +121,9 @@ public class CustomTabsLauncherTest {
         final Activity activity = mock(Activity.class);
         launcher.setActivity(activity);
 
+        when(intentFactory.createCustomTabsIntentOptions(any())).thenReturn(null);
         final Intent externalBrowserIntent = new Intent();
-        when(customTabsFactory.createExternalBrowserIntent(any())).thenReturn(externalBrowserIntent);
+        when(intentFactory.createExternalBrowserIntent(any())).thenReturn(externalBrowserIntent);
 
         final ActivityNotFoundException anf = mock(ActivityNotFoundException.class);
         doThrow(anf).when(activity).startActivity(any());
@@ -133,6 +137,8 @@ public class CustomTabsLauncherTest {
             final FlutterError actualError = ((FlutterError) e);
             assertThat(actualError.code).isEqualTo(CustomTabsLauncher.CODE_LAUNCH_ERROR);
         }
+
+        verify(intentFactory, never()).createCustomTabsIntent(any(), any());
     }
 
 
@@ -141,12 +147,14 @@ public class CustomTabsLauncherTest {
         final Activity activity = mock(Activity.class);
         launcher.setActivity(activity);
 
-        when(customTabsFactory.createExternalBrowserIntent(any())).thenReturn(null);
+        final CustomTabsIntentOptions intentOptions = mock(CustomTabsIntentOptions.class);
+        when(intentFactory.createCustomTabsIntentOptions(any())).thenReturn(intentOptions);
+        when(intentFactory.createExternalBrowserIntent(any())).thenReturn(null);
 
         final CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                 .setInitialActivityHeightPx(100)
                 .build();
-        when(customTabsFactory.createCustomTabsIntent(any(), any())).thenReturn(customTabsIntent);
+        when(intentFactory.createCustomTabsIntent(any(), any())).thenReturn(customTabsIntent);
 
         try {
             final String expUrl = "https://example.com";
@@ -159,6 +167,8 @@ public class CustomTabsLauncherTest {
             final Intent actualIntent = intentCaptor.getValue();
             assertThat(actualIntent).hasData(Uri.parse(expUrl));
             assertThat(actualIntent).isSameInstanceAs(customTabsIntent.intent);
+
+            verify(intentFactory).createCustomTabsIntent(any(), same(intentOptions));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -169,10 +179,12 @@ public class CustomTabsLauncherTest {
         final Activity activity = mock(Activity.class);
         launcher.setActivity(activity);
 
-        when(customTabsFactory.createExternalBrowserIntent(any())).thenReturn(null);
+        final CustomTabsIntentOptions intentOptions = mock(CustomTabsIntentOptions.class);
+        when(intentFactory.createCustomTabsIntentOptions(any())).thenReturn(intentOptions);
+        when(intentFactory.createExternalBrowserIntent(any())).thenReturn(null);
 
         final CustomTabsIntent customTabsIntent = spy(new CustomTabsIntent.Builder().build());
-        when(customTabsFactory.createCustomTabsIntent(any(), any())).thenReturn(customTabsIntent);
+        when(intentFactory.createCustomTabsIntent(any(), any())).thenReturn(customTabsIntent);
 
         try {
             final String expUrl = "https://example.com";
@@ -184,6 +196,8 @@ public class CustomTabsLauncherTest {
 
             final Uri actualUrl = urlCaptor.getValue();
             assertThat(actualUrl).isEqualTo(Uri.parse(expUrl));
+
+            verify(intentFactory).createCustomTabsIntent(any(), same(intentOptions));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -194,10 +208,12 @@ public class CustomTabsLauncherTest {
         final Activity activity = mock(Activity.class);
         launcher.setActivity(activity);
 
-        when(customTabsFactory.createExternalBrowserIntent(any())).thenReturn(null);
+        final CustomTabsIntentOptions intentOptions = mock(CustomTabsIntentOptions.class);
+        when(intentFactory.createCustomTabsIntentOptions(any())).thenReturn(intentOptions);
+        when(intentFactory.createExternalBrowserIntent(any())).thenReturn(null);
 
         final CustomTabsIntent customTabsIntent = spy(new CustomTabsIntent.Builder().build());
-        when(customTabsFactory.createCustomTabsIntent(any(), any())).thenReturn(customTabsIntent);
+        when(intentFactory.createCustomTabsIntent(any(), any())).thenReturn(customTabsIntent);
 
         final ActivityNotFoundException anf = mock(ActivityNotFoundException.class);
         doThrow(anf).when(customTabsIntent).launchUrl(any(), any());
@@ -212,5 +228,7 @@ public class CustomTabsLauncherTest {
             final FlutterError actualError = ((FlutterError) e);
             assertThat(actualError.code).isEqualTo(CustomTabsLauncher.CODE_LAUNCH_ERROR);
         }
+
+        verify(intentFactory).createCustomTabsIntent(any(), same(intentOptions));
     }
 }

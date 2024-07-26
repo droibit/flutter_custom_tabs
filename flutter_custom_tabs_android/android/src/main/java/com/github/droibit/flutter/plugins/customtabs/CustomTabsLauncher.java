@@ -72,14 +72,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
         }
 
         try {
-            final @Nullable CustomTabsIntentOptions customTabsOptions;
-            if (options == null) {
-                customTabsOptions = null;
-            } else {
-                customTabsOptions = new CustomTabsIntentOptions.Builder()
-                        .setOptions(options)
-                        .build();
-            }
+            final CustomTabsIntentOptions customTabsOptions = intentFactory.createCustomTabsIntentOptions(options);
             final Intent externalBrowserIntent = intentFactory.createExternalBrowserIntent(customTabsOptions);
             if (externalBrowserIntent != null) {
                 externalBrowserIntent.setData(uri);
