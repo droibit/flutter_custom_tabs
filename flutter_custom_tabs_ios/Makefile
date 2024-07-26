@@ -4,7 +4,7 @@ bootstrap:
 
 .PHONY: format
 format:
-	@swiftformat .
+	@xcrun --sdk macosx mint run swiftformat swiftformat .
 
 .PHONY: lint
 lint:
