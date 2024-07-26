@@ -106,6 +106,7 @@ opt_in_rules:
   - required_enum_case
   - return_value_from_void_function
   # - self_binding
+  - shorthand_argument
   - shorthand_optional_binding
   - single_test_class
   - sorted_first_last
@@ -156,4 +157,4 @@ identifier_name:
     - vc
     - on
     - db
-  reporter: "xcode"
+reporter: "xcode"
