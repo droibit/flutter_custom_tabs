@@ -75,7 +75,6 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.annotation.Config;
 
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Collections;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
@@ -472,7 +471,7 @@ public class IntentFactoryTest {
     public void applyPartialCustomTabsConfiguration_completeOptions() {
         final int expCornerRadius = 8;
         final PartialCustomTabsConfiguration options = new PartialCustomTabsConfiguration.Builder()
-                .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_DEFAULT)
+                .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_FIXED)
                 .setInitialHeight(100.0)
                 .setCornerRadius(expCornerRadius)
                 .build();
@@ -485,7 +484,7 @@ public class IntentFactoryTest {
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
-        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_DEFAULT);
+        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_FIXED);
         extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight);
         extras.integer(EXTRA_TOOLBAR_CORNER_RADIUS_DP).isEqualTo(expCornerRadius);
     }
@@ -493,7 +492,6 @@ public class IntentFactoryTest {
     @Test
     public void applyPartialCustomTabsConfiguration_minimumOptions() {
         final PartialCustomTabsConfiguration options = new PartialCustomTabsConfiguration.Builder()
-                .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_FIXED)
                 .setInitialHeight(200.0)
                 .build();
 
@@ -505,7 +503,7 @@ public class IntentFactoryTest {
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
-        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_FIXED);
+        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_DEFAULT);
         extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight);
         extras.doesNotContainKey(EXTRA_TOOLBAR_CORNER_RADIUS_DP);
     }

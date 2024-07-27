@@ -191,11 +191,14 @@ public class IntentFactory {
     ) {
         final Double initialHeightDp = configuration.getInitialHeight();
         final Integer resizeBehavior = configuration.getActivityHeightResizeBehavior();
-        if (initialHeightDp != null && resizeBehavior != null) {
-            builder.setInitialActivityHeightPx(
-                    resources.convertToPx(context, initialHeightDp),
-                    resizeBehavior
-            );
+
+        if (initialHeightDp != null) {
+            final int initialHeightPx = resources.convertToPx(context, initialHeightDp);
+            if (resizeBehavior != null) {
+                builder.setInitialActivityHeightPx(initialHeightPx, resizeBehavior);
+            } else {
+                builder.setInitialActivityHeightPx(initialHeightPx);
+            }
         }
 
         final Integer cornerRadius = configuration.getCornerRadius();
