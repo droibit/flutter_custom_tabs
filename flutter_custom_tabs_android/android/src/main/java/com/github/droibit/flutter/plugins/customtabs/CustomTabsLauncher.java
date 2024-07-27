@@ -22,6 +22,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
 import com.github.droibit.flutter.plugins.customtabs.core.IntentFactory;
+import com.github.droibit.flutter.plugins.customtabs.core.ExternalBrowserLauncher;
 import com.github.droibit.flutter.plugins.customtabs.core.NativeAppLauncher;
 import com.github.droibit.flutter.plugins.customtabs.core.PartialCustomTabsLauncher;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
@@ -35,6 +36,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
 
     private final @NonNull IntentFactory intentFactory;
     private final @NonNull NativeAppLauncher nativeAppLauncher;
+    private final @NonNull ExternalBrowserLauncher externalBrowserLauncher;
     private final @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher;
     private @Nullable Activity activity;
 
@@ -42,6 +44,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
         this(
                 new IntentFactory(),
                 new NativeAppLauncher(),
+                new ExternalBrowserLauncher(),
                 new PartialCustomTabsLauncher()
         );
     }
@@ -50,10 +53,12 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     CustomTabsLauncher(
             @NonNull IntentFactory intentFactory,
             @NonNull NativeAppLauncher nativeAppLauncher,
+            @NonNull ExternalBrowserLauncher externalBrowserLauncher,
             @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher
     ) {
         this.intentFactory = intentFactory;
         this.nativeAppLauncher = nativeAppLauncher;
+        this.externalBrowserLauncher = externalBrowserLauncher;
         this.partialCustomTabsLauncher = partialCustomTabsLauncher;
     }
 
@@ -78,11 +83,9 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
         }
 
         try {
-            final CustomTabsIntentOptions customTabsOptions = intentFactory.createCustomTabsIntentOptions(options);
-            final Intent externalBrowserIntent = intentFactory.createExternalBrowserIntent(customTabsOptions);
-            if (externalBrowserIntent != null) {
-                externalBrowserIntent.setData(uri);
-                activity.startActivity(externalBrowserIntent);
+            final CustomTabsIntentOptions customTabsOptions = customTabsIntentFactory
+                    .createIntentOptions(options);
+            if (externalBrowserLauncher.launch(activity, uri, customTabsOptions)) {
                 return;
             }
 
