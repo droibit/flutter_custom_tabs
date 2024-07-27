@@ -2,7 +2,6 @@ package com.github.droibit.flutter.plugins.customtabs;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
-import static androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX;
 import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
 import static java.util.Objects.requireNonNull;
 
@@ -24,6 +23,7 @@ import androidx.core.content.ContextCompat;
 
 import com.github.droibit.flutter.plugins.customtabs.core.IntentFactory;
 import com.github.droibit.flutter.plugins.customtabs.core.NativeAppLauncher;
+import com.github.droibit.flutter.plugins.customtabs.core.PartialCustomTabsLauncher;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 
 import java.util.Map;
@@ -32,23 +32,29 @@ import java.util.Objects;
 public class CustomTabsLauncher implements Messages.CustomTabsApi {
     @VisibleForTesting
     static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
-    private static final int REQUEST_CODE_CUSTOM_TABS = 0;
 
     private final @NonNull IntentFactory intentFactory;
     private final @NonNull NativeAppLauncher nativeAppLauncher;
+    private final @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher;
     private @Nullable Activity activity;
 
     CustomTabsLauncher() {
-        this(new IntentFactory(), new NativeAppLauncher());
+        this(
+                new IntentFactory(),
+                new NativeAppLauncher(),
+                new PartialCustomTabsLauncher()
+        );
     }
 
     @VisibleForTesting
     CustomTabsLauncher(
             @NonNull IntentFactory intentFactory,
-            @NonNull NativeAppLauncher nativeAppLauncher
+            @NonNull NativeAppLauncher nativeAppLauncher,
+            @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher
     ) {
         this.intentFactory = intentFactory;
         this.nativeAppLauncher = nativeAppLauncher;
+        this.partialCustomTabsLauncher = partialCustomTabsLauncher;
     }
 
     void setActivity(@Nullable Activity activity) {
@@ -82,14 +88,10 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
 
             final CustomTabsIntent customTabsIntent = intentFactory
                     .createCustomTabsIntent(activity, requireNonNull(customTabsOptions));
-            final Intent rawIntent = customTabsIntent.intent;
-            if (rawIntent.hasExtra(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX)) {
-                rawIntent.setData(uri);
-                // ref. https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs
-                activity.startActivityForResult(rawIntent, REQUEST_CODE_CUSTOM_TABS);
-            } else {
-                customTabsIntent.launchUrl(activity, uri);
+            if (partialCustomTabsLauncher.launch(activity, uri, customTabsIntent)) {
+                return;
             }
+            customTabsIntent.launchUrl(activity, uri);
         } catch (ActivityNotFoundException e) {
             throw new Messages.FlutterError(CODE_LAUNCH_ERROR, e.getMessage(), null);
         }
