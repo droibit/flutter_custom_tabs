@@ -7,7 +7,6 @@ import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.set
 import static com.github.droibit.flutter.plugins.customtabs.core.ResourceFactory.INVALID_RESOURCE_ID;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.Browser;
@@ -30,38 +29,19 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomT
 import java.util.List;
 import java.util.Map;
 
-public class IntentFactory {
+public class CustomTabsIntentFactory {
     private final @NonNull ResourceFactory resources;
 
-    public IntentFactory() {
+    public CustomTabsIntentFactory() {
         this(new ResourceFactory());
     }
 
     @VisibleForTesting
-    IntentFactory(@NonNull ResourceFactory resources) {
+    CustomTabsIntentFactory(@NonNull ResourceFactory resources) {
         this.resources = resources;
     }
 
-    public @Nullable Intent createExternalBrowserIntent(@Nullable CustomTabsIntentOptions options) {
-        final Intent intent = new Intent(Intent.ACTION_VIEW);
-        if (options == null) {
-            return intent;
-        }
-
-        final BrowserConfiguration browserOptions = options.getBrowser();
-        if (browserOptions == null || !browserOptions.getPrefersExternalBrowser()) {
-            return null;
-        }
-
-        final Map<String, String> headers = browserOptions.getHeaders();
-        if (headers != null) {
-            final Bundle bundleHeaders = extractBundle(headers);
-            intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
-        }
-        return intent;
-    }
-
-    public @NonNull CustomTabsIntent createCustomTabsIntent(
+    public @NonNull CustomTabsIntent createIntent(
             @NonNull Context context,
             @NonNull CustomTabsIntentOptions options
     ) {
@@ -256,7 +236,7 @@ public class IntentFactory {
         return dest;
     }
 
-    public @Nullable CustomTabsIntentOptions createCustomTabsIntentOptions(@Nullable Map<String, Object> options) {
+    public @Nullable CustomTabsIntentOptions createIntentOptions(@Nullable Map<String, Object> options) {
         if (options == null) {
             return null;
         } else {

@@ -43,7 +43,6 @@ import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -79,7 +78,7 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @Config(manifest = Config.NONE)
-public class IntentFactoryTest {
+public class CustomTabsIntentFactoryTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -90,78 +89,10 @@ public class IntentFactoryTest {
     private Context context;
 
     @InjectMocks
-    private IntentFactory intentFactory;
+    private CustomTabsIntentFactory factory;
 
     @Test
-    public void createExternalBrowserIntent_nullOptions() {
-        final Intent result = intentFactory.createExternalBrowserIntent(null);
-        assertThat(result).isNotNull();
-        assertThat(result).hasAction(Intent.ACTION_VIEW);
-        assertThat(result).extras().isNull();
-    }
-
-    @Test
-    public void createExternalBrowserIntent_emptyBrowserConfiguration() {
-        final CustomTabsIntentOptions options = new CustomTabsIntentOptions.Builder()
-                .setBrowser(null)
-                .build();
-        final Intent result = intentFactory.createExternalBrowserIntent(options);
-        assertThat(result).isNull();
-    }
-
-    @Test
-    public void createExternalBrowserIntent_prefersCustomTabs() {
-        final CustomTabsIntentOptions options = new CustomTabsIntentOptions.Builder()
-                .setBrowser(
-                        new BrowserConfiguration.Builder()
-                                .setPrefersExternalBrowser(false)
-                                .build()
-                )
-                .build();
-        final Intent result = intentFactory.createExternalBrowserIntent(options);
-        assertThat(result).isNull();
-    }
-
-    @Test
-    public void createExternalBrowserIntent_noHeaders() {
-        final CustomTabsIntentOptions options = new CustomTabsIntentOptions.Builder()
-                .setBrowser(
-                        new BrowserConfiguration.Builder()
-                                .setPrefersExternalBrowser(true)
-                                .build()
-                )
-                .build();
-        final Intent result = intentFactory.createExternalBrowserIntent(options);
-        assertThat(result).isNotNull();
-        assertThat(result).hasAction(Intent.ACTION_VIEW);
-        assertThat(result).extras().isNull();
-    }
-
-    @Test
-    public void createExternalBrowserIntent_addedHeaders() {
-        final SimpleEntry<String, String> expHeader = new SimpleEntry<>("key", "value");
-        final CustomTabsIntentOptions options = new CustomTabsIntentOptions.Builder()
-                .setBrowser(
-                        new BrowserConfiguration.Builder()
-                                .setPrefersExternalBrowser(true)
-                                .setHeaders(singletonMap(expHeader.getKey(), expHeader.getValue()))
-                                .build()
-                )
-                .build();
-        final Intent result = intentFactory.createExternalBrowserIntent(options);
-        assertThat(result).isNotNull();
-        assertThat(result).hasAction(Intent.ACTION_VIEW);
-        assertThat(result).extras().hasSize(1);
-
-        //noinspection DataFlowIssue
-        final Bundle actualHeaders = result.getBundleExtra(Browser.EXTRA_HEADERS);
-        assertThat(actualHeaders).isNotNull();
-        assertThat(actualHeaders).hasSize(1);
-        assertThat(actualHeaders).string(expHeader.getKey()).isEqualTo(expHeader.getValue());
-    }
-
-    @Test
-    public void createCustomTabsIntent_completeOptions() {
+    public void createIntent_completeOptions() {
         final CustomTabsColorSchemes expColorSchemes = mock(CustomTabsColorSchemes.class);
         final boolean expUrlBarHidingEnabled = true;
         final int expShareState = SHARE_STATE_OFF;
@@ -183,7 +114,7 @@ public class IntentFactoryTest {
                 .setBrowser(expBrowser)
                 .build();
 
-        final IntentFactory intentFactory = spy(this.intentFactory);
+        final CustomTabsIntentFactory intentFactory = spy(this.factory);
         doNothing().when(intentFactory).applyColorSchemes(any(), any());
         doNothing().when(intentFactory).applyCloseButton(any(), any(), any());
         doNothing().when(intentFactory).applyAnimations(any(), any(), any());
@@ -191,10 +122,10 @@ public class IntentFactoryTest {
         doNothing().when(intentFactory).applyBrowserConfiguration(any(), any(), any());
 
         final CustomTabsIntent customTabsIntent = intentFactory
-                .createCustomTabsIntent(context, options);
+                .createIntent(context, options);
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
 
-        final ArgumentCaptor<CustomTabsColorSchemes> colorSchemesCaptor = ArgumentCaptor.forClass(CustomTabsColorSchemes.class);
+        final ArgumentCaptor<CustomTabsColorSchemes> colorSchemesCaptor = ArgumentCaptor.captor();
         verify(intentFactory).applyColorSchemes(any(), colorSchemesCaptor.capture());
         assertThat(colorSchemesCaptor.getValue()).isSameInstanceAs(expColorSchemes);
 
@@ -221,10 +152,10 @@ public class IntentFactoryTest {
     }
 
     @Test
-    public void createCustomTabsIntent_minimumOptions() {
+    public void createIntent_minimumOptions() {
         final CustomTabsIntentOptions options = new CustomTabsIntentOptions.Builder()
                 .build();
-        final IntentFactory intentFactory = spy(this.intentFactory);
+        final CustomTabsIntentFactory intentFactory = spy(this.factory);
         doNothing().when(intentFactory).applyColorSchemes(any(), any());
         doNothing().when(intentFactory).applyCloseButton(any(), any(), any());
         doNothing().when(intentFactory).applyAnimations(any(), any(), any());
@@ -232,7 +163,7 @@ public class IntentFactoryTest {
         doNothing().when(intentFactory).applyBrowserConfiguration(any(), any(), any());
 
         final CustomTabsIntent customTabsIntent = intentFactory
-                .createCustomTabsIntent(context, options);
+                .createIntent(context, options);
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
         extras.doesNotContainKey(EXTRA_ENABLE_URLBAR_HIDING);
         extras.doesNotContainKey(EXTRA_TITLE_VISIBILITY_STATE);
@@ -302,7 +233,7 @@ public class IntentFactoryTest {
                 )
                 .build();
         final CustomTabsIntent.Builder builder = mock(CustomTabsIntent.Builder.class);
-        intentFactory.applyColorSchemes(builder, options);
+        factory.applyColorSchemes(builder, options);
 
         final ArgumentCaptor<Integer> schemeCaptor = ArgumentCaptor.forClass(Integer.class);
         final ArgumentCaptor<CustomTabColorSchemeParams> paramsCaptor
@@ -351,7 +282,7 @@ public class IntentFactoryTest {
         final CustomTabsColorSchemes options = new CustomTabsColorSchemes.Builder()
                 .build();
         final CustomTabsIntent.Builder builder = mock(CustomTabsIntent.Builder.class);
-        intentFactory.applyColorSchemes(builder, options);
+        factory.applyColorSchemes(builder, options);
 
         verify(builder, never()).setColorScheme(anyInt());
         verify(builder, never()).setColorSchemeParams(anyInt(), any());
@@ -370,7 +301,7 @@ public class IntentFactoryTest {
                 .build();
 
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        intentFactory.applyCloseButton(context, builder, options);
+        factory.applyCloseButton(context, builder, options);
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
@@ -384,7 +315,7 @@ public class IntentFactoryTest {
         final CustomTabsCloseButton options = new CustomTabsCloseButton.Builder()
                 .build();
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        intentFactory.applyCloseButton(context, builder, options);
+        factory.applyCloseButton(context, builder, options);
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
@@ -400,7 +331,7 @@ public class IntentFactoryTest {
                 .setIcon("icon")
                 .build();
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        intentFactory.applyCloseButton(context, builder, options);
+        factory.applyCloseButton(context, builder, options);
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
@@ -430,7 +361,7 @@ public class IntentFactoryTest {
                 .setEndExit("end_exit")
                 .build();
         final CustomTabsIntent.Builder builder = mock(CustomTabsIntent.Builder.class);
-        intentFactory.applyAnimations(context, builder, options);
+        factory.applyAnimations(context, builder, options);
 
         final ArgumentCaptor<Integer> startEnterCaptor = ArgumentCaptor.forClass(Integer.class);
         final ArgumentCaptor<Integer> startExitCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -461,7 +392,7 @@ public class IntentFactoryTest {
         final CustomTabsAnimations options = new CustomTabsAnimations.Builder()
                 .build();
         final CustomTabsIntent.Builder builder = mock(CustomTabsIntent.Builder.class);
-        intentFactory.applyAnimations(context, builder, options);
+        factory.applyAnimations(context, builder, options);
 
         verify(builder, never()).setStartAnimations(any(), anyInt(), anyInt());
         verify(builder, never()).setExitAnimations(any(), anyInt(), anyInt());
@@ -480,7 +411,7 @@ public class IntentFactoryTest {
         when(resources.convertToPx(any(), anyDouble())).thenReturn(expInitialActivityHeight);
 
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        intentFactory.applyPartialCustomTabsConfiguration(context, builder, options);
+        factory.applyPartialCustomTabsConfiguration(context, builder, options);
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
@@ -499,7 +430,7 @@ public class IntentFactoryTest {
         when(resources.convertToPx(any(), anyDouble())).thenReturn(expInitialActivityHeight);
 
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        intentFactory.applyPartialCustomTabsConfiguration(context, builder, options);
+        factory.applyPartialCustomTabsConfiguration(context, builder, options);
 
         final CustomTabsIntent customTabsIntent = builder.build();
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
@@ -523,7 +454,7 @@ public class IntentFactoryTest {
                     .build();
             final CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                     .build();
-            intentFactory.applyBrowserConfiguration(context, customTabsIntent, options);
+            factory.applyBrowserConfiguration(context, customTabsIntent, options);
 
             assertThat(customTabsIntent.intent).extras().containsKey(Browser.EXTRA_HEADERS);
             final Bundle actualHeaders = customTabsIntent.intent.getBundleExtra(Browser.EXTRA_HEADERS);
@@ -553,7 +484,7 @@ public class IntentFactoryTest {
                     .build();
             final CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                     .build();
-            intentFactory.applyBrowserConfiguration(context, customTabsIntent, options);
+            factory.applyBrowserConfiguration(context, customTabsIntent, options);
 
             assertThat(customTabsIntent.intent).extras().doesNotContainKey(Browser.EXTRA_HEADERS);
 
@@ -580,7 +511,7 @@ public class IntentFactoryTest {
                     .build();
             final CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                     .build();
-            intentFactory.applyBrowserConfiguration(context, customTabsIntent, options);
+            factory.applyBrowserConfiguration(context, customTabsIntent, options);
 
             assertThat(customTabsIntent.intent).extras().doesNotContainKey(Browser.EXTRA_HEADERS);
 
@@ -591,14 +522,14 @@ public class IntentFactoryTest {
     }
 
     @Test
-    public void createCustomTabsIntentOptions_nullOptions() {
-        final CustomTabsIntentOptions options = intentFactory.createCustomTabsIntentOptions(null);
+    public void createIntentOptions_nullOptions() {
+        final CustomTabsIntentOptions options = factory.createIntentOptions(null);
         assertThat(options).isNull();
     }
 
     @Test
-    public void createCustomTabsIntentOptions_notNullOptions() {
-        final CustomTabsIntentOptions options = intentFactory.createCustomTabsIntentOptions(emptyMap());
+    public void createIntentOptions_notNullOptions() {
+        final CustomTabsIntentOptions options = factory.createIntentOptions(emptyMap());
         assertThat(options).isNotNull();
     }
 }
