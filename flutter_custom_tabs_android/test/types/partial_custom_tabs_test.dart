@@ -4,15 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('PartialCustomTabsConfiguration', () {
-    test('toMessage() returns expected message with default values', () {
+    test('toMessage() returns expected message with minimum values', () {
       const configuration = PartialCustomTabsConfiguration(
         initialHeight: 200,
       );
       final actual = configuration.toMessage();
       expect(actual, <String, Object>{
         'initialHeight': configuration.initialHeight,
-        'activityHeightResizeBehavior':
-            configuration.activityHeightResizeBehavior.rawValue,
       });
     });
 
@@ -29,7 +27,7 @@ void main() {
       expect(actual, <String, Object?>{
         'initialHeight': configuration.initialHeight,
         'activityHeightResizeBehavior':
-            configuration.activityHeightResizeBehavior.rawValue,
+            configuration.activityHeightResizeBehavior!.rawValue,
         'cornerRadius': configuration.cornerRadius,
       });
     });
