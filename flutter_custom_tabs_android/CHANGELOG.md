@@ -1,3 +1,11 @@
+## 2.2.0-dev.2
+
+- Adds new launchers for other Android plugins' Android implementations([#205](https://github.com/droibit/flutter_custom_tabs/pull/205)).
+  - Introduces `PartialCustomTabsLauncher`.
+  - Introduces `ExternalBrowserLauncher`.
+  - Refactors `IntentFactory` to `CustomTabsIntentFactory`.
+- Updates `PartialCustomTabsConfiguration` to allow nullable `activityHeightResizeBehavior`([#206](https://github.com/droibit/flutter_custom_tabs/pull/206), [#205](https://github.com/droibit/flutter_custom_tabs/pull/205)).
+
 ## 2.2.0-dev.1
 
 - Enhances the plugin reusability and reduce pigeon dependency([#198](https://github.com/droibit/flutter_custom_tabs/pull/198)).
