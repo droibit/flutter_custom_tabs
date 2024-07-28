@@ -5,8 +5,7 @@ import 'package:meta/meta.dart';
 class PartialCustomTabsConfiguration {
   const PartialCustomTabsConfiguration({
     required this.initialHeight,
-    this.activityHeightResizeBehavior =
-        CustomTabsActivityHeightResizeBehavior.defaultBehavior,
+    this.activityHeightResizeBehavior,
     this.cornerRadius,
   });
 
@@ -16,7 +15,7 @@ class PartialCustomTabsConfiguration {
   final double initialHeight;
 
   /// The Custom Tab Activity's desired resize behavior.
-  final CustomTabsActivityHeightResizeBehavior activityHeightResizeBehavior;
+  final CustomTabsActivityHeightResizeBehavior? activityHeightResizeBehavior;
 
   /// The toolbar's top corner radius.
   ///

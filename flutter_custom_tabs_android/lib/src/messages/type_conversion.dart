@@ -85,7 +85,8 @@ extension PartialCustomTabsConfigurationConverter
   Map<String, Object> toMessage() {
     return {
       'initialHeight': initialHeight,
-      'activityHeightResizeBehavior': activityHeightResizeBehavior.rawValue,
+      if (activityHeightResizeBehavior != null)
+        'activityHeightResizeBehavior': activityHeightResizeBehavior!.rawValue,
       if (cornerRadius != null) 'cornerRadius': min(cornerRadius!, 16)
     };
   }
