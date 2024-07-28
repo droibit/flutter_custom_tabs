@@ -1,6 +1,6 @@
 name: flutter_custom_tabs_android
 description: Android platform implementation of flutter_custom_tabs.
-version: 2.2.0-dev.1
+version: 2.2.0-dev.2
 repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_android
 
 environment:
