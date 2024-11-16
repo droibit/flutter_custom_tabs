@@ -12,8 +12,7 @@ void main() {
   const channel =
       MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-      .setMockMethodCallHandler(
-          channel, (methodCall) async => log.add(methodCall));
+      .setMockMethodCallHandler(channel, (m) async => log.add(m));
 
   setUp(() {
     log = <MethodCall>[];
@@ -64,6 +63,29 @@ void main() {
       ],
     );
   });
+
+  test('warmup() invoke method "warmup" with null options', () async {
+    final session = await customTabs.warmup();
+    expect(session, isNull);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('warmup', arguments: <String, dynamic>{}),
+      ],
+    );
+  });
+
+  test('invalidate() invoke method "invalidate"', () async {
+    await customTabs.invalidate(_Session());
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('invalidate', arguments: <String, dynamic>{}),
+      ],
+    );
+  });
 }
 
 class _Options implements PlatformOptions {}
+
+class _Session implements PlatformSession {}

@@ -167,6 +167,7 @@ class CustomTabsApiCodec: FlutterStandardMessageCodec {
 protocol CustomTabsApi {
   func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SFSafariViewControllerOptions?, completion: @escaping (Result<Void, Error>) -> Void)
   func closeAllIfPossible(completion: @escaping (Result<Void, Error>) -> Void)
+  func invalidateSession(_ sessionId: String) throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -208,6 +209,21 @@ class CustomTabsApiSetup {
       }
     } else {
       closeAllIfPossibleChannel.setMessageHandler(nil)
+    }
+    let invalidateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.invalidate", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      invalidateChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let sessionIdArg = args[0] as! String
+        do {
+          try api.invalidateSession(sessionIdArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      invalidateChannel.setMessageHandler(nil)
     }
   }
 }

@@ -36,4 +36,16 @@ void main() {
       'prefersExternalBrowser': true,
     });
   });
+
+  test('toMessage() returns a message with session options', () {
+    final configuration = CustomTabsBrowserConfiguration.session(
+      const CustomTabsSession('com.example.browser'),
+      headers: const {'key': 'value'},
+    );
+    final actual = configuration.toMessage();
+    expect(actual, <String, Object>{
+      'sessionPackageName': configuration.sessionPackageName!,
+      'headers': configuration.headers!,
+    });
+  });
 }

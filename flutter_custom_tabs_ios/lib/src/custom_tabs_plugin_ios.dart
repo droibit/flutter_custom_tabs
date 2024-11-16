@@ -46,4 +46,27 @@ class CustomTabsPluginIOS extends CustomTabsPlatform {
   Future<void> closeAllIfPossible() async {
     return _hostApi.closeAllIfPossible();
   }
+
+  @override
+  Future<PlatformSession?> warmup([PlatformOptions? options]) async {
+    // No-op on iOS.
+    return null;
+  }
+
+  @override
+  Future<void> invalidate(PlatformSession session) async {
+    if (session is! SafariViewPrewarmingSession) {
+      throw ArgumentError.value(
+        session,
+        'session',
+        'must be an instance of SafariViewPrewarmingSession.',
+      );
+    }
+
+    final sessionId = session.id;
+    if (sessionId == null) {
+      return;
+    }
+    return _hostApi.invalidate(sessionId);
+  }
 }

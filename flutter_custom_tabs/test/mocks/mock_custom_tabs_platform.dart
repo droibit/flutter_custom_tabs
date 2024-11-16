@@ -10,9 +10,12 @@ class MockCustomTabsPlatform extends Fake
   bool? prefersDeepLink;
   CustomTabsOptions? customTabsOptions;
   SafariViewControllerOptions? safariVCOptions;
-
+  PlatformOptions? sessionOptions;
+  PlatformSession? session;
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
+  bool warmupCalled = false;
+  bool invalidateCalled = false;
 
   void setLaunchExpectations({
     required String url,
@@ -24,6 +27,20 @@ class MockCustomTabsPlatform extends Fake
     this.prefersDeepLink = prefersDeepLink;
     this.customTabsOptions = customTabsOptions;
     this.safariVCOptions = safariVCOptions;
+  }
+
+  void setWarmupExpectations({
+    PlatformOptions? customTabsOptions,
+    PlatformSession? customTabsSession,
+  }) {
+    sessionOptions = customTabsOptions;
+    session = customTabsSession;
+  }
+
+  void setInvalidateExpectations({
+    required PlatformSession session,
+  }) {
+    this.session = session;
   }
 
   @override
@@ -58,5 +75,31 @@ class MockCustomTabsPlatform extends Fake
   @override
   Future<void> closeAllIfPossible() async {
     closeAllIfPossibleCalled = true;
+  }
+
+  @override
+  Future<PlatformSession?> warmup([PlatformOptions? options]) async {
+    if (options is CustomTabsSessionOptions) {
+      final expected = sessionOptions as CustomTabsSessionOptions;
+      expect(options.prefersDefaultBrowser, expected.prefersDefaultBrowser);
+    } else {
+      expect(options, isNull);
+    }
+    warmupCalled = true;
+    return session;
+  }
+
+  @override
+  Future<void> invalidate(PlatformSession session) async {
+    if (session is CustomTabsSession) {
+      final expected = this.session as CustomTabsSession;
+      expect(session.packageName, expected.packageName);
+    } else if (session is SafariViewPrewarmingSession) {
+      final expected = this.session as SafariViewPrewarmingSession;
+      expect(session.id, expected.id);
+    } else {
+      expect(session, isNotNull);
+    }
+    invalidateCalled = true;
   }
 }

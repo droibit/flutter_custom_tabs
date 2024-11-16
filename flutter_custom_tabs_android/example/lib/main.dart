@@ -4,10 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final session = await CustomTabsPlatform.instance.warmup();
+  debugPrint('Warm up session: $session');
+  runApp(MyApp(session as CustomTabsSession));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CustomTabsSession _session;
+
+  const MyApp(
+    CustomTabsSession session, {
+    super.key,
+  }) : _session = session;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +67,10 @@ class MyApp extends StatelessWidget {
                 FilledButton.tonal(
                   onPressed: () => _launchInExternalBrowser(),
                   child: const Text('Show flutter.dev in external browser'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () => _launchURLWithSession(context, _session),
+                  child: const Text('Show flutter.dev with session'),
                 ),
               ],
             ),
@@ -182,6 +196,29 @@ Future<void> _launchInExternalBrowser() async {
   try {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchURLWithSession(
+  BuildContext context,
+  CustomTabsSession session,
+) async {
+  final theme = Theme.of(context);
+  try {
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+          navigationBarColor: theme.colorScheme.surface,
+        ),
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        browser: CustomTabsBrowserConfiguration.session(session),
+      ),
     );
   } catch (e) {
     debugPrint(e.toString());

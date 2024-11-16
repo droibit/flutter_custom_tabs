@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.github.droibit.plugins.flutter.customtabs.android.example"
-    compileSdk flutter.compileSdkVersion
+    compileSdk 34 //flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {

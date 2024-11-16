@@ -5,15 +5,23 @@ import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-/// Passes [url] with options to the underlying platform for launching a custom tab.
+/// Launches a web URL using a custom tab or browser, with various customization options.
 ///
-/// - On Android, the appearance and behavior of [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) can be customized using the [customTabsOptions] parameter.
-/// - On iOS, the appearance and behavior of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) can be customized using the [safariVCOptions] parameter.
-/// - For web, customization options are not available.
+/// The [launchUrl] function provides a way to open web content within your app using
+/// a customizable in-app browser experience on Android and iOS platforms.
 ///
-/// If [customTabsOptions] or [safariVCOptions] are `null`, the URL will be launched in an external browser on mobile platforms.
+/// ### Supported Platforms
 ///
-/// Example of launching Custom Tabs:
+/// - **Android**: Uses [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/)
+///   to display web content within your app. Customize the appearance and behavior
+///   using the [customTabsOptions] parameter.
+/// - **iOS**: Uses [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
+///   to present web content. Customize using the [safariVCOptions] parameter.
+/// - **Web**: Customization options are not available; the URL will be opened in a new browser tab.
+///
+/// ### Examples
+///
+/// **Launch a URL with customization:**
 ///
 /// ```dart
 /// final theme = ...;
@@ -42,7 +50,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// }
 /// ```
 ///
-/// Example of launching an external browser:
+/// **Launch a URL in the external browser:**
 ///
 /// ```dart
 /// try {
@@ -51,6 +59,13 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   // An exception is thrown if browser app is not installed on Android device.
 /// }
 /// ```
+///
+/// ### Notes
+///
+/// - The URL must have an `http` or `https` scheme; otherwise, a [PlatformException] is thrown.
+/// - Use [closeCustomTabs] to programmatically close the custom tab if needed.
+/// - Make sure to call the [warmupCustomTabs] function before launching the URL to improve performance.
+///
 Future<void> launchUrl(
   Uri url, {
   bool prefersDeepLink = false,
@@ -72,12 +87,64 @@ Future<void> launchUrl(
   );
 }
 
-/// Closes all custom tabs that were opened earlier by "launchUrl".
+/// Closes all Custom Tabs that were opened earlier by [launchUrl].
 ///
-/// Availability:
-/// - Android: **SDK 23+**
-/// - iOS: Any
-/// - Web: Not supported
+/// **Platform Availability:**
+/// - **Android:** Supported on SDK 23 (Android 6.0) and above.
+/// - **iOS:** All versions.
+/// - **Web:** Not supported.
 Future<void> closeCustomTabs() async {
   await CustomTabsPlatform.instance.closeAllIfPossible();
+}
+
+/// Pre-warms the Custom Tabs browser process, potentially improving performance when launching a URL.
+///
+/// On **Android**, calling `warmupCustomTabs()` initializes the Custom Tabs service,
+/// causing the browser process to start in the background even before the user clicks on a link.
+/// This can save up to **700ms** when opening a link. If [options] are not provided,
+/// the default browser to warm up is **Chrome**.
+///
+/// For more details, see
+/// [Warm-up and pre-fetch: using the Custom Tabs Service](https://developer.chrome.com/docs/android/custom-tabs/guide-warmup-prefetch).
+///
+/// On **other platforms**, this method does nothing.
+///
+/// **Note:** It's recommended to call [invalidateSession] when the session is no longer needed to release resources.
+///
+/// Returns a [CustomTabsSession] which can be used when launching a URL with a specific session.
+///
+/// ### Example
+///
+/// ```dart
+/// final session = await warmupCustomTabs(
+///   options: const CustomTabsSessionOptions(prefersDefaultBrowser: true),
+/// );
+/// debugPrint('Warm up session: $session');
+///
+/// await launchUrl(
+///   Uri.parse('https://flutter.dev'),
+///   customTabsOptions: CustomTabsOptions(
+///     colorSchemes: CustomTabsColorSchemes.defaults(
+///       toolbarColor: theme.colorScheme.surface,
+///     ),
+///     urlBarHidingEnabled: true,
+///     showTitle: true,
+///     browser: CustomTabsBrowserConfiguration.session(session),
+///   ),
+///   safariVCOptions: SafariViewControllerOptions(
+///     preferredBarTintColor: theme.colorScheme.surface,
+///     preferredControlTintColor: theme.colorScheme.onSurface,
+///     barCollapsingEnabled: true,
+///   ),
+/// );
+/// ```
+Future<CustomTabsSession> warmupCustomTabs({
+  CustomTabsSessionOptions? options,
+}) async {
+  final session = await CustomTabsPlatform.instance.warmup(options);
+  return session as CustomTabsSession? ?? const CustomTabsSession(null);
+}
+
+Future<void> invalidateSession(PlatformSession session) {
+  return CustomTabsPlatform.instance.invalidate(session);
 }

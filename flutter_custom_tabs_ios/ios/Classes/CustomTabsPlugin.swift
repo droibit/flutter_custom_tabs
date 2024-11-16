@@ -40,6 +40,10 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         }
     }
 
+    func invalidateSession(_ sessionId: String) throws {
+        // TODO: Not implemented yet
+    }
+
     // MARK: - Private
 
     private func launchURL(

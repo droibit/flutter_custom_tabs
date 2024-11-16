@@ -79,8 +79,10 @@ class _MockCustomTabsApi implements CustomTabsApi {
   String? url;
   bool? prefersDeepLink;
   PlatformOptions? options;
+  String? sessionId;
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
+  bool invalidateCalled = false;
 
   void setLaunchExpectations({
     required String url,
@@ -90,6 +92,12 @@ class _MockCustomTabsApi implements CustomTabsApi {
     this.url = url;
     this.prefersDeepLink = prefersDeepLink;
     this.options = options;
+  }
+
+  void setInvalidateExpectations({
+    required String sessionId,
+  }) {
+    this.sessionId = sessionId;
   }
 
   @override
@@ -116,6 +124,12 @@ class _MockCustomTabsApi implements CustomTabsApi {
   @override
   Future<void> closeAllIfPossible() async {
     closeAllIfPossibleCalled = true;
+  }
+
+  @override
+  Future<void> invalidate(String sessionId) async {
+    expect(this.sessionId, sessionId);
+    invalidateCalled = true;
   }
 }
 

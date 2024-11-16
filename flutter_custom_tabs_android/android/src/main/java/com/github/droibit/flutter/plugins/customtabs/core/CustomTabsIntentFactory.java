@@ -16,17 +16,19 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsSession;
+import androidx.core.util.Pair;
 
-import com.droibit.android.customtabs.launcher.CustomTabsPackageFallback;
-import com.droibit.android.customtabs.launcher.NonChromeCustomTabs;
+import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider;
 import com.github.droibit.flutter.plugins.customtabs.core.options.BrowserConfiguration;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsAnimations;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsCloseButton;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsColorSchemes;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomTabsConfiguration;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionController;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
 
-import java.util.List;
 import java.util.Map;
 
 public class CustomTabsIntentFactory {
@@ -43,9 +45,25 @@ public class CustomTabsIntentFactory {
 
     public @NonNull CustomTabsIntent createIntent(
             @NonNull Context context,
-            @NonNull CustomTabsIntentOptions options
+            @NonNull CustomTabsIntentOptions options,
+            @NonNull CustomTabsSessionFactory customTabsSessionFactory
     ) {
-        final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        final BrowserConfiguration browserConfiguration;
+        if (options.getBrowser() != null) {
+            browserConfiguration = options.getBrowser();
+        } else {
+            browserConfiguration = new BrowserConfiguration();
+        }
+        final Pair<String, CustomTabsSession> session = customTabsSessionFactory
+                .getSession(browserConfiguration.getSessionPackageName());
+
+        final CustomTabsIntent.Builder builder;
+        if (session == null) {
+            builder = new CustomTabsIntent.Builder();
+        } else {
+            builder = new CustomTabsIntent.Builder(session.second);
+        }
+
         final CustomTabsColorSchemes colorSchemes = options.getColorSchemes();
         if (colorSchemes != null) {
             applyColorSchemes(builder, colorSchemes);
@@ -87,12 +105,6 @@ public class CustomTabsIntentFactory {
         }
 
         final CustomTabsIntent customTabsIntent = builder.build();
-        final BrowserConfiguration browserConfiguration;
-        if (options.getBrowser() != null) {
-            browserConfiguration = options.getBrowser();
-        } else {
-            browserConfiguration = new BrowserConfiguration();
-        }
         applyBrowserConfiguration(context, customTabsIntent, browserConfiguration);
         return customTabsIntent;
     }
@@ -199,33 +211,25 @@ public class CustomTabsIntentFactory {
             customTabsIntent.intent.putExtra(Browser.EXTRA_HEADERS, bundleHeaders);
         }
 
-        final CustomTabsPackageFallback fallback = getCustomTabsPackageFallback(context, options);
+        // Avoid overriding the package if using CustomTabsSession.
+        if (customTabsIntent.intent.getPackage() != null) {
+            return;
+        }
+        final String sessionPackageName = options.getSessionPackageName();
+        if (sessionPackageName != null) {
+            // If CustomTabsSession is not obtained after service binding,
+            // fallback to launching the Custom Tabs resolved during warmup.
+            customTabsIntent.intent.setPackage(sessionPackageName);
+            return;
+        }
+
+        final CustomTabsPackageProvider fallback = options.getAdditionalCustomTabs(context);
         final Boolean prefersDefaultBrowser = options.getPrefersDefaultBrowser();
         if (prefersDefaultBrowser != null && prefersDefaultBrowser) {
             setCustomTabsPackage(customTabsIntent, context, fallback);
         } else {
             setChromeCustomTabsPackage(customTabsIntent, context, fallback);
         }
-    }
-
-    private static @NonNull CustomTabsPackageFallback getCustomTabsPackageFallback(
-            @NonNull Context context,
-            @NonNull BrowserConfiguration options
-    ) {
-        final List<String> fallbackCustomTabs;
-        if (options.getFallbackCustomTabs() != null) {
-            fallbackCustomTabs = options.getFallbackCustomTabs();
-        } else {
-            fallbackCustomTabs = null;
-        }
-
-        final CustomTabsPackageFallback fallback;
-        if (fallbackCustomTabs != null && !fallbackCustomTabs.isEmpty()) {
-            fallback = new NonChromeCustomTabs(fallbackCustomTabs);
-        } else {
-            fallback = new NonChromeCustomTabs(context);
-        }
-        return fallback;
     }
 
     private @NonNull Bundle extractBundle(@NonNull Map<String, String> headers) {
@@ -239,10 +243,9 @@ public class CustomTabsIntentFactory {
     public @Nullable CustomTabsIntentOptions createIntentOptions(@Nullable Map<String, Object> options) {
         if (options == null) {
             return null;
-        } else {
-            return new CustomTabsIntentOptions.Builder()
-                    .setOptions(options)
-                    .build();
         }
+        return new CustomTabsIntentOptions.Builder()
+                .setOptions(options)
+                .build();
     }
 }

@@ -18,4 +18,8 @@ abstract class CustomTabsApi {
   });
 
   void closeAllIfPossible();
+
+  String? warmup(Map<String, Object?>? options);
+
+  void invalidate(String packageName);
 }
