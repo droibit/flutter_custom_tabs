@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 /// The session for the prewarming of [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller).
 @immutable
-class SafariViewPrewarmingSession implements PlatformSession {  
+class SafariViewPrewarmingSession implements PlatformSession {
   const SafariViewPrewarmingSession(this.id);
 
   final String? id;

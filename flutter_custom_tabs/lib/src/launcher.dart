@@ -59,7 +59,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 ///   // An exception is thrown if browser app is not installed on Android device.
 /// }
 /// ```
-/// 
+///
 /// ### Notes
 ///
 /// - The URL must have an `http` or `https` scheme; otherwise, a [PlatformException] is thrown.
@@ -88,7 +88,7 @@ Future<void> launchUrl(
 }
 
 /// Closes all Custom Tabs that were opened earlier by [launchUrl].
-/// 
+///
 /// **Platform Availability:**
 /// - **Android:** Supported on SDK 23 (Android 6.0) and above.
 /// - **iOS:** All versions.
@@ -108,11 +108,11 @@ Future<void> closeCustomTabs() async {
 /// [Warm-up and pre-fetch: using the Custom Tabs Service](https://developer.chrome.com/docs/android/custom-tabs/guide-warmup-prefetch).
 ///
 /// On **other platforms**, this method does nothing.
-/// 
+///
 /// **Note:** It's recommended to call [invalidateSession] when the session is no longer needed to release resources.
 ///
 /// Returns a [CustomTabsSession] which can be used when launching a URL with a specific session.
-/// 
+///
 /// ### Example
 ///
 /// ```dart
@@ -120,7 +120,7 @@ Future<void> closeCustomTabs() async {
 ///   options: const CustomTabsSessionOptions(prefersDefaultBrowser: true),
 /// );
 /// debugPrint('Warm up session: $session');
-/// 
+///
 /// await launchUrl(
 ///   Uri.parse('https://flutter.dev'),
 ///   customTabsOptions: CustomTabsOptions(

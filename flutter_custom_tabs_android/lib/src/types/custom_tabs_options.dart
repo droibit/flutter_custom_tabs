@@ -50,7 +50,7 @@ class CustomTabsOptions implements PlatformOptions {
         );
 
   /// Creates a [CustomTabsOptions] instance with HTTP headers for an external browser.
-  /// 
+  ///
   /// [headers] can be used to [add extra HTTP request headers](https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-request-headers).
   /// Note: Depending on the browser used to launch Custom Tabs, it may not be possible to add arbitrary headers.
   CustomTabsOptions.externalBrowser({

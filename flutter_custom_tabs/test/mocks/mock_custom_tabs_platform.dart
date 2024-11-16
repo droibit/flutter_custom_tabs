@@ -15,7 +15,7 @@ class MockCustomTabsPlatform extends Fake
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
   bool warmupCalled = false;
-  bool invalidateCalled = false;  
+  bool invalidateCalled = false;
 
   void setLaunchExpectations({
     required String url,
@@ -92,7 +92,7 @@ class MockCustomTabsPlatform extends Fake
   @override
   Future<void> invalidate(PlatformSession session) async {
     if (session is CustomTabsSession) {
-      final expected = sessionOptions as CustomTabsSession;  
+      final expected = sessionOptions as CustomTabsSession;
       expect(session.packageName, expected.packageName);
     } else if (session is SafariViewPrewarmingSession) {
       final expected = sessionOptions as SafariViewPrewarmingSession;

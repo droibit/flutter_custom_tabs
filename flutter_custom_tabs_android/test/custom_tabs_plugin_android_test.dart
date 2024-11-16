@@ -108,8 +108,7 @@ void main() {
     );
   });
 
-  test('warmup() returns null when packageName is null',
-      () async {
+  test('warmup() returns null when packageName is null', () async {
     final session = await customTabs.warmup();
     expect(session, isNull);
   });

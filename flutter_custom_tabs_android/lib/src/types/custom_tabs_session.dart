@@ -5,9 +5,9 @@ import 'package:meta/meta.dart';
 ///
 /// A [CustomTabsSession] allows you to establish a connection to a Custom Tabs provider,
 /// enabling features like pre-warming the browser and pre-fetching content to improve
-/// performance when launching URLs. 
+/// performance when launching a URL.
 @immutable
-class CustomTabsSession implements PlatformSession {  
+class CustomTabsSession implements PlatformSession {
   const CustomTabsSession(this.packageName);
 
   /// The package name of the Custom Tabs application corresponding to the session.
@@ -20,7 +20,7 @@ class CustomTabsSession implements PlatformSession {
 /// Options for creating a Custom Tabs session.
 ///
 /// [CustomTabsSessionOptions] allows you to customize the behavior of a custom tabs session
-/// when establishing a connection to a Custom Tabs provider. 
+/// when establishing a connection to a Custom Tabs provider.
 @immutable
 class CustomTabsSessionOptions implements PlatformOptions {
   const CustomTabsSessionOptions({
