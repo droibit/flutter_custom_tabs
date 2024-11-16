@@ -8,12 +8,15 @@ import 'custom_tabs_color_schemes.dart';
 import 'custom_tabs_share_state.dart';
 import 'partial_custom_tabs.dart';
 
-/// The comprehensive set of options for launching [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) by specifying a URL.
+/// A comprehensive set of options for customizing the appearance and behavior of
+/// [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) when launching a URL.
 ///
-/// See also:
+/// The [CustomTabsOptions] class allows you to tailor the Custom Tabs experience to match
+/// your application's theme and requirements. You can customize colors, animations, toolbar
+/// behavior, and more.
 ///
+/// ### See Also
 /// - [CustomTabsIntent.Builder](https://developer.android.com/reference/androidx/browser/customtabs/CustomTabsIntent.Builder)
-///
 @immutable
 class CustomTabsOptions implements PlatformOptions {
   /// Creates a [CustomTabsOptions] instance with the specified options.
@@ -47,6 +50,9 @@ class CustomTabsOptions implements PlatformOptions {
         );
 
   /// Creates a [CustomTabsOptions] instance with HTTP headers for an external browser.
+  /// 
+  /// [headers] can be used to [add extra HTTP request headers](https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-request-headers).
+  /// Note: Depending on the browser used to launch Custom Tabs, it may not be possible to add arbitrary headers.
   CustomTabsOptions.externalBrowser({
     required Map<String, String> headers,
   }) : this(

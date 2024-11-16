@@ -39,7 +39,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
-import static java.util.Collections.singletonList;
+import static java.util.Collections.singleton;
 import static java.util.Collections.singletonMap;
 
 import android.content.Context;
@@ -61,6 +61,7 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsClos
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsColorSchemes;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomTabsConfiguration;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -84,6 +85,9 @@ public class CustomTabsIntentFactoryTest {
 
     @Mock
     private ResourceFactory resources;
+
+    @Mock
+    private CustomTabsSessionFactory customTabsSessionFactory;
 
     @Mock
     private Context context;
@@ -122,7 +126,7 @@ public class CustomTabsIntentFactoryTest {
         doNothing().when(intentFactory).applyBrowserConfiguration(any(), any(), any());
 
         final CustomTabsIntent customTabsIntent = intentFactory
-                .createIntent(context, options);
+                .createIntent(context, options, customTabsSessionFactory);
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
 
         final ArgumentCaptor<CustomTabsColorSchemes> colorSchemesCaptor = ArgumentCaptor.captor();
@@ -163,7 +167,7 @@ public class CustomTabsIntentFactoryTest {
         doNothing().when(intentFactory).applyBrowserConfiguration(any(), any(), any());
 
         final CustomTabsIntent customTabsIntent = intentFactory
-                .createIntent(context, options);
+                .createIntent(context, options, customTabsSessionFactory);
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
         extras.doesNotContainKey(EXTRA_ENABLE_URLBAR_HIDING);
         extras.doesNotContainKey(EXTRA_TITLE_VISIBILITY_STATE);
@@ -183,7 +187,7 @@ public class CustomTabsIntentFactoryTest {
         final BrowserConfiguration actualBrowserConfig = browserConfigCaptor.getValue();
         assertThat(actualBrowserConfig.getPrefersExternalBrowser()).isFalse();
         assertThat(actualBrowserConfig.getPrefersDefaultBrowser()).isNull();
-        assertThat(actualBrowserConfig.getFallbackCustomTabs()).isNull();
+        assertThat(actualBrowserConfig.getFallbackCustomTabPackages()).isNull();
         assertThat(actualBrowserConfig.getHeaders()).isNull();
     }
 
@@ -448,7 +452,7 @@ public class CustomTabsIntentFactoryTest {
             final SimpleEntry<String, String> expHeader = new SimpleEntry<>("key", "value");
             final BrowserConfiguration options = new BrowserConfiguration.Builder()
                     .setHeaders(singletonMap(expHeader.getKey(), expHeader.getValue()))
-                    .setFallbackCustomTabs(singletonList("com.example.customtabs"))
+                    .setFallbackCustomTabs(singleton("com.example.customtabs"))
                     .setPrefersExternalBrowser(false)
                     .setPrefersDefaultBrowser(false)
                     .build();

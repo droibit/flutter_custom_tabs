@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 
 import com.github.droibit.flutter.plugins.customtabs.Messages.FlutterError;
 import com.github.droibit.flutter.plugins.customtabs.core.CustomTabsIntentFactory;
@@ -27,15 +28,21 @@ import com.github.droibit.flutter.plugins.customtabs.core.ExternalBrowserLaunche
 import com.github.droibit.flutter.plugins.customtabs.core.NativeAppLauncher;
 import com.github.droibit.flutter.plugins.customtabs.core.PartialCustomTabsLauncher;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
+import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSessionOptions;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionController;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
 
 import java.util.Map;
 import java.util.Objects;
+
+import io.flutter.Log;
 
 public class CustomTabsLauncher implements Messages.CustomTabsApi {
     @VisibleForTesting
     static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
     private final @NonNull CustomTabsIntentFactory customTabsIntentFactory;
+    private final @NonNull CustomTabsSessionFactory customTabsSessionFactory;
     private final @NonNull NativeAppLauncher nativeAppLauncher;
     private final @NonNull ExternalBrowserLauncher externalBrowserLauncher;
     private final @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher;
@@ -44,6 +51,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     CustomTabsLauncher() {
         this(
                 new CustomTabsIntentFactory(),
+                new CustomTabsSessionFactory(),
                 new NativeAppLauncher(),
                 new ExternalBrowserLauncher(),
                 new PartialCustomTabsLauncher()
@@ -53,17 +61,20 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     @VisibleForTesting
     CustomTabsLauncher(
             @NonNull CustomTabsIntentFactory customTabsIntentFactory,
+            @NonNull CustomTabsSessionFactory customTabsSessionFactory,
             @NonNull NativeAppLauncher nativeAppLauncher,
             @NonNull ExternalBrowserLauncher externalBrowserLauncher,
             @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher
     ) {
         this.customTabsIntentFactory = customTabsIntentFactory;
+        this.customTabsSessionFactory = customTabsSessionFactory;
         this.nativeAppLauncher = nativeAppLauncher;
         this.externalBrowserLauncher = externalBrowserLauncher;
         this.partialCustomTabsLauncher = partialCustomTabsLauncher;
     }
 
     void setActivity(@Nullable Activity activity) {
+        customTabsSessionFactory.handleActivityChange(activity);
         this.activity = activity;
     }
 
@@ -90,8 +101,11 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
                 return;
             }
 
-            final CustomTabsIntent customTabsIntent = customTabsIntentFactory
-                    .createIntent(activity, requireNonNull(customTabsOptions));
+            final CustomTabsIntent customTabsIntent = customTabsIntentFactory.createIntent(
+                    activity,
+                    requireNonNull(customTabsOptions),
+                    customTabsSessionFactory
+            );
             if (partialCustomTabsLauncher.launch(activity, uri, customTabsIntent)) {
                 return;
             }
@@ -152,5 +166,34 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
         } else {
             return pm.resolveService(intent, flags);
         }
+    }
+
+    @Override
+    public @Nullable String warmup(@Nullable Map<String, Object> options) {
+        final Activity activity = this.activity;
+        if (activity == null) {
+            Log.w("CustomTabsAndroid", "Activity is null. Cannot warm up custom tabs.");
+            return null;
+        }
+
+        final CustomTabsSessionOptions sessionOptions = customTabsSessionFactory
+                .createSessionOptions(options);
+        final Pair<String, CustomTabsSessionController> session = customTabsSessionFactory
+                .createSession(activity, sessionOptions);
+        if (session == null) {
+            return null;
+        }
+
+        final String packageName = session.first;
+        final CustomTabsSessionController controller = session.second;
+        if (controller.bindCustomTabsService(activity, packageName)) {
+            return packageName;
+        }
+        return null;
+    }
+
+    @Override
+    public void invalidate(@NonNull String packageName) {
+        customTabsSessionFactory.invalidateSession(packageName);
     }
 }

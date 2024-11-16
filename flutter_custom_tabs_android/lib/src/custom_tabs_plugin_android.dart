@@ -39,7 +39,39 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
   }
 
   @override
-  Future<void> closeAllIfPossible() async {
+  Future<void> closeAllIfPossible() {
     return _hostApi.closeAllIfPossible();
+  }
+
+  @override
+  Future<PlatformSession?> warmup([PlatformOptions? options]) async {
+    if (options != null && options is! CustomTabsSessionOptions) {
+      throw ArgumentError.value(
+        options,
+        'options',
+        'must be an instance of CustomTabsSessionOptions.',
+      );
+    }
+
+    final browserOptions = options as CustomTabsSessionOptions?;
+    final packageName = await _hostApi.warmup(browserOptions?.toMessage());
+    return packageName == null ? null : CustomTabsSession(packageName);
+  }
+
+  @override
+  Future<void> invalidate(PlatformSession session) async {
+    if (session is! CustomTabsSession) {
+      throw ArgumentError.value(
+        session,
+        'session',
+        'must be an instance of CustomTabsSession.',
+      );
+    }
+
+    final packageName = session.packageName;
+    if (packageName == null) {
+      return;
+    }
+    return _hostApi.invalidate(packageName);
   }
 }

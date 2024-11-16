@@ -75,14 +75,89 @@ void main() {
     await customTabs.closeAllIfPossible();
     expect(api.closeAllIfPossibleCalled, isTrue);
   });
+
+  test('warmup() invoke method "warmup" with valid options', () async {
+    const options = CustomTabsSessionOptions(
+      prefersDefaultBrowser: true,
+    );
+    const packageName = 'com.example.browser';
+    api.setWarmupExpectations(
+      options: options,
+      packageName: packageName,
+    );
+
+    final session = await customTabs.warmup(options);
+    expect(
+      session,
+      isA<CustomTabsSession>()
+          .having((s) => s.packageName, 'packageName', packageName),
+    );
+  });
+
+  test('warmup() invoke method "warmup" with no options', () async {
+    const packageName = 'com.example.browser';
+    api.setWarmupExpectations(
+      packageName: packageName,
+    );
+
+    final session = await customTabs.warmup();
+    expect(
+      session,
+      isA<CustomTabsSession>()
+          .having((s) => s.packageName, 'packageName', packageName),
+    );
+  });
+
+  test('warmup() returns null when packageName is null',
+      () async {
+    final session = await customTabs.warmup();
+    expect(session, isNull);
+  });
+
+  test(
+      'warmup() throws ArgumentError when options is not CustomTabsSessionOptions',
+      () async {
+    expect(
+      customTabs.warmup(const _Options()),
+      throwsA(isA<ArgumentError>()),
+    );
+  });
+
+  test('invalidate() invoke method "invalidate" with valid options', () async {
+    const packageName = 'com.example.browser';
+    api.setInvalidateExpectations(
+      packageName: packageName,
+    );
+
+    await customTabs.invalidate(const CustomTabsSession(packageName));
+    expect(api.invalidateCalled, isTrue);
+  });
+
+  test(
+      'invalidate() throws ArgumentError when session is not CustomTabsSession',
+      () {
+    expect(
+      () => customTabs.invalidate(_Session()),
+      throwsA(isA<ArgumentError>()),
+    );
+  });
+
+  test('invalidate() does nothing when session is NoSession', () async {
+    await customTabs.invalidate(const CustomTabsSession(null));
+    expect(api.invalidateCalled, isFalse);
+  });
 }
 
 class _MockCustomTabsApi implements CustomTabsApi {
   String? url;
   bool? prefersDeepLink;
-  PlatformOptions? options;
+  PlatformOptions? launchOptions;
+  PlatformOptions? sessionOptions;
+  String? packageName;
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
+  bool warmupCalled = false;
+  bool invalidateCalled = false;
 
   void setLaunchExpectations({
     required String url,
@@ -91,7 +166,21 @@ class _MockCustomTabsApi implements CustomTabsApi {
   }) {
     this.url = url;
     this.prefersDeepLink = prefersDeepLink;
-    this.options = options;
+    launchOptions = options;
+  }
+
+  void setWarmupExpectations({
+    PlatformOptions? options,
+    String? packageName,
+  }) {
+    this.packageName = packageName;
+    sessionOptions = options;
+  }
+
+  void setInvalidateExpectations({
+    required String packageName,
+  }) {
+    this.packageName = packageName;
   }
 
   @override
@@ -103,10 +192,10 @@ class _MockCustomTabsApi implements CustomTabsApi {
     expect(url, this.url);
     expect(prefersDeepLink, this.prefersDeepLink);
 
-    if (this.options == null) {
+    if (launchOptions == null) {
       expect(options, isNull);
-    } else if (this.options is CustomTabsOptions) {
-      final expected = (this.options as CustomTabsOptions).toMessage();
+    } else if (launchOptions is CustomTabsOptions) {
+      final expected = (launchOptions as CustomTabsOptions).toMessage();
       expect(options?['urlBarHidingEnabled'], expected['urlBarHidingEnabled']);
     } else {
       expect(options, isNotNull);
@@ -118,6 +207,29 @@ class _MockCustomTabsApi implements CustomTabsApi {
   Future<void> closeAllIfPossible() async {
     closeAllIfPossibleCalled = true;
   }
+
+  @override
+  Future<String?> warmup(Map<String?, Object?>? options) async {
+    if (sessionOptions == null) {
+      expect(options, isNull);
+    } else if (sessionOptions is CustomTabsSessionOptions) {
+      final expected = (sessionOptions as CustomTabsSessionOptions).toMessage();
+      expect(
+        options?['prefersDefaultBrowser'],
+        expected['prefersDefaultBrowser'],
+      );
+    } else {
+      expect(options, isNotNull);
+    }
+    warmupCalled = true;
+    return packageName;
+  }
+
+  @override
+  Future<void> invalidate(String packageName) async {
+    expect(packageName, this.packageName);
+    invalidateCalled = true;
+  }
 }
 
 class _Options implements PlatformOptions {
@@ -127,3 +239,5 @@ class _Options implements PlatformOptions {
     this.urlBarHidingEnabled,
   });
 }
+
+class _Session implements PlatformSession {}

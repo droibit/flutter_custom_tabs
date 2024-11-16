@@ -42,6 +42,7 @@ extension CustomTabsBrowserConfigurationConverter
         'prefersDefaultBrowser': prefersDefaultBrowser!,
       if (fallbackCustomTabs != null) 'fallbackCustomTabs': fallbackCustomTabs!,
       if (headers != null) 'headers': headers!,
+      if (sessionPackageName != null) 'sessionPackageName': sessionPackageName!,
     };
   }
 }
@@ -88,6 +89,16 @@ extension PartialCustomTabsConfigurationConverter
       if (activityHeightResizeBehavior != null)
         'activityHeightResizeBehavior': activityHeightResizeBehavior!.rawValue,
       if (cornerRadius != null) 'cornerRadius': min(cornerRadius!, 16)
+    };
+  }
+}
+
+extension CustomTabsSessionOptionsConverter on CustomTabsSessionOptions {
+  Map<String, Object> toMessage() {
+    return {
+      if (prefersDefaultBrowser != null)
+        'prefersDefaultBrowser': prefersDefaultBrowser!,
+      if (fallbackCustomTabs != null) 'fallbackCustomTabs': fallbackCustomTabs!,
     };
   }
 }

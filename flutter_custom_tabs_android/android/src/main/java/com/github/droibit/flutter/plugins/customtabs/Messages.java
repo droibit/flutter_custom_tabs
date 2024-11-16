@@ -63,6 +63,11 @@ public class Messages {
 
     void closeAllIfPossible();
 
+    @Nullable 
+    String warmup(@Nullable Map<String, Object> options);
+
+    void invalidate(@NonNull String packageName);
+
     /** The codec used by CustomTabsApi. */
     static @NonNull MessageCodec<Object> getCodec() {
       return new StandardMessageCodec();
@@ -105,6 +110,54 @@ public class Messages {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 try {
                   api.closeAllIfPossible();
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.warmup", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                Map<String, Object> optionsArg = (Map<String, Object>) args.get(0);
+                try {
+                  String output = api.warmup(optionsArg);
+                  wrapped.add(0, output);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.invalidate", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                String packageNameArg = (String) args.get(0);
+                try {
+                  api.invalidate(packageNameArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {
