@@ -27,4 +27,12 @@ class CustomTabsPluginWeb extends CustomTabsPlatform {
 
   @override
   Future<void> closeAllIfPossible() async {}
+
+  @override
+  Future<PlatformSession?> warmup([PlatformOptions? options]) async {
+    return null;
+  }
+
+  @override
+  Future<void> invalidate(PlatformSession session) async {}
 }
