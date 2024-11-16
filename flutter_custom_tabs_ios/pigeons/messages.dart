@@ -16,6 +16,9 @@ abstract class CustomTabsApi {
 
   @async
   void closeAllIfPossible();
+
+  @SwiftFunction('invalidateSession(_:)')
+  void invalidate(String sessionId);
 }
 
 class SFSafariViewControllerOptions {
