@@ -29,4 +29,14 @@ class MethodChannelCustomTabs extends CustomTabsPlatform {
   Future<void> closeAllIfPossible() {
     return _channel.invokeMethod('closeAllIfPossible');
   }
+
+  @override
+  Future<PlatformSession?> warmup([PlatformOptions? options]) {
+    return _channel.invokeMethod('warmup', <String, dynamic>{});
+  }
+
+  @override
+  Future<void> invalidate(PlatformSession session) {
+    return _channel.invokeMethod('invalidate', <String, dynamic>{});
+  }
 }

@@ -43,4 +43,17 @@ abstract class CustomTabsPlatform extends PlatformInterface {
   Future<void> closeAllIfPossible() {
     throw UnimplementedError('closeAllIfPossible() has not been implemented.');
   }
+
+  /// On Android, Warm up the browser process.
+  ///
+  /// Allows the browser application to pre-initialize itself in the background.
+  /// Significantly speeds up URL opening in the browser.
+  Future<PlatformSession?> warmup([PlatformOptions? options]) {
+    throw UnimplementedError('warmup() has not been implemented.');
+  }
+
+  /// Invalidates the session.
+  Future<void> invalidate(PlatformSession session) {
+    throw UnimplementedError('invalidate() has not been implemented.');
+  }
 }
