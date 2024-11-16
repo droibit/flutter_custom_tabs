@@ -92,10 +92,10 @@ class MockCustomTabsPlatform extends Fake
   @override
   Future<void> invalidate(PlatformSession session) async {
     if (session is CustomTabsSession) {
-      final expected = sessionOptions as CustomTabsSession;
+      final expected = this.session as CustomTabsSession;
       expect(session.packageName, expected.packageName);
     } else if (session is SafariViewPrewarmingSession) {
-      final expected = sessionOptions as SafariViewPrewarmingSession;
+      final expected = this.session as SafariViewPrewarmingSession;
       expect(session.id, expected.id);
     } else {
       expect(session, isNotNull);
