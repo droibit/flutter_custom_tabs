@@ -87,4 +87,75 @@ void main() {
     await closeCustomTabs();
     expect(mock.closeAllIfPossibleCalled, isTrue);
   });
+
+  test('warmupCustomTabs() invoke method "warmup" with options', () async {
+    const options = CustomTabsSessionOptions(
+      prefersDefaultBrowser: true,
+    );
+    const sessionPackageName = 'com.example.browser';
+    mock.setWarmupExpectations(
+      customTabsOptions: options,
+      customTabsSession: const CustomTabsSession(sessionPackageName),
+    );
+
+    final actualSession = await warmupCustomTabs(options: options);
+    expect(actualSession.packageName, sessionPackageName);
+    expect(mock.warmupCalled, isTrue);
+  });
+
+  test('warmupCustomTabs() invoke method "warmup" with no options', () async {
+    const sessionPackageName = 'com.example.browser';
+    mock.setWarmupExpectations(
+      customTabsSession: const CustomTabsSession(sessionPackageName),
+    );
+
+    final actualSession = await warmupCustomTabs();
+    expect(actualSession.packageName, sessionPackageName);
+    expect(mock.warmupCalled, isTrue);
+  });
+
+  test(
+      'warmupCustomTabs() returns empty CustomTabsSession when session is null',
+      () async {
+    mock.setWarmupExpectations(
+      customTabsSession: null,
+    );
+
+    final actualSession = await warmupCustomTabs();
+    expect(actualSession.packageName, isNull);
+    expect(mock.warmupCalled, isTrue);
+  });
+
+  test('invalidateSession() invoke method "invalidate" with CustomTabsSession',
+      () async {
+    const session = CustomTabsSession('com.example.browser');
+    mock.setInvalidateExpectations(session: session);
+
+    await invalidateSession(session);
+    expect(mock.invalidateCalled, isTrue);
+  });
+
+  test(
+      'invalidateSession() invoke method "invalidate" with SafariViewPrewarmingSession',
+      () async {
+    const session = SafariViewPrewarmingSession('test');
+    mock.setInvalidateExpectations(session: session);
+
+    await invalidateSession(session);
+    expect(mock.invalidateCalled, isTrue);
+  });
+
+  test(
+      'invalidateSession() invoke method "invalidate" with non-PlatformSession implementation',
+      () async {
+    const session = _Session();
+    mock.setInvalidateExpectations(session: session);
+
+    await invalidateSession(session);
+    expect(mock.invalidateCalled, isTrue);
+  });
+}
+
+class _Session implements PlatformSession {
+  const _Session();
 }

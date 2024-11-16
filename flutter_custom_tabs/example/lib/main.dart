@@ -5,10 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart' as lite;
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final session = await warmupCustomTabs(
+    options: const CustomTabsSessionOptions(prefersDefaultBrowser: true),
+  );
+  debugPrint('Warm up session: $session');
+  runApp(MyApp(session));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CustomTabsSession _session;
+
+  const MyApp(
+    CustomTabsSession session, {
+    super.key,
+  }) : _session = session;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +86,10 @@ class MyApp extends StatelessWidget {
               FilledButton(
                 onPressed: () => _launchInExternalBrowser(),
                 child: const Text('Show flutter.dev in external browser'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchURLWithSession(context, _session),
+                child: const Text('Show flutter.dev with session'),
               ),
             ],
           ),
@@ -292,6 +308,33 @@ Future<void> _launchInExternalBrowser() async {
     await launchUrl(
       Uri.parse('https://flutter.dev'),
       prefersDeepLink: false,
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchURLWithSession(
+  BuildContext context,
+  CustomTabsSession session,
+) async {
+  final theme = Theme.of(context);
+  try {
+    await launchUrl(
+      Uri.parse('https://flutter.dev'),
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+          navigationBarColor: theme.colorScheme.surface,
+        ),
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        browser: CustomTabsBrowserConfiguration.session(session),
+      ),
+      safariVCOptions: SafariViewControllerOptions(
+        preferredBarTintColor: theme.colorScheme.surface,
+        preferredControlTintColor: theme.colorScheme.onSurface,
+      ),
     );
   } catch (e) {
     debugPrint(e.toString());
