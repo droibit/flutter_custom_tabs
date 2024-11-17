@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,12 +11,11 @@ void main() {
 
   test('launchUrl() launch with non-web URL', () async {
     final url = Uri.parse('file:/home');
-    try {
-      await launchUrl(url);
-      fail("failed");
-    } catch (e) {
-      expect(e, isA<PlatformException>());
-    }
+    expect(
+      () => launchUrl(url),
+      throwsA(isA<ArgumentError>()),
+    );
+    expect(mock.launchUrlCalled, isFalse);
   });
 
   test('launchUrl() launch with null options', () async {
@@ -26,11 +25,11 @@ void main() {
       prefersDeepLink: false,
     );
 
-    try {
-      await launchUrl(url);
-    } catch (e) {
-      fail(e.toString());
-    }
+    expect(
+      () async => await launchUrl(url),
+      returnsNormally,
+    );
+    expect(mock.launchUrlCalled, isTrue);
   });
 
   test('launchUrl() launch with empty options', () async {
@@ -44,15 +43,15 @@ void main() {
       safariVCOptions: safariVCOptions,
     );
 
-    try {
-      await launchUrl(
+    expect(
+      () async => await launchUrl(
         url,
         customTabsOptions: customTabsOptions,
         safariVCOptions: safariVCOptions,
-      );
-    } catch (e) {
-      fail(e.toString());
-    }
+      ),
+      returnsNormally,
+    );
+    expect(mock.launchUrlCalled, isTrue);
   });
 
   test('launchUrl() launch with options', () async {
@@ -71,20 +70,23 @@ void main() {
       safariVCOptions: safariVCOptions,
     );
 
-    try {
-      await launchUrl(
+    expect(
+      () async => await launchUrl(
         url,
         prefersDeepLink: prefersDeepLink,
         customTabsOptions: customTabsOptions,
         safariVCOptions: safariVCOptions,
-      );
-    } catch (e) {
-      fail(e.toString());
-    }
+      ),
+      returnsNormally,
+    );
+    expect(mock.launchUrlCalled, isTrue);
   });
 
   test('closeCustomTabs() invoke method "closeAllIfPossible"', () async {
-    await closeCustomTabs();
+    expect(
+      () async => await closeCustomTabs(),
+      returnsNormally,
+    );
     expect(mock.closeAllIfPossibleCalled, isTrue);
   });
 
@@ -124,6 +126,52 @@ void main() {
     final actualSession = await warmupCustomTabs();
     expect(actualSession.packageName, isNull);
     expect(mock.warmupCalled, isTrue);
+  });
+
+  test('mayLaunchUrl() launch with non-web URL', () async {
+    final url = Uri.parse('file:/home');
+    expect(
+      () => launchUrl(url),
+      throwsA(isA<ArgumentError>()),
+    );
+  });
+
+  test(
+      'mayLaunchUrl() invoke method "mayLaunch" with CustomTabsSession on Android',
+      () async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+    const url = 'http://example.com/';
+    const customTabsSession = CustomTabsSession('com.example.browser');
+    mock.setMayLaunchExpectations(
+      urls: [url],
+      customTabsSession: customTabsSession,
+    );
+
+    final actualSession = await mayLaunchUrl(
+      Uri.parse(url),
+      customTabsSession: customTabsSession,
+    );
+    expect(actualSession.id, isNull);
+    expect(mock.mayLaunchCalled, isTrue);
+  });
+
+  test('mayLaunchUrl() invoke method "mayLaunch" with null on iOS', () async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+    const url = 'http://example.com/';
+    const prewarmingSession = SafariViewPrewarmingSession('test-session-id');
+    mock.setMayLaunchExpectations(
+        urls: [url],
+        customTabsSession: null,
+        prewarmingSession: prewarmingSession);
+
+    final actualSession = await mayLaunchUrl(
+      Uri.parse(url),
+      customTabsSession: null,
+    );
+    expect(actualSession.id, prewarmingSession.id);
+    expect(mock.mayLaunchCalled, isTrue);
   });
 
   test('invalidateSession() invoke method "invalidate" with CustomTabsSession',

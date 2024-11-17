@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
@@ -71,16 +72,9 @@ Future<void> launchUrl(
   bool prefersDeepLink = false,
   CustomTabsOptions? customTabsOptions,
   SafariViewControllerOptions? safariVCOptions,
-}) async {
-  if (url.scheme != 'http' && url.scheme != 'https') {
-    throw PlatformException(
-      code: 'NOT_A_WEB_SCHEME',
-      message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
-    );
-  }
-
-  await CustomTabsPlatform.instance.launch(
-    url.toString(),
+}) {
+  return CustomTabsPlatform.instance.launch(
+    _requireWebUrl(url),
     prefersDeepLink: prefersDeepLink,
     customTabsOptions: customTabsOptions,
     safariVCOptions: safariVCOptions,
@@ -93,8 +87,8 @@ Future<void> launchUrl(
 /// - **Android:** Supported on SDK 23 (Android 6.0) and above.
 /// - **iOS:** All versions.
 /// - **Web:** Not supported.
-Future<void> closeCustomTabs() async {
-  await CustomTabsPlatform.instance.closeAllIfPossible();
+Future<void> closeCustomTabs() {
+  return CustomTabsPlatform.instance.closeAllIfPossible();
 }
 
 /// Pre-warms the Custom Tabs browser process, potentially improving performance when launching a URL.
@@ -145,6 +139,61 @@ Future<CustomTabsSession> warmupCustomTabs({
   return session as CustomTabsSession? ?? const CustomTabsSession(null);
 }
 
+/// Notifies the browser of a potential URL that might be launched later,
+/// improving performance when the URL is actually launched.
+///
+/// On **Android**, this method pre-fetches the web page at the specified URL.
+/// This can improve page load time when the URL is launched later using [launchUrl].
+/// For more details, see
+/// [Warm-up and pre-fetch: using the Custom Tabs Service](https://developer.chrome.com/docs/android/custom-tabs/guide-warmup-prefetch).
+///
+/// On **iOS**, this method uses a best-effort approach to prewarming connections,
+/// but may delay or drop requests based on the volume of requests made by your app.
+/// Use this method when you expect to present [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) soon.
+/// Many HTTP servers time out connections after a few minutes.
+/// After a timeout, prewarming delivers less performance benefit.
+///
+/// **Note:** It's crucial to call [invalidateSession] to release resources and properly dispose of the session when it is no longer needed.
+///
+/// ### Example
+///
+/// ```dart
+/// final prewarmingSession = await mayLaunchUrl(
+///   Uri.parse('https://flutter.dev'),
+/// );
+///
+/// // Invalidates the session when the originating screen is disposed or in other cases where the session should be invalidated.
+/// await invalidateSession(prewarmingSession);
+/// ```
+Future<SafariViewPrewarmingSession> mayLaunchUrl(
+  Uri url, {
+  CustomTabsSession? customTabsSession,
+}) async {
+  final session = await CustomTabsPlatform.instance.mayLaunch(
+    [_requireWebUrl(url)],
+    session: switch (defaultTargetPlatform) {
+      TargetPlatform.android => customTabsSession,
+      _ => null,
+    },
+  );
+  return session as SafariViewPrewarmingSession? ??
+      const SafariViewPrewarmingSession(null);
+}
+
+/// Invalidates a session to release resources and properly dispose of it.
+///
+/// Use this method to invalidate a session that was created using [warmupCustomTabs] or [mayLaunchUrl] when it is no longer needed.
 Future<void> invalidateSession(PlatformSession session) {
   return CustomTabsPlatform.instance.invalidate(session);
+}
+
+String _requireWebUrl(Uri url) {
+  if (url.scheme != 'http' && url.scheme != 'https') {
+    throw ArgumentError.value(
+      url,
+      'url',
+      'must have an http or https scheme.',
+    );
+  }
+  return url.toString();
 }
