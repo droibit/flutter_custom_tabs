@@ -118,7 +118,8 @@ class _MyAppState extends State<MyApp> {
                 child: const Text('Show flutter.dev in external browser'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLWithSession(context, widget.customTabsSession),
+                onPressed: () =>
+                    _launchURLWithSession(context, widget.customTabsSession),
                 child: const Text('Show flutter.dev with session'),
               ),
             ],
