@@ -75,6 +75,19 @@ void main() {
     );
   });
 
+  test('mayLaunch() invoke method "mayLaunchUrl" with null session', () async {
+    await customTabs.mayLaunch(['http://example.com/']);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall('mayLaunch', arguments: <String, dynamic>{
+          'urls': ['http://example.com/'],
+          'session': null,
+        }),
+      ],
+    );
+  });
+
   test('invalidate() invoke method "invalidate"', () async {
     await customTabs.invalidate(_Session());
     expect(

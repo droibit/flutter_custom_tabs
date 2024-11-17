@@ -8,14 +8,13 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('$CustomTabsPlatform() is the default instance', () {
-    expect(
-        CustomTabsPlatform.instance, isInstanceOf<MethodChannelCustomTabs>());
+    expect(CustomTabsPlatform.instance, isA<MethodChannelCustomTabs>());
   });
 
   test('Cannot be implemented with `implements`', () {
     expect(() {
       CustomTabsPlatform.instance = _ImplementsCustomTabsPlatform();
-    }, throwsA(isInstanceOf<AssertionError>()));
+    }, throwsA(isA<AssertionError>()));
   });
 
   test('Can be mocked with `implements`', () {

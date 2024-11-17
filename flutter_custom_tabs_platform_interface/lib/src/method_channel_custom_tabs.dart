@@ -36,6 +36,17 @@ class MethodChannelCustomTabs extends CustomTabsPlatform {
   }
 
   @override
+  Future<PlatformSession?> mayLaunch(
+    List<String> urls, {
+    PlatformSession? session,
+  }) {
+    return _channel.invokeMethod('mayLaunch', <String, dynamic>{
+      'urls': urls,
+      'session': null,
+    });
+  }
+
+  @override
   Future<void> invalidate(PlatformSession session) {
     return _channel.invokeMethod('invalidate', <String, dynamic>{});
   }
