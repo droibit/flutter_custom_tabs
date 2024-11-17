@@ -11,69 +11,93 @@ void main() async {
   runApp(MyApp(session as CustomTabsSession));
 }
 
-class MyApp extends StatelessWidget {
-  final CustomTabsSession _session;
+class MyApp extends StatefulWidget {
+  final CustomTabsSession session;
 
   const MyApp(
-    CustomTabsSession session, {
+    this.session, {
     super.key,
-  }) : _session = session;
+  });
+
+  @override
+  State createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+// After warming up, the session might not be established immediately, so we wait for a short period.
+    final session = widget.session;
+    Future.delayed(const Duration(seconds: 1), () async {
+      await CustomTabsPlatform.instance.mayLaunch(
+        ['https://flutter.dev'],
+        session: session,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    final session = widget.session;
+    Future(() async {
+      await CustomTabsPlatform.instance.invalidate(session);
+    });
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: (lightDynamic, darkDynamic) => MaterialApp(
-        title: 'Flutter Custom Tabs Example',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.blue,
-          brightness: Brightness.light,
-        ),
-        darkTheme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.blue,
-          brightness: Brightness.dark,
-        ),
-        themeMode: ThemeMode.system,
-        home: Builder(
-          builder: (context) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Example for Android'),
-            ),
-            body: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              children: <Widget>[
-                FilledButton.tonal(
-                  onPressed: () => _launchURL(context),
-                  child: const Text('Show flutter.dev (Chrome)'),
-                ),
-                FilledButton.tonal(
-                  onPressed: () => _launchURLInDefaultBrowser(context),
-                  child:
-                      const Text('Show flutter.dev (prefer default browser)'),
-                ),
-                FilledButton.tonal(
-                  onPressed: () => _launchURLInBottomSheet(context),
-                  child: const Text('Show flutter.dev in bottom sheet'),
-                ),
-                FilledButton.tonal(
-                  onPressed: () => _launchDeepLinkURL(context),
-                  child: const Text('Deep link to Google Maps'),
-                ),
-                FilledButton.tonal(
-                  onPressed: () => _launchAndCloseManually(context),
-                  child: const Text('Show flutter.dev + close after 5 seconds'),
-                ),
-                FilledButton.tonal(
-                  onPressed: () => _launchInExternalBrowser(),
-                  child: const Text('Show flutter.dev in external browser'),
-                ),
-                FilledButton.tonal(
-                  onPressed: () => _launchURLWithSession(context, _session),
-                  child: const Text('Show flutter.dev with session'),
-                ),
-              ],
-            ),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.system,
+      home: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text('Example for Android'),
+          ),
+          body: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            children: <Widget>[
+              FilledButton.tonal(
+                onPressed: () => _launchURL(context),
+                child: const Text('Show flutter.dev (Chrome)'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchURLInDefaultBrowser(context),
+                child: const Text('Show flutter.dev (prefer default browser)'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchURLInBottomSheet(context),
+                child: const Text('Show flutter.dev in bottom sheet'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchDeepLinkURL(context),
+                child: const Text('Deep link to Google Maps'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchAndCloseManually(context),
+                child: const Text('Show flutter.dev + close after 5 seconds'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchInExternalBrowser(),
+                child: const Text('Show flutter.dev in external browser'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchURLWithSession(context, widget.session),
+                child: const Text('Show flutter.dev with session'),
+              ),
+            ],
           ),
         ),
       ),
@@ -174,8 +198,8 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
 Future<void> _launchAndCloseManually(BuildContext context) async {
   final theme = Theme.of(context);
   try {
-    Timer(const Duration(seconds: 5), () {
-      CustomTabsPlatform.instance.closeAllIfPossible();
+    Future.delayed(const Duration(seconds: 5), () async {
+      await CustomTabsPlatform.instance.closeAllIfPossible();
     });
 
     await CustomTabsPlatform.instance.launch(

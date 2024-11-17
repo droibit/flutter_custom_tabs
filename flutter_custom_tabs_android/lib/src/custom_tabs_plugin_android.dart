@@ -59,6 +59,27 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
   }
 
   @override
+  Future<PlatformSession?> mayLaunch(
+    List<String> urls, {
+    PlatformSession? session,
+  }) async {
+    if (session is! CustomTabsSession) {
+      throw ArgumentError.value(
+        session,
+        'session',
+        'must be an instance of CustomTabsSession.',
+      );
+    }
+
+    final packageName = session.packageName;
+    if (packageName == null) {
+      return null;
+    }
+    await _hostApi.mayLaunch(urls, packageName);
+    return null;
+  }
+
+  @override
   Future<void> invalidate(PlatformSession session) async {
     if (session is! CustomTabsSession) {
       throw ArgumentError.value(
