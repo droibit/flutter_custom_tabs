@@ -6,8 +6,39 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  PlatformSession? _session;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future(() async {
+      _session = await CustomTabsPlatform.instance.mayLaunch(
+        ['https://flutter.dev'],
+        session: null,
+      );
+      debugPrint('Warm up session: $_session');
+    });
+  }
+
+  @override
+  void dispose() {
+    final session = _session;
+    if (session != null) {
+      Future(() async {
+        await CustomTabsPlatform.instance.invalidate(session);
+      });
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +158,8 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
 Future<void> _launchAndCloseManually(BuildContext context) async {
   final theme = Theme.of(context);
   try {
-    Timer(const Duration(seconds: 5), () {
-      CustomTabsPlatform.instance.closeAllIfPossible();
+    Future.delayed(const Duration(seconds: 5), () async {
+      await CustomTabsPlatform.instance.closeAllIfPossible();
     });
 
     await CustomTabsPlatform.instance.launch(

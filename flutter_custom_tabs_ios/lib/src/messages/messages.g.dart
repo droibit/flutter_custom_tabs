@@ -196,6 +196,28 @@ class CustomTabsApi {
     }
   }
 
+  Future<String?> mayLaunch(List<String?> urlStrings) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.mayLaunch';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[urlStrings]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else {
+      return (__pigeon_replyList[0] as String?);
+    }
+  }
+
   Future<void> invalidate(String sessionId) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.invalidate';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(

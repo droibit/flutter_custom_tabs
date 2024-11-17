@@ -3,8 +3,6 @@ import XCTest
 
 @testable import flutter_custom_tabs_ios
 
-private typealias OpenArgument = MockLauncher.OpenArgument
-
 final class CustomTabsPluginTest: XCTestCase {
     private var launcher: MockLauncher!
     private var plugin: CustomTabsPlugin!
@@ -28,10 +26,10 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertTrue(launcher.openArgumentStack.isEmpty)
-        XCTAssertEqual(launcher.presentArgumentStack.count, 1)
+        XCTAssertTrue(launcher.openArguments.isEmpty)
+        XCTAssertEqual(launcher.presentArguments.count, 1)
 
-        let actualArgument = launcher.presentArgumentStack.first!
+        let actualArgument = launcher.presentArguments.first!
         XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
     }
 
@@ -49,10 +47,10 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertTrue(launcher.openArgumentStack.isEmpty)
-        XCTAssertEqual(launcher.presentArgumentStack.count, 1)
+        XCTAssertTrue(launcher.openArguments.isEmpty)
+        XCTAssertEqual(launcher.presentArguments.count, 1)
 
-        let actualArgument = launcher.presentArgumentStack.first!
+        let actualArgument = launcher.presentArguments.first!
         XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
     }
 
@@ -65,7 +63,7 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertEqual(launcher.openArgumentStack, [
+        XCTAssertEqual(launcher.openArguments, [
             .init(url: url, options: [:]),
         ])
     }
@@ -83,7 +81,7 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertEqual(launcher.openArgumentStack, [
+        XCTAssertEqual(launcher.openArguments, [
             .init(url: url, options: [:]),
         ])
     }
@@ -99,10 +97,10 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertEqual(launcher.openArgumentStack, [
+        XCTAssertEqual(launcher.openArguments, [
             .init(url: url, options: [.universalLinksOnly: true]),
         ])
-        XCTAssertTrue(launcher.presentArgumentStack.isEmpty)
+        XCTAssertTrue(launcher.presentArguments.isEmpty)
     }
 
     func testFallBackToExternalBrowser() throws {
@@ -114,11 +112,11 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertEqual(launcher.openArgumentStack, [
+        XCTAssertEqual(launcher.openArguments, [
             .init(url: url, options: [.universalLinksOnly: true]),
             .init(url: url, options: [:]),
         ])
-        XCTAssertTrue(launcher.presentArgumentStack.isEmpty)
+        XCTAssertTrue(launcher.presentArguments.isEmpty)
     }
 
     func testFallBackToSFSafariViewController() throws {
@@ -132,12 +130,64 @@ final class CustomTabsPluginTest: XCTestCase {
                 XCTFail("error")
             }
         }
-        XCTAssertEqual(launcher.openArgumentStack, [
+        XCTAssertEqual(launcher.openArguments, [
             .init(url: url, options: [.universalLinksOnly: true]),
         ])
-        XCTAssertEqual(launcher.presentArgumentStack.count, 1)
+        XCTAssertEqual(launcher.presentArguments.count, 1)
 
-        let actualArgument = launcher.presentArgumentStack.first!
+        let actualArgument = launcher.presentArguments.first!
         XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
+    }
+
+    // MARK: - Prewarming
+
+    func testMayLaunchURLs() {
+        let urls = [
+            URL(string: "https://example.com")!,
+            URL(string: "https://flutter.dev")!,
+        ]
+        let urlStrings = urls.map(\.absoluteString)
+        let expectedSessionId = "test-session-id"
+        launcher.setPrewarmConnectionsResults(expectedSessionId)
+
+        do {
+            let sessionId = try plugin.mayLaunchURLs(urlStrings)
+            XCTAssertEqual(sessionId, expectedSessionId)
+
+            let actualArgument = launcher.prewarmConnectionsArguments.first!
+            XCTAssertEqual(actualArgument.urls, urls)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+
+    func testMayLaunchURLsReturnsNil() {
+        let urls = [URL(string: "https://example.com")!]
+        let urlStrings = urls.map(\.absoluteString)
+        launcher.setPrewarmConnectionsResults(nil)
+
+        do {
+            let sessionId = try plugin.mayLaunchURLs(urlStrings)
+            XCTAssertNil(sessionId)
+
+            let actualArgument = launcher.prewarmConnectionsArguments.first!
+            XCTAssertEqual(actualArgument.urls, urls)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+
+    // MARK: - Invalidate Session
+
+    func testInvalidateSession() {
+        do {
+            let sessionId = "test-session-id"
+            try plugin.invalidateSession(sessionId)
+
+            let actualArgument = launcher.invalidatePrewarmingSessionArguments.first!
+            XCTAssertEqual(actualArgument.sessionId, sessionId)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
     }
 }

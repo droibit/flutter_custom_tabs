@@ -167,6 +167,7 @@ class CustomTabsApiCodec: FlutterStandardMessageCodec {
 protocol CustomTabsApi {
   func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SFSafariViewControllerOptions?, completion: @escaping (Result<Void, Error>) -> Void)
   func closeAllIfPossible(completion: @escaping (Result<Void, Error>) -> Void)
+  func mayLaunchURLs(_ urlStrings: [String?]) throws -> String?
   func invalidateSession(_ sessionId: String) throws
 }
 
@@ -209,6 +210,21 @@ class CustomTabsApiSetup {
       }
     } else {
       closeAllIfPossibleChannel.setMessageHandler(nil)
+    }
+    let mayLaunchChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.mayLaunch", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      mayLaunchChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let urlStringsArg = args[0] as! [String?]
+        do {
+          let result = try api.mayLaunchURLs(urlStringsArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      mayLaunchChannel.setMessageHandler(nil)
     }
     let invalidateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.invalidate", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

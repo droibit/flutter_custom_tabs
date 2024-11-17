@@ -54,6 +54,15 @@ class CustomTabsPluginIOS extends CustomTabsPlatform {
   }
 
   @override
+  Future<PlatformSession?> mayLaunch(
+    List<String> urls, {
+    PlatformSession? session,
+  }) async {
+    final sessionId = await _hostApi.mayLaunch(urls);
+    return SafariViewPrewarmingSession(sessionId);
+  }
+
+  @override
   Future<void> invalidate(PlatformSession session) async {
     if (session is! SafariViewPrewarmingSession) {
       throw ArgumentError.value(
