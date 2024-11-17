@@ -17,6 +17,9 @@ abstract class CustomTabsApi {
   @async
   void closeAllIfPossible();
 
+  @SwiftFunction('mayLaunchURLs(_:)')
+  String? mayLaunch(List<String?> urlStrings);
+
   @SwiftFunction('invalidateSession(_:)')
   void invalidate(String sessionId);
 }

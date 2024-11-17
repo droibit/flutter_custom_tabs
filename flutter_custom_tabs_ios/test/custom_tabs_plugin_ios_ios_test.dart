@@ -35,6 +35,7 @@ void main() {
       customTabsOptions: const _Options(),
       safariVCOptions: options,
     );
+    expect(api.launchUrlCalled, isTrue);
   });
 
   test('launch() invoke method "launch" with invalid options', () async {
@@ -54,6 +55,7 @@ void main() {
       customTabsOptions: const _Options(),
       safariVCOptions: options,
     );
+    expect(api.launchUrlCalled, isTrue);
   });
 
   test('launch() invoke method "launch" with no options', () async {
@@ -67,11 +69,55 @@ void main() {
       url,
       prefersDeepLink: prefersDeepLink,
     );
+    expect(api.launchUrlCalled, isTrue);
   });
 
   test('closeAllIfPossible() invoke method "closeAllIfPossible"', () async {
     await customTabs.closeAllIfPossible();
     expect(api.closeAllIfPossibleCalled, isTrue);
+  });
+
+  test('mayLaunch() invoke method "mayLaunch" with valid options', () async {
+    const urls = ['http://example.com/'];
+    const sessionId = 'test-session-id';
+    api.setMayLaunchExpectations(
+      urls: urls,
+      sessionId: sessionId,
+    );
+
+    final session = await customTabs.mayLaunch(urls);
+    expect(
+      session,
+      isA<SafariViewPrewarmingSession>().having((s) => s.id, 'id', sessionId),
+    );
+    expect(api.mayLaunchCalled, isTrue);
+  });
+
+  test('invalidate() invoke method "invalidate" with valid options', () async {
+    const sessionId = 'test-session-id';
+    api.setInvalidateExpectations(
+      sessionId: sessionId,
+    );
+
+    const session = SafariViewPrewarmingSession(sessionId);
+    await customTabs.invalidate(session);
+    expect(api.invalidateCalled, isTrue);
+  });
+
+  test(
+      'invalidate() throws ArgumentError if session is not SafariViewPrewarmingSession',
+      () async {
+    expect(
+      () => customTabs.invalidate(_Session()),
+      throwsA(
+        isA<ArgumentError>(),
+      ),
+    );
+  });
+
+  test('invalidate() does nothing when session is NoSession', () async {
+    await customTabs.invalidate(const SafariViewPrewarmingSession(null));
+    expect(api.invalidateCalled, isFalse);
   });
 }
 
@@ -80,8 +126,10 @@ class _MockCustomTabsApi implements CustomTabsApi {
   bool? prefersDeepLink;
   PlatformOptions? options;
   String? sessionId;
+  List<String?>? urls;
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
+  bool mayLaunchCalled = false;
   bool invalidateCalled = false;
 
   void setLaunchExpectations({
@@ -92,6 +140,14 @@ class _MockCustomTabsApi implements CustomTabsApi {
     this.url = url;
     this.prefersDeepLink = prefersDeepLink;
     this.options = options;
+  }
+
+  void setMayLaunchExpectations({
+    required List<String?> urls,
+    required String sessionId,
+  }) {
+    this.urls = urls;
+    this.sessionId = sessionId;
   }
 
   void setInvalidateExpectations({
@@ -127,6 +183,13 @@ class _MockCustomTabsApi implements CustomTabsApi {
   }
 
   @override
+  Future<String?> mayLaunch(List<String?> urls) async {
+    expect(urls, this.urls);
+    mayLaunchCalled = true;
+    return sessionId;
+  }
+
+  @override
   Future<void> invalidate(String sessionId) async {
     expect(this.sessionId, sessionId);
     invalidateCalled = true;
@@ -140,3 +203,5 @@ class _Options implements PlatformOptions {
     this.barCollapsingEnabled,
   });
 }
+
+class _Session implements PlatformSession {}

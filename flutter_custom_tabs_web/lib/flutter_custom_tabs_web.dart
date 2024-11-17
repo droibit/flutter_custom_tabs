@@ -26,13 +26,27 @@ class CustomTabsPluginWeb extends CustomTabsPlatform {
   }
 
   @override
-  Future<void> closeAllIfPossible() async {}
+  Future<void> closeAllIfPossible() async {
+    // No-op on web.
+  }
 
   @override
   Future<PlatformSession?> warmup([PlatformOptions? options]) async {
+    // No-op on web.
     return null;
   }
 
   @override
-  Future<void> invalidate(PlatformSession session) async {}
+  Future<PlatformSession?> mayLaunch(
+    List<String> urls, {
+    PlatformSession? session,
+  }) async {
+    // No-op on web.
+    return null;
+  }
+
+  @override
+  Future<void> invalidate(PlatformSession session) async {
+    // No-op on web.
+  }
 }

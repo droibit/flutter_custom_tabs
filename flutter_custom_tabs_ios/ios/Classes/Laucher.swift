@@ -2,6 +2,8 @@ import SafariServices
 import UIKit
 
 open class Launcher {
+    private var prewarmingTokenCache = [String: Any]()
+
     open func open(
         _ url: URL,
         options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:],
@@ -39,6 +41,32 @@ open class Launcher {
             animated: true,
             completion: completion
         )
+    }
+
+    open func prewarmConnections(to urls: [URL]) -> String? {
+        guard #available(iOS 15.0, *) else {
+            return nil
+        }
+
+        let id = UUID().uuidString
+        let newToken = SFSafariViewController.prewarmConnections(to: urls)
+        prewarmingTokenCache[id] = newToken
+        return id
+    }
+
+    open func invalidatePrewarmingSession(withId sessionId: String) {
+        guard #available(iOS 15.0, *) else {
+            return
+        }
+
+        guard
+            let id = UUID(uuidString: sessionId)?.uuidString,
+            let token = prewarmingTokenCache[id] as? SFSafariViewController.PrewarmingToken
+        else {
+            return
+        }
+        token.invalidate()
+        prewarmingTokenCache.removeValue(forKey: id)
     }
 }
 

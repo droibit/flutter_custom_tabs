@@ -7,14 +7,17 @@ class MockCustomTabsPlatform extends Fake
     with MockPlatformInterfaceMixin
     implements CustomTabsPlatform {
   String? url;
+  List<String>? urls;
   bool? prefersDeepLink;
   CustomTabsOptions? customTabsOptions;
   SafariViewControllerOptions? safariVCOptions;
   PlatformOptions? sessionOptions;
-  PlatformSession? session;
+  PlatformSession? argSession;
+  PlatformSession? returnSession;
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
   bool warmupCalled = false;
+  bool mayLaunchCalled = false;
   bool invalidateCalled = false;
 
   void setLaunchExpectations({
@@ -34,18 +37,28 @@ class MockCustomTabsPlatform extends Fake
     PlatformSession? customTabsSession,
   }) {
     sessionOptions = customTabsOptions;
-    session = customTabsSession;
+    returnSession = customTabsSession;
+  }
+
+  void setMayLaunchExpectations({
+    required List<String> urls,
+    required PlatformSession? customTabsSession,
+    PlatformSession? prewarmingSession,
+  }) {
+    this.urls = urls;
+    argSession = customTabsSession;
+    returnSession = prewarmingSession;
   }
 
   void setInvalidateExpectations({
     required PlatformSession session,
   }) {
-    this.session = session;
+    argSession = session;
   }
 
   @override
   Future<void> launch(
-    String? urlString, {
+    String urlString, {
     bool? prefersDeepLink,
     PlatformOptions? customTabsOptions,
     PlatformOptions? safariVCOptions,
@@ -86,16 +99,33 @@ class MockCustomTabsPlatform extends Fake
       expect(options, isNull);
     }
     warmupCalled = true;
-    return session;
+    return returnSession;
+  }
+
+  @override
+  Future<PlatformSession?> mayLaunch(
+    List<String> urls, {
+    PlatformSession? session,
+  }) async {
+    expect(urls, this.urls);
+
+    if (session is CustomTabsSession) {
+      final expected = argSession as CustomTabsSession;
+      expect(session.packageName, expected.packageName);
+    } else {
+      expect(session, isNull);
+    }
+    mayLaunchCalled = true;
+    return returnSession;
   }
 
   @override
   Future<void> invalidate(PlatformSession session) async {
     if (session is CustomTabsSession) {
-      final expected = this.session as CustomTabsSession;
+      final expected = argSession as CustomTabsSession;
       expect(session.packageName, expected.packageName);
     } else if (session is SafariViewPrewarmingSession) {
-      final expected = this.session as SafariViewPrewarmingSession;
+      final expected = argSession as SafariViewPrewarmingSession;
       expect(session.id, expected.id);
     } else {
       expect(session, isNotNull);

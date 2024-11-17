@@ -21,5 +21,8 @@ abstract class CustomTabsApi {
 
   String? warmup(Map<String, Object?>? options);
 
-  void invalidate(String packageName);
+  void mayLaunch(
+    List<String?> urls, String sessionPackageName);
+
+  void invalidate(String sessionPackageName);
 }

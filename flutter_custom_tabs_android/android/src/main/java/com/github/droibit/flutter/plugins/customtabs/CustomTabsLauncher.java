@@ -17,6 +17,7 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
@@ -32,14 +33,16 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSess
 import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionController;
 import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import io.flutter.Log;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class CustomTabsLauncher implements Messages.CustomTabsApi {
     @VisibleForTesting
-    static final String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
+    static final @NonNull String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
     private final @NonNull CustomTabsIntentFactory customTabsIntentFactory;
     private final @NonNull CustomTabsSessionFactory customTabsSessionFactory;
@@ -172,7 +175,6 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     public @Nullable String warmup(@Nullable Map<String, Object> options) {
         final Activity activity = this.activity;
         if (activity == null) {
-            Log.w("CustomTabsAndroid", "Activity is null. Cannot warm up custom tabs.");
             return null;
         }
 
@@ -193,7 +195,17 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     }
 
     @Override
-    public void invalidate(@NonNull String packageName) {
-        customTabsSessionFactory.invalidateSession(packageName);
+    public void mayLaunch(@NonNull List<String> urls, @NonNull String sessionPackageName) {
+        final CustomTabsSessionController controller = customTabsSessionFactory
+                .getSessionController(sessionPackageName);
+        if (controller == null) {
+            return;
+        }
+        controller.mayLaunchUrls(urls);
+    }
+
+    @Override
+    public void invalidate(@NonNull String sessionPackageName) {
+        customTabsSessionFactory.invalidateSession(sessionPackageName);
     }
 }

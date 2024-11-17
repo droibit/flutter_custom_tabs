@@ -83,7 +83,7 @@ void main() {
     const packageName = 'com.example.browser';
     api.setWarmupExpectations(
       options: options,
-      packageName: packageName,
+      sessionPackageName: packageName,
     );
 
     final session = await customTabs.warmup(options);
@@ -97,7 +97,7 @@ void main() {
   test('warmup() invoke method "warmup" with no options', () async {
     const packageName = 'com.example.browser';
     api.setWarmupExpectations(
-      packageName: packageName,
+      sessionPackageName: packageName,
     );
 
     final session = await customTabs.warmup();
@@ -122,10 +122,45 @@ void main() {
     );
   });
 
+  test('mayLaunch() invoke method "mayLaunch" with valid session', () async {
+    const urls = ['http://example.com/'];
+    const packageName = 'com.example.browser';
+    api.setMayLaunchExpectations(
+      urls: urls,
+      sessionPackageName: packageName,
+    );
+
+    const session = CustomTabsSession(packageName);
+    await customTabs.mayLaunch(
+      urls,
+      session: session,
+    );
+    expect(api.mayLaunchCalled, isTrue);
+  });
+
+  test('mayLaunch() throws ArgumentError when session is not CustomTabsSession',
+      () {
+    expect(
+      customTabs.mayLaunch(
+        ['http://example.com/'],
+        session: _Session(),
+      ),
+      throwsA(isA<ArgumentError>()),
+    );
+  });
+
+  test('mayLaunch() does nothing when session is NoSession', () async {
+    await customTabs.mayLaunch(
+      ['http://example.com/'],
+      session: const CustomTabsSession(null),
+    );
+    expect(api.mayLaunchCalled, isFalse);
+  });
+
   test('invalidate() invoke method "invalidate" with valid options', () async {
     const packageName = 'com.example.browser';
     api.setInvalidateExpectations(
-      packageName: packageName,
+      sessionPackageName: packageName,
     );
 
     await customTabs.invalidate(const CustomTabsSession(packageName));
@@ -152,10 +187,12 @@ class _MockCustomTabsApi implements CustomTabsApi {
   bool? prefersDeepLink;
   PlatformOptions? launchOptions;
   PlatformOptions? sessionOptions;
-  String? packageName;
+  String? sessionPackageName;
+  List<String?>? urls;
   bool launchUrlCalled = false;
   bool closeAllIfPossibleCalled = false;
   bool warmupCalled = false;
+  bool mayLaunchCalled = false;
   bool invalidateCalled = false;
 
   void setLaunchExpectations({
@@ -170,16 +207,24 @@ class _MockCustomTabsApi implements CustomTabsApi {
 
   void setWarmupExpectations({
     PlatformOptions? options,
-    String? packageName,
+    String? sessionPackageName,
   }) {
-    this.packageName = packageName;
+    this.sessionPackageName = sessionPackageName;
     sessionOptions = options;
   }
 
   void setInvalidateExpectations({
-    required String packageName,
+    required String sessionPackageName,
   }) {
-    this.packageName = packageName;
+    this.sessionPackageName = sessionPackageName;
+  }
+
+  void setMayLaunchExpectations({
+    required List<String?> urls,
+    required String sessionPackageName,
+  }) {
+    this.urls = urls;
+    this.sessionPackageName = sessionPackageName;
   }
 
   @override
@@ -221,12 +266,19 @@ class _MockCustomTabsApi implements CustomTabsApi {
       expect(options, isNotNull);
     }
     warmupCalled = true;
-    return packageName;
+    return sessionPackageName;
   }
 
   @override
-  Future<void> invalidate(String packageName) async {
-    expect(packageName, this.packageName);
+  Future<void> mayLaunch(List<String?> urls, String sessionPackageName) async {
+    expect(urls, this.urls);
+    expect(sessionPackageName, this.sessionPackageName);
+    mayLaunchCalled = true;
+  }
+
+  @override
+  Future<void> invalidate(String sessionPackageName) async {
+    expect(sessionPackageName, this.sessionPackageName);
     invalidateCalled = true;
   }
 }

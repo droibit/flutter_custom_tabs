@@ -14,13 +14,43 @@ void main() async {
   runApp(MyApp(session));
 }
 
-class MyApp extends StatelessWidget {
-  final CustomTabsSession _session;
+class MyApp extends StatefulWidget {
+  final CustomTabsSession customTabsSession;
 
-  const MyApp(
-    CustomTabsSession session, {
-    super.key,
-  }) : _session = session;
+  const MyApp(this.customTabsSession, {super.key});
+
+  @override
+  State createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  SafariViewPrewarmingSession? _prewarmingSession;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // After warming up, the session might not be established immediately, so we wait for a short period.
+    final customTabsSession = widget.customTabsSession;
+    Future.delayed(const Duration(seconds: 1), () async {
+      _prewarmingSession = await mayLaunchUrl(
+        Uri.parse('https://flutter.dev'),
+        customTabsSession: customTabsSession,
+      );
+      debugPrint('Warm up session: $_prewarmingSession');
+    });
+  }
+
+  @override
+  void dispose() {
+    final session = _prewarmingSession;
+    if (session != null) {
+      Future(() async {
+        await invalidateSession(session);
+      });
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +118,8 @@ class MyApp extends StatelessWidget {
                 child: const Text('Show flutter.dev in external browser'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLWithSession(context, _session),
+                onPressed: () =>
+                    _launchURLWithSession(context, widget.customTabsSession),
                 child: const Text('Show flutter.dev with session'),
               ),
             ],

@@ -5,8 +5,11 @@ import Foundation
 class MockLauncher: Launcher {
     private var openCompletionHandlerResults = [Bool]()
     private var presentCompletionHandlerResults = [Bool]()
-    private(set) var openArgumentStack = [OpenArgument]()
-    private(set) var presentArgumentStack = [PresentArgument]()
+    private var prewarmConnectionsResults = [String?]()
+    private(set) var openArguments = [OpenArgument]()
+    private(set) var presentArguments = [PresentArgument]()
+    private(set) var prewarmConnectionsArguments = [PrewarmConnectionsArgument]()
+    private(set) var invalidatePrewarmingSessionArguments = [InvalidatePrewarmingSessionArgument]()
 
     override init() {}
 
@@ -18,24 +21,37 @@ class MockLauncher: Launcher {
         presentCompletionHandlerResults.append(contentsOf: values)
     }
 
+    func setPrewarmConnectionsResults(_ values: String?...) {
+        prewarmConnectionsResults.append(contentsOf: values)
+    }
+
     override func open(
         _ url: URL,
         options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:],
         completionHandler completion: ((Bool) -> Void)? = nil
     ) {
-        openArgumentStack.append(.init(url: url, options: options))
+        openArguments.append(.init(url: url, options: options))
 
         let opened = openCompletionHandlerResults.removeFirst()
         completion?(opened)
     }
 
     override func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
-        presentArgumentStack.append(
+        presentArguments.append(
             .init(viewControllerToPresent: viewControllerToPresent)
         )
 
         let presented = presentCompletionHandlerResults.removeFirst()
         completion?(presented)
+    }
+
+    override func prewarmConnections(to urls: [URL]) -> String? {
+        prewarmConnectionsArguments.append(.init(urls: urls))
+        return prewarmConnectionsResults.removeFirst()
+    }
+
+    override func invalidatePrewarmingSession(withId sessionId: String) {
+        invalidatePrewarmingSessionArguments.append(.init(sessionId: sessionId))
     }
 }
 
@@ -47,6 +63,14 @@ extension MockLauncher {
 
     struct PresentArgument {
         let viewControllerToPresent: UIViewController?
+    }
+
+    struct PrewarmConnectionsArgument {
+        let urls: [URL]
+    }
+
+    struct InvalidatePrewarmingSessionArgument {
+        let sessionId: String
     }
 }
 

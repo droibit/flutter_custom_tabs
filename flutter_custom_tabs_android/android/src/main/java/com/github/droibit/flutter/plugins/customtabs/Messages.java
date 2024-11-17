@@ -66,7 +66,9 @@ public class Messages {
     @Nullable 
     String warmup(@Nullable Map<String, Object> options);
 
-    void invalidate(@NonNull String packageName);
+    void mayLaunch(@NonNull List<String> urls, @NonNull String sessionPackageName);
+
+    void invalidate(@NonNull String sessionPackageName);
 
     /** The codec used by CustomTabsApi. */
     static @NonNull MessageCodec<Object> getCodec() {
@@ -149,15 +151,40 @@ public class Messages {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.mayLaunch", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                List<String> urlsArg = (List<String>) args.get(0);
+                String sessionPackageNameArg = (String) args.get(1);
+                try {
+                  api.mayLaunch(urlsArg, sessionPackageNameArg);
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
                 binaryMessenger, "dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.invalidate", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 ArrayList<Object> args = (ArrayList<Object>) message;
-                String packageNameArg = (String) args.get(0);
+                String sessionPackageNameArg = (String) args.get(0);
                 try {
-                  api.invalidate(packageNameArg);
+                  api.invalidate(sessionPackageNameArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

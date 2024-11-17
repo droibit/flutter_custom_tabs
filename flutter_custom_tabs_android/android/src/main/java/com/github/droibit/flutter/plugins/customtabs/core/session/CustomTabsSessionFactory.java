@@ -60,6 +60,10 @@ public class CustomTabsSessionFactory {
         return new Pair<>(customTabsPackage, newController);
     }
 
+    public @Nullable CustomTabsSessionController getSessionController(@NonNull String packageName) {
+        return cachedSessions.get(packageName);
+    }
+
     public @Nullable Pair<String, CustomTabsSession> getSession(@Nullable String packageName) {
         if (packageName == null) {
             return null;
