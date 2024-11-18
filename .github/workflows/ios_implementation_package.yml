@@ -15,23 +15,16 @@ on:
       - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
 env:
-  DEVELOPER_DIR: /Applications/Xcode_15.4.app
+  DEVELOPER_DIR: /Applications/Xcode_16.1.app
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@v4
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-    # Workaround for Xcode 15.x performance regression.
-    # ref. https://bitrise.io/blog/post/xcode-15-performance-regressions
-    - name: Install yeetd
-      run: |
-          wget https://github.com/biscuitehh/yeetd/releases/download/1.0/yeetd-normal.pkg
-          sudo installer -pkg yeetd-normal.pkg -target /
-          yeetd &              
     - uses: irgaly/setup-mint@v1
       with:
         mint-directory: ./flutter_custom_tabs_ios
