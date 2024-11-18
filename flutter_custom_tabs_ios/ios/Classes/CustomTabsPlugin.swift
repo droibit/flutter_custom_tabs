@@ -65,7 +65,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
                     completion(.success(()))
                 } else {
                     completion(.failure(
-                        FlutterError(message: "Failed to launch external browser.")
+                        PigeonError(message: "Failed to launch external browser.")
                     ))
                 }
             }
@@ -78,14 +78,14 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
                 completion(.success(()))
             } else {
                 completion(.failure(
-                    FlutterError(message: "Failed to launch SFSafariViewController.")
+                    PigeonError(message: "Failed to launch SFSafariViewController.")
                 ))
             }
         }
     }
 }
 
-extension FlutterError: Error {
+extension PigeonError {
     convenience init(message: String) {
         self.init(code: Self.errorCode, message: message, details: nil)
     }

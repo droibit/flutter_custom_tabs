@@ -40,9 +40,9 @@ final class CustomTabsPluginTest: XCTestCase {
         let options = SFSafariViewControllerOptions()
         plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: options) { result in
             if case let .failure(error) = result {
-                XCTAssertTrue(error is FlutterError)
-                let actualError = error as! FlutterError
-                XCTAssertEqual(actualError.code, FlutterError.errorCode)
+                XCTAssertTrue(error is PigeonError)
+                let actualError = error as! PigeonError
+                XCTAssertEqual(actualError.code, PigeonError.errorCode)
             } else {
                 XCTFail("error")
             }
@@ -74,9 +74,9 @@ final class CustomTabsPluginTest: XCTestCase {
         let url = URL(string: "https://example.com")!
         plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: nil) { result in
             if case let .failure(error) = result {
-                XCTAssertTrue(error is FlutterError)
-                let actualError = error as! FlutterError
-                XCTAssertEqual(actualError.code, FlutterError.errorCode)
+                XCTAssertTrue(error is PigeonError)
+                let actualError = error as! PigeonError
+                XCTAssertEqual(actualError.code, PigeonError.errorCode)
             } else {
                 XCTFail("error")
             }
