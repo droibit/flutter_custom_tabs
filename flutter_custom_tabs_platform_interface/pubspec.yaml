@@ -5,17 +5,17 @@ repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_cus
 publish_to: 'none'
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ^3.2.0
+  flutter: ">=3.16.0"
 
 dependencies:
   flutter:
     sdk: flutter
   meta: ^1.10.0
-  plugin_platform_interface: ^2.1.7
+  plugin_platform_interface: ^2.1.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.4.2
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
