@@ -28,11 +28,14 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-// After warming up, the session might not be established immediately, so we wait for a short period.
+    // After warming up, the session might not be established immediately, so we wait for a short period.
     final session = widget.session;
     Future.delayed(const Duration(seconds: 1), () async {
       await CustomTabsPlatform.instance.mayLaunch(
-        ['https://flutter.dev'],
+        [
+          'https://flutter.dev',
+          'https://dart.dev',
+        ],
         session: session,
       );
     });
@@ -94,8 +97,20 @@ class _MyAppState extends State<MyApp> {
                 child: const Text('Show flutter.dev in external browser'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLWithSession(context, widget.session),
+                onPressed: () => _launchURLWithSession(
+                  context,
+                  uri: 'https://flutter.dev',
+                  session: widget.session,
+                ),
                 child: const Text('Show flutter.dev with session'),
+              ),
+              FilledButton.tonal(
+                onPressed: () => _launchURLWithSession(
+                  context,
+                  uri: 'https://dart.dev',
+                  session: widget.session,
+                ),
+                child: const Text('Show dart.dev with session'),
               ),
             ],
           ),
@@ -227,13 +242,14 @@ Future<void> _launchInExternalBrowser() async {
 }
 
 Future<void> _launchURLWithSession(
-  BuildContext context,
-  CustomTabsSession session,
-) async {
+  BuildContext context, {
+  required String uri,
+  required CustomTabsSession session,
+}) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
-      'https://flutter.dev',
+      uri,
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,

@@ -105,7 +105,7 @@ Future<void> closeCustomTabs() {
 ///
 /// **Note:** It's recommended to call [invalidateSession] when the session is no longer needed to release resources.
 ///
-/// Returns a [CustomTabsSession] which can be used when launching a URL with a specific session.
+/// Returns a [CustomTabsSession] which can be used when launching a URL with a specific session on Android.
 ///
 /// ### Example
 ///
@@ -139,7 +139,7 @@ Future<CustomTabsSession> warmupCustomTabs({
   return session as CustomTabsSession? ?? const CustomTabsSession(null);
 }
 
-/// Notifies the browser of a potential URL that might be launched later,
+/// Tells the browser of a potential URL that might be launched later,
 /// improving performance when the URL is actually launched.
 ///
 /// On **Android**, this method pre-fetches the web page at the specified URL.
@@ -152,6 +152,10 @@ Future<CustomTabsSession> warmupCustomTabs({
 /// Use this method when you expect to present [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) soon.
 /// Many HTTP servers time out connections after a few minutes.
 /// After a timeout, prewarming delivers less performance benefit.
+///
+/// On **Web**, this method does nothing.
+///
+/// Returns a [SafariViewPrewarmingSession] for disconnecting the connection on iOS.
 ///
 /// **Note:** It's crucial to call [invalidateSession] to release resources and properly dispose of the session when it is no longer needed.
 ///
@@ -169,8 +173,56 @@ Future<SafariViewPrewarmingSession> mayLaunchUrl(
   Uri url, {
   CustomTabsSession? customTabsSession,
 }) async {
+  return mayLaunchUrls(
+    [url],
+    customTabsSession: customTabsSession,
+  );
+}
+
+/// Tells the browser of potential URLs that might be launched later,
+/// improving performance when the URL is actually launched.
+///
+/// On **Android**, this method pre-fetches the web page at the specified URLs.
+/// This can improve page load time when the URL is launched later using [launchUrl].
+/// [urls] to be used for launching. The first URL in the list is considered the most likely
+/// and should be specified first. Optionally, additional URLs can be provided in decreasing priority order.
+/// These additional URLs are treated as less likely than the first one and may be ignored.
+/// Note that all previous calls to this method will be deprioritized.
+/// For more details, see
+/// [Warm-up and pre-fetch: using the Custom Tabs Service](https://developer.chrome.com/docs/android/custom-tabs/guide-warmup-prefetch).
+///
+/// On **iOS**, this method uses a best-effort approach to prewarming connections,
+/// but may delay or drop requests based on the volume of requests made by your app.
+/// Use this method when you expect to present [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) soon.
+/// Many HTTP servers time out connections after a few minutes.
+/// After a timeout, prewarming delivers less performance benefit.
+///
+/// On **Web**, this method does nothing.
+///
+/// Returns a [SafariViewPrewarmingSession] for disconnecting the connection on iOS.
+///
+/// **Note:** It's crucial to call [invalidateSession] to release resources and properly dispose of the session when it is no longer needed.
+///
+/// ### Example
+///
+/// ```dart
+/// final prewarmingSession = await mayLaunchUrls(
+///   [
+///     Uri.parse('https://flutter.dev'),
+///     Uri.parse('https://dart.dev'),
+///   ],
+///   options: const CustomTabsSessionOptions(prefersDefaultBrowser: true),
+/// );
+///
+/// // Invalidates the session when the originating screen is disposed or in other cases where the session should be invalidated.
+/// await invalidateSession(prewarmingSession);
+/// ```
+Future<SafariViewPrewarmingSession> mayLaunchUrls(
+  List<Uri> urls, {
+  CustomTabsSession? customTabsSession,
+}) async {
   final session = await CustomTabsPlatform.instance.mayLaunch(
-    [_requireWebUrl(url)],
+    urls.map(_requireWebUrl).toList(),
     session: switch (defaultTargetPlatform) {
       TargetPlatform.android => customTabsSession,
       _ => null,
@@ -182,7 +234,10 @@ Future<SafariViewPrewarmingSession> mayLaunchUrl(
 
 /// Invalidates a session to release resources and properly dispose of it.
 ///
-/// Use this method to invalidate a session that was created using [warmupCustomTabs] or [mayLaunchUrl] when it is no longer needed.
+/// Use this method to invalidate a session that was created using one of the following methods when it is no longer needed:
+/// - [warmupCustomTabs]
+/// - [mayLaunchUrl]
+/// - [mayLaunchUrls]
 Future<void> invalidateSession(PlatformSession session) {
   return CustomTabsPlatform.instance.invalidate(session);
 }
