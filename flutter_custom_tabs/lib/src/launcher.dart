@@ -152,6 +152,7 @@ Future<CustomTabsSession> warmupCustomTabs({
 /// Use this method when you expect to present [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) soon.
 /// Many HTTP servers time out connections after a few minutes.
 /// After a timeout, prewarming delivers less performance benefit.
+/// This feature is available on iOS 15 and above.
 ///
 /// On **Web**, this method does nothing.
 ///
@@ -196,6 +197,7 @@ Future<SafariViewPrewarmingSession> mayLaunchUrl(
 /// Use this method when you expect to present [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) soon.
 /// Many HTTP servers time out connections after a few minutes.
 /// After a timeout, prewarming delivers less performance benefit.
+/// This feature is available on iOS 15 and above.
 ///
 /// On **Web**, this method does nothing.
 ///
