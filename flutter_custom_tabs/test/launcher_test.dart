@@ -9,7 +9,8 @@ void main() {
   final mock = MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launchUrl() launch with non-web URL', () async {
+  test('launchUrl() throws ArgumentError when URL scheme is not http or https',
+      () async {
     final url = Uri.parse('file:/home');
     expect(
       () => launchUrl(url),
@@ -128,10 +129,12 @@ void main() {
     expect(mock.warmupCalled, isTrue);
   });
 
-  test('mayLaunchUrl() launch with non-web URL', () async {
+  test(
+      'mayLaunchUrl() throws ArgumentError when URL scheme is not http or https',
+      () async {
     final url = Uri.parse('file:/home');
     expect(
-      () => launchUrl(url),
+      () => mayLaunchUrl(url),
       throwsA(isA<ArgumentError>()),
     );
   });
@@ -166,9 +169,63 @@ void main() {
         customTabsSession: null,
         prewarmingSession: prewarmingSession);
 
-    final actualSession = await mayLaunchUrl(
-      Uri.parse(url),
+    final actualSession = await mayLaunchUrl(Uri.parse(url));
+    expect(actualSession.id, prewarmingSession.id);
+    expect(mock.mayLaunchCalled, isTrue);
+  });
+
+  test(
+      'mayLaunchUrls() throws ArgumentError when URL scheme is not http or https',
+      () async {
+    final urls = [
+      Uri.parse('https://example.com/'),
+      Uri.parse('file:/home'),
+    ];
+    expect(
+      () => mayLaunchUrls(urls),
+      throwsA(isA<ArgumentError>()),
+    );
+  });
+
+  test(
+      'mayLaunchUrls() invoke method "mayLaunch" with CustomTabsSession on Android',
+      () async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+    const urls = [
+      'http://example.com/',
+      'http://flutter.dev/',
+    ];
+    const customTabsSession = CustomTabsSession('com.example.browser');
+    mock.setMayLaunchExpectations(
+      urls: urls,
+      customTabsSession: customTabsSession,
+    );
+
+    final actualSession = await mayLaunchUrls(
+      urls.map(Uri.parse).toList(),
+      customTabsSession: customTabsSession,
+    );
+    expect(actualSession.id, isNull);
+    expect(mock.mayLaunchCalled, isTrue);
+  });
+
+  test('mayLaunchUrls() invoke method "mayLaunch" with null on iOS', () async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+    const urls = [
+      'http://example.com/',
+      'http://flutter.dev/',
+    ];
+    const prewarmingSession = SafariViewPrewarmingSession('test-session-id');
+    mock.setMayLaunchExpectations(
+      urls: urls,
       customTabsSession: null,
+      prewarmingSession: prewarmingSession,
+    );
+
+    final actualSession = await mayLaunchUrls(
+      urls.map(Uri.parse).toList(),
     );
     expect(actualSession.id, prewarmingSession.id);
     expect(mock.mayLaunchCalled, isTrue);

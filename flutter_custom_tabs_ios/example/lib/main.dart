@@ -22,8 +22,10 @@ class _MyAppState extends State<MyApp> {
 
     Future(() async {
       _session = await CustomTabsPlatform.instance.mayLaunch(
-        ['https://flutter.dev'],
-        session: null,
+        [
+          'https://flutter.dev',
+          'https://dart.dev',
+        ],
       );
       debugPrint('Warm up session: $_session');
     });
@@ -64,8 +66,12 @@ class _MyAppState extends State<MyApp> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
               FilledButton(
-                onPressed: () => _launchURL(context),
+                onPressed: () => _launchURL('https://flutter.dev', context),
                 child: const Text('Show flutter.dev'),
+              ),
+              FilledButton(
+                onPressed: () => _launchURL('https://dart.dev', context),
+                child: const Text('Show dart.dev'),
               ),
               FilledButton(
                 onPressed: () => _launchURLInBottomSheet(context),
@@ -91,11 +97,14 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-Future<void> _launchURL(BuildContext context) async {
+Future<void> _launchURL(
+  String url,
+  BuildContext context,
+) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
-      'https://flutter.dev',
+      url,
       safariVCOptions: SafariViewControllerOptions(
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,
