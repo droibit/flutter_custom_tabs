@@ -48,7 +48,7 @@ public class CustomTabsSessionControllerTest {
             String packageName = "com.example";
             final boolean result = controller.bindCustomTabsService(context, packageName);
             assertThat(result).isTrue();
-            assertThat(controller.isBoundCustomTabsService()).isTrue();
+            assertThat(controller.isCustomTabsServiceBound()).isTrue();
 
             mocked.verify(
                     () -> CustomTabsClient.bindCustomTabsService(any(), eq(packageName), any())
@@ -65,7 +65,7 @@ public class CustomTabsSessionControllerTest {
             String packageName = "com.example";
             final boolean result = controller.bindCustomTabsService(context, packageName);
             assertThat(result).isFalse();
-            assertThat(controller.isBoundCustomTabsService()).isFalse();
+            assertThat(controller.isCustomTabsServiceBound()).isFalse();
 
             mocked.verify(
                     () -> CustomTabsClient.bindCustomTabsService(any(), eq(packageName), any())
@@ -82,7 +82,7 @@ public class CustomTabsSessionControllerTest {
             String packageName = "com.example";
             final boolean result = controller.bindCustomTabsService(context, packageName);
             assertThat(result).isFalse();
-            assertThat(controller.isBoundCustomTabsService()).isFalse();
+            assertThat(controller.isCustomTabsServiceBound()).isFalse();
 
             mocked.verify(
                     () -> CustomTabsClient.bindCustomTabsService(any(), eq(packageName), any())
@@ -95,7 +95,7 @@ public class CustomTabsSessionControllerTest {
         controller.bindCustomTabsService(context, "com.example");
         controller.unbindCustomTabsService();
 
-        assertThat(controller.isBoundCustomTabsService()).isFalse();
+        assertThat(controller.isCustomTabsServiceBound()).isFalse();
         assertThat(controller.getSession()).isNull();
         verify(context).unbindService(controller);
     }
@@ -118,6 +118,6 @@ public class CustomTabsSessionControllerTest {
         controller.onServiceDisconnected(name);
 
         assertThat(controller.getSession()).isNull();
-        assertThat(controller.isBoundCustomTabsService()).isFalse();
+        assertThat(controller.isCustomTabsServiceBound()).isFalse();
     }
 }
