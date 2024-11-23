@@ -73,31 +73,31 @@ class _MyAppState extends State<MyApp> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
               FilledButton.tonal(
-                onPressed: () => _launchURL(context),
+                onPressed: () => _launchUrl(context),
                 child: const Text('Show flutter.dev (Chrome)'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLInDefaultBrowser(context),
+                onPressed: () => _launchUrlInDefaultBrowser(context),
                 child: const Text('Show flutter.dev (prefer default browser)'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLInBottomSheet(context),
+                onPressed: () => _launchUrlInBottomSheet(context),
                 child: const Text('Show flutter.dev in bottom sheet'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchDeepLinkURL(context),
+                onPressed: () => _launchDeepLinkUrl(context),
                 child: const Text('Deep link to Google Maps'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchAndCloseManually(context),
+                onPressed: () => _launchUrlAndCloseManually(context),
                 child: const Text('Show flutter.dev + close after 5 seconds'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchInExternalBrowser(),
+                onPressed: () => _launchUrlInExternalBrowser(),
                 child: const Text('Show flutter.dev in external browser'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLWithSession(
+                onPressed: () => _launchUrlWithSession(
                   context,
                   uri: 'https://flutter.dev',
                   session: widget.session,
@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
                 child: const Text('Show flutter.dev with session'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchURLWithSession(
+                onPressed: () => _launchUrlWithSession(
                   context,
                   uri: 'https://dart.dev',
                   session: widget.session,
@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-Future<void> _launchURL(BuildContext context) async {
+Future<void> _launchUrl(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -144,7 +144,7 @@ Future<void> _launchURL(BuildContext context) async {
   }
 }
 
-Future<void> _launchURLInDefaultBrowser(BuildContext context) async {
+Future<void> _launchUrlInDefaultBrowser(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -166,7 +166,7 @@ Future<void> _launchURLInDefaultBrowser(BuildContext context) async {
   }
 }
 
-Future<void> _launchURLInBottomSheet(BuildContext context) async {
+Future<void> _launchUrlInBottomSheet(BuildContext context) async {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);
   try {
@@ -189,7 +189,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
   }
 }
 
-Future<void> _launchDeepLinkURL(BuildContext context) async {
+Future<void> _launchDeepLinkUrl(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -210,7 +210,7 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
   }
 }
 
-Future<void> _launchAndCloseManually(BuildContext context) async {
+Future<void> _launchUrlAndCloseManually(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     Future.delayed(const Duration(seconds: 5), () async {
@@ -231,7 +231,7 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
   }
 }
 
-Future<void> _launchInExternalBrowser() async {
+Future<void> _launchUrlInExternalBrowser() async {
   try {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',
@@ -241,7 +241,7 @@ Future<void> _launchInExternalBrowser() async {
   }
 }
 
-Future<void> _launchURLWithSession(
+Future<void> _launchUrlWithSession(
   BuildContext context, {
   required String uri,
   required CustomTabsSession session,

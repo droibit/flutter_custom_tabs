@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           'https://dart.dev',
         ],
       );
-      debugPrint('Warm up session: $_session');
+      debugPrint('Prewarming connection: $_session');
     });
   }
 
@@ -66,27 +66,27 @@ class _MyAppState extends State<MyApp> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
               FilledButton(
-                onPressed: () => _launchURL('https://flutter.dev', context),
+                onPressed: () => _launchUrl('https://flutter.dev', context),
                 child: const Text('Show flutter.dev'),
               ),
               FilledButton(
-                onPressed: () => _launchURL('https://dart.dev', context),
+                onPressed: () => _launchUrl('https://dart.dev', context),
                 child: const Text('Show dart.dev'),
               ),
               FilledButton(
-                onPressed: () => _launchURLInBottomSheet(context),
+                onPressed: () => _launchUrlInBottomSheet(context),
                 child: const Text('Show flutter.dev in bottom sheet'),
               ),
               FilledButton(
-                onPressed: () => _launchDeepLinkURL(context),
+                onPressed: () => _launchDeepLinkUrl(context),
                 child: const Text('Deep link to Apple Maps'),
               ),
               FilledButton(
-                onPressed: () => _launchAndCloseManually(context),
+                onPressed: () => _launchUrlAndCloseManually(context),
                 child: const Text('Show flutter.dev + close after 5 seconds'),
               ),
               FilledButton(
-                onPressed: () => _launchInExternalBrowser(),
+                onPressed: () => _launchUrlInExternalBrowser(),
                 child: const Text('Show flutter.dev in external browser'),
               ),
             ],
@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-Future<void> _launchURL(
+Future<void> _launchUrl(
   String url,
   BuildContext context,
 ) async {
@@ -118,7 +118,7 @@ Future<void> _launchURL(
   }
 }
 
-Future<void> _launchURLInBottomSheet(BuildContext context) async {
+Future<void> _launchUrlInBottomSheet(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -147,7 +147,7 @@ Future<void> _launchURLInBottomSheet(BuildContext context) async {
   }
 }
 
-Future<void> _launchDeepLinkURL(BuildContext context) async {
+Future<void> _launchDeepLinkUrl(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -164,7 +164,7 @@ Future<void> _launchDeepLinkURL(BuildContext context) async {
   }
 }
 
-Future<void> _launchAndCloseManually(BuildContext context) async {
+Future<void> _launchUrlAndCloseManually(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     Future.delayed(const Duration(seconds: 5), () async {
@@ -185,7 +185,7 @@ Future<void> _launchAndCloseManually(BuildContext context) async {
   }
 }
 
-Future<void> _launchInExternalBrowser() async {
+Future<void> _launchUrlInExternalBrowser() async {
   try {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',

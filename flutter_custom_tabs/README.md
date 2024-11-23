@@ -57,7 +57,7 @@ You can launch a web URL similar to `url_launcher` and specify options to custom
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-void _launchURL(BuildContext context) async {
+void _launchUrl(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await launchUrl(
@@ -101,7 +101,7 @@ but we have introduced a lightweight URL launch for users who don't need as much
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
 
-void _launchURL(BuildContext context) async {
+void _launchUrl(BuildContext context) async {
     final theme = Theme.of(context);
     try {
       await launchUrl(
@@ -201,7 +201,7 @@ Requirements:
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-Future<void> _launchURLInBottomSheet(BuildContext context) async {
+Future<void> _launchUrlInBottomSheet(BuildContext context) async {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);    
   await launchUrl(
@@ -245,7 +245,7 @@ You can prioritize launching the default browser on the device that supports Cus
 ```dart
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-Future<void> _launchURLInDefaultBrowserOnAndroid() async {  
+Future<void> _launchUrlInDefaultBrowserOnAndroid() async {  
   await launchUrl(
     Uri.parse('https://flutter.dev'),
     customTabsOptions: CustomTabsOptions(
