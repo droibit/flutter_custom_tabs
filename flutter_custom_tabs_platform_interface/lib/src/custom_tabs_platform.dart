@@ -52,6 +52,8 @@ abstract class CustomTabsPlatform extends PlatformInterface {
     throw UnimplementedError('warmup() has not been implemented.');
   }
 
+  /// Tells the browser of potential URLs that might be launched later,
+  /// improving performance when the URL is actually launched.
   Future<PlatformSession?> mayLaunch(
     List<String> urls, {
     PlatformSession? session,
@@ -59,7 +61,7 @@ abstract class CustomTabsPlatform extends PlatformInterface {
     throw UnimplementedError('mayLaunchUrl() has not been implemented.');
   }
 
-  /// Invalidates the session.
+  /// Invalidates a session to release resources and properly dispose of it.
   Future<void> invalidate(PlatformSession session) {
     throw UnimplementedError('invalidate() has not been implemented.');
   }
