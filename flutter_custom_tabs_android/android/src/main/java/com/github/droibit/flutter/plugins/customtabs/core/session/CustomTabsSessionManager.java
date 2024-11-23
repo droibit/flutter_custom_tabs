@@ -16,7 +16,7 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSess
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomTabsSessionManager {
+public class CustomTabsSessionManager implements CustomTabsSessionProvider {
     private static final @NonNull String TAG = "CustomTabsAndroid";
 
     private final @NonNull Map<String, CustomTabsSessionController> cachedSessions;
@@ -64,7 +64,8 @@ public class CustomTabsSessionManager {
         return cachedSessions.get(packageName);
     }
 
-    public @Nullable Pair<String, CustomTabsSession> getSession(@Nullable String packageName) {
+    @Override
+    public @Nullable CustomTabsSession getSession(@Nullable String packageName) {
         if (packageName == null) {
             return null;
         }
@@ -73,7 +74,7 @@ public class CustomTabsSessionManager {
         if (controller == null) {
             return null;
         }
-        return new Pair<>(packageName, controller.getSession());
+        return controller.getSession();
     }
 
     public void invalidateSession(@NonNull String packageName) {

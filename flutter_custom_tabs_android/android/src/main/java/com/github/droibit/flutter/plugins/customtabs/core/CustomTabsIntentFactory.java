@@ -17,7 +17,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsSession;
-import androidx.core.util.Pair;
 
 import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider;
 import com.github.droibit.flutter.plugins.customtabs.core.options.BrowserConfiguration;
@@ -26,7 +25,7 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsClos
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsColorSchemes;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomTabsConfiguration;
-import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionManager;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionProvider;
 
 import java.util.Map;
 
@@ -45,7 +44,7 @@ public class CustomTabsIntentFactory {
     public @NonNull CustomTabsIntent createIntent(
             @NonNull Context context,
             @NonNull CustomTabsIntentOptions options,
-            @NonNull CustomTabsSessionManager sessionManager
+            @NonNull CustomTabsSessionProvider sessionProvider
     ) {
         final BrowserConfiguration browserConfiguration;
         if (options.getBrowser() != null) {
@@ -53,14 +52,14 @@ public class CustomTabsIntentFactory {
         } else {
             browserConfiguration = new BrowserConfiguration();
         }
-        final Pair<String, CustomTabsSession> session = sessionManager
+        final CustomTabsSession session = sessionProvider
                 .getSession(browserConfiguration.getSessionPackageName());
 
         final CustomTabsIntent.Builder builder;
         if (session == null) {
             builder = new CustomTabsIntent.Builder();
         } else {
-            builder = new CustomTabsIntent.Builder(session.second);
+            builder = new CustomTabsIntent.Builder(session);
         }
 
         final CustomTabsColorSchemes colorSchemes = options.getColorSchemes();

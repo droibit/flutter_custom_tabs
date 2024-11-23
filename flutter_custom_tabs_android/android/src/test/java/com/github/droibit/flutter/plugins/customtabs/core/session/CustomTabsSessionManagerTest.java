@@ -104,15 +104,14 @@ public class CustomTabsSessionManagerTest {
         when(controller.getSession()).thenReturn(session);
         cachedSessions.put(packageName, controller);
 
-        final Pair<String, CustomTabsSession> result = factory.getSession(packageName);
+        final CustomTabsSession result = factory.getSession(packageName);
         assertThat(result).isNotNull();
-        assertThat(result.first).isEqualTo(packageName);
-        assertThat(result.second).isSameInstanceAs(session);
+        assertThat(result).isSameInstanceAs(session);
     }
 
     @Test
     public void getSession_withNonExistingSession_returnsNull() {
-        final Pair<String, CustomTabsSession> result = factory.getSession("non.existent.package");
+        final CustomTabsSession result = factory.getSession("non.existent.package");
         assertThat(result).isNull();
     }
 
