@@ -5,7 +5,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 
 import 'types/launch_options.dart';
 
-/// Passes [url] with options to the underlying platform for launching a custom tab.
+/// Passes [url] with options to the underlying platform for launching a Custom Tab.
 ///
 /// Example:
 ///

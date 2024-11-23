@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-/// The share state that should be applied to the custom tab.
+/// The share state that should be applied to the Custom Tab.
 enum CustomTabsShareState {
   /// Applies the default share settings depending on the browser.
   browserDefault(0),

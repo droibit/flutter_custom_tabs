@@ -11,7 +11,7 @@ class PartialCustomTabsConfiguration {
 
   /// The Custom Tab Activity's initial height.
   ///
-  /// *The minimum partial custom tab height is 50% of the screen height.
+  /// *The minimum partial Custom Tab height is 50% of the screen height.
   final double initialHeight;
 
   /// The Custom Tab Activity's desired resize behavior.
@@ -23,7 +23,7 @@ class PartialCustomTabsConfiguration {
   final int? cornerRadius;
 }
 
-/// Desired height behavior for the custom tab.
+/// Desired height behavior for the Custom Tab.
 enum CustomTabsActivityHeightResizeBehavior {
   /// Applies the default height resize behavior for the Custom Tab Activity when it behaves as a bottom sheet.
   defaultBehavior(0),

@@ -66,13 +66,13 @@ class CustomTabsOptions implements PlatformOptions {
   /// A Boolean value that enables the url bar to hide as the user scrolls down the page.
   final bool? urlBarHidingEnabled;
 
-  /// The share state that should be applied to the custom tab.
+  /// The share state that should be applied to the Custom Tab.
   final CustomTabsShareState? shareState;
 
-  /// A Boolean value that determines whether to show the page title in the toolbar of the custom tab.
+  /// A Boolean value that determines whether to show the page title in the toolbar of the Custom Tab.
   final bool? showTitle;
 
-  /// A Boolean value that indicates whether to enable [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) for this custom tab.
+  /// A Boolean value that indicates whether to enable [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) for this Custom Tab.
   final bool? instantAppsEnabled;
 
   /// The close button configuration.
@@ -81,7 +81,7 @@ class CustomTabsOptions implements PlatformOptions {
   /// The enter and exit animations.
   final CustomTabsAnimations? animations;
 
-  /// The configuration for the custom tab as browser.
+  /// The configuration for the Custom Tab as browser.
   final CustomTabsBrowserConfiguration? browser;
 
   /// The configuration for Partial Custom Tabs.

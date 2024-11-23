@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 
-/// The configuration of a custom tab visualization.
+/// The configuration of a Custom Tab visualization.
 @immutable
 class CustomTabsColorSchemes {
   const CustomTabsColorSchemes({
@@ -42,15 +42,15 @@ class CustomTabsColorSchemes {
   final CustomTabsColorSchemeParams? defaultPrams;
 }
 
-/// Desired color scheme on a custom tab.
+/// Desired color scheme on a Custom Tab.
 enum CustomTabsColorScheme {
-  /// Applies either a light or dark color scheme to the user interface in the custom tab depending on the user's system settings.
+  /// Applies either a light or dark color scheme to the user interface in the Custom Tab depending on the user's system settings.
   system(0),
 
-  /// Applies a light color scheme to the user interface in the custom tab.
+  /// Applies a light color scheme to the user interface in the Custom Tab.
   light(1),
 
-  /// Applies a dark color scheme to the user interface in the custom tab.
+  /// Applies a dark color scheme to the user interface in the Custom Tab.
   dark(2);
 
   @internal
@@ -60,7 +60,7 @@ enum CustomTabsColorScheme {
   final int rawValue;
 }
 
-/// Contains visual parameters of a custom tab that may depend on the color scheme.
+/// Contains visual parameters of a Custom Tab that may depend on the color scheme.
 ///
 /// See also:
 ///

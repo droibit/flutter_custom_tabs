@@ -19,7 +19,7 @@ class CustomTabsSession implements PlatformSession {
 
 /// Options for creating a Custom Tabs session.
 ///
-/// [CustomTabsSessionOptions] allows you to customize the behavior of a custom tabs session
+/// [CustomTabsSessionOptions] allows you to customize the behavior of a Custom Tab session
 /// when establishing a connection to a Custom Tabs provider.
 @immutable
 class CustomTabsSessionOptions implements PlatformOptions {
