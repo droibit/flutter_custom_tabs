@@ -26,8 +26,7 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsClos
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsColorSchemes;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomTabsConfiguration;
-import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionController;
-import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionManager;
 
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public class CustomTabsIntentFactory {
     public @NonNull CustomTabsIntent createIntent(
             @NonNull Context context,
             @NonNull CustomTabsIntentOptions options,
-            @NonNull CustomTabsSessionFactory customTabsSessionFactory
+            @NonNull CustomTabsSessionManager sessionManager
     ) {
         final BrowserConfiguration browserConfiguration;
         if (options.getBrowser() != null) {
@@ -54,7 +53,7 @@ public class CustomTabsIntentFactory {
         } else {
             browserConfiguration = new BrowserConfiguration();
         }
-        final Pair<String, CustomTabsSession> session = customTabsSessionFactory
+        final Pair<String, CustomTabsSession> session = sessionManager
                 .getSession(browserConfiguration.getSessionPackageName());
 
         final CustomTabsIntent.Builder builder;

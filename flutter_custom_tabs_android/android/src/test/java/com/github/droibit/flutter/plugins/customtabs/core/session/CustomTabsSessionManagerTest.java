@@ -33,15 +33,15 @@ import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 @Config(manifest = Config.NONE)
-public class CustomTabsSessionFactoryTest {
+public class CustomTabsSessionManagerTest {
     private Map<String, CustomTabsSessionController> cachedSessions;
 
-    private CustomTabsSessionFactory factory;
+    private CustomTabsSessionManager factory;
 
     @Before
     public void setUp() {
         cachedSessions = new HashMap<>();
-        factory = new CustomTabsSessionFactory(cachedSessions);
+        factory = new CustomTabsSessionManager(cachedSessions);
     }
 
     @After

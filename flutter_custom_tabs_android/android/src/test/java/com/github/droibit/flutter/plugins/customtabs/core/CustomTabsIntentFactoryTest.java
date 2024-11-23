@@ -61,7 +61,7 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsClos
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsColorSchemes;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomTabsConfiguration;
-import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionManager;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -87,7 +87,7 @@ public class CustomTabsIntentFactoryTest {
     private ResourceFactory resources;
 
     @Mock
-    private CustomTabsSessionFactory customTabsSessionFactory;
+    private CustomTabsSessionManager sessionManager;
 
     @Mock
     private Context context;
@@ -126,7 +126,7 @@ public class CustomTabsIntentFactoryTest {
         doNothing().when(intentFactory).applyBrowserConfiguration(any(), any(), any());
 
         final CustomTabsIntent customTabsIntent = intentFactory
-                .createIntent(context, options, customTabsSessionFactory);
+                .createIntent(context, options, sessionManager);
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
 
         final ArgumentCaptor<CustomTabsColorSchemes> colorSchemesCaptor = ArgumentCaptor.captor();
@@ -167,7 +167,7 @@ public class CustomTabsIntentFactoryTest {
         doNothing().when(intentFactory).applyBrowserConfiguration(any(), any(), any());
 
         final CustomTabsIntent customTabsIntent = intentFactory
-                .createIntent(context, options, customTabsSessionFactory);
+                .createIntent(context, options, sessionManager);
         final BundleSubject extras = assertThat(customTabsIntent.intent).extras();
         extras.doesNotContainKey(EXTRA_ENABLE_URLBAR_HIDING);
         extras.doesNotContainKey(EXTRA_TITLE_VISIBILITY_STATE);

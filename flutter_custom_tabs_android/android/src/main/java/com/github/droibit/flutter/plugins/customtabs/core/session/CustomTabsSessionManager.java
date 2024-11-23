@@ -16,17 +16,17 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSess
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomTabsSessionFactory {
+public class CustomTabsSessionManager {
     private static final @NonNull String TAG = "CustomTabsAndroid";
 
     private final @NonNull Map<String, CustomTabsSessionController> cachedSessions;
 
-    public CustomTabsSessionFactory() {
+    public CustomTabsSessionManager() {
         this(new HashMap<>());
     }
 
     @VisibleForTesting
-    CustomTabsSessionFactory(@NonNull Map<String, CustomTabsSessionController> cachedSessions) {
+    CustomTabsSessionManager(@NonNull Map<String, CustomTabsSessionController> cachedSessions) {
         this.cachedSessions = cachedSessions;
     }
 

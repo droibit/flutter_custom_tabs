@@ -31,13 +31,11 @@ import com.github.droibit.flutter.plugins.customtabs.core.PartialCustomTabsLaunc
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSessionOptions;
 import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionController;
-import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionFactory;
+import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionManager;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import io.flutter.Log;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 public class CustomTabsLauncher implements Messages.CustomTabsApi {
@@ -45,7 +43,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     static final @NonNull String CODE_LAUNCH_ERROR = "LAUNCH_ERROR";
 
     private final @NonNull CustomTabsIntentFactory customTabsIntentFactory;
-    private final @NonNull CustomTabsSessionFactory customTabsSessionFactory;
+    private final @NonNull CustomTabsSessionManager customTabsSessionManager;
     private final @NonNull NativeAppLauncher nativeAppLauncher;
     private final @NonNull ExternalBrowserLauncher externalBrowserLauncher;
     private final @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher;
@@ -54,7 +52,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     CustomTabsLauncher() {
         this(
                 new CustomTabsIntentFactory(),
-                new CustomTabsSessionFactory(),
+                new CustomTabsSessionManager(),
                 new NativeAppLauncher(),
                 new ExternalBrowserLauncher(),
                 new PartialCustomTabsLauncher()
@@ -64,20 +62,20 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     @VisibleForTesting
     CustomTabsLauncher(
             @NonNull CustomTabsIntentFactory customTabsIntentFactory,
-            @NonNull CustomTabsSessionFactory customTabsSessionFactory,
+            @NonNull CustomTabsSessionManager customTabsSessionManager,
             @NonNull NativeAppLauncher nativeAppLauncher,
             @NonNull ExternalBrowserLauncher externalBrowserLauncher,
             @NonNull PartialCustomTabsLauncher partialCustomTabsLauncher
     ) {
         this.customTabsIntentFactory = customTabsIntentFactory;
-        this.customTabsSessionFactory = customTabsSessionFactory;
+        this.customTabsSessionManager = customTabsSessionManager;
         this.nativeAppLauncher = nativeAppLauncher;
         this.externalBrowserLauncher = externalBrowserLauncher;
         this.partialCustomTabsLauncher = partialCustomTabsLauncher;
     }
 
     void setActivity(@Nullable Activity activity) {
-        customTabsSessionFactory.handleActivityChange(activity);
+        customTabsSessionManager.handleActivityChange(activity);
         this.activity = activity;
     }
 
@@ -107,7 +105,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
             final CustomTabsIntent customTabsIntent = customTabsIntentFactory.createIntent(
                     activity,
                     requireNonNull(customTabsOptions),
-                    customTabsSessionFactory
+                    customTabsSessionManager
             );
             if (partialCustomTabsLauncher.launch(activity, uri, customTabsIntent)) {
                 return;
@@ -178,9 +176,9 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
             return null;
         }
 
-        final CustomTabsSessionOptions sessionOptions = customTabsSessionFactory
+        final CustomTabsSessionOptions sessionOptions = customTabsSessionManager
                 .createSessionOptions(options);
-        final Pair<String, CustomTabsSessionController> session = customTabsSessionFactory
+        final Pair<String, CustomTabsSessionController> session = customTabsSessionManager
                 .createSession(activity, sessionOptions);
         if (session == null) {
             return null;
@@ -196,7 +194,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
 
     @Override
     public void mayLaunch(@NonNull List<String> urls, @NonNull String sessionPackageName) {
-        final CustomTabsSessionController controller = customTabsSessionFactory
+        final CustomTabsSessionController controller = customTabsSessionManager
                 .getSessionController(sessionPackageName);
         if (controller == null) {
             return;
@@ -206,6 +204,6 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
 
     @Override
     public void invalidate(@NonNull String sessionPackageName) {
-        customTabsSessionFactory.invalidateSession(sessionPackageName);
+        customTabsSessionManager.invalidateSession(sessionPackageName);
     }
 }
