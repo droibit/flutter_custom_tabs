@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-/// The configuration for close button on the custom tab.
+/// The configuration for close button on the Custom Tab.
 @immutable
 class CustomTabsCloseButton {
   const CustomTabsCloseButton({
@@ -8,14 +8,14 @@ class CustomTabsCloseButton {
     this.position,
   });
 
-  /// Resource identifier of the close button icon for the custom tab.
+  /// Resource identifier of the close button icon for the Custom Tab.
   final String? icon;
 
-  /// The position of the close button on the custom tab.
+  /// The position of the close button on the Custom Tab.
   final CustomTabsCloseButtonPosition? position;
 }
 
-/// The position of the close button on the custom tab.
+/// The position of the close button on the Custom Tab.
 enum CustomTabsCloseButtonPosition {
   /// Positions the close button at the start of the toolbar.
   start(1),
@@ -30,7 +30,7 @@ enum CustomTabsCloseButtonPosition {
   final int rawValue;
 }
 
-/// Build-in close button icons for the custom tab.
+/// Build-in close button icons for the Custom Tab.
 class CustomTabsCloseButtonIcons {
   /// The resource ID of build-in back arrow button icon.
   static String get back => "fct_ic_arrow_back";

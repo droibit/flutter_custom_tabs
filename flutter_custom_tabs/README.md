@@ -148,7 +148,7 @@ Support status in `flutter_custom_tabs`:
 ### Deep Linking
 
 Supports launching a deep link URL.  
-(If a native app that responds to the deep link URL is installed, it will directly launch it. otherwise, it will launch a custom tab.)
+(If a native app that responds to the deep link URL is installed, it will directly launch it. otherwise, it will launch a Custom Tab.)
 
 ```dart
 import 'package:flutter/material.dart';

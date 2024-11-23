@@ -6,7 +6,7 @@ import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-/// Launches a web URL using a custom tab or browser, with various customization options.
+/// Launches a web URL using a Custom Tab or browser, with various customization options.
 ///
 /// The [launchUrl] function provides a way to open web content within your app using
 /// a customizable in-app browser experience on Android and iOS platforms.
@@ -64,7 +64,7 @@ import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platf
 /// ### Notes
 ///
 /// - The URL must have an `http` or `https` scheme; otherwise, a [PlatformException] is thrown.
-/// - Use [closeCustomTabs] to programmatically close the custom tab if needed.
+/// - Use [closeCustomTabs] to programmatically close the Custom Tab if needed.
 /// - Make sure to call the [warmupCustomTabs] function before launching the URL to improve performance.
 ///
 Future<void> launchUrl(

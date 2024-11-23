@@ -89,7 +89,7 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
     ) {
         final Activity activity = this.activity;
         if (activity == null) {
-            throw new FlutterError(CODE_LAUNCH_ERROR, "Launching a custom tab requires a foreground activity.", null);
+            throw new FlutterError(CODE_LAUNCH_ERROR, "Launching a Custom Tab requires a foreground activity.", null);
         }
 
         final Uri uri = Uri.parse(urlString);

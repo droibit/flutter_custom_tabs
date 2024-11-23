@@ -38,7 +38,7 @@
 
 ## 1.1.0
 
-- Add interface to manually close a custom tab([#67](https://github.com/droibit/flutter_custom_tabs/pull/67)).
+- Add interface to manually close a Custom Tab([#67](https://github.com/droibit/flutter_custom_tabs/pull/67)).
 
 ## 1.0.1
 

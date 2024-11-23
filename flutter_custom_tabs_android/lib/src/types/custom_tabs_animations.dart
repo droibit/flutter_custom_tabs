@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-/// The enter and exit animations for the custom tab.
+/// The enter and exit animations for the Custom Tab.
 ///
 /// Specify the Resource ID according to the specifications for the Android platform.
 /// - For resources within the Android app, use the resource name.
@@ -20,7 +20,7 @@ class CustomTabsAnimations {
     this.endExit,
   });
 
-  /// Resource ID of the start "enter" animation for the custom tab.
+  /// Resource ID of the start "enter" animation for the Custom Tab.
   final String? startEnter;
 
   /// Resource ID of the start "exit" animation for the application.
@@ -29,7 +29,7 @@ class CustomTabsAnimations {
   /// Resource ID of the exit "enter" animation for the application.
   final String? endEnter;
 
-  /// Resource ID of the exit "exit" animation for the custom tab.
+  /// Resource ID of the exit "exit" animation for the Custom Tab.
   final String? endExit;
 }
 
