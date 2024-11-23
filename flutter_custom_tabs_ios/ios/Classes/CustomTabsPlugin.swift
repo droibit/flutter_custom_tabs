@@ -18,7 +18,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         _ urlString: String,
         prefersDeepLink: Bool,
         options: SFSafariViewControllerOptions?,
-        completion: @escaping (Result<Void, Error>) -> Void
+        completion: @escaping (Result<Void, any Error>) -> Void
     ) {
         let url = URL(string: urlString)!
         if prefersDeepLink {
@@ -57,7 +57,7 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
     private func launchURL(
         _ url: URL,
         options: SFSafariViewControllerOptions?,
-        completion: @escaping (Result<Void, Error>) -> Void
+        completion: @escaping (Result<Void, any Error>) -> Void
     ) {
         guard let options else {
             launcher.open(url) { opened in
