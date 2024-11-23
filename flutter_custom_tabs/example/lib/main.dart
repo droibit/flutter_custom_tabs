@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         Uri.parse('https://flutter.dev'),
         customTabsSession: customTabsSession,
       );
-      debugPrint('Warm up session: $_prewarmingSession');
+      debugPrint('Prewarming connection: $_prewarmingSession');
     });
   }
 

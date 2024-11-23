@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
+import 'package:meta/meta.dart';
 
 /// Launches a web URL using a Custom Tab or browser, with various customization options.
 ///
@@ -132,6 +133,7 @@ Future<void> closeCustomTabs() {
 ///   ),
 /// );
 /// ```
+@experimental
 Future<CustomTabsSession> warmupCustomTabs({
   CustomTabsSessionOptions? options,
 }) async {
@@ -170,6 +172,7 @@ Future<CustomTabsSession> warmupCustomTabs({
 /// // Invalidates the session when the originating screen is disposed or in other cases where the session should be invalidated.
 /// await invalidateSession(prewarmingSession);
 /// ```
+@experimental
 Future<SafariViewPrewarmingSession> mayLaunchUrl(
   Uri url, {
   CustomTabsSession? customTabsSession,
@@ -219,6 +222,7 @@ Future<SafariViewPrewarmingSession> mayLaunchUrl(
 /// // Invalidates the session when the originating screen is disposed or in other cases where the session should be invalidated.
 /// await invalidateSession(prewarmingSession);
 /// ```
+@experimental
 Future<SafariViewPrewarmingSession> mayLaunchUrls(
   List<Uri> urls, {
   CustomTabsSession? customTabsSession,
@@ -240,6 +244,7 @@ Future<SafariViewPrewarmingSession> mayLaunchUrls(
 /// - [warmupCustomTabs]
 /// - [mayLaunchUrl]
 /// - [mayLaunchUrls]
+@experimental
 Future<void> invalidateSession(PlatformSession session) {
   return CustomTabsPlatform.instance.invalidate(session);
 }
