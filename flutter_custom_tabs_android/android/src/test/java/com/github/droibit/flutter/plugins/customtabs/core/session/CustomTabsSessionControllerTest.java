@@ -92,12 +92,18 @@ public class CustomTabsSessionControllerTest {
 
     @Test
     public void unbindCustomTabsService_whenBound_unbindsService() {
-        controller.bindCustomTabsService(context, "com.example");
-        controller.unbindCustomTabsService();
+        try (MockedStatic<CustomTabsClient> mocked = mockStatic(CustomTabsClient.class)) {
+            mocked.when(() -> CustomTabsClient.bindCustomTabsService(any(), anyString(), any()))
+                    .thenReturn(true);
 
-        assertThat(controller.isCustomTabsServiceBound()).isFalse();
-        assertThat(controller.getSession()).isNull();
-        verify(context).unbindService(controller);
+            final Context context = mock(Context.class);
+            controller.bindCustomTabsService(context);
+            controller.unbindCustomTabsService();
+
+            assertThat(controller.isCustomTabsServiceBound()).isFalse();
+            assertThat(controller.getSession()).isNull();
+            verify(context).unbindService(controller);
+        }
     }
 
     @Test

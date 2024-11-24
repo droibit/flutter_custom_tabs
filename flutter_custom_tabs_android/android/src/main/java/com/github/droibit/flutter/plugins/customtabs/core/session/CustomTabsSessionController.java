@@ -55,8 +55,10 @@ public class CustomTabsSessionController extends CustomTabsServiceConnection {
         try {
             final boolean bound = CustomTabsClient.bindCustomTabsService(context, packageName, this);
             Log.d(TAG, "Custom Tab(" + packageName + ") bound: " + bound);
+            if (bound) {
+                this.context = context;
+            }
             customTabsServiceBound = bound;
-            this.context = context;
         } catch (SecurityException e) {
             customTabsServiceBound = false;
         }
