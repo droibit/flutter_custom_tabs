@@ -35,6 +35,11 @@ public class CustomTabsSessionController extends CustomTabsServiceConnection {
     }
 
     @VisibleForTesting
+    void setSession(@Nullable CustomTabsSession session) {
+        this.session = session;
+    }
+
+    @VisibleForTesting
     boolean isCustomTabsServiceBound() {
         return customTabsServiceBound;
     }
@@ -90,12 +95,23 @@ public class CustomTabsSessionController extends CustomTabsServiceConnection {
         Log.d(TAG, "Custom Tab(" + packageName + ") disconnected.");
     }
 
-    public void mayLaunchUrls(@NonNull @Size(min = 1) List<String> urls) {
+    public void mayLaunchUrls(@NonNull List<String> urls) {
         final CustomTabsSession session = this.session;
         if (session == null) {
             Log.w(TAG, "Custom Tab session is null. Cannot may launch URLs.");
             return;
         }
+        if (urls.isEmpty()) {
+            Log.w(TAG, "URLs is empty. Cannot may launch URLs.");
+            return;
+        }
+
+        if (urls.size() == 1) {
+            final boolean succeeded = session.mayLaunchUrl(Uri.parse(urls.get(0)), null, null);
+            Log.d(TAG, "May launch URL: " + succeeded);
+            return;
+        }
+
         final List<Bundle> bundles = new ArrayList<>(urls.size());
         for (String url : urls) {
             final Bundle bundle = new Bundle(1);
