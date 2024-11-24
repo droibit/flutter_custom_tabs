@@ -45,8 +45,8 @@ public class CustomTabsSessionControllerTest {
             mocked.when(() -> CustomTabsClient.bindCustomTabsService(any(), anyString(), any()))
                     .thenReturn(true);
 
-            String packageName = "com.example";
-            final boolean result = controller.bindCustomTabsService(context, packageName);
+            final Context context = mock(Context.class);
+            final boolean result = controller.bindCustomTabsService(context);
             assertThat(result).isTrue();
             assertThat(controller.isCustomTabsServiceBound()).isTrue();
 
@@ -62,8 +62,8 @@ public class CustomTabsSessionControllerTest {
             mocked.when(() -> CustomTabsClient.bindCustomTabsService(any(), anyString(), any()))
                     .thenReturn(false);
 
-            String packageName = "com.example";
-            final boolean result = controller.bindCustomTabsService(context, packageName);
+            final Context context = mock(Context.class);
+            final boolean result = controller.bindCustomTabsService(context);
             assertThat(result).isFalse();
             assertThat(controller.isCustomTabsServiceBound()).isFalse();
 
@@ -79,8 +79,8 @@ public class CustomTabsSessionControllerTest {
             mocked.when(() -> CustomTabsClient.bindCustomTabsService(any(), anyString(), any()))
                     .thenThrow(new SecurityException());
 
-            String packageName = "com.example";
-            final boolean result = controller.bindCustomTabsService(context, packageName);
+            final Context context = mock(Context.class);
+            final boolean result = controller.bindCustomTabsService(context);
             assertThat(result).isFalse();
             assertThat(controller.isCustomTabsServiceBound()).isFalse();
 

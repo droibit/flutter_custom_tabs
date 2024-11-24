@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsSession;
-import androidx.core.util.Pair;
 
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSessionOptions;
 
@@ -36,7 +35,7 @@ public class CustomTabsSessionManager implements CustomTabsSessionProvider {
                 .build();
     }
 
-    public @Nullable Pair<String, CustomTabsSessionController> createSession(
+    public @Nullable CustomTabsSessionController createSessionController(
             @NonNull Context context,
             @NonNull CustomTabsSessionOptions options
     ) {
@@ -52,12 +51,12 @@ public class CustomTabsSessionManager implements CustomTabsSessionProvider {
 
         final CustomTabsSessionController cachedController = cachedSessions.get(customTabsPackage);
         if (cachedController != null) {
-            return new Pair<>(customTabsPackage, cachedController);
+            return cachedController;
         }
 
-        final CustomTabsSessionController newController = new CustomTabsSessionController();
+        final CustomTabsSessionController newController = new CustomTabsSessionController(customTabsPackage);
         cachedSessions.put(customTabsPackage, newController);
-        return new Pair<>(customTabsPackage, newController);
+        return newController;
     }
 
     public @Nullable CustomTabsSessionController getSessionController(@NonNull String packageName) {
@@ -88,12 +87,11 @@ public class CustomTabsSessionManager implements CustomTabsSessionProvider {
 
     public void handleActivityChange(@Nullable Context activity) {
         Log.d(TAG, "handleActivityChange: " + activity);
-        for (Map.Entry<String, CustomTabsSessionController> session : cachedSessions.entrySet()) {
-            final CustomTabsSessionController controller = session.getValue();
+        for (CustomTabsSessionController controller : cachedSessions.values()) {
             if (activity == null) {
                 controller.unbindCustomTabsService();
             } else {
-                controller.bindCustomTabsService(activity, session.getKey());
+                controller.bindCustomTabsService(activity);
             }
         }
     }

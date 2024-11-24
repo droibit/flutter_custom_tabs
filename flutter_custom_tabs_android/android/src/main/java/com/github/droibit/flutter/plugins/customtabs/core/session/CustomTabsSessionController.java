@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.Size;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsService;
@@ -22,9 +21,14 @@ import io.flutter.Log;
 public class CustomTabsSessionController extends CustomTabsServiceConnection {
     private static final @NonNull String TAG = "CustomTabsAndroid";
 
+    private final String packageName;
     private @Nullable Context context;
     private @Nullable CustomTabsSession session;
     private boolean customTabsServiceBound;
+
+    public @NonNull String getPackageName() {
+        return packageName;
+    }
 
     public @Nullable CustomTabsSession getSession() {
         return session;
@@ -35,15 +39,19 @@ public class CustomTabsSessionController extends CustomTabsServiceConnection {
         return customTabsServiceBound;
     }
 
-    public boolean bindCustomTabsService(@NonNull Context context, @NonNull String packageName) {
+    public CustomTabsSessionController(@NonNull String packageName) {
+        this.packageName = packageName;
+    }
+
+    public boolean bindCustomTabsService(@NonNull Context context) {
         if (customTabsServiceBound) {
             Log.d(TAG, "Custom Tab(" + packageName + ") already bound.");
             return true;
         }
-        return tryBindCustomTabsService(context, packageName);
+        return tryBindCustomTabsService(context);
     }
 
-    private boolean tryBindCustomTabsService(@NonNull Context context, @NonNull String packageName) {
+    private boolean tryBindCustomTabsService(@NonNull Context context) {
         try {
             final boolean bound = CustomTabsClient.bindCustomTabsService(context, packageName, this);
             Log.d(TAG, "Custom Tab(" + packageName + ") bound: " + bound);
@@ -62,7 +70,7 @@ public class CustomTabsSessionController extends CustomTabsServiceConnection {
         }
         session = null;
         customTabsServiceBound = false;
-        Log.d(TAG, "Custom Tab unbound.");
+        Log.d(TAG, "Custom Tab(" + packageName + ") unbound.");
     }
 
     @Override
@@ -77,7 +85,6 @@ public class CustomTabsSessionController extends CustomTabsServiceConnection {
         session = null;
         customTabsServiceBound = false;
 
-        final String packageName = name != null ? name.getPackageName() : "unknown";
         Log.d(TAG, "Custom Tab(" + packageName + ") disconnected.");
     }
 
