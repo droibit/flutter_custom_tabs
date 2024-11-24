@@ -283,18 +283,18 @@ public class CustomTabsLauncherTest {
 
         final String expectedPackageName = "com.example.browser";
         final CustomTabsSessionController controller = mock(CustomTabsSessionController.class);
-        when(controller.bindCustomTabsService(any(), any()))
-                .thenReturn(true);
+        when(controller.getPackageName()).thenReturn(expectedPackageName);
+        when(controller.bindCustomTabsService(any())).thenReturn(true);
 
-        when(customTabsSessionManager.createSession(any(), any()))
-                .thenReturn(new Pair<>(expectedPackageName, controller));
+        when(customTabsSessionManager.createSessionController(any(), any()))
+                .thenReturn(controller);
 
         final Map<String, Object> options = Collections.emptyMap();
         final String actualPackageName = launcher.warmup(options);
         assertThat(actualPackageName).isEqualTo(expectedPackageName);
 
         verify(customTabsSessionManager).createSessionOptions(same(options));
-        verify(controller).bindCustomTabsService(any(), eq(expectedPackageName));
+        verify(controller).bindCustomTabsService(any());
     }
 
     @Test
@@ -305,7 +305,7 @@ public class CustomTabsLauncherTest {
         final CustomTabsSessionOptions sessionOptions = mock(CustomTabsSessionOptions.class);
         when(customTabsSessionManager.createSessionOptions(any())).thenReturn(sessionOptions);
 
-        when(customTabsSessionManager.createSession(any(), any()))
+        when(customTabsSessionManager.createSessionController(any(), any()))
                 .thenReturn(null);
 
         final Map<String, Object> options = Collections.emptyMap();
@@ -323,20 +323,18 @@ public class CustomTabsLauncherTest {
         final CustomTabsSessionOptions sessionOptions = mock(CustomTabsSessionOptions.class);
         when(customTabsSessionManager.createSessionOptions(any())).thenReturn(sessionOptions);
 
-        final String expectedPackageName = "com.example.browser";
         final CustomTabsSessionController controller = mock(CustomTabsSessionController.class);
-        when(controller.bindCustomTabsService(any(), eq(expectedPackageName)))
-                .thenReturn(false);
+        when(controller.bindCustomTabsService(any())).thenReturn(false);
 
-        when(customTabsSessionManager.createSession(any(), any()))
-                .thenReturn(new Pair<>(expectedPackageName, controller));
+        when(customTabsSessionManager.createSessionController(any(), any()))
+                .thenReturn(controller);
 
         final Map<String, Object> options = Collections.emptyMap();
         final String actualPackageName = launcher.warmup(options);
         assertThat(actualPackageName).isNull();
 
         verify(customTabsSessionManager).createSessionOptions(same(options));
-        verify(controller).bindCustomTabsService(any(), eq(expectedPackageName));
+        verify(controller).bindCustomTabsService(any());
     }
 
     @Test
@@ -347,7 +345,7 @@ public class CustomTabsLauncherTest {
         assertThat(actualPackageName).isNull();
 
         verify(customTabsSessionManager, never()).createSessionOptions(any());
-        verify(customTabsSessionManager, never()).createSession(any(), any());
+        verify(customTabsSessionManager, never()).createSessionController(any(), any());
     }
 
     @Test

@@ -21,7 +21,6 @@ import androidx.annotation.RestrictTo;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
-import androidx.core.util.Pair;
 
 import com.github.droibit.flutter.plugins.customtabs.Messages.FlutterError;
 import com.github.droibit.flutter.plugins.customtabs.core.CustomTabsIntentFactory;
@@ -178,16 +177,14 @@ public class CustomTabsLauncher implements Messages.CustomTabsApi {
 
         final CustomTabsSessionOptions sessionOptions = customTabsSessionManager
                 .createSessionOptions(options);
-        final Pair<String, CustomTabsSessionController> session = customTabsSessionManager
-                .createSession(activity, sessionOptions);
-        if (session == null) {
+        final CustomTabsSessionController sessionController = customTabsSessionManager
+                .createSessionController(activity, sessionOptions);
+        if (sessionController == null) {
             return null;
         }
 
-        final String packageName = session.first;
-        final CustomTabsSessionController controller = session.second;
-        if (controller.bindCustomTabsService(activity, packageName)) {
-            return packageName;
+        if (sessionController.bindCustomTabsService(activity)) {
+            return sessionController.getPackageName();
         }
         return null;
     }

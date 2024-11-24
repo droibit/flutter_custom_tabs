@@ -3,6 +3,7 @@ package com.github.droibit.flutter.plugins.customtabs.core.session;
 import static com.droibit.android.customtabs.launcher.CustomTabsIntentHelper.getCustomTabsPackage;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.mock;
@@ -14,7 +15,6 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 
 import androidx.browser.customtabs.CustomTabsSession;
-import androidx.core.util.Pair;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.droibit.android.customtabs.launcher.CustomTabsIntentHelper;
@@ -50,7 +50,7 @@ public class CustomTabsSessionManagerTest {
     }
 
     @Test
-    public void createSession_withValidPackage_returnsSessionController() {
+    public void createSessionController_withValidPackage_returnsSessionController() {
         try (MockedStatic<CustomTabsIntentHelper> mocked = mockStatic(CustomTabsIntentHelper.class)) {
             final String packageName = "com.example.customtabs";
             mocked.when(() -> getCustomTabsPackage(any(), anyBoolean(), any()))
@@ -61,24 +61,20 @@ public class CustomTabsSessionManagerTest {
             when(options.getAdditionalCustomTabs(any())).thenReturn(additionalCustomTabs);
 
             final Context context = mock(Context.class);
-            final Pair<String, CustomTabsSessionController> result = factory.createSession(context, options);
+            final CustomTabsSessionController result = factory.createSessionController(context, options);
 
             assertThat(result).isNotNull();
-            assertThat(result.first).isEqualTo(packageName);
-            assertThat(result.second).isNotNull();
+            assertThat(result.getPackageName()).isEqualTo(packageName);
             assertThat(cachedSessions.containsKey(packageName)).isTrue();
 
-            mocked.verify(() ->
-                    getCustomTabsPackage(any(), eq(true), any())
-            );
+            mocked.verify(() -> getCustomTabsPackage(any(), eq(true), any()));
         }
     }
 
     @Test
-    public void createSession_withNullPackage_returnsNull() {
+    public void createSessionController_controller_withNullPackage_returnsNull() {
         try (MockedStatic<CustomTabsIntentHelper> mocked = mockStatic(CustomTabsIntentHelper.class)) {
-            mocked.when(() -> getCustomTabsPackage(any(), anyBoolean(), any()))
-                    .thenReturn(null);
+            mocked.when(() -> getCustomTabsPackage(any(), anyBoolean(), any())).thenReturn(null);
 
             final CustomTabsSessionOptions options = mock(CustomTabsSessionOptions.class);
             when(options.getPrefersDefaultBrowser()).thenReturn(true);
@@ -87,12 +83,10 @@ public class CustomTabsSessionManagerTest {
 
 
             final Context context = mock(Context.class);
-            final Pair<String, CustomTabsSessionController> result = factory.createSession(context, options);
+            final CustomTabsSessionController result = factory.createSessionController(context, options);
 
             assertThat(result).isNull();
-            mocked.verify(() ->
-                    getCustomTabsPackage(any(), eq(false), any())
-            );
+            mocked.verify(() -> getCustomTabsPackage(any(), eq(false), any()));
         }
     }
 
@@ -159,6 +153,7 @@ public class CustomTabsSessionManagerTest {
     public void handleActivityChange_withActivity_bindsAllServices() {
         final String packageName1 = "com.example.customtabs1";
         final CustomTabsSessionController controller1 = mock(CustomTabsSessionController.class);
+
         cachedSessions.put(packageName1, controller1);
 
         final String packageName2 = "com.example.customtabs2";
@@ -168,7 +163,7 @@ public class CustomTabsSessionManagerTest {
         final Context activity = mock(Context.class);
         factory.handleActivityChange(activity);
 
-        verify(controller1).bindCustomTabsService(any(), eq(packageName1));
-        verify(controller2).bindCustomTabsService(any(), eq(packageName2));
+        verify(controller1).bindCustomTabsService(same(activity));
+        verify(controller2).bindCustomTabsService(same(activity));
     }
 }
