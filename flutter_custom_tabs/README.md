@@ -173,7 +173,7 @@ Future<void> _launchDeepLinkUrl(BuildContext context) async {
 }
 ```
 
-## Launch in an external browser
+### Launch in an external browser
 
 By default, if no mobile platform-specific options are specified, a URL will be launched in an external browser.
 
