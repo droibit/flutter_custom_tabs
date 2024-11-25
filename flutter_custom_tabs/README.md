@@ -155,7 +155,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 // or import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
 
-Future<void> _launchDeepLinkURL(BuildContext context) async {
+Future<void> _launchDeepLinkUrl(BuildContext context) async {
   final theme = Theme.of(context);
   await launchUrl(
     Uri.parse('https://www.google.com/maps/@35.6908883,139.7865242,13z'),
