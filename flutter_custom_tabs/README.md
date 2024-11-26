@@ -268,3 +268,65 @@ Future<void> _closeCustomTabsManually() async {
   await closeCustomTabs();
 }
 ```
+
+### Performance optimization
+
+To enhance performance when launching URLs, especially on mobile platforms,  
+you can utilize the following functions. These functions help reduce startup time and provide a smoother user experience.
+
+For more details, please refer to the example app.
+
+#### Platform-Specific Behaviors
+
+##### Android
+
+- **Pre-Warming the Browser Process**: Use `warmupCustomTabs()` to pre-warm the Custom Tabs browser process. This initializes the browser in the background and can reduce the time it takes to launch a URL.
+
+```dart
+// You can specify `CustomTabsSessionOptions` if you want to customize the browser to be launched.
+final customTabsSession = await warmupCustomTabs();
+```
+
+- **Pre-Fetching URLs**: Use `mayLaunchUrl(s)` to inform the browser about URLs that might be launched. This allows the browser to pre-fetch content, improving load times when the URL is actually opened.
+
+```dart
+await mayLaunchUrl(
+  Uri.parse('https://flutter.dev'),
+  customTabsSession: customTabsSession, // Use the session from warmupCustomTabs()
+);
+```
+
+- **Launch the URL with Pre-Warmed Session**: You can launch a URL with a pre-warmed session to improve the startup performance of the Custom Tabs.
+
+```dart
+Future<void> _launchUrlWithSession(
+  BuildContext context,
+  CustomTabsSession customTabsSession,
+) async {
+  final theme = Theme.of(context);
+  await launchUrl(
+    Uri.parse('https://flutter.dev'),
+    customTabsOptions: CustomTabsOptions(
+      colorSchemes: CustomTabsColorSchemes.defaults(
+        toolbarColor: theme.colorScheme.surface,
+      ),
+      // Use the pre-warmed session.
+      browser: CustomTabsBrowserConfiguration.session(customTabsSession),
+    ),
+  );
+}
+```
+
+##### iOS
+
+- **Pre-Warming Connections**: Starting from iOS 15, you can use `mayLaunchUrl(s)` to pre-warm web connections. This can help reduce the time to load a page by preparing the network resources ahead of time.
+
+```dart
+final prewarmingSession = await mayLaunchUrl(Uri.parse('https://flutter.dev'));
+```
+
+It's crucial to call `invalidateSession` to release resources and properly dispose of the session when it is no longer needed.
+
+```dart
+await invalidateSession(prewarmingSession);
+```
