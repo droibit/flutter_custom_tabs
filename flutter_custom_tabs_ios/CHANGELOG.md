@@ -1,11 +1,18 @@
+## 2.2.0-dev.1
+
+- Implements `warmup`, `mayLaunch`, and `invalidate` methods in `CustomTabsPluginIOS` for performance optimization.
+- Updates minimum supported SDK version to Flutter 3.16.0/Dart 3.2.
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.2.0-dev.1.
+- Updates minimum required `pigeon` version to 21.1.0.
+
 ## 2.1.0
 
-- Updates minimum supported SDK version to Flutter 3.10/Dart 3 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
+- Updates minimum supported SDK version to Flutter 3.10/Dart 3.
 - Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.1.0.
-- Updates minimum required `pigeon` version to 17.0.0 ([#189](https://github.com/droibit/flutter_custom_tabs/pull/189)).
-- Adds privacy manifest ([#186](https://github.com/droibit/flutter_custom_tabs/pull/186)).
-- Updates the CocoaPods dependency to version 1.15.2 ([#186](https://github.com/droibit/flutter_custom_tabs/pull/186)).
-- Refactor `SFSafariViewController` dismissal handling ([#191](https://github.com/droibit/flutter_custom_tabs/pull/191)).
+- Updates minimum required `pigeon` version to 17.0.0.
+- Adds privacy manifest.
+- Updates the CocoaPods dependency to version 1.15.2.
+- Refactor `SFSafariViewController` dismissal handling.
 
 ## 2.0.0
 
