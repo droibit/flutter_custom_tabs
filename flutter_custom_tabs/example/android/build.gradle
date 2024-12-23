@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'com.android.tools.build:gradle:8.1.4'
     }
 }
 
@@ -15,6 +15,12 @@ allprojects {
         mavenCentral()
         maven { url "https://jitpack.io" }
     }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile).configureEach {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }    
 }
 
 rootProject.buildDir = '../build'
