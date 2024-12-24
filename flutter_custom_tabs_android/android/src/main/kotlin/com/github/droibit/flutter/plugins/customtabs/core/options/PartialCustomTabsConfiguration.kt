@@ -1,7 +1,6 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import androidx.annotation.Dimension
-import androidx.annotation.Dimension.DP
 import androidx.browser.customtabs.CustomTabsIntent.ActivityHeightResizeBehavior
 
 class PartialCustomTabsConfiguration(
@@ -37,7 +36,7 @@ class PartialCustomTabsConfiguration(
             return this
         }
 
-        fun setCornerRadius(@Dimension(unit = DP) cornerRadius: Int?): Builder {
+        fun setCornerRadius(@Dimension(unit = Dimension.DP) cornerRadius: Int?): Builder {
             this.cornerRadius = cornerRadius
             return this
         }
