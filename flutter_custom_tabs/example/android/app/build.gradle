@@ -1,6 +1,6 @@
 plugins {
-    id "com.android.application"
-    id "dev.flutter.flutter-gradle-plugin"
+    id 'com.android.application'
+    id 'dev.flutter.flutter-gradle-plugin'
 }
 
 def localProperties = new Properties()
@@ -22,12 +22,12 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.github.droibit.flutter.plugins.customtabs.example"
+    namespace 'com.github.droibit.flutter.plugins.customtabs.example'
     compileSdk 34 // flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        applicationId "com.github.droibit.flutter.plugins.customtabs.example"
+        applicationId 'com.github.droibit.flutter.plugins.customtabs.example'
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk flutter.minSdkVersion
@@ -44,6 +44,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
     lint {
         disable 'InvalidPackage'
     }

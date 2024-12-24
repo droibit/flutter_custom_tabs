@@ -1,5 +1,4 @@
 group 'com.github.droibit.plugins.flutter.customtabs'
-version '1.0-SNAPSHOT'
 
 buildscript {
     repositories {
@@ -8,7 +7,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10'
     }
 }
 
@@ -21,9 +21,10 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    if (project.android.hasProperty("namespace")) {
+    if (project.android.hasProperty('namespace')) {
         namespace 'com.github.droibit.plugins.flutter.customtabs'
     }
 
@@ -47,15 +48,30 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
+            }
+        }
+    }
+
     dependencies {
+        implementation 'androidx.core:core-ktx:1.9.0'
         implementation 'androidx.browser:browser:1.8.0'
         implementation 'com.github.droibit:customtabslauncher:3.0.0-beta01'
 
         testImplementation 'junit:junit:4.13.2'
         testImplementation 'org.robolectric:robolectric:4.11'
-        testImplementation 'org.mockito:mockito-core:5.12.0'
+        testImplementation 'io.mockk:mockk:1.13.3'
         testImplementation 'com.google.truth:truth:1.4.4'
         testImplementation 'androidx.test.ext:truth:1.6.0'
-        testImplementation 'androidx.test.ext:junit:1.2.1'
+        testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
     }
 }
