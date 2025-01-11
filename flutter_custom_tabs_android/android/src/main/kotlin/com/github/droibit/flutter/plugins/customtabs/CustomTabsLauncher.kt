@@ -20,7 +20,6 @@ import com.github.droibit.flutter.plugins.customtabs.core.ExternalBrowserLaunche
 import com.github.droibit.flutter.plugins.customtabs.core.NativeAppLauncher
 import com.github.droibit.flutter.plugins.customtabs.core.PartialCustomTabsLauncher
 import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionManager
-import com.github.droibit.flutter.plugins.customtabs.core.utils.CODE_LAUNCH_ERROR
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class CustomTabsLauncher @VisibleForTesting constructor(
@@ -152,5 +151,9 @@ internal class CustomTabsLauncher @VisibleForTesting constructor(
         } else {
             pm.resolveService(intent, flags)
         }
+    }
+
+    private companion object {
+        const val CODE_LAUNCH_ERROR = "LAUNCH_ERROR"
     }
 }

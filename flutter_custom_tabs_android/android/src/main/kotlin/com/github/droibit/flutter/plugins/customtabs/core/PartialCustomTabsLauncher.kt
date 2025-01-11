@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX
-import com.github.droibit.flutter.plugins.customtabs.core.utils.REQUEST_CODE_PARTIAL_CUSTOM_TABS
 
 class PartialCustomTabsLauncher {
     fun launch(activity: Activity, uri: Uri, customTabsIntent: CustomTabsIntent): Boolean {
@@ -19,5 +18,9 @@ class PartialCustomTabsLauncher {
             return true
         }
         return false
+    }
+
+    private companion object {
+        const val REQUEST_CODE_PARTIAL_CUSTOM_TABS = 1001
     }
 }
