@@ -16,7 +16,7 @@ import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsColo
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsIntentOptions
 import com.github.droibit.flutter.plugins.customtabs.core.options.PartialCustomTabsConfiguration
 import com.github.droibit.flutter.plugins.customtabs.core.session.CustomTabsSessionProvider
-import com.github.droibit.flutter.plugins.customtabs.core.utils.extractBundle
+import com.github.droibit.flutter.plugins.customtabs.core.utils.bundleOf
 
 class CustomTabsIntentFactory @VisibleForTesting internal constructor(
     private val resources: ResourceFactory
@@ -130,7 +130,7 @@ class CustomTabsIntentFactory @VisibleForTesting internal constructor(
         options: BrowserConfiguration
     ) {
         val rawIntent = customTabsIntent.intent
-        options.headers?.let { rawIntent.putExtra(EXTRA_HEADERS, extractBundle(it)) }
+        options.headers?.let { rawIntent.putExtra(EXTRA_HEADERS, bundleOf(it)) }
 
         // Avoid overriding the package if using CustomTabsSession.
         if (rawIntent.getPackage() != null) {
