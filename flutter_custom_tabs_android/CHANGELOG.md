@@ -1,3 +1,7 @@
+## 2.2.0-dev.4
+
+- Kotlinize the android implementation.
+
 ## 2.2.0-dev.3
 
 - Implements `warmup`, `mayLaunch`, and `invalidate` methods in `CustomTabsPluginAndroid` for performance optimization.
