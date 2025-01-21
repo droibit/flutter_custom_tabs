@@ -16,7 +16,6 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
     }
 }
 
@@ -65,7 +64,7 @@ android {
     dependencies {
         implementation 'androidx.core:core-ktx:1.9.0'
         implementation 'androidx.browser:browser:1.8.0'
-        implementation 'com.github.droibit:customtabslauncher:3.0.0-beta01'
+        implementation 'io.github.droibit:customtabslauncher:3.0.0'
 
         testImplementation 'junit:junit:4.13.2'
         testImplementation 'org.robolectric:robolectric:4.11'
