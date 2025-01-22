@@ -15,7 +15,7 @@ on:
       - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
 env:
-  DEVELOPER_DIR: /Applications/Xcode_16.1.app
+  DEVELOPER_DIR: /Applications/Xcode_16.2.app
 
 jobs:
   build:
