@@ -1,17 +1,18 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider
 
-class CustomTabsSessionOptions private constructor(
+class CustomTabsSessionOptions @VisibleForTesting internal constructor(
     private val browser: BrowserConfiguration
 ) {
     constructor(
-        prefersExternalBrowser: Boolean?,
+        prefersDefaultBrowser: Boolean?,
         fallbackCustomTabPackages: Set<String>?
     ) : this(
         BrowserConfiguration.Builder()
-            .setPrefersExternalBrowser(prefersExternalBrowser)
+            .setPrefersDefaultBrowser(prefersDefaultBrowser)
             .setFallbackCustomTabs(fallbackCustomTabPackages)
             .build()
     )
@@ -27,7 +28,7 @@ class CustomTabsSessionOptions private constructor(
     }
 
     class Builder {
-        private var prefersExternalBrowser: Boolean? = null
+        private var prefersDefaultBrowser: Boolean? = null
         private var fallbackCustomTabs: Set<String>? = null
 
         fun setOptions(options: Map<String, Any?>?): Builder {
@@ -35,14 +36,14 @@ class CustomTabsSessionOptions private constructor(
                 return this
             }
 
-            prefersExternalBrowser = options[KEY_PREFERS_DEFAULT_BROWSER] as Boolean?
+            prefersDefaultBrowser = options[KEY_PREFERS_DEFAULT_BROWSER] as Boolean?
             @Suppress("UNCHECKED_CAST")
             fallbackCustomTabs = (options[KEY_FALLBACK_CUSTOM_TABS] as List<String>?)?.toSet()
             return this
         }
 
         fun setPrefersDefaultBrowser(prefersExternalBrowser: Boolean?): Builder {
-            this.prefersExternalBrowser = prefersExternalBrowser
+            this.prefersDefaultBrowser = prefersExternalBrowser
             return this
         }
 
@@ -52,7 +53,7 @@ class CustomTabsSessionOptions private constructor(
         }
 
         fun build() = CustomTabsSessionOptions(
-            prefersExternalBrowser,
+            prefersDefaultBrowser,
             fallbackCustomTabs
         )
 

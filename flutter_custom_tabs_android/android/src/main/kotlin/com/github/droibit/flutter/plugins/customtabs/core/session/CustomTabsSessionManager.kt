@@ -1,12 +1,10 @@
 package com.github.droibit.flutter.plugins.customtabs.core.session
 
 import android.content.Context
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.browser.customtabs.CustomTabsSession
 import com.droibit.android.customtabs.launcher.getCustomTabsPackage
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSessionOptions
-import com.github.droibit.flutter.plugins.customtabs.core.utils.TAG
 
 class CustomTabsSessionManager @VisibleForTesting internal constructor(
     private val cachedSessions: MutableMap<String, CustomTabsSessionController>
@@ -51,7 +49,6 @@ class CustomTabsSessionManager @VisibleForTesting internal constructor(
     }
 
     fun handleActivityChange(activity: Context?) {
-        Log.d(TAG, "handleActivityChange: $activity")
         for (controller in cachedSessions.values) {
             if (activity == null) {
                 controller.unbindCustomTabsService()
