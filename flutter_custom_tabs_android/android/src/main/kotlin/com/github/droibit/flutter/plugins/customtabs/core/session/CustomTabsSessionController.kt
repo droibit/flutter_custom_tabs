@@ -9,7 +9,6 @@ import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
-import com.github.droibit.flutter.plugins.customtabs.core.utils.TAG
 import io.flutter.Log
 
 class CustomTabsSessionController(
@@ -55,7 +54,7 @@ class CustomTabsSessionController(
 
     override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
         val warmedUp = client.warmup(0)
-        Log.d(TAG, "Custom Tab(" + name.packageName + ") warmedUp: " + warmedUp)
+        Log.d(TAG, "Custom Tab(${name.packageName}) warmedUp: " + warmedUp)
         session = client.newSession(null)
     }
 
@@ -69,11 +68,11 @@ class CustomTabsSessionController(
     fun mayLaunchUrls(urls: List<String>) {
         val session = this.session
         if (session == null) {
-            Log.w(TAG, "Custom Tab session is null. Cannot may launch URLs.")
+            Log.w(TAG, "Custom Tab session is null. Cannot may launch URL(s).")
             return
         }
         if (urls.isEmpty()) {
-            Log.w(TAG, "URLs is empty. Cannot may launch URLs.")
+            Log.w(TAG, "URLs is empty. Cannot may launch URL(s).")
             return
         }
 
@@ -86,5 +85,9 @@ class CustomTabsSessionController(
         val bundles = urls.map { bundleOf(KEY_URL to it.toUri()) }
         val succeeded = session.mayLaunchUrl(null, null, bundles)
         Log.d(TAG, "May launch URL(s): $succeeded")
+    }
+
+    private companion object {
+        private const val TAG = "CustomTabsAndroid"
     }
 }
