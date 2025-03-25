@@ -25,9 +25,6 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-        # This workflow is designed to avoid lint errors in Flutter version 3.27.0 and later.
-        # ref. https://github.com/flutter/flutter/issues/159739
-        flutter-version: 3.24.0        
     - uses: irgaly/setup-mint@v1
       with:
         mint-directory: ./flutter_custom_tabs_ios
