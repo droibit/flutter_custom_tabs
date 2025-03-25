@@ -3,8 +3,12 @@ import '../types/types.dart';
 
 extension SafariViewControllerOptionsConverter on SafariViewControllerOptions {
   SFSafariViewControllerOptions toMessage() {
-    return SFSafariViewControllerOptions(
+    // Temporarily suppress deprecation warnings until migration to `Color.toARGB32`.
+    // See: https://github.com/flutter/flutter/issues/160184#issuecomment-2560184639
+    return SFSafariViewControllerOptions(  
+      // ignore: deprecated_member_use
       preferredBarTintColor: preferredBarTintColor?.value,
+      // ignore: deprecated_member_use
       preferredControlTintColor: preferredControlTintColor?.value,
       barCollapsingEnabled: barCollapsingEnabled,
       entersReaderIfAvailable: entersReaderIfAvailable,
