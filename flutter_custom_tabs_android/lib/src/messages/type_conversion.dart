@@ -107,7 +107,7 @@ extension _StringColorConverter on Color {
   String toHexColorString() {
     // Temporarily suppress deprecation warnings until migration to `Color.toARGB32`.
     // See: https://github.com/flutter/flutter/issues/160184#issuecomment-2560184639
-        
+
     // ignore: deprecated_member_use
     return '#${value.toRadixString(16)}';
   }
