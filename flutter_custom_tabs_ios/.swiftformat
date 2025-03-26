@@ -1,37 +1,31 @@
 # file options
+
 --exclude Carthage,Pods,.swiftpm,./ios/Classes/messages.g.swift
 
 # format options
+
 --allman false
---binarygrouping 4,8
 --commas always
---decimalgrouping 3,6
 --elseposition same-line
---voidtype void
---exponentcase lowercase
---exponentgrouping disabled
---fractiongrouping disabled
 --header ignore
---hexgrouping 4,8
---hexliteralcase uppercase
 --ifdef indent
 --indent 4
 --importgrouping testable-bottom
 --linebreaks lf
 --maxwidth 200
---octalgrouping 4,8
 --operatorfunc spaced
 --patternlet hoist
 --ranges spaced
 --self remove
 --semicolons inline
 --stripunusedargs closure-only
---swiftversion 5.6
+--swiftversion 5.9
 --trimwhitespace always
 --wraparguments preserve
 --wrapcollections preserve
 --typeblanklines remove
 
 # rules
+
 --disable strongOutlets, docComments
 --enable isEmpty,blockComments

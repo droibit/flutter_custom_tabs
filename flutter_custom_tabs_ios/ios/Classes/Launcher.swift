@@ -73,7 +73,7 @@ open class Launcher {
 private extension UIWindow {
     static var keyWindow: UIWindow? {
         guard let delegate = UIApplication.shared.delegate as? FlutterAppDelegate else {
-            return UIApplication.shared.windows.first { $0.isKeyWindow }
+            return UIApplication.shared.windows.first(where: \.isKeyWindow)
         }
         return delegate.window
     }
@@ -85,15 +85,15 @@ private extension UIWindow {
 
 private func recursivelyFindTopViewController(from viewController: UIViewController?) -> UIViewController? {
     if let navigationController = viewController as? UINavigationController {
-        return recursivelyFindTopViewController(from: navigationController.visibleViewController)
+        recursivelyFindTopViewController(from: navigationController.visibleViewController)
     } else if let tabBarController = viewController as? UITabBarController,
               let selected = tabBarController.selectedViewController
     {
-        return recursivelyFindTopViewController(from: selected)
+        recursivelyFindTopViewController(from: selected)
     } else if let presentedViewController = viewController?.presentedViewController {
-        return recursivelyFindTopViewController(from: presentedViewController)
+        recursivelyFindTopViewController(from: presentedViewController)
     } else {
-        return viewController
+        viewController
     }
 }
 

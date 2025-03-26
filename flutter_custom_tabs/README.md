@@ -27,7 +27,13 @@ dependencies:
 > [!IMPORTANT]  
 > v2.0.0 includes breaking changes from v1.x. Please refer to the [migration guide](https://github.com/droibit/flutter_custom_tabs/blob/main/flutter_custom_tabs/doc/migration-guides.md) when updating the plugin.
 
-### Requirements for Android
+### Requirements
+
+#### iOS
+
+- Xcode 15.0 and above.
+
+#### Android
 
 - Android Gradle Plugin v7.4.0 and above.
 - Kotlin v1.7.0 and above.

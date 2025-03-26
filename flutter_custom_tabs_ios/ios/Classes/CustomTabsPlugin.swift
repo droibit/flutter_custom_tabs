@@ -61,26 +61,22 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
     ) {
         guard let options else {
             launcher.open(url) { opened in
-                if opened {
-                    completion(.success(()))
-                } else {
-                    completion(.failure(
+                completion(
+                    opened ? .success(()) : .failure(
                         PigeonError(message: "Failed to launch external browser.")
-                    ))
-                }
+                    )
+                )
             }
             return
         }
 
         let safariViewController = SFSafariViewController.make(url: url, options: options)
         launcher.present(safariViewController) { presented in
-            if presented {
-                completion(.success(()))
-            } else {
-                completion(.failure(
+            completion(
+                presented ? .success(()) : .failure(
                     PigeonError(message: "Failed to launch SFSafariViewController.")
-                ))
-            }
+                )
+            )
         }
     }
 }
