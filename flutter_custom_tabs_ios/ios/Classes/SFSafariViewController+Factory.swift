@@ -56,23 +56,18 @@ private extension UISheetPresentationController {
         if !configuration.detents.isEmpty {
             detents = configuration.detents.compactMap { detent in
                 switch detent {
-                case pageSheetDetentMedium:
-                    return .medium()
-                case pageSheetDetentLarge:
-                    return .large()
-                default:
-                    return nil
+                case pageSheetDetentMedium: .medium()
+                case pageSheetDetentLarge: .large()
+                default: nil
                 }
             }
         }
+        
         if let largestUndimmedDetentIdentifier = configuration.largestUndimmedDetentIdentifier {
-            switch largestUndimmedDetentIdentifier {
-            case pageSheetDetentMedium:
-                self.largestUndimmedDetentIdentifier = .medium
-            case pageSheetDetentLarge:
-                self.largestUndimmedDetentIdentifier = .large
-            default:
-                break
+            self.largestUndimmedDetentIdentifier = switch largestUndimmedDetentIdentifier {
+            case pageSheetDetentMedium: .medium
+            case pageSheetDetentLarge: .large
+            default: nil
             }
         }
 
