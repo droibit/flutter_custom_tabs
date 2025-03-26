@@ -62,7 +62,7 @@ private extension UISheetPresentationController {
                 }
             }
         }
-        
+
         if let largestUndimmedDetentIdentifier = configuration.largestUndimmedDetentIdentifier {
             self.largestUndimmedDetentIdentifier = switch largestUndimmedDetentIdentifier {
             case pageSheetDetentMedium: .medium
