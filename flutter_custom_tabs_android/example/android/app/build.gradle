@@ -1,39 +1,21 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'dev.flutter.flutter-gradle-plugin'
-}
-
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
-}
-
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
-    namespace 'com.github.droibit.plugins.flutter.customtabs.android.example'
+    namespace "com.github.droibit.plugins.flutter.customtabs.android.example"
     compileSdk 34 //flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        applicationId 'com.github.droibit.plugins.flutter.customtabs.flutter_custom_tabs_android_example'
+        applicationId = "com.github.droibit.plugins.flutter.customtabs.flutter_custom_tabs_android_example"
         // Enable multidex support.
-        minSdk flutter.minSdkVersion
-        targetSdk flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {
@@ -46,7 +28,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
 
     compileOptions {
@@ -56,5 +38,5 @@ android {
 }
 
 flutter {
-    source '../..'
+    source "../.."
 }
