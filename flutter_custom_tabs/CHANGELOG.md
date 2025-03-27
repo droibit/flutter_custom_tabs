@@ -1,3 +1,7 @@
+## 2.2.1
+
+- No changes except for version bump.
+
 ## 2.2.0
 
 - Updates minimum required `flutter_custom_tabs_android/ios/web` version to 2.2.0.

@@ -1,6 +1,6 @@
 name: flutter_custom_tabs
 description: A Flutter plugin for mobile apps to launch a URL in Custom Tabs/SFSafariViewController.
-version: 2.2.0
+version: 2.2.1
 homepage: https://github.com/droibit/flutter_custom_tabs
 repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs
 issue_tracker: https://github.com/droibit/flutter_custom_tabs/issues
