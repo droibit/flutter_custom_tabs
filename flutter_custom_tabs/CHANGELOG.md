@@ -1,3 +1,9 @@
+## 2.2.0
+
+- Updates minimum required `flutter_custom_tabs_android/ios/web` version to 2.2.0.
+- Updates Android Gradle setup to use the new Flutter Gradle plugin integration.
+- Adds iOS requirements to README.
+
 ## 2.2.0-dev.1
 
 - Addes `warmupCustomTabs`, `mayLaunchUrl(s)`, and `invalidateSession` functions for performance optimization.
