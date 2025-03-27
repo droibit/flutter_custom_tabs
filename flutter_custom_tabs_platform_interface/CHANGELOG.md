@@ -1,4 +1,8 @@
 
+## 2.2.0
+
+- No changes except for version bump.
+
 ## 2.2.0-dev.1
 
 - Adds `warmup`, `mayLaunch`, and `invalidate` methods to `CustomTabsPlatform` for performance optimization.

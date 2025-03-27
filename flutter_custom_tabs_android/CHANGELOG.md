@@ -1,3 +1,13 @@
+## 2.2.0
+
+- Fixes a bug where default browser preference wasn't properly applied during Custom Tabs warm-up.
+- Adds temporary comments to suppress `Color.value` deprecation warnings.
+- Improves logging and move TAG constant to appropriate class.
+- Adds unit tests for Custom Tabs options classes.
+- Updates Android Gradle setup to use the new Flutter Gradle plugin integration.
+- Updates CustomTabsLauncher to [v3.0.0](https://github.com/droibit/CustomTabsLauncher/releases/tag/3.0.0) and remove JitPack repository.
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.2.0.
+
 ## 2.2.0-dev.4
 
 - Kotlinize the android implementation.

@@ -1,3 +1,7 @@
+## 2.2.0
+
+- No changes except for version bump.
+
 ## 2.2.0-dev.1
 
 - Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.2.0-dev.1.

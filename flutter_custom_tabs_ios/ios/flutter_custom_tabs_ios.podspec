@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_custom_tabs_ios'
-  s.version          = '2.2.0-dev.1'
+  s.version          = '2.2.0'
   s.summary          = 'iOS platform implementation of flutter_custom_tabs.'
   s.description      = <<-DESC
 iOS platform implementation of flutter_custom_tabs.
