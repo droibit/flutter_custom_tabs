@@ -4,6 +4,7 @@ version: 2.2.0
 homepage: https://github.com/droibit/flutter_custom_tabs
 repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_platform_interface
 issue_tracker: https://github.com/droibit/flutter_custom_tabs/issues
+publish_to: 'none'
 
 environment:
   sdk: ^3.2.0
