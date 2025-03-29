@@ -50,7 +50,7 @@ class MockUrlLauncherPlugin extends Mock
   LinkDelegate get linkDelegate => throw UnimplementedError();
 
   @override
-  html.Window? openNewWindow(String url, {String? webOnlyWindowName}) {
+  bool openNewWindow(String url, {String? webOnlyWindowName}) {
     throw UnimplementedError();
   }
 }
