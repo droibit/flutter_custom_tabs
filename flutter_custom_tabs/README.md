@@ -156,6 +156,9 @@ void _launchUrl(BuildContext context) async {
 | Change the availability of Reader mode | - | ✅ | Not provided |
 | Change appearance of close button | ✅<br>(Icon, position) | ✅<br>(Predefined button styles) | Not provided |
 | Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided |
+| Change availability of bookmarks button | ✅ | - | Not provided |
+| Change availability of download button | ✅ | - | Not provided |
+| Enable App-specific history | ✅ | - | Not provided |
 | Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided |
 | Prefer the default browser over Chrome | ✅ | - | Not provided |
 | Pass HTTP headers | ✅ | - | Not provided |
@@ -255,31 +258,6 @@ Future<void> _launchUrlInBottomSheet(BuildContext context) async {
 }
 ```
 
-### Prefer the default browser over Chrome
-
-On Android, the plugin defaults to launching Chrome, which supports all Custom Tabs features.
-You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
-
-> [!NOTE]  
-> Some browsers may not support the options specified in `CustomTabsOptions`.
->
-> - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
-
-```dart
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-
-Future<void> _launchUrlInDefaultBrowserOnAndroid() async {  
-  await launchUrl(
-    Uri.parse('https://flutter.dev'),
-    customTabsOptions: CustomTabsOptions(
-      browser: const CustomTabsBrowserConfiguration(
-        prefersDefaultBrowser: true,
-      ),
-    ),
-  );
-}
-```
-
 ### Close the Custom Tabs
 
 You can manually close the Custom Tabs.
@@ -352,4 +330,54 @@ It's crucial to call `invalidateSession` to release resources and properly dispo
 
 ```dart
 await invalidateSession(prewarmingSession);
+```
+
+### Android: Prefer the default browser over Chrome
+
+On Android, the plugin defaults to launching Chrome, which supports all Custom Tabs features.
+You can prioritize launching the default browser on the device that supports Custom Tabs over Chrome.
+
+> [!NOTE]  
+> Some browsers may not support the options specified in `CustomTabsOptions`.
+>
+> - See: [Custom Tabs Browser Support](https://developer.chrome.com/docs/android/custom-tabs/browser-support/).
+
+```dart
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+
+Future<void> _launchUrlInDefaultBrowserOnAndroid() async {  
+  await launchUrl(
+    Uri.parse('https://flutter.dev'),
+    customTabsOptions: CustomTabsOptions(
+      browser: const CustomTabsBrowserConfiguration(
+        prefersDefaultBrowser: true,
+      ),
+    ),
+  );
+}
+```
+
+### Android: Enable App-specific history
+
+App-specific history improves your users' browsing experience by organizing web pages they've visited through your Flutter app into dedicated groups within Chrome's history.  
+When enabled, pages opened from your app appear with your app's name in Chrome's history, creating a more organized browsing experience.
+
+Requirements:
+
+- Android 14 and above
+- Chrome version 126 and above
+
+For more technical details, see [App-specific history](https://developer.chrome.com/docs/android/custom-tabs/guide-app-specific-history).
+
+```dart
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+
+Future<void> _launchUrlWithAppSpecificHistoryOnAndroid() async {
+  await launchUrl(
+    Uri.parse('https://flutter.dev'),
+    customTabsOptions: const CustomTabsOptions(
+      shareIdentityEnabled: true,
+    ),
+  );
+}
 ```
