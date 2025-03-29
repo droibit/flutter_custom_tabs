@@ -36,6 +36,7 @@ void main() {
         instantAppsEnabled: false,
         downloadButtonEnabled: true,
         bookmarksButtonEnabled: false,
+        shareIdentityEnabled: true,
         closeButton: CustomTabsCloseButton(
           icon: "icon",
           position: CustomTabsCloseButtonPosition.end,
@@ -88,6 +89,7 @@ void main() {
         'instantAppsEnabled': false,
         'downloadButtonEnabled': true,
         'bookmarksButtonEnabled': false,
+        'shareIdentityEnabled': true,
         'closeButton': {
           'icon': "icon",
           'position': 2,
@@ -110,6 +112,43 @@ void main() {
           'initialHeight': 500,
           'activityHeightResizeBehavior': 1,
           'cornerRadius': 16,
+        },
+      });
+    });
+
+    test('toMessage() returns a message with partial Custom Tabs options', () {
+      final options = CustomTabsOptions.partial(
+        configuration: const PartialCustomTabsConfiguration(
+          initialHeight: 800,
+          activityHeightResizeBehavior: CustomTabsActivityHeightResizeBehavior.adjustable,
+          cornerRadius: 12,
+        ),
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: const Color(0xFF1A73E8),
+        ),
+        showTitle: true,
+        downloadButtonEnabled: false,
+        bookmarksButtonEnabled: true,
+        closeButton: const CustomTabsCloseButton(icon: "ic_close_black"),
+      );
+
+      final actual = options.toMessage();
+      expect(actual, <String, Object>{
+        'colorSchemes': {
+          'defaultParams': {
+            'toolbarColor': '#ff1a73e8',
+          },
+        },
+        'showTitle': true,
+        'downloadButtonEnabled': false,
+        'bookmarksButtonEnabled': true,
+        'closeButton': {
+          'icon': "ic_close_black",
+        },
+        'partial': <String, Object>{
+          'initialHeight': 800,
+          'activityHeightResizeBehavior': 1,
+          'cornerRadius': 12,
         },
       });
     });

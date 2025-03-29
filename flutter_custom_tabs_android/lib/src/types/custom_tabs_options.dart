@@ -28,6 +28,7 @@ class CustomTabsOptions implements PlatformOptions {
     this.instantAppsEnabled,
     this.downloadButtonEnabled,
     this.bookmarksButtonEnabled,
+    this.shareIdentityEnabled,
     this.closeButton,
     this.animations,
     this.browser,
@@ -86,6 +87,22 @@ class CustomTabsOptions implements PlatformOptions {
 
   /// A Boolean value that determines whether to show the download button in the overflow menu. The button is enabled by default.
   final bool? downloadButtonEnabled;
+
+  /// A Boolean value that enables App-specific history for Custom Tabs.
+  ///
+  /// When enabled, links opened from your app will be grouped together in Chrome's history 
+  /// along with your app's name, making it easier for users to:
+  /// - Find pages they previously visited through your app
+  /// - Resume their browsing session specific to your app
+  /// - Distinguish between browsing activities across different apps
+  /// 
+  /// This feature is available on Android 14 and above.
+  /// 
+  /// Enabling this option shares your app's package name with Chrome but has no impact
+  /// on cookies or sign-in state.
+  ///
+  /// See: [App-specific history](https://developer.chrome.com/docs/android/custom-tabs/guide-app-specific-history)
+  final bool? shareIdentityEnabled;
 
   /// The close button configuration.
   final CustomTabsCloseButton? closeButton;
