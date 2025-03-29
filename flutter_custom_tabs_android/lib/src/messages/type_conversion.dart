@@ -13,9 +13,12 @@ extension CustomTabsOptionsConverter on CustomTabsOptions {
       if (shareState != null) 'shareState': shareState!.rawValue,
       if (showTitle != null) 'showTitle': showTitle!,
       if (instantAppsEnabled != null) 'instantAppsEnabled': instantAppsEnabled!,
-      if (bookmarksButtonEnabled != null) 'bookmarksButtonEnabled' : bookmarksButtonEnabled!,
-      if (downloadButtonEnabled != null) 'downloadButtonEnabled' : downloadButtonEnabled!,
-      if (shareIdentityEnabled != null) 'shareIdentityEnabled' : shareIdentityEnabled!,
+      if (bookmarksButtonEnabled != null)
+        'bookmarksButtonEnabled': bookmarksButtonEnabled!,
+      if (downloadButtonEnabled != null)
+        'downloadButtonEnabled': downloadButtonEnabled!,
+      if (shareIdentityEnabled != null)
+        'shareIdentityEnabled': shareIdentityEnabled!,
       if (closeButton != null) 'closeButton': closeButton!.toMessage(),
       if (animations != null) 'animations': animations!.toMessage(),
       if (browser != null) 'browser': browser!.toMessage(),

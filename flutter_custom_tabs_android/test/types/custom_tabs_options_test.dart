@@ -120,7 +120,8 @@ void main() {
       final options = CustomTabsOptions.partial(
         configuration: const PartialCustomTabsConfiguration(
           initialHeight: 800,
-          activityHeightResizeBehavior: CustomTabsActivityHeightResizeBehavior.adjustable,
+          activityHeightResizeBehavior:
+              CustomTabsActivityHeightResizeBehavior.adjustable,
           cornerRadius: 12,
         ),
         colorSchemes: CustomTabsColorSchemes.defaults(
