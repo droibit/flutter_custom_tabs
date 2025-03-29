@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
 import 'package:url_launcher_platform_interface/link.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:web/web.dart' as html;
 
 class MockUrlLauncherPlugin extends Mock
     with MockPlatformInterfaceMixin
