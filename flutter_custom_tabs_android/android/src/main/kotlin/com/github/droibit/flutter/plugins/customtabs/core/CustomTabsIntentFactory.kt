@@ -42,11 +42,14 @@ class CustomTabsIntentFactory @VisibleForTesting internal constructor(
         val builder = CustomTabsIntent.Builder(session)
 
         options.colorSchemes?.let { applyColorSchemes(builder, it) }
-        options.closeButton?.let { applyCloseButton(context, builder, it) }
         options.urlBarHidingEnabled?.let { builder.setUrlBarHidingEnabled(it) }
         options.shareState?.let { builder.setShareState(it) }
         options.showTitle?.let { builder.setShowTitle(it) }
         options.instantAppsEnabled?.let { builder.setInstantAppsEnabled(it) }
+        options.bookmarksButtonEnabled?.let { builder.setBookmarksButtonEnabled(it) }
+        options.downloadButtonEnabled?.let { builder.setDownloadButtonEnabled(it) }
+        options.shareIdentityEnabled?.let { builder.setShareIdentityEnabled(it) }
+        options.closeButton?.let { applyCloseButton(context, builder, it) }
         options.animations?.let { applyAnimations(context, builder, it) }
         options.partial?.let { applyPartialCustomTabsConfiguration(context, builder, it) }
 

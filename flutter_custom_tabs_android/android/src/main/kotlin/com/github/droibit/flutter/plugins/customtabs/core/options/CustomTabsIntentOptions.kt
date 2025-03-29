@@ -8,6 +8,9 @@ class CustomTabsIntentOptions private constructor(
     @ShareState val shareState: Int?,
     val showTitle: Boolean?,
     val instantAppsEnabled: Boolean?,
+    val bookmarksButtonEnabled: Boolean?,
+    val downloadButtonEnabled: Boolean?,
+    val shareIdentityEnabled: Boolean?,
     val closeButton: CustomTabsCloseButton?,
     val animations: CustomTabsAnimations?,
     val browser: BrowserConfiguration?,
@@ -19,6 +22,9 @@ class CustomTabsIntentOptions private constructor(
         private var shareState: Int? = null
         private var showTitle: Boolean? = null
         private var instantAppsEnabled: Boolean? = null
+        private var bookmarksButtonEnabled: Boolean? = null
+        private var downloadButtonEnabled: Boolean? = null
+        private var shareIdentityEnabled: Boolean? = null
         private var closeButton: CustomTabsCloseButton? = null
         private var animations: CustomTabsAnimations? = null
         private var browser: BrowserConfiguration? = null
@@ -40,6 +46,9 @@ class CustomTabsIntentOptions private constructor(
             shareState = options[KEY_SHARE_STATE] as Int?
             showTitle = options[KEY_SHOW_TITLE] as Boolean?
             instantAppsEnabled = options[KEY_INSTANT_APPS_ENABLED] as Boolean?
+            bookmarksButtonEnabled = options[KEY_BOOKMARKS_BUTTON_ENABLED] as Boolean?
+            downloadButtonEnabled = options[KEY_DOWNLOAD_BUTTON_ENABLED] as Boolean?
+            shareIdentityEnabled = options[KEY_SHARE_IDENTITY_ENABLED] as Boolean?
             closeButton = CustomTabsCloseButton.Builder()
                 .setOptions((options[KEY_CLOSE_BUTTON] as Map<String, Any?>?))
                 .build()
@@ -80,6 +89,21 @@ class CustomTabsIntentOptions private constructor(
             return this
         }
 
+        fun setBookmarksButtonEnabled(bookmarksButtonEnabled: Boolean?): Builder {
+            this.bookmarksButtonEnabled = bookmarksButtonEnabled
+            return this
+        }
+
+        fun setDownloadButtonEnabled(downloadButtonEnabled: Boolean?): Builder {
+            this.downloadButtonEnabled = downloadButtonEnabled
+            return this
+        }
+
+        fun setShareIdentityEnabled(shareIdentityEnabled: Boolean?): Builder {
+            this.shareIdentityEnabled = shareIdentityEnabled
+            return this
+        }
+
         fun setCloseButton(closeButton: CustomTabsCloseButton?): Builder {
             this.closeButton = closeButton
             return this
@@ -101,15 +125,18 @@ class CustomTabsIntentOptions private constructor(
         }
 
         fun build() = CustomTabsIntentOptions(
-            colorSchemes,
-            urlBarHidingEnabled,
-            shareState,
-            showTitle,
-            instantAppsEnabled,
-            closeButton,
-            animations,
-            browser,
-            partial
+            colorSchemes = colorSchemes,
+            urlBarHidingEnabled = urlBarHidingEnabled,
+            shareState = shareState,
+            showTitle = showTitle,
+            instantAppsEnabled = instantAppsEnabled,
+            bookmarksButtonEnabled = bookmarksButtonEnabled,
+            downloadButtonEnabled = downloadButtonEnabled,
+            shareIdentityEnabled = shareIdentityEnabled,
+            closeButton = closeButton,
+            animations = animations,
+            browser = browser,
+            partial = partial,
         )
 
         private companion object {
@@ -118,6 +145,9 @@ class CustomTabsIntentOptions private constructor(
             private const val KEY_SHARE_STATE = "shareState"
             private const val KEY_SHOW_TITLE = "showTitle"
             private const val KEY_INSTANT_APPS_ENABLED = "instantAppsEnabled"
+            private const val KEY_BOOKMARKS_BUTTON_ENABLED = "bookmarksButtonEnabled"
+            private const val KEY_DOWNLOAD_BUTTON_ENABLED = "downloadButtonEnabled"
+            private const val KEY_SHARE_IDENTITY_ENABLED = "shareIdentityEnabled"
             private const val KEY_CLOSE_BUTTON = "closeButton"
             private const val KEY_ANIMATIONS = "animations"
             private const val KEY_BROWSER = "browser"

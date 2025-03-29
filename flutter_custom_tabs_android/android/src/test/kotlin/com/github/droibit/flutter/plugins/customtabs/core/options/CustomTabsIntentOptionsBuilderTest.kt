@@ -15,6 +15,9 @@ class CustomTabsIntentOptionsBuilderTest {
             "shareState" to CustomTabsIntent.SHARE_STATE_ON,
             "showTitle" to true,
             "instantAppsEnabled" to false,
+            "bookmarksButtonEnabled" to true,
+            "downloadButtonEnabled" to false,
+            "shareIdentityEnabled" to true,
             "closeButton" to mapOf(
                 "icon" to "ic_arrow_back"
             ),
@@ -40,6 +43,9 @@ class CustomTabsIntentOptionsBuilderTest {
         assertThat(intentOptions.shareState).isEqualTo(CustomTabsIntent.SHARE_STATE_ON)
         assertThat(intentOptions.showTitle).isTrue()
         assertThat(intentOptions.instantAppsEnabled).isFalse()
+        assertThat(intentOptions.bookmarksButtonEnabled).isTrue()
+        assertThat(intentOptions.downloadButtonEnabled).isFalse()
+        assertThat(intentOptions.shareIdentityEnabled).isTrue()
         assertThat(intentOptions.closeButton?.icon).isEqualTo("ic_arrow_back")
         assertThat(intentOptions.animations?.startEnter).isEqualTo("enter_anim")
         assertThat(intentOptions.animations?.startExit).isEqualTo("exit_anim")

@@ -122,6 +122,12 @@ class _MyAppState extends State<MyApp> {
                     _launchUrlWithSession(context, widget.customTabsSession),
                 child: const Text('Show flutter.dev with session'),
               ),
+              if (Platform.isAndroid)
+                FilledButton(
+                  onPressed: () => _launchUrlWithAppSpecificHistoryOnAndroid(),
+                  child: const Text(
+                      'Show flutter.dev (with app-specific history)'),
+                ),
             ],
           ),
         ),
@@ -370,4 +376,15 @@ Future<void> _launchUrlWithSession(
   } catch (e) {
     debugPrint(e.toString());
   }
+}
+
+Future<void> _launchUrlWithAppSpecificHistoryOnAndroid() async {
+  await launchUrl(
+    Uri.parse('https://flutter.dev'),
+    customTabsOptions: const CustomTabsOptions(
+      urlBarHidingEnabled: true,
+      showTitle: true,
+      shareIdentityEnabled: true,
+    ),
+  );
 }

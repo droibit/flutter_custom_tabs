@@ -12,6 +12,8 @@ import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_HEIGHT_FIXED
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_CLOSE_BUTTON_ICON
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_CLOSE_BUTTON_POSITION
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_DISABLE_BOOKMARKS_BUTTON
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_DISABLE_DOWNLOAD_BUTTON
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ENABLE_INSTANT_APPS
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ENABLE_URLBAR_HIDING
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX
@@ -82,17 +84,21 @@ class CustomTabsIntentFactoryTest {
         val expShareState = SHARE_STATE_OFF
         val expShowTitle = true
         val expInstantAppsEnabled = false
+        val expBookmarksButtonEnabled = true
+        val expDownloadButtonEnabled = false
         val expCloseButton = mockk<CustomTabsCloseButton>()
         val expAnimations = mockk<CustomTabsAnimations>()
         val expPartial = mockk<PartialCustomTabsConfiguration>()
         val expBrowser = mockk<BrowserConfiguration>(relaxed = true)
         val options = CustomTabsIntentOptions.Builder()
             .setColorSchemes(expColorSchemes)
-            .setCloseButton(expCloseButton)
             .setUrlBarHidingEnabled(expUrlBarHidingEnabled)
             .setShareState(expShareState)
             .setShowTitle(expShowTitle)
             .setInstantAppsEnabled(expInstantAppsEnabled)
+            .setBookmarksButtonEnabled(expBookmarksButtonEnabled)
+            .setDownloadButtonEnabled(expDownloadButtonEnabled)
+            .setCloseButton(expCloseButton)
             .setAnimations(expAnimations)
             .setPartial(expPartial)
             .setBrowser(expBrowser)
@@ -114,14 +120,18 @@ class CustomTabsIntentFactoryTest {
 
         assertThat(colorSchemesSlot.captured).isSameInstanceAs(expColorSchemes)
 
-        val closeButtonSlot = slot<CustomTabsCloseButton>()
-        verify { factory.applyCloseButton(any(), any(), capture(closeButtonSlot)) }
-        assertThat(closeButtonSlot.captured).isSameInstanceAs(expCloseButton)
-
         extras.bool(EXTRA_ENABLE_URLBAR_HIDING).isEqualTo(expUrlBarHidingEnabled)
         extras.integer(EXTRA_SHARE_STATE).isEqualTo(expShareState)
         extras.integer(EXTRA_TITLE_VISIBILITY_STATE).isEqualTo(SHOW_PAGE_TITLE)
         extras.bool(EXTRA_ENABLE_INSTANT_APPS).isEqualTo(expInstantAppsEnabled)
+        extras.bool(EXTRA_DISABLE_BOOKMARKS_BUTTON).isEqualTo(!expBookmarksButtonEnabled)
+        extras.bool(EXTRA_DISABLE_DOWNLOAD_BUTTON).isEqualTo(!expDownloadButtonEnabled)
+        
+        // Cannot verify `shareIdentityEnabled` as it cannot be retrieved from `Intent#extras` using a key.
+
+        val closeButtonSlot = slot<CustomTabsCloseButton>()
+        verify { factory.applyCloseButton(any(), any(), capture(closeButtonSlot)) }
+        assertThat(closeButtonSlot.captured).isSameInstanceAs(expCloseButton)
 
         val animationsSlot = slot<CustomTabsAnimations>()
         verify { factory.applyAnimations(any(), any(), capture(animationsSlot)) }

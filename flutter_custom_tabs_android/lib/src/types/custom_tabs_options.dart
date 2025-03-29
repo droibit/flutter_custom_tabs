@@ -26,6 +26,9 @@ class CustomTabsOptions implements PlatformOptions {
     this.shareState,
     this.showTitle,
     this.instantAppsEnabled,
+    this.downloadButtonEnabled,
+    this.bookmarksButtonEnabled,
+    this.shareIdentityEnabled,
     this.closeButton,
     this.animations,
     this.browser,
@@ -38,12 +41,16 @@ class CustomTabsOptions implements PlatformOptions {
     CustomTabsColorSchemes? colorSchemes,
     CustomTabsShareState? shareState,
     bool? showTitle,
+    bool? downloadButtonEnabled,
+    bool? bookmarksButtonEnabled,
     CustomTabsCloseButton? closeButton,
     CustomTabsBrowserConfiguration? browser,
   }) : this(
           colorSchemes: colorSchemes,
           shareState: shareState,
           showTitle: showTitle,
+          downloadButtonEnabled: downloadButtonEnabled,
+          bookmarksButtonEnabled: bookmarksButtonEnabled,
           closeButton: closeButton,
           browser: browser,
           partial: configuration,
@@ -72,8 +79,30 @@ class CustomTabsOptions implements PlatformOptions {
   /// A Boolean value that determines whether to show the page title in the toolbar of the Custom Tab.
   final bool? showTitle;
 
-  /// A Boolean value that indicates whether to enable [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) for this Custom Tab.
+  /// A Boolean value that determines whether to enable [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) for this Custom Tab.
   final bool? instantAppsEnabled;
+
+  /// A Boolean value that determines whether to show the bookmarks button in the overflow menu. The button is enabled by default.
+  final bool? bookmarksButtonEnabled;
+
+  /// A Boolean value that determines whether to show the download button in the overflow menu. The button is enabled by default.
+  final bool? downloadButtonEnabled;
+
+  /// A Boolean value that enables App-specific history for Custom Tabs.
+  ///
+  /// When enabled, links opened from your app will be grouped together in Chrome's history
+  /// along with your app's name, making it easier for users to:
+  /// - Find pages they previously visited through your app
+  /// - Resume their browsing session specific to your app
+  /// - Distinguish between browsing activities across different apps
+  ///
+  /// This feature is available on Android 14 and above.
+  ///
+  /// Enabling this option shares your app's package name with Chrome but has no impact
+  /// on cookies or sign-in state.
+  ///
+  /// See: [App-specific history](https://developer.chrome.com/docs/android/custom-tabs/guide-app-specific-history)
+  final bool? shareIdentityEnabled;
 
   /// The close button configuration.
   final CustomTabsCloseButton? closeButton;
