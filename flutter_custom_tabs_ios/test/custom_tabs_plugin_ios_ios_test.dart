@@ -121,7 +121,7 @@ void main() {
   });
 }
 
-class _MockCustomTabsApi implements CustomTabsApi {
+class _MockCustomTabsApi extends CustomTabsApi {
   String? url;
   bool? prefersDeepLink;
   PlatformOptions? options;

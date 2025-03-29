@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
-  kotlinOut: 'android/src/main/java/com/github/droibit/flutter/plugins/customtabs/Messages.kt',
+  kotlinOut: 'android/src/main/kotlin/com/github/droibit/flutter/plugins/customtabs/Messages.kt',
   kotlinOptions: KotlinOptions(
     package: 'com.github.droibit.flutter.plugins.customtabs',
   ),
