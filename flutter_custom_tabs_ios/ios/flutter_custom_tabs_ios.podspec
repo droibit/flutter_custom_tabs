@@ -16,7 +16,7 @@ iOS platform implementation of flutter_custom_tabs.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '11.0'
+  s.platform = :ios, '12.0'
   s.swift_version = '5.0'
   s.resource_bundles = {'flutter_custom_tabs_ios_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
   # Flutter.framework does not contain a i386 slice.
