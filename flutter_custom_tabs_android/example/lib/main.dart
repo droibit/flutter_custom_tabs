@@ -112,6 +112,10 @@ class _MyAppState extends State<MyApp> {
                 ),
                 child: const Text('Show dart.dev with session'),
               ),
+              FilledButton.tonal(
+                onPressed: () => _launchUrlWithButtonOptions(),
+                child: const Text('Show flutter.dev (no bookmark/download)'),
+              ),
             ],
           ),
         ),
@@ -258,6 +262,22 @@ Future<void> _launchUrlWithSession(
         urlBarHidingEnabled: true,
         showTitle: true,
         browser: CustomTabsBrowserConfiguration.session(session),
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _launchUrlWithButtonOptions() async {
+  try {
+    await CustomTabsPlatform.instance.launch(
+      'https://flutter.dev',
+      customTabsOptions: const CustomTabsOptions(
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        downloadButtonEnabled: false,
+        bookmarksButtonEnabled: false,
       ),
     );
   } catch (e) {

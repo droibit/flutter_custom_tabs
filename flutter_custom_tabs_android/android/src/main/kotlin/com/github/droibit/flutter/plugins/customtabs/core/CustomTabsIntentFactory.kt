@@ -47,6 +47,8 @@ class CustomTabsIntentFactory @VisibleForTesting internal constructor(
         options.shareState?.let { builder.setShareState(it) }
         options.showTitle?.let { builder.setShowTitle(it) }
         options.instantAppsEnabled?.let { builder.setInstantAppsEnabled(it) }
+        options.bookmarksButtonEnabled?.let { builder.setBookmarksButtonEnabled(it) }
+        options.downloadButtonEnabled?.let { builder.setDownloadButtonEnabled(it) }
         options.animations?.let { applyAnimations(context, builder, it) }
         options.partial?.let { applyPartialCustomTabsConfiguration(context, builder, it) }
 

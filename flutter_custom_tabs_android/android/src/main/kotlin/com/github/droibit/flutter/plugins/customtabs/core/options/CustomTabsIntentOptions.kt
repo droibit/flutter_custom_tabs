@@ -8,6 +8,8 @@ class CustomTabsIntentOptions private constructor(
     @ShareState val shareState: Int?,
     val showTitle: Boolean?,
     val instantAppsEnabled: Boolean?,
+    val bookmarksButtonEnabled: Boolean?,
+    val downloadButtonEnabled: Boolean?,
     val closeButton: CustomTabsCloseButton?,
     val animations: CustomTabsAnimations?,
     val browser: BrowserConfiguration?,
@@ -19,6 +21,8 @@ class CustomTabsIntentOptions private constructor(
         private var shareState: Int? = null
         private var showTitle: Boolean? = null
         private var instantAppsEnabled: Boolean? = null
+        private var bookmarksButtonEnabled: Boolean? = null
+        private var downloadButtonEnabled: Boolean? = null
         private var closeButton: CustomTabsCloseButton? = null
         private var animations: CustomTabsAnimations? = null
         private var browser: BrowserConfiguration? = null
@@ -40,6 +44,8 @@ class CustomTabsIntentOptions private constructor(
             shareState = options[KEY_SHARE_STATE] as Int?
             showTitle = options[KEY_SHOW_TITLE] as Boolean?
             instantAppsEnabled = options[KEY_INSTANT_APPS_ENABLED] as Boolean?
+            bookmarksButtonEnabled = options[KEY_BOOKMARKS_BUTTON_ENABLED] as Boolean?
+            downloadButtonEnabled = options[KEY_DOWNLOAD_BUTTON_ENABLED] as Boolean?
             closeButton = CustomTabsCloseButton.Builder()
                 .setOptions((options[KEY_CLOSE_BUTTON] as Map<String, Any?>?))
                 .build()

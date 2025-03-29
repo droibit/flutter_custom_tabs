@@ -14,6 +14,8 @@ extension CustomTabsOptionsConverter on CustomTabsOptions {
       if (showTitle != null) 'showTitle': showTitle!,
       if (instantAppsEnabled != null) 'instantAppsEnabled': instantAppsEnabled!,
       if (animations != null) 'animations': animations!.toMessage(),
+      if (bookmarksButtonEnabled != null) 'bookmarksButtonEnabled' : bookmarksButtonEnabled!,
+      if (downloadButtonEnabled != null) 'downloadButtonEnabled' : downloadButtonEnabled!,
       if (closeButton != null) 'closeButton': closeButton!.toMessage(),
       if (browser != null) 'browser': browser!.toMessage(),
       if (partial != null) 'partial': partial!.toMessage(),

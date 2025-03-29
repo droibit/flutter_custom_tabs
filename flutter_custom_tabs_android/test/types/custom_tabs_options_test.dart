@@ -34,6 +34,8 @@ void main() {
         shareState: CustomTabsShareState.off,
         showTitle: true,
         instantAppsEnabled: false,
+        downloadButtonEnabled: true,
+        bookmarksButtonEnabled: false,
         closeButton: CustomTabsCloseButton(
           icon: "icon",
           position: CustomTabsCloseButtonPosition.end,
@@ -84,6 +86,8 @@ void main() {
         'shareState': 2,
         'showTitle': true,
         'instantAppsEnabled': false,
+        'downloadButtonEnabled': true,
+        'bookmarksButtonEnabled': false,
         'closeButton': {
           'icon': "icon",
           'position': 2,
