@@ -47,7 +47,7 @@ internal class CustomTabsLauncher @VisibleForTesting constructor(
     override fun launch(
         urlString: String,
         prefersDeepLink: Boolean,
-        options: Map<String, Any?>?
+        options: Map<String, Any>?
     ) {
         val activity = this.activity
             ?: throw FlutterError(
@@ -109,7 +109,7 @@ internal class CustomTabsLauncher @VisibleForTesting constructor(
         }
     }
 
-    override fun warmup(options: Map<String, Any?>?): String? {
+    override fun warmup(options: Map<String, Any>?): String? {
         val activity = this.activity ?: return null
 
         val sessionOptions = customTabsSessionManager.createSessionOptions(options)
@@ -124,10 +124,9 @@ internal class CustomTabsLauncher @VisibleForTesting constructor(
         }
     }
 
-    override fun mayLaunch(urls: List<String?>, sessionPackageName: String) {
+    override fun mayLaunch(urls: List<String>, sessionPackageName: String) {
         val controller = customTabsSessionManager.getSessionController(sessionPackageName) ?: return
-        @Suppress("UNCHECKED_CAST")
-        controller.mayLaunchUrls(urls as List<String>)
+        controller.mayLaunchUrls(urls)
     }
 
     override fun invalidate(sessionPackageName: String) {

@@ -34,32 +34,32 @@ class CustomTabsIntentOptions private constructor(
          * @noinspection DataFlowIssue
          */
         @Suppress("UNCHECKED_CAST")
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }
 
             colorSchemes = CustomTabsColorSchemes.Builder()
-                .setOptions((options[KEY_COLOR_SCHEMES] as Map<String, Any?>?))
+                .setOptions((options[KEY_COLOR_SCHEMES] as Map<String, Any>?))
                 .build()
             urlBarHidingEnabled = options[KEY_URL_BAR_HIDING_ENABLED] as Boolean?
-            shareState = options[KEY_SHARE_STATE] as Int?
+            shareState = (options[KEY_SHARE_STATE] as Long?)?.toInt()
             showTitle = options[KEY_SHOW_TITLE] as Boolean?
             instantAppsEnabled = options[KEY_INSTANT_APPS_ENABLED] as Boolean?
             bookmarksButtonEnabled = options[KEY_BOOKMARKS_BUTTON_ENABLED] as Boolean?
             downloadButtonEnabled = options[KEY_DOWNLOAD_BUTTON_ENABLED] as Boolean?
             shareIdentityEnabled = options[KEY_SHARE_IDENTITY_ENABLED] as Boolean?
             closeButton = CustomTabsCloseButton.Builder()
-                .setOptions((options[KEY_CLOSE_BUTTON] as Map<String, Any?>?))
+                .setOptions((options[KEY_CLOSE_BUTTON] as Map<String, Any>?))
                 .build()
             animations = CustomTabsAnimations.Builder()
-                .setOptions(options[KEY_ANIMATIONS] as Map<String, Any?>?)
+                .setOptions(options[KEY_ANIMATIONS] as Map<String, Any>?)
                 .build()
             browser = BrowserConfiguration.Builder()
-                .setOptions(options[KEY_BROWSER] as Map<String, Any?>?)
+                .setOptions(options[KEY_BROWSER] as Map<String, Any>?)
                 .build()
             partial = PartialCustomTabsConfiguration.Builder()
-                .setOptions(options[KEY_PARTIAL] as Map<String, Any?>?)
+                .setOptions(options[KEY_PARTIAL] as Map<String, Any>?)
                 .build()
             return this
         }

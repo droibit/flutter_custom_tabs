@@ -10,12 +10,12 @@ class CustomTabsCloseButton(
         private var icon: String? = null
         private var position: Int? = null
 
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }
             icon = options[KEY_ICON] as String?
-            position = options[KEY_POSITION] as Int?
+            position = (options[KEY_POSITION] as Long?)?.toInt()
             return this
         }
 

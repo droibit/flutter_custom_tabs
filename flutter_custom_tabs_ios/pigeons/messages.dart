@@ -18,7 +18,7 @@ abstract class CustomTabsApi {
   void closeAllIfPossible();
 
   @SwiftFunction('mayLaunchURLs(_:)')
-  String? mayLaunch(List<String?> urlStrings);
+  String? mayLaunch(List<String> urlStrings);
 
   @SwiftFunction('invalidateSession(_:)')
   void invalidate(String sessionId);
@@ -54,7 +54,7 @@ class UISheetPresentationControllerConfiguration {
     this.preferredCornerRadius,
   });
 
-  final List<String?> detents;
+  final List<String> detents;
   final String? largestUndimmedDetentIdentifier;
   final bool? prefersScrollingExpandsWhenScrolledToEdge;
   final bool? prefersGrabberVisible;

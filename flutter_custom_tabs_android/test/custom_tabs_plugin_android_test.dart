@@ -230,8 +230,8 @@ class _MockCustomTabsApi extends CustomTabsApi {
   @override
   Future<void> launch(
     String url, {
-    required bool prefersDeepLink,
-    Map<String?, Object?>? options,
+    bool? prefersDeepLink,
+    Map<String, Object>? options,
   }) async {
     expect(url, this.url);
     expect(prefersDeepLink, this.prefersDeepLink);

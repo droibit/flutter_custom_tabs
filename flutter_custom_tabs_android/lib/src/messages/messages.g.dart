@@ -50,7 +50,7 @@ class CustomTabsApi {
 
   final String pigeonVar_messageChannelSuffix;
 
-  Future<void> launch(String urlString, {required bool prefersDeepLink, Map<String, Object?>? options, }) async {
+  Future<void> launch(String urlString, {required bool prefersDeepLink, Map<String, Object>? options, }) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.launch$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
@@ -94,7 +94,7 @@ class CustomTabsApi {
     }
   }
 
-  Future<String?> warmup(Map<String, Object?>? options) async {
+  Future<String?> warmup(Map<String, Object>? options) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.warmup$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
@@ -116,7 +116,7 @@ class CustomTabsApi {
     }
   }
 
-  Future<void> mayLaunch(List<String?> urls, String sessionPackageName) async {
+  Future<void> mayLaunch(List<String> urls, String sessionPackageName) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_android.CustomTabsApi.mayLaunch$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,

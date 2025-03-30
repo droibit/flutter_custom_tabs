@@ -9,7 +9,7 @@ class CustomTabsCloseButtonBuilderTest {
     fun setOptions_withAllOptions() {
         val options = mapOf(
             "icon" to "ic_arrow_back",
-            "position" to CustomTabsIntent.CLOSE_BUTTON_POSITION_START
+            "position" to CustomTabsIntent.CLOSE_BUTTON_POSITION_START.toLong(),
         )
 
         val closeButton = CustomTabsCloseButton.Builder()

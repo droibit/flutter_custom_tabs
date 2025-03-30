@@ -23,7 +23,7 @@ class CustomTabsIntentFactory @VisibleForTesting internal constructor(
 ) {
     constructor() : this(ResourceFactory())
 
-    fun createIntentOptions(options: Map<String, Any?>?): CustomTabsIntentOptions? {
+    fun createIntentOptions(options: Map<String, Any>?): CustomTabsIntentOptions? {
         if (options == null) {
             return null
         }

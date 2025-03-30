@@ -13,14 +13,15 @@ class PartialCustomTabsConfiguration(
         private var activityHeightResizeBehavior: Int? = null
         private var cornerRadius: Int? = null
 
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }
 
             initialHeight = options[KEY_INITIAL_HEIGHT] as Double?
-            activityHeightResizeBehavior = options[KEY_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR] as Int?
-            cornerRadius = options[KEY_CORNER_RADIUS] as Int?
+            activityHeightResizeBehavior =
+                (options[KEY_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR] as Long?)?.toInt()
+            cornerRadius = (options[KEY_CORNER_RADIUS] as Long?)?.toInt()
             return this
         }
 

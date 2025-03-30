@@ -11,7 +11,7 @@ class CustomTabsSessionManager @VisibleForTesting internal constructor(
 ) : CustomTabsSessionProvider {
     constructor() : this(mutableMapOf())
 
-    fun createSessionOptions(options: Map<String, Any?>?): CustomTabsSessionOptions {
+    fun createSessionOptions(options: Map<String, Any>?): CustomTabsSessionOptions {
         return CustomTabsSessionOptions.Builder()
             .setOptions(options)
             .build()

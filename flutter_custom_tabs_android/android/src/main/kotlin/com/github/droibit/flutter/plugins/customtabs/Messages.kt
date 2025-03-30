@@ -56,10 +56,10 @@ private open class MessagesPigeonCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface CustomTabsApi {
-  fun launch(urlString: String, prefersDeepLink: Boolean, options: Map<String, Any?>?)
+  fun launch(urlString: String, prefersDeepLink: Boolean, options: Map<String, Any>?)
   fun closeAllIfPossible()
-  fun warmup(options: Map<String, Any?>?): String?
-  fun mayLaunch(urls: List<String?>, sessionPackageName: String)
+  fun warmup(options: Map<String, Any>?): String?
+  fun mayLaunch(urls: List<String>, sessionPackageName: String)
   fun invalidate(sessionPackageName: String)
 
   companion object {
@@ -78,7 +78,7 @@ interface CustomTabsApi {
             val args = message as List<Any?>
             val urlStringArg = args[0] as String
             val prefersDeepLinkArg = args[1] as Boolean
-            val optionsArg = args[2] as Map<String, Any?>?
+            val optionsArg = args[2] as Map<String, Any>?
             val wrapped: List<Any?> = try {
               api.launch(urlStringArg, prefersDeepLinkArg, optionsArg)
               listOf(null)
@@ -112,7 +112,7 @@ interface CustomTabsApi {
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val optionsArg = args[0] as Map<String, Any?>?
+            val optionsArg = args[0] as Map<String, Any>?
             val wrapped: List<Any?> = try {
               listOf(api.warmup(optionsArg))
             } catch (exception: Throwable) {
@@ -129,7 +129,7 @@ interface CustomTabsApi {
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val urlsArg = args[0] as List<String?>
+            val urlsArg = args[0] as List<String>
             val sessionPackageNameArg = args[1] as String
             val wrapped: List<Any?> = try {
               api.mayLaunch(urlsArg, sessionPackageNameArg)
