@@ -43,7 +43,7 @@ class CustomTabsIntentOptions private constructor(
                 .setOptions((options[KEY_COLOR_SCHEMES] as Map<String, Any>?))
                 .build()
             urlBarHidingEnabled = options[KEY_URL_BAR_HIDING_ENABLED] as Boolean?
-            shareState = options[KEY_SHARE_STATE] as Int?
+            shareState = (options[KEY_SHARE_STATE] as Long?)?.toInt()
             showTitle = options[KEY_SHOW_TITLE] as Boolean?
             instantAppsEnabled = options[KEY_INSTANT_APPS_ENABLED] as Boolean?
             bookmarksButtonEnabled = options[KEY_BOOKMARKS_BUTTON_ENABLED] as Boolean?

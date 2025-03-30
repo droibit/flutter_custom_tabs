@@ -21,7 +21,7 @@ class CustomTabsColorSchemes(
             if (options == null) {
                 return this
             }
-            colorScheme = options[KEY_COLOR_SCHEME] as Int?
+            colorScheme = (options[KEY_COLOR_SCHEME] as Long?)?.toInt()
             lightParams = buildColorSchemeParams(options[KEY_LIGHT_PARAMS] as Map<String, Any>?)
             darkParams = buildColorSchemeParams(options[KEY_DARK_PARAMS] as Map<String, Any>?)
             defaultParams = buildColorSchemeParams(options[KEY_DEFAULT_PARAMS] as Map<String, Any>?)

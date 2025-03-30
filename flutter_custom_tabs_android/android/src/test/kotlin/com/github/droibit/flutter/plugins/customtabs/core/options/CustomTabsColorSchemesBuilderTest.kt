@@ -15,21 +15,21 @@ class CustomTabsColorSchemesBuilderTest {
     @Test
     fun setOptions_withAllOptions() {
         val options = mapOf(
-            "colorScheme" to CustomTabsIntent.COLOR_SCHEME_DARK,
+            "colorScheme" to CustomTabsIntent.COLOR_SCHEME_DARK.toLong(),
             "lightParams" to mapOf(
                 "toolbarColor" to "#FFFFFF",
                 "navigationBarColor" to "#AAAAAA",
-                "navigationBarDividerColor" to "#BBBBBB"
+                "navigationBarDividerColor" to "#BBBBBB",
             ),
             "darkParams" to mapOf(
                 "toolbarColor" to "#000000",
                 "navigationBarColor" to "#333333",
-                "navigationBarDividerColor" to "#444444"
+                "navigationBarDividerColor" to "#444444",
             ),
             "defaultParams" to mapOf(
                 "toolbarColor" to "#CCCCCC",
                 "navigationBarColor" to "#DDDDDD",
-                "navigationBarDividerColor" to "#EEEEEE"
+                "navigationBarDividerColor" to "#EEEEEE",
             )
         )
 
@@ -61,9 +61,9 @@ class CustomTabsColorSchemesBuilderTest {
     @Test
     fun setOptions_withPartialOptions() {
         val options = mapOf(
-            "colorScheme" to CustomTabsIntent.COLOR_SCHEME_LIGHT,
+            "colorScheme" to CustomTabsIntent.COLOR_SCHEME_LIGHT.toLong(),
             "darkParams" to mapOf(
-                "toolbarColor" to "#000000"
+                "toolbarColor" to "#000000",
             )
         )
 
@@ -81,13 +81,13 @@ class CustomTabsColorSchemesBuilderTest {
     fun setOptions_withPartialColorSchemeParams() {
         val options = mapOf(
             "lightParams" to mapOf(
-                "toolbarColor" to "#FFFFFF"
+                "toolbarColor" to "#FFFFFF",
             ),
             "darkParams" to mapOf(
-                "navigationBarColor" to "#333333"
+                "navigationBarColor" to "#333333",
             ),
             "defaultParams" to mapOf(
-                "navigationBarDividerColor" to "#EEEEEE"
+                "navigationBarDividerColor" to "#EEEEEE",
             )
         )
 

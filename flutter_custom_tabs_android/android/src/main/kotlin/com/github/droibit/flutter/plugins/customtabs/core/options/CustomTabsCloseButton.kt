@@ -15,7 +15,7 @@ class CustomTabsCloseButton(
                 return this
             }
             icon = options[KEY_ICON] as String?
-            position = options[KEY_POSITION] as Int?
+            position = (options[KEY_POSITION] as Long?)?.toInt()
             return this
         }
 

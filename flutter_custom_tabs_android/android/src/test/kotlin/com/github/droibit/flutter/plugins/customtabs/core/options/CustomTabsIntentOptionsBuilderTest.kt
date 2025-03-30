@@ -9,27 +9,27 @@ class CustomTabsIntentOptionsBuilderTest {
     fun setOptions_withAllOptions() {
         val options = mapOf(
             "colorSchemes" to mapOf(
-                "colorScheme" to CustomTabsIntent.COLOR_SCHEME_DARK
+                "colorScheme" to CustomTabsIntent.COLOR_SCHEME_DARK.toLong(),
             ),
             "urlBarHidingEnabled" to true,
-            "shareState" to CustomTabsIntent.SHARE_STATE_ON,
+            "shareState" to CustomTabsIntent.SHARE_STATE_ON.toLong(),
             "showTitle" to true,
             "instantAppsEnabled" to false,
             "bookmarksButtonEnabled" to true,
             "downloadButtonEnabled" to false,
             "shareIdentityEnabled" to true,
             "closeButton" to mapOf(
-                "icon" to "ic_arrow_back"
+                "icon" to "ic_arrow_back",
             ),
             "animations" to mapOf(
                 "startEnter" to "enter_anim",
-                "startExit" to "exit_anim"
+                "startExit" to "exit_anim",
             ),
             "browser" to mapOf(
-                "prefersDefaultBrowser" to true
+                "prefersDefaultBrowser" to true,
             ),
             "partial" to mapOf(
-                "initialHeight" to 0.7
+                "initialHeight" to 0.7,
             )
         )
 

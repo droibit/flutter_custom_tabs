@@ -1,6 +1,9 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_HEIGHT_ADJUSTABLE
+import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_HEIGHT_DEFAULT
+import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_HEIGHT_FIXED
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -9,8 +12,8 @@ class PartialCustomTabsConfigurationBuilderTest {
     fun setOptions_withAllOptions() {
         val options = mapOf(
             "initialHeight" to 0.8,
-            "activityHeightResizeBehavior" to CustomTabsIntent.ACTIVITY_HEIGHT_FIXED,
-            "cornerRadius" to 8
+            "activityHeightResizeBehavior" to ACTIVITY_HEIGHT_FIXED.toLong(),
+            "cornerRadius" to 8.toLong(),
         )
 
         val config = PartialCustomTabsConfiguration.Builder()
@@ -18,7 +21,7 @@ class PartialCustomTabsConfigurationBuilderTest {
             .build()
 
         assertThat(config.initialHeight).isEqualTo(0.8)
-        assertThat(config.activityHeightResizeBehavior).isEqualTo(CustomTabsIntent.ACTIVITY_HEIGHT_FIXED)
+        assertThat(config.activityHeightResizeBehavior).isEqualTo(ACTIVITY_HEIGHT_FIXED)
         assertThat(config.cornerRadius).isEqualTo(8)
     }
 
@@ -26,7 +29,7 @@ class PartialCustomTabsConfigurationBuilderTest {
     fun setOptions_withPartialOptions() {
         val options = mapOf(
             "initialHeight" to 0.5,
-            "cornerRadius" to 16
+            "cornerRadius" to 16.toLong()
         )
 
         val config = PartialCustomTabsConfiguration.Builder()
@@ -85,11 +88,11 @@ class PartialCustomTabsConfigurationBuilderTest {
     @Test
     fun setActivityHeightResizeBehavior_withValidValue() {
         val config = PartialCustomTabsConfiguration.Builder()
-            .setActivityHeightResizeBehavior(CustomTabsIntent.ACTIVITY_HEIGHT_DEFAULT)
+            .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_DEFAULT)
             .build()
 
         assertThat(config.initialHeight).isNull()
-        assertThat(config.activityHeightResizeBehavior).isEqualTo(CustomTabsIntent.ACTIVITY_HEIGHT_DEFAULT)
+        assertThat(config.activityHeightResizeBehavior).isEqualTo(ACTIVITY_HEIGHT_DEFAULT)
         assertThat(config.cornerRadius).isNull()
     }
 
@@ -130,12 +133,12 @@ class PartialCustomTabsConfigurationBuilderTest {
     fun build_withChainedMethods() {
         val config = PartialCustomTabsConfiguration.Builder()
             .setInitialHeight(0.6)
-            .setActivityHeightResizeBehavior(CustomTabsIntent.ACTIVITY_HEIGHT_ADJUSTABLE)
+            .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_ADJUSTABLE)
             .setCornerRadius(12)
             .build()
 
         assertThat(config.initialHeight).isEqualTo(0.6)
-        assertThat(config.activityHeightResizeBehavior).isEqualTo(CustomTabsIntent.ACTIVITY_HEIGHT_ADJUSTABLE)
+        assertThat(config.activityHeightResizeBehavior).isEqualTo(ACTIVITY_HEIGHT_ADJUSTABLE)
         assertThat(config.cornerRadius).isEqualTo(12)
     }
 
@@ -152,19 +155,19 @@ class PartialCustomTabsConfigurationBuilderTest {
     fun setOptions_overridesExistingValues() {
         val config = PartialCustomTabsConfiguration.Builder()
             .setInitialHeight(0.3)
-            .setActivityHeightResizeBehavior(CustomTabsIntent.ACTIVITY_HEIGHT_ADJUSTABLE)
+            .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_ADJUSTABLE)
             .setCornerRadius(4)
             .setOptions(
                 mapOf(
                     "initialHeight" to 0.9,
-                    "activityHeightResizeBehavior" to CustomTabsIntent.ACTIVITY_HEIGHT_FIXED,
-                    "cornerRadius" to 8
+                    "activityHeightResizeBehavior" to ACTIVITY_HEIGHT_FIXED.toLong(),
+                    "cornerRadius" to 8.toLong(),
                 )
             )
             .build()
 
         assertThat(config.initialHeight).isEqualTo(0.9)
-        assertThat(config.activityHeightResizeBehavior).isEqualTo(CustomTabsIntent.ACTIVITY_HEIGHT_FIXED)
+        assertThat(config.activityHeightResizeBehavior).isEqualTo(ACTIVITY_HEIGHT_FIXED)
         assertThat(config.cornerRadius).isEqualTo(8)
     }
 }
