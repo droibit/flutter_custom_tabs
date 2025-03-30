@@ -31,7 +31,7 @@ class CustomTabsSessionOptions @VisibleForTesting internal constructor(
         private var prefersDefaultBrowser: Boolean? = null
         private var fallbackCustomTabs: Set<String>? = null
 
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }

@@ -1,7 +1,8 @@
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
-  kotlinOut: 'android/src/main/kotlin/com/github/droibit/flutter/plugins/customtabs/Messages.kt',
+  kotlinOut:
+      'android/src/main/kotlin/com/github/droibit/flutter/plugins/customtabs/Messages.kt',
   kotlinOptions: KotlinOptions(
     package: 'com.github.droibit.flutter.plugins.customtabs',
   ),
@@ -12,15 +13,14 @@ abstract class CustomTabsApi {
   void launch(
     String urlString, {
     required bool prefersDeepLink,
-    Map<String, Object?>? options,
+    Map<String, Object>? options,
   });
 
   void closeAllIfPossible();
 
-  String? warmup(Map<String, Object?>? options);
+  String? warmup(Map<String, Object>? options);
 
-  void mayLaunch(
-    List<String?> urls, String sessionPackageName);
+  void mayLaunch(List<String> urls, String sessionPackageName);
 
   void invalidate(String sessionPackageName);
 }

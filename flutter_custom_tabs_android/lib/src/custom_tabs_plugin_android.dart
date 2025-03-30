@@ -26,7 +26,7 @@ class CustomTabsPluginAndroid extends CustomTabsPlatform {
     PlatformOptions? customTabsOptions,
     PlatformOptions? safariVCOptions,
   }) {
-    final Map<String, Object?>? message = switch (customTabsOptions) {
+    final Map<String, Object>? message = switch (customTabsOptions) {
       null => null,
       (CustomTabsOptions options) => options.toMessage(),
       _ => {},

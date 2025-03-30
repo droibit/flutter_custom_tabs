@@ -17,7 +17,7 @@ class CustomTabsColorSchemes(
         private var defaultParams: CustomTabColorSchemeParams? = null
 
         @Suppress("UNCHECKED_CAST")
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }

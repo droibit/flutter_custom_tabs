@@ -76,7 +76,7 @@ class UISheetPresentationControllerConfiguration {
     this.preferredCornerRadius,
   });
 
-  List<String?> detents;
+  List<String> detents;
 
   String? largestUndimmedDetentIdentifier;
 
@@ -102,7 +102,7 @@ class UISheetPresentationControllerConfiguration {
   static UISheetPresentationControllerConfiguration decode(Object result) {
     result as List<Object?>;
     return UISheetPresentationControllerConfiguration(
-      detents: (result[0] as List<Object?>?)!.cast<String?>(),
+      detents: (result[0] as List<Object?>?)!.cast<String>(),
       largestUndimmedDetentIdentifier: result[1] as String?,
       prefersScrollingExpandsWhenScrolledToEdge: result[2] as bool?,
       prefersGrabberVisible: result[3] as bool?,
@@ -201,7 +201,7 @@ class CustomTabsApi {
     }
   }
 
-  Future<String?> mayLaunch(List<String?> urlStrings) async {
+  Future<String?> mayLaunch(List<String> urlStrings) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.flutter_custom_tabs_ios.CustomTabsApi.mayLaunch$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,

@@ -13,7 +13,7 @@ class PartialCustomTabsConfiguration(
         private var activityHeightResizeBehavior: Int? = null
         private var cornerRadius: Int? = null
 
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }

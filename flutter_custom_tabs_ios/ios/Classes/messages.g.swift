@@ -110,7 +110,7 @@ struct SFSafariViewControllerOptions {
 
 /// Generated class from Pigeon that represents data sent in messages.
 struct UISheetPresentationControllerConfiguration {
-  var detents: [String?]
+  var detents: [String]
   var largestUndimmedDetentIdentifier: String? = nil
   var prefersScrollingExpandsWhenScrolledToEdge: Bool? = nil
   var prefersGrabberVisible: Bool? = nil
@@ -120,7 +120,7 @@ struct UISheetPresentationControllerConfiguration {
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
   static func fromList(_ pigeonVar_list: [Any?]) -> UISheetPresentationControllerConfiguration? {
-    let detents = pigeonVar_list[0] as! [String?]
+    let detents = pigeonVar_list[0] as! [String]
     let largestUndimmedDetentIdentifier: String? = nilOrValue(pigeonVar_list[1])
     let prefersScrollingExpandsWhenScrolledToEdge: Bool? = nilOrValue(pigeonVar_list[2])
     let prefersGrabberVisible: Bool? = nilOrValue(pigeonVar_list[3])
@@ -194,7 +194,7 @@ class MessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 protocol CustomTabsApi {
   func launchURL(_ urlString: String, prefersDeepLink: Bool, options: SFSafariViewControllerOptions?, completion: @escaping (Result<Void, Error>) -> Void)
   func closeAllIfPossible(completion: @escaping (Result<Void, Error>) -> Void)
-  func mayLaunchURLs(_ urlStrings: [String?]) throws -> String?
+  func mayLaunchURLs(_ urlStrings: [String]) throws -> String?
   func invalidateSession(_ sessionId: String) throws
 }
 
@@ -242,7 +242,7 @@ class CustomTabsApiSetup {
     if let api = api {
       mayLaunchChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let urlStringsArg = args[0] as! [String?]
+        let urlStringsArg = args[0] as! [String]
         do {
           let result = try api.mayLaunchURLs(urlStringsArg)
           reply(wrapResult(result))

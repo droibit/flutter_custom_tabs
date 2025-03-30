@@ -27,7 +27,7 @@ class BrowserConfiguration internal constructor(
          * @noinspection DataFlowIssue
          */
         @Suppress("UNCHECKED_CAST")
-        fun setOptions(options: Map<String, Any?>?): Builder {
+        fun setOptions(options: Map<String, Any>?): Builder {
             if (options == null) {
                 return this
             }

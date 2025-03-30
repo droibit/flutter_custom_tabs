@@ -40,8 +40,8 @@ public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
         }
     }
 
-    func mayLaunchURLs(_ urlStrings: [String?]) throws -> String? {
-        let urls = urlStrings.map { URL(string: $0!)! }
+    func mayLaunchURLs(_ urlStrings: [String]) throws -> String? {
+        let urls = urlStrings.map { URL(string: $0)! }
         guard let sessionId = launcher.prewarmConnections(to: urls) else {
             return nil
         }
