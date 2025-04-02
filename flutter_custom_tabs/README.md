@@ -162,7 +162,7 @@ void _launchUrl(BuildContext context) async {
 | Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided |
 | Prefer the default browser over Chrome | ✅ | - | Not provided |
 | Pass HTTP headers | ✅ | - | Not provided |
-| Show as a bottom sheet | ✅ | ✅ | Not provided |
+| Partial display | ✅ | ✅ <br>(bottom sheet only) | Not provided |
 
 Support status in `flutter_custom_tabs`:
 
@@ -214,20 +214,19 @@ Future<void> _launchInExternalBrowser() async {
 }
 ```
 
-### Show as a bottom sheet
+### Partial display
 
-You can launch a URL in Custom Tabs as a bottom sheet.
+Partial display allows web content to appear in a sheet instead of taking up the full screen. This creates a more integrated experience where users can view and interact with web content while still seeing parts of your app.
 
-Requirements:
-
-- Android: Chrome v107 and above or [other browsers](https://developer.chrome.com/docs/android/custom-tabs/browser-support/#setinitialactivityheightpx)
-- iOS: 15.0+
+- **Android**: Supports bottom sheets (Chrome 107+, portrait mode) and side sheets (Chrome 120+, landscape mode or large screens).
+  - For details on feature compatibility, see [Browser support](https://developer.chrome.com/docs/android/custom-tabs/browser-support).
+- **iOS (15.0+)**: Supports displaying as a bottom sheet with standard system presentation options.
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-Future<void> _launchUrlInBottomSheet(BuildContext context) async {
+Future<void> _launchUrlInSheetView(BuildContext context) async {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);    
   await launchUrl(
@@ -235,6 +234,13 @@ Future<void> _launchUrlInBottomSheet(BuildContext context) async {
     customTabsOptions: CustomTabsOptions.partial(
       configuration: PartialCustomTabsConfiguration(
         initialHeight: mediaQuery.size.height * 0.7,
+        initialWidth: mediaQuery.size.width * 0.4,
+        activitySideSheetMaximizationEnabled: true,
+        activitySideSheetDecorationType:
+            CustomTabsActivitySideSheetDecorationType.shadow,
+        activitySideSheetRoundedCornersPosition:
+            CustomTabsActivitySideSheetRoundedCornersPosition.top,
+        cornerRadius: 16,
       ),
       colorSchemes: CustomTabsColorSchemes.defaults(
         toolbarColor: theme.colorScheme.surface,
