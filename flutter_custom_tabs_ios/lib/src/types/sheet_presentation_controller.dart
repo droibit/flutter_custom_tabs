@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 /// Configuration for presenting [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) as a customizable sheet.
 ///
-/// This class provides control over iOS 15's `UISheetPresentationController`, enabling rich sheet-based 
+/// This class provides control over iOS 15's `UISheetPresentationController`, enabling rich sheet-based
 /// presentations with the following capabilities:
 ///
 /// - **Customizable Height**: Configure the sheet to appear at different heights using [detents]
