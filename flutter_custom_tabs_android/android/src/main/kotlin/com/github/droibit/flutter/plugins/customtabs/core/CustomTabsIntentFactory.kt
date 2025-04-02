@@ -123,7 +123,31 @@ class CustomTabsIntentFactory @VisibleForTesting internal constructor(
                 builder.setInitialActivityHeightPx(initialHeightPx, resizeBehavior)
             }
         }
-        configuration.cornerRadius?.let { builder.setToolbarCornerRadiusDp(it) }
+        configuration.initialWidth?.let { initialWidthDp ->
+            val initialWidthPx = resources.convertToPx(context, initialWidthDp)
+            builder.setInitialActivityWidthPx(initialWidthPx)
+        }
+        configuration.activitySideSheetBreakpoint?.let {
+            builder.setActivitySideSheetBreakpointDp(it.toInt())
+        }
+        configuration.activitySideSheetMaximizationEnabled?.let {
+            builder.setActivitySideSheetMaximizationEnabled(it)
+        }
+        configuration.activitySideSheetPosition?.let {
+            builder.setActivitySideSheetPosition(it)
+        }
+        configuration.activitySideSheetDecorationType?.let {
+            builder.setActivitySideSheetDecorationType(it)
+        }
+        configuration.activitySideSheetRoundedCornersPosition?.let {
+            builder.setActivitySideSheetRoundedCornersPosition(it)
+        }
+        configuration.cornerRadius?.let {
+            builder.setToolbarCornerRadiusDp(it)
+        }
+        configuration.backgroundInteractionEnabled?.let {
+            builder.setBackgroundInteractionEnabled(it)
+        }
     }
 
     @VisibleForTesting

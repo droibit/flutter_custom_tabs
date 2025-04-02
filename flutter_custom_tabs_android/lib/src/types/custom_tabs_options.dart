@@ -36,6 +36,13 @@ class CustomTabsOptions implements PlatformOptions {
   });
 
   /// Creates a [CustomTabsOptions] instance with configuration for Partial Custom Tabs.
+  ///
+  /// When using Partial Custom Tabs, note that navigation bar customization
+  /// (`navigationBarColor` and `navigationBarDividerColor`) will be ignored as
+  /// Partial Custom Tabs inherit the host app's color scheme for navigation elements.
+  ///
+  /// See also:
+  /// - [Partial Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs/)
   const CustomTabsOptions.partial({
     required PartialCustomTabsConfiguration configuration,
     CustomTabsColorSchemes? colorSchemes,

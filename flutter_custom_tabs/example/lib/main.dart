@@ -98,8 +98,8 @@ class _MyAppState extends State<MyApp> {
                 child: const Text('Deep link to platform maps'),
               ),
               FilledButton(
-                onPressed: () => _launchUrlInBottomSheet(context),
-                child: const Text('Show flutter.dev in bottom sheet'),
+                onPressed: () => _launchUrlInSheetView(context),
+                child: const Text('Show flutter.dev in sheet view'),
               ),
               FilledButton(
                 onPressed: () => _launchUrlWithCustomCloseButton(context),
@@ -230,7 +230,7 @@ Future<void> _launchDeepLinkUrl(BuildContext context) async {
   }
 }
 
-Future<void> _launchUrlInBottomSheet(BuildContext context) async {
+Future<void> _launchUrlInSheetView(BuildContext context) async {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);
   try {
@@ -239,6 +239,13 @@ Future<void> _launchUrlInBottomSheet(BuildContext context) async {
       customTabsOptions: CustomTabsOptions.partial(
         configuration: PartialCustomTabsConfiguration(
           initialHeight: mediaQuery.size.height * 0.7,
+          initialWidth: mediaQuery.size.width * 0.4,
+          activitySideSheetMaximizationEnabled: true,
+          activitySideSheetDecorationType:
+              CustomTabsActivitySideSheetDecorationType.divider,
+          activitySideSheetRoundedCornersPosition:
+              CustomTabsActivitySideSheetRoundedCornersPosition.top,
+          cornerRadius: 12,
         ),
         colorSchemes: CustomTabsColorSchemes.defaults(
           colorScheme: theme.brightness.toColorScheme(),
@@ -274,13 +281,15 @@ Future<void> _launchUrlWithCustomCloseButton(BuildContext context) async {
     await launchUrl(
       Uri.parse('https://flutter.dev'),
       customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.defaults(
-            toolbarColor: theme.colorScheme.surface,
-          ),
-          showTitle: true,
-          closeButton: CustomTabsCloseButton(
-            icon: CustomTabsCloseButtonIcons.back,
-          )),
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+        ),
+        showTitle: true,
+        closeButton: CustomTabsCloseButton(
+          icon: CustomTabsCloseButtonIcons.back,
+          position: CustomTabsCloseButtonPosition.start,
+        ),
+      ),
       safariVCOptions: SafariViewControllerOptions(
         preferredBarTintColor: theme.colorScheme.surface,
         preferredControlTintColor: theme.colorScheme.onSurface,

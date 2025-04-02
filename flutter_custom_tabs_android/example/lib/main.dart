@@ -81,8 +81,8 @@ class _MyAppState extends State<MyApp> {
                 child: const Text('Show flutter.dev (prefer default browser)'),
               ),
               FilledButton.tonal(
-                onPressed: () => _launchUrlInBottomSheet(context),
-                child: const Text('Show flutter.dev in bottom sheet'),
+                onPressed: () => _launchUrlInPartialCustomTabs(context),
+                child: const Text('Show flutter.dev (partial Custom Tabs)'),
               ),
               FilledButton.tonal(
                 onPressed: () => _launchDeepLinkUrl(context),
@@ -175,7 +175,7 @@ Future<void> _launchUrlInDefaultBrowser(BuildContext context) async {
   }
 }
 
-Future<void> _launchUrlInBottomSheet(BuildContext context) async {
+Future<void> _launchUrlInPartialCustomTabs(BuildContext context) async {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);
   try {
@@ -184,13 +184,25 @@ Future<void> _launchUrlInBottomSheet(BuildContext context) async {
       customTabsOptions: CustomTabsOptions.partial(
         configuration: PartialCustomTabsConfiguration(
           initialHeight: mediaQuery.size.height * 0.7,
+          initialWidth: mediaQuery.size.width * 0.4,
+          activitySideSheetMaximizationEnabled: true,
+          activitySideSheetPosition: CustomTabsActivitySideSheetPosition.start,
+          activitySideSheetDecorationType:
+              CustomTabsActivitySideSheetDecorationType.shadow,
+          activitySideSheetRoundedCornersPosition:
+              CustomTabsActivitySideSheetRoundedCornersPosition.top,
+          cornerRadius: 16,
+          backgroundInteractionEnabled: false,
         ),
         colorSchemes: CustomTabsColorSchemes.defaults(
           colorScheme: theme.brightness.toColorScheme(),
           toolbarColor: theme.colorScheme.primaryContainer,
         ),
         showTitle: true,
-        closeButton: const CustomTabsCloseButton(icon: "ic_round_close"),
+        closeButton: const CustomTabsCloseButton(
+          icon: "ic_round_close",
+          position: CustomTabsCloseButtonPosition.end,
+        ),
       ),
     );
   } catch (e) {

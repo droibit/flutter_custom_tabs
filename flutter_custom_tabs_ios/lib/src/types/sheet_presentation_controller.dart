@@ -1,11 +1,19 @@
 import 'package:meta/meta.dart';
 
-/// The configuration to show [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) as a page sheet.
+/// Configuration for presenting [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) as a customizable sheet.
 ///
-/// - Availability: **iOS15.0+**
+/// This class provides control over iOS 15's `UISheetPresentationController`, enabling rich sheet-based
+/// presentations with the following capabilities:
 ///
-/// See also:
+/// - **Customizable Height**: Configure the sheet to appear at different heights using [detents]
+///   (medium: approximately half-screen, large: full-screen)
+/// - **Interactive Resizing**: Users can resize the sheet by dragging when multiple detents are specified
+/// - **Visual Indicators**: Control the visibility of the grabber handle with [prefersGrabberVisible]
+/// - **Background Interaction**: Allow interaction with content behind the sheet when using
+///   [largestUndimmedDetentIdentifier]
+/// - **Appearance Control**: Customize corner radius and edge attachment behavior in different orientations
 ///
+/// ### See also
 /// - [UISheetPresentationController](https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller)
 @immutable
 class SheetPresentationControllerConfiguration {
@@ -33,7 +41,7 @@ class SheetPresentationControllerConfiguration {
   /// A Boolean value that determines whether the sheet attaches to the bottom edge of the screen in a compact-height size class.
   final bool? prefersEdgeAttachedInCompactHeight;
 
-  /// The corner radius that the sheet attempts to present with.
+  /// The corner radius in logical pixels that the sheet attempts to present with.
   final double? preferredCornerRadius;
 }
 
