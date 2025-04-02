@@ -94,7 +94,23 @@ extension PartialCustomTabsConfigurationConverter
       'initialHeight': initialHeight,
       if (activityHeightResizeBehavior != null)
         'activityHeightResizeBehavior': activityHeightResizeBehavior!.rawValue,
-      if (cornerRadius != null) 'cornerRadius': min(cornerRadius!, 16)
+      if (initialWidth != null) 'initialWidth': initialWidth!,
+      if (activitySideSheetBreakpoint != null)
+        'activitySideSheetBreakpoint': activitySideSheetBreakpoint!,
+      if (activitySideSheetMaximizationEnabled != null)
+        'activitySideSheetMaximizationEnabled':
+            activitySideSheetMaximizationEnabled!,
+      if (activitySideSheetPosition != null)
+        'activitySideSheetPosition': activitySideSheetPosition!.rawValue,
+      if (activitySideSheetDecorationType != null)
+        'activitySideSheetDecorationType':
+            activitySideSheetDecorationType!.rawValue,
+      if (activitySideSheetRoundedCornersPosition != null)
+        'activitySideSheetRoundedCornersPosition':
+            activitySideSheetRoundedCornersPosition!.rawValue,
+      if (cornerRadius != null) 'cornerRadius': min(cornerRadius!, 16),
+      if (backgroundInteractionEnabled != null)
+        'backgroundInteractionEnabled': backgroundInteractionEnabled!,
     };
   }
 }

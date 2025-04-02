@@ -9,14 +9,24 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_HEIGHT_DEFAULT
 import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_HEIGHT_FIXED
+import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER
+import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_SIDE_SHEET_POSITION_START
+import androidx.browser.customtabs.CustomTabsIntent.ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_SIDE_SHEET_BREAKPOINT_DP
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_SIDE_SHEET_DECORATION_TYPE
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_SIDE_SHEET_ENABLE_MAXIMIZATION
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_SIDE_SHEET_POSITION
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_CLOSE_BUTTON_ICON
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_CLOSE_BUTTON_POSITION
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_DISABLE_BACKGROUND_INTERACTION
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_DISABLE_BOOKMARKS_BUTTON
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_DISABLE_DOWNLOAD_BUTTON
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ENABLE_INSTANT_APPS
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_ENABLE_URLBAR_HIDING
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_HEIGHT_PX
+import androidx.browser.customtabs.CustomTabsIntent.EXTRA_INITIAL_ACTIVITY_WIDTH_PX
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_SHARE_STATE
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_TITLE_VISIBILITY_STATE
 import androidx.browser.customtabs.CustomTabsIntent.EXTRA_TOOLBAR_CORNER_RADIUS_DP
@@ -126,7 +136,7 @@ class CustomTabsIntentFactoryTest {
         extras.bool(EXTRA_ENABLE_INSTANT_APPS).isEqualTo(expInstantAppsEnabled)
         extras.bool(EXTRA_DISABLE_BOOKMARKS_BUTTON).isEqualTo(!expBookmarksButtonEnabled)
         extras.bool(EXTRA_DISABLE_DOWNLOAD_BUTTON).isEqualTo(!expDownloadButtonEnabled)
-        
+
         // Cannot verify `shareIdentityEnabled` as it cannot be retrieved from `Intent#extras` using a key.
 
         val closeButtonSlot = slot<CustomTabsCloseButton>()
@@ -387,24 +397,53 @@ class CustomTabsIntentFactoryTest {
 
     @Test
     fun applyPartialCustomTabsConfiguration_completeOptions() {
+        val expBreakpoint = 300
+        val expSideSheetMaximizationEnabled = true
         val expCornerRadius = 8
         val options = PartialCustomTabsConfiguration.Builder()
-            .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_FIXED)
             .setInitialHeight(100.0)
+            .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_FIXED)
+            .setInitialWidth(200.0)
+            .setActivitySideSheetBreakpoint(expBreakpoint.toDouble())
+            .setActivitySideSheetMaximizationEnabled(expSideSheetMaximizationEnabled)
+            .setActivitySideSheetPosition(ACTIVITY_SIDE_SHEET_POSITION_START)
+            .setActivitySideSheetDecorationType(ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER)
+            .setActivitySideSheetRoundedCornersPosition(
+                ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
+            )
             .setCornerRadius(expCornerRadius)
+            .setBackgroundInteractionEnabled(false)
             .build()
 
         val expInitialActivityHeight = 100
-        every { resources.convertToPx(any(), any()) } returns expInitialActivityHeight
+        every { resources.convertToPx(any(), eq(100.0)) } returns expInitialActivityHeight
+
+        val expInitialActivityWidth = 200
+        every { resources.convertToPx(any(), eq(200.0)) } returns expInitialActivityWidth
 
         val builder = CustomTabsIntent.Builder()
         factory.applyPartialCustomTabsConfiguration(context, builder, options)
 
         val customTabsIntent = builder.build()
         val extras = assertThat(customTabsIntent.intent).extras()
-        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_FIXED)
         extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight)
+        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_FIXED)
+        extras.integer(EXTRA_INITIAL_ACTIVITY_WIDTH_PX).isEqualTo(expInitialActivityWidth)
+        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_BREAKPOINT_DP).isEqualTo(expBreakpoint)
+        extras.bool(EXTRA_ACTIVITY_SIDE_SHEET_ENABLE_MAXIMIZATION).isEqualTo(
+            expSideSheetMaximizationEnabled
+        )
+        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_POSITION).isEqualTo(
+            ACTIVITY_SIDE_SHEET_POSITION_START
+        )
+        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_DECORATION_TYPE).isEqualTo(
+            ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER
+        )
+        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION).isEqualTo(
+            ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
+        )
         extras.integer(EXTRA_TOOLBAR_CORNER_RADIUS_DP).isEqualTo(expCornerRadius)
+        extras.bool(EXTRA_DISABLE_BACKGROUND_INTERACTION).isTrue()
     }
 
     @Test
