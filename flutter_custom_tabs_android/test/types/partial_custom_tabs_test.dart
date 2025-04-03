@@ -4,14 +4,119 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('PartialCustomTabsConfiguration', () {
-    test('toMessage() returns expected message with minimum values', () {
-      const configuration = PartialCustomTabsConfiguration(
-        initialHeight: 200,
+    test('bottomSheet() sets correct properties', () {
+      const initialHeight = 300.0;
+      const cornerRadius = 15;
+      const resizeBehavior = CustomTabsActivityHeightResizeBehavior.adjustable;
+      const backgroundInteraction = true;
+
+      const configuration = PartialCustomTabsConfiguration.bottomSheet(
+        initialHeight: initialHeight,
+        activityHeightResizeBehavior: resizeBehavior,
+        cornerRadius: cornerRadius,
+        backgroundInteractionEnabled: backgroundInteraction,
       );
+
+      expect(configuration.initialHeight, initialHeight);
+      expect(configuration.activityHeightResizeBehavior, resizeBehavior);
+      expect(configuration.cornerRadius, cornerRadius);
+      expect(configuration.backgroundInteractionEnabled, backgroundInteraction);
+      expect(configuration.initialWidth, isNull);
+      expect(configuration.activitySideSheetBreakpoint, isNull);
+      expect(configuration.activitySideSheetMaximizationEnabled, isNull);
+      expect(configuration.activitySideSheetPosition, isNull);
+      expect(configuration.activitySideSheetDecorationType, isNull);
+      expect(configuration.activitySideSheetRoundedCornersPosition, isNull);
+    });
+
+    test('sideSheet() sets correct properties', () {
+      const initialWidth = 500.0;
+      const cornerRadius = 15;
+      const breakpoint = 700.0;
+      const maximizationEnabled = true;
+      const position = CustomTabsActivitySideSheetPosition.start;
+      const decorationType = CustomTabsActivitySideSheetDecorationType.shadow;
+      const cornersPosition =
+          CustomTabsActivitySideSheetRoundedCornersPosition.top;
+      const backgroundInteraction = true;
+
+      const configuration = PartialCustomTabsConfiguration.sideSheet(
+        initialWidth: initialWidth,
+        activitySideSheetBreakpoint: breakpoint,
+        activitySideSheetMaximizationEnabled: maximizationEnabled,
+        activitySideSheetPosition: position,
+        activitySideSheetDecorationType: decorationType,
+        activitySideSheetRoundedCornersPosition: cornersPosition,
+        cornerRadius: cornerRadius,
+        backgroundInteractionEnabled: backgroundInteraction,
+      );
+
+      expect(configuration.initialWidth, initialWidth);
+      expect(configuration.activitySideSheetBreakpoint, breakpoint);
+      expect(
+        configuration.activitySideSheetMaximizationEnabled,
+        maximizationEnabled,
+      );
+      expect(configuration.activitySideSheetPosition, position);
+      expect(configuration.activitySideSheetDecorationType, decorationType);
+      expect(
+        configuration.activitySideSheetRoundedCornersPosition,
+        cornersPosition,
+      );
+      expect(configuration.cornerRadius, cornerRadius);
+      expect(configuration.backgroundInteractionEnabled, backgroundInteraction);
+      expect(configuration.initialHeight, isNull);
+      expect(configuration.activityHeightResizeBehavior, isNull);
+    });
+
+    test('adaptiveSheet() sets correct properties', () {
+      const initialHeight = 300.0;
+      const initialWidth = 500.0;
+      const resizeBehavior = CustomTabsActivityHeightResizeBehavior.adjustable;
+      const cornerRadius = 15;
+      const breakpoint = 700.0;
+      const maximizationEnabled = true;
+      const position = CustomTabsActivitySideSheetPosition.start;
+      const decorationType = CustomTabsActivitySideSheetDecorationType.shadow;
+      const cornersPosition =
+          CustomTabsActivitySideSheetRoundedCornersPosition.top;
+      const backgroundInteraction = true;
+
+      const configuration = PartialCustomTabsConfiguration.adaptiveSheet(
+        initialHeight: initialHeight,
+        initialWidth: initialWidth,
+        activityHeightResizeBehavior: resizeBehavior,
+        activitySideSheetBreakpoint: breakpoint,
+        activitySideSheetMaximizationEnabled: maximizationEnabled,
+        activitySideSheetPosition: position,
+        activitySideSheetDecorationType: decorationType,
+        activitySideSheetRoundedCornersPosition: cornersPosition,
+        cornerRadius: cornerRadius,
+        backgroundInteractionEnabled: backgroundInteraction,
+      );
+
+      expect(configuration.initialHeight, initialHeight);
+      expect(configuration.initialWidth, initialWidth);
+      expect(configuration.activityHeightResizeBehavior, resizeBehavior);
+      expect(configuration.activitySideSheetBreakpoint, breakpoint);
+      expect(
+        configuration.activitySideSheetMaximizationEnabled,
+        maximizationEnabled,
+      );
+      expect(configuration.activitySideSheetPosition, position);
+      expect(configuration.activitySideSheetDecorationType, decorationType);
+      expect(
+        configuration.activitySideSheetRoundedCornersPosition,
+        cornersPosition,
+      );
+      expect(configuration.cornerRadius, cornerRadius);
+      expect(configuration.backgroundInteractionEnabled, backgroundInteraction);
+    });
+
+    test('toMessage() returns expected message with minimum values', () {
+      const configuration = PartialCustomTabsConfiguration();
       final actual = configuration.toMessage();
-      expect(actual, <String, Object>{
-        'initialHeight': configuration.initialHeight,
-      });
+      expect(actual, isEmpty);
     });
 
     test('toMessage() returns a message with complete options', () {
@@ -34,7 +139,7 @@ void main() {
       final actual = configuration.toMessage();
 
       expect(actual, <String, Object>{
-        'initialHeight': configuration.initialHeight,
+        'initialHeight': configuration.initialHeight!,
         'activityHeightResizeBehavior':
             configuration.activityHeightResizeBehavior!.rawValue,
         'cornerRadius': configuration.cornerRadius!,

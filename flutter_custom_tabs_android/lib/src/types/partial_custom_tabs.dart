@@ -14,10 +14,57 @@ import 'package:meta/meta.dart';
 /// - [Partial Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs/)
 @immutable
 class PartialCustomTabsConfiguration {
+  /// Creates a [PartialCustomTabsConfiguration] instance with the specified options.
   const PartialCustomTabsConfiguration({
-    required this.initialHeight,
+    this.initialHeight,
     this.activityHeightResizeBehavior,
     this.initialWidth,
+    this.activitySideSheetBreakpoint,
+    this.activitySideSheetMaximizationEnabled,
+    this.activitySideSheetPosition,
+    this.activitySideSheetDecorationType,
+    this.activitySideSheetRoundedCornersPosition,
+    this.cornerRadius,
+    this.backgroundInteractionEnabled,
+  });
+
+  /// Creates a [PartialCustomTabsConfiguration] instance optimized for bottom sheet display.
+  ///
+  /// This constructor configures options specific to bottom sheet presentation,
+  /// setting all side sheet properties to null.
+  const PartialCustomTabsConfiguration.bottomSheet({
+    required this.initialHeight,
+    this.activityHeightResizeBehavior,
+    this.cornerRadius,
+    this.backgroundInteractionEnabled,
+  })  : initialWidth = null,
+        activitySideSheetBreakpoint = null,
+        activitySideSheetMaximizationEnabled = null,
+        activitySideSheetPosition = null,
+        activitySideSheetDecorationType = null,
+        activitySideSheetRoundedCornersPosition = null;
+
+  /// Creates a [PartialCustomTabsConfiguration] instance optimized for side sheet display.
+  ///
+  /// This constructor configures options specific to side sheet presentation,
+  /// setting all bottom sheet properties to null.
+  const PartialCustomTabsConfiguration.sideSheet({
+    required this.initialWidth,
+    this.activitySideSheetBreakpoint,
+    this.activitySideSheetMaximizationEnabled,
+    this.activitySideSheetPosition,
+    this.activitySideSheetDecorationType,
+    this.activitySideSheetRoundedCornersPosition,
+    this.cornerRadius,
+    this.backgroundInteractionEnabled,
+  })  : initialHeight = null,
+        activityHeightResizeBehavior = null;
+
+  /// Creates a [PartialCustomTabsConfiguration] instance with both bottom and side sheet support.
+  const PartialCustomTabsConfiguration.adaptiveSheet({
+    required this.initialHeight,
+    required this.initialWidth,
+    this.activityHeightResizeBehavior,
     this.activitySideSheetBreakpoint,
     this.activitySideSheetMaximizationEnabled,
     this.activitySideSheetPosition,
@@ -33,7 +80,7 @@ class PartialCustomTabsConfiguration {
   /// not take effect in landscape mode or in multi-window mode.
   ///
   /// *The minimum partial Custom Tab height is 50% of the screen height.
-  final double initialHeight;
+  final double? initialHeight;
 
   /// The Custom Tab Activity's desired resize behavior.
   final CustomTabsActivityHeightResizeBehavior? activityHeightResizeBehavior;
