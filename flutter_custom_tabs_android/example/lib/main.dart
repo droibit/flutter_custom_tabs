@@ -182,7 +182,7 @@ Future<void> _launchUrlInPartialCustomTabs(BuildContext context) async {
     await CustomTabsPlatform.instance.launch(
       'https://flutter.dev',
       customTabsOptions: CustomTabsOptions.partial(
-        configuration: PartialCustomTabsConfiguration(
+        configuration: PartialCustomTabsConfiguration.adaptiveSheet(
           initialHeight: mediaQuery.size.height * 0.7,
           initialWidth: mediaQuery.size.width * 0.4,
           activitySideSheetMaximizationEnabled: true,

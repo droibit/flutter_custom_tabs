@@ -91,7 +91,7 @@ extension PartialCustomTabsConfigurationConverter
     on PartialCustomTabsConfiguration {
   Map<String, Object> toMessage() {
     return {
-      'initialHeight': initialHeight,
+      if (initialHeight != null) 'initialHeight': initialHeight!,
       if (activityHeightResizeBehavior != null)
         'activityHeightResizeBehavior': activityHeightResizeBehavior!.rawValue,
       if (initialWidth != null) 'initialWidth': initialWidth!,

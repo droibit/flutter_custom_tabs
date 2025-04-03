@@ -219,6 +219,7 @@ Future<void> _launchInExternalBrowser() async {
 Partial display allows web content to appear in a sheet instead of taking up the full screen. This creates a more integrated experience where users can view and interact with web content while still seeing parts of your app.
 
 - **Android**: Supports bottom sheets (Chrome 107+, portrait mode) and side sheets (Chrome 120+, landscape mode or large screens).
+  - For implementation details, see [Partial Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs).
   - For details on feature compatibility, see [Browser support](https://developer.chrome.com/docs/android/custom-tabs/browser-support).
 - **iOS (15.0+)**: Supports displaying as a bottom sheet with standard system presentation options.
 
@@ -232,7 +233,7 @@ Future<void> _launchUrlInSheetView(BuildContext context) async {
   await launchUrl(
     Uri.parse('https://flutter.dev'),
     customTabsOptions: CustomTabsOptions.partial(
-      configuration: PartialCustomTabsConfiguration(
+      configuration: PartialCustomTabsConfiguration.adaptiveSheet(
         initialHeight: mediaQuery.size.height * 0.7,
         initialWidth: mediaQuery.size.width * 0.4,
         activitySideSheetMaximizationEnabled: true,

@@ -237,7 +237,7 @@ Future<void> _launchUrlInSheetView(BuildContext context) async {
     await launchUrl(
       Uri.parse('https://flutter.dev'),
       customTabsOptions: CustomTabsOptions.partial(
-        configuration: PartialCustomTabsConfiguration(
+        configuration: PartialCustomTabsConfiguration.adaptiveSheet(
           initialHeight: mediaQuery.size.height * 0.7,
           initialWidth: mediaQuery.size.width * 0.4,
           activitySideSheetMaximizationEnabled: true,
