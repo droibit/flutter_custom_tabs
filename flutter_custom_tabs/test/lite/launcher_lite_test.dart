@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
 import 'package:flutter_custom_tabs/src/lite/type_conversion.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
@@ -10,14 +9,14 @@ void main() {
   final mock = MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launchUrl() launch with non-web URL', () async {
+  test('launchUrl() throws ArgumentError when launching with non-web URL',
+      () async {
     final url = Uri.parse('file:/home');
-    try {
-      await launchUrl(url);
-      fail("failed");
-    } catch (e) {
-      expect(e, isA<PlatformException>());
-    }
+    expect(
+      () => launchUrl(url),
+      throwsA(isA<ArgumentError>()),
+    );
+    expect(mock.launchUrlCalled, isFalse);
   });
 
   test('launchUrl() launch with empty options', () async {

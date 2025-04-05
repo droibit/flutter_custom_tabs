@@ -9,7 +9,7 @@ void main() {
   final mock = MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launchUrl() throws ArgumentError when URL scheme is not http or https',
+  test('launchUrl() throws ArgumentError when launching with non-web URL',
       () async {
     final url = Uri.parse('file:/home');
     expect(
