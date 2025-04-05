@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-import 'types/launch_options.dart';
+import 'launch_options.dart';
+import 'type_conversion.dart';
 
 /// Passes [url] with options to the underlying platform for launching a Custom Tab.
 ///
@@ -29,9 +29,10 @@ Future<void> launchUrl(
   LaunchOptions options = const LaunchOptions(),
 }) async {
   if (url.scheme != 'http' && url.scheme != 'https') {
-    throw PlatformException(
-      code: 'NOT_A_WEB_SCHEME',
-      message: 'Flutter Custom Tabs only supports URL of http or https scheme.',
+    throw ArgumentError.value(
+      url,
+      'url',
+      'must have an http or https scheme.',
     );
   }
 
