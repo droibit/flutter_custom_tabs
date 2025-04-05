@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs_platform_interface/flutter_custom_tabs_platform_interface.dart';
 
-import 'types/launch_options.dart';
+import 'launch_options.dart';
+import 'type_conversion.dart';
 
 /// Passes [url] with options to the underlying platform for launching a Custom Tab.
 ///

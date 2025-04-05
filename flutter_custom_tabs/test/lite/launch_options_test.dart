@@ -1,12 +1,13 @@
 import 'package:flutter/painting.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs_lite.dart';
+import 'package:flutter_custom_tabs/src/lite/launch_options.dart';
+import 'package:flutter_custom_tabs/src/lite/type_conversion.dart';
 import 'package:flutter_custom_tabs_android/flutter_custom_tabs_android.dart';
 import 'package:flutter_custom_tabs_ios/flutter_custom_tabs_ios.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('CustomTabsOptions', () {
-    test('toCustomTabsOptions converts LaunchOptions with null values', () {
+    test('toCustomTabsOptions() converts LaunchOptions with null values', () {
       const launchOptions = LaunchOptions();
 
       final actual = launchOptions.toCustomTabsOptions();
