@@ -49,6 +49,8 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        // ref. https://www.reddit.com/r/androiddev/comments/mztyva/a_few_tips_for_testparameterinjector_library/
+        freeCompilerArgs += ['-java-parameters']
     }
 
     testOptions {
@@ -72,5 +74,6 @@ android {
         testImplementation 'com.google.truth:truth:1.4.4'
         testImplementation 'androidx.test.ext:truth:1.6.0'
         testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
+        testImplementation 'com.google.testparameterinjector:test-parameter-injector:1.18'
     }
 }
