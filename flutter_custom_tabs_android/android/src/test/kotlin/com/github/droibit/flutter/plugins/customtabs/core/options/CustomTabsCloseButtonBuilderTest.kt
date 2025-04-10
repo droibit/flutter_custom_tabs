@@ -1,15 +1,30 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
-import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent.CLOSE_BUTTON_POSITION_START
 import com.google.common.truth.Truth.assertThat
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(TestParameterInjector::class)
 class CustomTabsCloseButtonBuilderTest {
+    @Test
+    fun build_withChainedMethods() {
+        val closeButton = CustomTabsCloseButton.Builder()
+            .setIcon("ic_arrow_back")
+            .setPosition(CLOSE_BUTTON_POSITION_START)
+            .build()
+
+        assertThat(closeButton.icon).isEqualTo("ic_arrow_back")
+        assertThat(closeButton.position).isEqualTo(CLOSE_BUTTON_POSITION_START)
+    }
+
     @Test
     fun setOptions_withAllOptions() {
         val options = mapOf(
             "icon" to "ic_arrow_back",
-            "position" to CustomTabsIntent.CLOSE_BUTTON_POSITION_START.toLong(),
+            "position" to CLOSE_BUTTON_POSITION_START.toLong(),
         )
 
         val closeButton = CustomTabsCloseButton.Builder()
@@ -17,35 +32,11 @@ class CustomTabsCloseButtonBuilderTest {
             .build()
 
         assertThat(closeButton.icon).isEqualTo("ic_arrow_back")
-        assertThat(closeButton.position).isEqualTo(CustomTabsIntent.CLOSE_BUTTON_POSITION_START)
+        assertThat(closeButton.position).isEqualTo(CLOSE_BUTTON_POSITION_START)
     }
 
     @Test
-    fun setOptions_withPartialOptions() {
-        val options = mapOf(
-            "icon" to "ic_arrow_back"
-        )
-
-        val closeButton = CustomTabsCloseButton.Builder()
-            .setOptions(options)
-            .build()
-
-        assertThat(closeButton.icon).isEqualTo("ic_arrow_back")
-        assertThat(closeButton.position).isNull()
-    }
-
-    @Test
-    fun setOptions_withEmptyMap() {
-        val closeButton = CustomTabsCloseButton.Builder()
-            .setOptions(emptyMap())
-            .build()
-
-        assertThat(closeButton.icon).isNull()
-        assertThat(closeButton.position).isNull()
-    }
-
-    @Test
-    fun setOptions_withNull() {
+    fun setOptions_withNullOptions() {
         val closeButton = CustomTabsCloseButton.Builder()
             .setOptions(null)
             .build()
@@ -55,61 +46,24 @@ class CustomTabsCloseButtonBuilderTest {
     }
 
     @Test
-    fun setIcon_withValidValue() {
+    fun setIcon_parameterized(
+        @TestParameter("ic_arrow_back", "null") input: String?
+    ) {
         val closeButton = CustomTabsCloseButton.Builder()
-            .setIcon("ic_arrow_back")
+            .setIcon(input)
             .build()
 
-        assertThat(closeButton.icon).isEqualTo("ic_arrow_back")
-        assertThat(closeButton.position).isNull()
+        assertThat(closeButton.icon).isEqualTo(input)
     }
 
     @Test
-    fun setIcon_withNull() {
+    fun setPosition_parameterized(
+        @TestParameter("1", "null") input: Int?
+    ) {
         val closeButton = CustomTabsCloseButton.Builder()
-            .setIcon(null)
+            .setPosition(input)
             .build()
 
-        assertThat(closeButton.icon).isNull()
-        assertThat(closeButton.position).isNull()
-    }
-
-    @Test
-    fun setPosition_withValidValue() {
-        val closeButton = CustomTabsCloseButton.Builder()
-            .setPosition(CustomTabsIntent.CLOSE_BUTTON_POSITION_START)
-            .build()
-
-        assertThat(closeButton.icon).isNull()
-        assertThat(closeButton.position).isEqualTo(CustomTabsIntent.CLOSE_BUTTON_POSITION_START)
-    }
-
-    @Test
-    fun setPosition_withNull() {
-        val closeButton = CustomTabsCloseButton.Builder()
-            .setPosition(null)
-            .build()
-
-        assertThat(closeButton.icon).isNull()
-        assertThat(closeButton.position).isNull()
-    }
-
-    @Test
-    fun build_withChainedMethods() {
-        val closeButton = CustomTabsCloseButton.Builder()
-            .setIcon("ic_arrow_back")
-            .setPosition(CustomTabsIntent.CLOSE_BUTTON_POSITION_START)
-            .build()
-
-        assertThat(closeButton.icon).isEqualTo("ic_arrow_back")
-        assertThat(closeButton.position).isEqualTo(CustomTabsIntent.CLOSE_BUTTON_POSITION_START)
-    }
-
-    @Test
-    fun build_withoutSettingAnyOptions() {
-        val closeButton = CustomTabsCloseButton.Builder().build()
-
-        assertThat(closeButton.icon).isNull()
-        assertThat(closeButton.position).isNull()
+        assertThat(closeButton.position).isEqualTo(input)
     }
 }

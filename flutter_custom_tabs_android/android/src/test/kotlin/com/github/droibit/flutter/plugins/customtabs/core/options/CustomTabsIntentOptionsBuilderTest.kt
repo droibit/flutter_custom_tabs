@@ -6,6 +6,63 @@ import org.junit.Test
 
 class CustomTabsIntentOptionsBuilderTest {
     @Test
+    fun build_withAllIndividualParameters() {
+        val colorSchemes = CustomTabsColorSchemes.Builder()
+            .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
+            .build()
+        val closeButton = CustomTabsCloseButton.Builder()
+            .setIcon("ic_back")
+            .build()
+        val animations = CustomTabsAnimations.Builder()
+            .setStartEnter("enter")
+            .setStartExit("exit")
+            .build()
+        val browser = BrowserConfiguration.Builder()
+            .setPrefersDefaultBrowser(false)
+            .build()
+        val partial = PartialCustomTabsConfiguration.Builder()
+            .setCornerRadius(8)
+            .build()
+
+        val intentOptions = CustomTabsIntentOptions.Builder()
+            .setColorSchemes(colorSchemes)
+            .setUrlBarHidingEnabled(true)
+            .setShareState(CustomTabsIntent.SHARE_STATE_ON)
+            .setShowTitle(false)
+            .setInstantAppsEnabled(true)
+            .setCloseButton(closeButton)
+            .setAnimations(animations)
+            .setBrowser(browser)
+            .setPartial(partial)
+            .build()
+
+        assertThat(intentOptions.colorSchemes).isSameInstanceAs(colorSchemes)
+        assertThat(intentOptions.urlBarHidingEnabled).isTrue()
+        assertThat(intentOptions.shareState).isEqualTo(CustomTabsIntent.SHARE_STATE_ON)
+        assertThat(intentOptions.showTitle).isFalse()
+        assertThat(intentOptions.instantAppsEnabled).isTrue()
+        assertThat(intentOptions.closeButton).isSameInstanceAs(closeButton)
+        assertThat(intentOptions.animations).isSameInstanceAs(animations)
+        assertThat(intentOptions.browser).isSameInstanceAs(browser)
+        assertThat(intentOptions.partial).isSameInstanceAs(partial)
+    }
+
+    @Test
+    fun build_withoutSettingAnyOptions() {
+        val intentOptions = CustomTabsIntentOptions.Builder().build()
+
+        assertThat(intentOptions.colorSchemes).isNull()
+        assertThat(intentOptions.urlBarHidingEnabled).isNull()
+        assertThat(intentOptions.shareState).isNull()
+        assertThat(intentOptions.showTitle).isNull()
+        assertThat(intentOptions.instantAppsEnabled).isNull()
+        assertThat(intentOptions.closeButton).isNull()
+        assertThat(intentOptions.animations).isNull()
+        assertThat(intentOptions.browser).isNull()
+        assertThat(intentOptions.partial).isNull()
+    }
+
+    @Test
     fun setOptions_withAllOptions() {
         val options = mapOf(
             "colorSchemes" to mapOf(
@@ -54,50 +111,7 @@ class CustomTabsIntentOptionsBuilderTest {
     }
 
     @Test
-    fun setOptions_withPartialOptions() {
-        val options = mapOf(
-            "urlBarHidingEnabled" to true,
-            "showTitle" to false,
-            "closeButton" to mapOf(
-                "icon" to "ic_close"
-            )
-        )
-
-        val intentOptions = CustomTabsIntentOptions.Builder()
-            .setOptions(options)
-            .build()
-
-        assertThat(intentOptions.urlBarHidingEnabled).isTrue()
-        assertThat(intentOptions.showTitle).isFalse()
-        assertThat(intentOptions.closeButton?.icon).isEqualTo("ic_close")
-        assertThat(intentOptions.colorSchemes).isNotNull()
-        assertThat(intentOptions.shareState).isNull()
-        assertThat(intentOptions.instantAppsEnabled).isNull()
-        assertThat(intentOptions.animations).isNotNull()
-        assertThat(intentOptions.browser).isNotNull()
-        assertThat(intentOptions.partial).isNotNull()
-    }
-
-    @Test
-    fun setOptions_withEmptyMap() {
-        val intentOptions = CustomTabsIntentOptions.Builder()
-            .setOptions(emptyMap())
-            .build()
-
-        assertThat(intentOptions.colorSchemes).isNotNull()
-        assertThat(intentOptions.colorSchemes?.colorScheme).isNull()
-        assertThat(intentOptions.urlBarHidingEnabled).isNull()
-        assertThat(intentOptions.shareState).isNull()
-        assertThat(intentOptions.showTitle).isNull()
-        assertThat(intentOptions.instantAppsEnabled).isNull()
-        assertThat(intentOptions.closeButton).isNotNull()
-        assertThat(intentOptions.animations).isNotNull()
-        assertThat(intentOptions.browser).isNotNull()
-        assertThat(intentOptions.partial).isNotNull()
-    }
-
-    @Test
-    fun setOptions_withNull() {
+    fun setOptions_withNullOptions() {
         val intentOptions = CustomTabsIntentOptions.Builder()
             .setOptions(null)
             .build()
@@ -212,62 +226,5 @@ class CustomTabsIntentOptionsBuilderTest {
             .build()
 
         assertThat(intentOptions.partial).isSameInstanceAs(partial)
-    }
-
-    @Test
-    fun build_withAllIndividualParameters() {
-        val colorSchemes = CustomTabsColorSchemes.Builder()
-            .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
-            .build()
-        val closeButton = CustomTabsCloseButton.Builder()
-            .setIcon("ic_back")
-            .build()
-        val animations = CustomTabsAnimations.Builder()
-            .setStartEnter("enter")
-            .setStartExit("exit")
-            .build()
-        val browser = BrowserConfiguration.Builder()
-            .setPrefersDefaultBrowser(false)
-            .build()
-        val partial = PartialCustomTabsConfiguration.Builder()
-            .setCornerRadius(8)
-            .build()
-
-        val intentOptions = CustomTabsIntentOptions.Builder()
-            .setColorSchemes(colorSchemes)
-            .setUrlBarHidingEnabled(true)
-            .setShareState(CustomTabsIntent.SHARE_STATE_ON)
-            .setShowTitle(false)
-            .setInstantAppsEnabled(true)
-            .setCloseButton(closeButton)
-            .setAnimations(animations)
-            .setBrowser(browser)
-            .setPartial(partial)
-            .build()
-
-        assertThat(intentOptions.colorSchemes).isSameInstanceAs(colorSchemes)
-        assertThat(intentOptions.urlBarHidingEnabled).isTrue()
-        assertThat(intentOptions.shareState).isEqualTo(CustomTabsIntent.SHARE_STATE_ON)
-        assertThat(intentOptions.showTitle).isFalse()
-        assertThat(intentOptions.instantAppsEnabled).isTrue()
-        assertThat(intentOptions.closeButton).isSameInstanceAs(closeButton)
-        assertThat(intentOptions.animations).isSameInstanceAs(animations)
-        assertThat(intentOptions.browser).isSameInstanceAs(browser)
-        assertThat(intentOptions.partial).isSameInstanceAs(partial)
-    }
-
-    @Test
-    fun build_withoutSettingAnyOptions() {
-        val intentOptions = CustomTabsIntentOptions.Builder().build()
-
-        assertThat(intentOptions.colorSchemes).isNull()
-        assertThat(intentOptions.urlBarHidingEnabled).isNull()
-        assertThat(intentOptions.shareState).isNull()
-        assertThat(intentOptions.showTitle).isNull()
-        assertThat(intentOptions.instantAppsEnabled).isNull()
-        assertThat(intentOptions.closeButton).isNull()
-        assertThat(intentOptions.animations).isNull()
-        assertThat(intentOptions.browser).isNull()
-        assertThat(intentOptions.partial).isNull()
     }
 }

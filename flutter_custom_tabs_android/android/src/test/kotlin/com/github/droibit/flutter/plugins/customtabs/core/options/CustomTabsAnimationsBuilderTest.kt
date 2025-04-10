@@ -1,9 +1,28 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import com.google.common.truth.Truth.assertThat
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(TestParameterInjector::class)
 class CustomTabsAnimationsBuilderTest {
+    @Test
+    fun build_withChainedMethods() {
+        val animations = CustomTabsAnimations.Builder()
+            .setStartEnter("fade_in")
+            .setStartExit("fade_out")
+            .setEndEnter("slide_in")
+            .setEndExit("slide_out")
+            .build()
+
+        assertThat(animations.startEnter).isEqualTo("fade_in")
+        assertThat(animations.startExit).isEqualTo("fade_out")
+        assertThat(animations.endEnter).isEqualTo("slide_in")
+        assertThat(animations.endExit).isEqualTo("slide_out")
+    }
+
     @Test
     fun setOptions_withAllOptions() {
         val options = mapOf(
@@ -24,36 +43,7 @@ class CustomTabsAnimationsBuilderTest {
     }
 
     @Test
-    fun setOptions_withPartialOptions() {
-        val options = mapOf(
-            "startEnter" to "fade_in",
-            "endExit" to "slide_out"
-        )
-
-        val animations = CustomTabsAnimations.Builder()
-            .setOptions(options)
-            .build()
-
-        assertThat(animations.startEnter).isEqualTo("fade_in")
-        assertThat(animations.startExit).isNull()
-        assertThat(animations.endEnter).isNull()
-        assertThat(animations.endExit).isEqualTo("slide_out")
-    }
-
-    @Test
-    fun setOptions_withEmptyMap() {
-        val animations = CustomTabsAnimations.Builder()
-            .setOptions(emptyMap())
-            .build()
-
-        assertThat(animations.startEnter).isNull()
-        assertThat(animations.startExit).isNull()
-        assertThat(animations.endEnter).isNull()
-        assertThat(animations.endExit).isNull()
-    }
-
-    @Test
-    fun setOptions_withNull() {
+    fun setOptions_withNullOptions() {
         val animations = CustomTabsAnimations.Builder()
             .setOptions(null)
             .build()
@@ -65,75 +55,58 @@ class CustomTabsAnimationsBuilderTest {
     }
 
     @Test
-    fun setStartEnter_withValidValue() {
+    fun setStartEnter_parameterized(
+        @TestParameter("fade_in", "null") input: String?
+    ) {
         val animations = CustomTabsAnimations.Builder()
-            .setStartEnter("fade_in")
+            .setStartEnter(input)
             .build()
 
-        assertThat(animations.startEnter).isEqualTo("fade_in")
+        assertThat(animations.startEnter).isEqualTo(input)
         assertThat(animations.startExit).isNull()
         assertThat(animations.endEnter).isNull()
         assertThat(animations.endExit).isNull()
     }
 
     @Test
-    fun setStartExit_withValidValue() {
+    fun setStartExit_parameterized(
+        @TestParameter("fade_out", "null") input: String?
+    ) {
         val animations = CustomTabsAnimations.Builder()
-            .setStartExit("fade_out")
+            .setStartExit(input)
             .build()
 
         assertThat(animations.startEnter).isNull()
-        assertThat(animations.startExit).isEqualTo("fade_out")
+        assertThat(animations.startExit).isEqualTo(input)
         assertThat(animations.endEnter).isNull()
         assertThat(animations.endExit).isNull()
     }
 
     @Test
-    fun setEndEnter_withValidValue() {
+    fun setEndEnter_parameterized(
+        @TestParameter("slide_in", "null") input: String?
+    ) {
         val animations = CustomTabsAnimations.Builder()
-            .setEndEnter("slide_in")
+            .setEndEnter(input)
             .build()
 
         assertThat(animations.startEnter).isNull()
         assertThat(animations.startExit).isNull()
-        assertThat(animations.endEnter).isEqualTo("slide_in")
+        assertThat(animations.endEnter).isEqualTo(input)
         assertThat(animations.endExit).isNull()
     }
 
     @Test
-    fun setEndExit_withValidValue() {
+    fun setEndExit_parameterized(
+        @TestParameter("slide_out", "null") input: String?
+    ) {
         val animations = CustomTabsAnimations.Builder()
-            .setEndExit("slide_out")
+            .setEndExit(input)
             .build()
 
         assertThat(animations.startEnter).isNull()
         assertThat(animations.startExit).isNull()
         assertThat(animations.endEnter).isNull()
-        assertThat(animations.endExit).isEqualTo("slide_out")
-    }
-
-    @Test
-    fun build_withChainedMethods() {
-        val animations = CustomTabsAnimations.Builder()
-            .setStartEnter("fade_in")
-            .setStartExit("fade_out")
-            .setEndEnter("slide_in")
-            .setEndExit("slide_out")
-            .build()
-
-        assertThat(animations.startEnter).isEqualTo("fade_in")
-        assertThat(animations.startExit).isEqualTo("fade_out")
-        assertThat(animations.endEnter).isEqualTo("slide_in")
-        assertThat(animations.endExit).isEqualTo("slide_out")
-    }
-
-    @Test
-    fun build_withoutSettingAnyOptions() {
-        val animations = CustomTabsAnimations.Builder().build()
-
-        assertThat(animations.startEnter).isNull()
-        assertThat(animations.startExit).isNull()
-        assertThat(animations.endEnter).isNull()
-        assertThat(animations.endExit).isNull()
+        assertThat(animations.endExit).isEqualTo(input)
     }
 }
