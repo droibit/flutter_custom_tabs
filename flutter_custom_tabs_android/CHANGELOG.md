@@ -1,3 +1,16 @@
+## 2.3.0
+
+- Adds new options to `CustomTabsOptions`:
+  - `bookmarksButtonEnabled`: Controls whether the bookmarks button is shown in the overflow menu.
+  - `downloadButtonEnabled`: Controls whether the download button is shown in the overflow menu.
+  - `shareIdentityEnabled`: Enables app-specific history, grouping links opened from the app in Chrome's history.
+- Adds new options to `PartialCustomTabsConfiguration`:
+  - Supports side sheet format for partial Custom Tabs on larger screens.
+  - `backgroundInteractionEnabled`: Controls whether interactions with the background app are enabled when a Partial Custom Tab is launched.
+- Updates minimum supported SDK version to Flutter 3.19.0/Dart 3.3.
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.2.0.
+- Updates minimum required `pigeon` version to 22.7.0.
+
 ## 2.2.0
 
 - Fixes a bug where default browser preference wasn't properly applied during Custom Tabs warm-up.
