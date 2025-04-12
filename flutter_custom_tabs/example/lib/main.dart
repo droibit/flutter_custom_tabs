@@ -351,10 +351,7 @@ Future<void> _launchUrlAndCloseManually(BuildContext context) async {
 
 Future<void> _launchUrlInExternalBrowser() async {
   try {
-    await launchUrl(
-      Uri.parse('https://flutter.dev'),
-      prefersDeepLink: false,
-    );
+    await launchUrl(Uri.parse('https://flutter.dev'));
   } catch (e) {
     debugPrint(e.toString());
   }
@@ -388,12 +385,16 @@ Future<void> _launchUrlWithSession(
 }
 
 Future<void> _launchUrlWithAppSpecificHistoryOnAndroid() async {
-  await launchUrl(
-    Uri.parse('https://flutter.dev'),
-    customTabsOptions: const CustomTabsOptions(
-      urlBarHidingEnabled: true,
-      showTitle: true,
-      shareIdentityEnabled: true,
-    ),
-  );
+  try {
+    await launchUrl(
+      Uri.parse('https://flutter.dev'),
+      customTabsOptions: const CustomTabsOptions(
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        shareIdentityEnabled: true,
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
 }
