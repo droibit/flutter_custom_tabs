@@ -1,6 +1,11 @@
+## 2.3.0
+
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.3.0.
+- Updates minimum supported SDK version to Flutter 3.16.0/Dart 3.2.
+
 ## 2.2.0
 
-- No changes except for version bump.
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.2.0.
 
 ## 2.2.0-dev.1
 
