@@ -1,3 +1,17 @@
+## 2.3.0
+
+- Exposes new options from `flutter_custom_tabs_android`:
+  - Customization:
+    - Control visibility of bookmarks and download buttons in the overflow menu (`CustomTabsOptions.bookmarksButtonEnabled`, `CustomTabsOptions.downloadButtonEnabled`).
+    - Enable app-specific history in Chrome (`CustomTabsOptions.shareIdentityEnabled`).
+  - Partial Custom Tabs:
+    - Support side sheet format on larger screens (`PartialCustomTabsConfiguration`).
+    - Control background app interaction (`PartialCustomTabsConfiguration.backgroundInteractionEnabled`).
+- Improves documentation for the partial display.
+- Updates minimum iOS version to 12.0.
+- Updates minimum supported SDK version to Flutter 3.19.0/Dart 3.3.
+- Updates minimum required `flutter_custom_tabs_android/ios/web` version to 2.3.0.
+
 ## 2.2.1
 
 - No changes except for version bump.
@@ -10,7 +24,7 @@
 
 ## 2.2.0-dev.1
 
-- Addes `warmupCustomTabs`, `mayLaunchUrl(s)`, and `invalidateSession` functions for performance optimization.
+- Adds `warmupCustomTabs`, `mayLaunchUrl(s)`, and `invalidateSession` functions for performance optimization.
 - Updates minimum supported SDK version to Flutter 3.16.0/Dart 3.2.
 - Updates minimum required `flutter_custom_tabs_ios/web` version to 2.2.0-dev.1.
 - Updates minimum required `flutter_custom_tabs_android` version to 2.2.0-dev.3.
