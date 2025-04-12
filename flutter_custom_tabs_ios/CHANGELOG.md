@@ -1,6 +1,11 @@
+## 2.3.1
+
+- No changes except for version bump.
+
 ## 2.3.0
 
 - Improves documentation for the `SheetPresentationControllerConfiguration` class.
+- Updates minimum iOS version to 12.0
 - Updates minimum supported SDK version to Flutter 3.19.0/Dart 3.3.
 - Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.2.0.
 - Updates minimum required `pigeon` version to 22.7.0.

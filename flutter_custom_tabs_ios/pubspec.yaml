@@ -1,6 +1,6 @@
 name: flutter_custom_tabs_ios
 description: iOS platform implementation of flutter_custom_tabs.
-version: 2.3.0
+version: 2.3.1
 homepage: https://github.com/droibit/flutter_custom_tabs
 repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_ios
 issue_tracker: https://github.com/droibit/flutter_custom_tabs/issues
