@@ -1,9 +1,10 @@
-  
 name: CI for platform interface package
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - develop      
     paths:
       - 'flutter_custom_tabs_platform_interface/**'
       - '.github/workflows/platform_interface_package.yml'
