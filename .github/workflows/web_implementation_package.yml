@@ -3,7 +3,9 @@ name: CI for the web implementation package
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - develop      
     paths:
       - 'flutter_custom_tabs_web/**'
       - '.github/workflows/web_implementation_package.yml'

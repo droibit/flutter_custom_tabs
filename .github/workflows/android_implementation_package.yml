@@ -2,7 +2,9 @@ name: CI for android implementation package
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - develop
     paths:
       - 'flutter_custom_tabs_android/**'
       - '.github/workflows/android_implementation_package.yml'
