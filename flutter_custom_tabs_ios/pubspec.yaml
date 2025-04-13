@@ -4,6 +4,7 @@ version: 2.3.1
 homepage: https://github.com/droibit/flutter_custom_tabs
 repository: https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_ios
 issue_tracker: https://github.com/droibit/flutter_custom_tabs/issues
+publish_to: 'none'
 
 environment:
   sdk: ^3.3.0
@@ -12,7 +13,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_custom_tabs_platform_interface: ^2.3.0
+  # flutter_custom_tabs_platform_interface: ^2.3.0
+  flutter_custom_tabs_platform_interface:
+    path: ../flutter_custom_tabs_platform_interface  
   meta: ^1.10.0
 
 dev_dependencies:
