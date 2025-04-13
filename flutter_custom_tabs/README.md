@@ -158,7 +158,7 @@ void _launchUrl(BuildContext context) async {
 | Change the availability of [Instant Apps](https://developer.android.com/topic/instant-apps/index.html) | ✅ | - | Not provided |
 | Change availability of bookmarks button | ✅ | - | Not provided |
 | Change availability of download button | ✅ | - | Not provided |
-| Enable App-specific history | ✅ | - | Not provided |
+| Enable App-specific history | ✅ | - | ✅<br>(always enabled on Android) |
 | Change animation style | ✅ | ✅<br>(Predefined modal presentation styles) | Not provided |
 | Prefer the default browser over Chrome | ✅ | - | Not provided |
 | Pass HTTP headers | ✅ | - | Not provided |

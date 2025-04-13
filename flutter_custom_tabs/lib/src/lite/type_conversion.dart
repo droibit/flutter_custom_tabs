@@ -24,6 +24,7 @@ extension LaunchOptionsConverter on LaunchOptions {
       urlBarHidingEnabled: urlBarHidingEnabled,
       shareState: CustomTabsShareState.on,
       showTitle: true,
+      shareIdentityEnabled: true,
       browser: const CustomTabsBrowserConfiguration(
         prefersDefaultBrowser: true,
       ),
