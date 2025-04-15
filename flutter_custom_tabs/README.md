@@ -12,7 +12,7 @@ In version 2.0, the plugin expands the support for launching a URL in mobile app
 
 |             | Android | iOS   |  Web  |
 |-------------|---------|-------|-------|
-| **Support** | SDK 19+ | 11.0+ | Any   |
+| **Support** | SDK 19+ | 12.0+ | Any   |
 | Implementation | [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) | [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) | [url_launcher](https://pub.dev/packages/url_launcher) |
 
 ## Getting Started
