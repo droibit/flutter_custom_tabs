@@ -34,9 +34,6 @@ android {
 
     vectorDrawables.useSupportLibrary = true
   }
-  lintOptions {
-    disable 'InvalidPackage'
-  }
 
   buildFeatures {
     buildConfig false
@@ -53,6 +50,12 @@ android {
     freeCompilerArgs += ['-java-parameters']
   }
 
+  lintOptions {
+    checkAllWarnings true
+    warningsAsErrors true
+    disable 'InvalidPackage', 'AndroidGradlePluginVersion', 'GradleDependency'
+  }
+
   testOptions {
     unitTests.all {
       testLogging {
@@ -62,18 +65,18 @@ android {
       }
     }
   }
+}
 
-  dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.browser:browser:1.8.0'
-    implementation 'io.github.droibit:customtabslauncher:3.0.0'
+dependencies {
+  implementation 'androidx.core:core-ktx:1.9.0'
+  implementation 'androidx.browser:browser:1.8.0'
+  implementation 'io.github.droibit:customtabslauncher:3.0.0'
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.11'
-    testImplementation 'io.mockk:mockk:1.13.3'
-    testImplementation 'com.google.truth:truth:1.4.4'
-    testImplementation 'androidx.test.ext:truth:1.6.0'
-    testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
-    testImplementation 'com.google.testparameterinjector:test-parameter-injector:1.18'
-  }
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.robolectric:robolectric:4.11'
+  testImplementation 'io.mockk:mockk:1.13.3'
+  testImplementation 'com.google.truth:truth:1.4.4'
+  testImplementation 'androidx.test.ext:truth:1.6.0'
+  testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
+  testImplementation 'com.google.testparameterinjector:test-parameter-injector:1.18'
 }
