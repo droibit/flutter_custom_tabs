@@ -6,7 +6,7 @@ import androidx.browser.customtabs.CustomTabsIntent.ActivitySideSheetDecorationT
 import androidx.browser.customtabs.CustomTabsIntent.ActivitySideSheetPosition
 import androidx.browser.customtabs.CustomTabsIntent.ActivitySideSheetRoundedCornersPosition
 
-class PartialCustomTabsConfiguration(
+class PartialCustomTabsConfiguration internal constructor(
   @Dimension(unit = Dimension.DP) val initialHeight: Double?,
   @ActivityHeightResizeBehavior val activityHeightResizeBehavior: Int?,
   @Dimension(unit = Dimension.DP) val initialWidth: Double?,

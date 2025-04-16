@@ -4,7 +4,7 @@ import android.graphics.Color
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent.ColorScheme
 
-class CustomTabsColorSchemes(
+class CustomTabsColorSchemes internal constructor(
   @ColorScheme val colorScheme: Int?,
   val lightParams: CustomTabColorSchemeParams?,
   val darkParams: CustomTabColorSchemeParams?,

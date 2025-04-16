@@ -45,6 +45,9 @@ jobs:
     - name: Build example android app
       run: flutter build apk --release
       working-directory: ./flutter_custom_tabs_android/example
+    - name: Run Android lint
+      run: ./gradlew :flutter_custom_tabs_android:lint
+      working-directory: ./flutter_custom_tabs_android/example/android
     - name: Run Android unit tests
       run: ./gradlew :flutter_custom_tabs_android:testDebugUnitTest
       working-directory: ./flutter_custom_tabs_android/example/android

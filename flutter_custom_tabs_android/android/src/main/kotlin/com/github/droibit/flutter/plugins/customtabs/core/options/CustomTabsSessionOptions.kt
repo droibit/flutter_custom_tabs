@@ -1,10 +1,9 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider
 
-class CustomTabsSessionOptions @VisibleForTesting internal constructor(
+class CustomTabsSessionOptions internal constructor(
   private val browser: BrowserConfiguration
 ) {
   constructor(
