@@ -9,74 +9,74 @@ import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
 class CustomTabsSessionOptionsBuilderTest {
-    @Test
-    fun setOptions_withAllOptions() {
-        val options = mapOf(
-            "prefersDefaultBrowser" to true,
-            "fallbackCustomTabs" to listOf(
-                "com.example.browser1",
-                "com.example.browser2",
-            )
-        )
+  @Test
+  fun setOptions_withAllOptions() {
+    val options = mapOf(
+      "prefersDefaultBrowser" to true,
+      "fallbackCustomTabs" to listOf(
+        "com.example.browser1",
+        "com.example.browser2",
+      )
+    )
 
-        val sessionOptions = CustomTabsSessionOptions.Builder()
-            .setOptions(options)
-            .build()
+    val sessionOptions = CustomTabsSessionOptions.Builder()
+      .setOptions(options)
+      .build()
 
-        assertThat(sessionOptions.prefersDefaultBrowser).isTrue()
-        assertThat(sessionOptions.fallbackCustomTabPackages).containsExactly(
-            "com.example.browser1",
-            "com.example.browser2",
-        )
-    }
+    assertThat(sessionOptions.prefersDefaultBrowser).isTrue()
+    assertThat(sessionOptions.fallbackCustomTabPackages).containsExactly(
+      "com.example.browser1",
+      "com.example.browser2",
+    )
+  }
 
-    @Test
-    fun setOptions_withNullOptions() {
-        val sessionOptions = CustomTabsSessionOptions.Builder()
-            .setOptions(null)
-            .build()
+  @Test
+  fun setOptions_withNullOptions() {
+    val sessionOptions = CustomTabsSessionOptions.Builder()
+      .setOptions(null)
+      .build()
 
-        assertThat(sessionOptions.prefersDefaultBrowser).isNull()
-        assertThat(sessionOptions.fallbackCustomTabPackages).isNull()
-    }
+    assertThat(sessionOptions.prefersDefaultBrowser).isNull()
+    assertThat(sessionOptions.fallbackCustomTabPackages).isNull()
+  }
 
-    @Test
-    fun setPrefersDefaultBrowser_parameterized(
-        @TestParameter("true", "false", "null") input: Boolean?
-    ) {
-        val sessionOptions = CustomTabsSessionOptions.Builder()
-            .setPrefersDefaultBrowser(input)
-            .build()
+  @Test
+  fun setPrefersDefaultBrowser_parameterized(
+    @TestParameter("true", "false", "null") input: Boolean?
+  ) {
+    val sessionOptions = CustomTabsSessionOptions.Builder()
+      .setPrefersDefaultBrowser(input)
+      .build()
 
-        assertThat(sessionOptions.prefersDefaultBrowser).isEqualTo(input)
-        assertThat(sessionOptions.fallbackCustomTabPackages).isNull()
-    }
+    assertThat(sessionOptions.prefersDefaultBrowser).isEqualTo(input)
+    assertThat(sessionOptions.fallbackCustomTabPackages).isNull()
+  }
 
-    @Test
-    @TestParameters("{input: ['com.example.browser1']}", customName = "Multiple packages")
-    @TestParameters("{input: []}", customName = "Empty packages")
-    @TestParameters("{input: null}", customName = "Null packages")
-    fun setFallbackCustomTabs_parameterized(input: List<String>?) {
-        val inputSet = input?.toSet()
-        val sessionOptions = CustomTabsSessionOptions.Builder()
-            .setFallbackCustomTabs(inputSet)
-            .build()
+  @Test
+  @TestParameters("{input: ['com.example.browser1']}", customName = "Multiple packages")
+  @TestParameters("{input: []}", customName = "Empty packages")
+  @TestParameters("{input: null}", customName = "Null packages")
+  fun setFallbackCustomTabs_parameterized(input: List<String>?) {
+    val inputSet = input?.toSet()
+    val sessionOptions = CustomTabsSessionOptions.Builder()
+      .setFallbackCustomTabs(inputSet)
+      .build()
 
-        assertThat(sessionOptions.fallbackCustomTabPackages).isEqualTo(inputSet)
-    }
+    assertThat(sessionOptions.fallbackCustomTabPackages).isEqualTo(inputSet)
+  }
 
-    @Test
-    fun build_withChainedMethods() {
-        val animations = CustomTabsAnimations.Builder()
-            .setStartEnter("fade_in")
-            .setStartExit("fade_out")
-            .setEndEnter("slide_in")
-            .setEndExit("slide_out")
-            .build()
+  @Test
+  fun build_withChainedMethods() {
+    val animations = CustomTabsAnimations.Builder()
+      .setStartEnter("fade_in")
+      .setStartExit("fade_out")
+      .setEndEnter("slide_in")
+      .setEndExit("slide_out")
+      .build()
 
-        assertThat(animations.startEnter).isEqualTo("fade_in")
-        assertThat(animations.startExit).isEqualTo("fade_out")
-        assertThat(animations.endEnter).isEqualTo("slide_in")
-        assertThat(animations.endExit).isEqualTo("slide_out")
-    }
+    assertThat(animations.startEnter).isEqualTo("fade_in")
+    assertThat(animations.startExit).isEqualTo("fade_out")
+    assertThat(animations.endEnter).isEqualTo("slide_in")
+    assertThat(animations.endExit).isEqualTo("slide_out")
+  }
 }

@@ -1,42 +1,42 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
+  id "com.android.application"
+  id "kotlin-android"
+  id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
-    namespace "com.github.droibit.plugins.flutter.customtabs.android.example"
-    compileSdk 34 //flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+  namespace "com.github.droibit.plugins.flutter.customtabs.android.example"
+  compileSdk 34 //flutter.compileSdkVersion
+  ndkVersion flutter.ndkVersion
 
-    defaultConfig {
-        applicationId = "com.github.droibit.plugins.flutter.customtabs.flutter_custom_tabs_android_example"
-        // Enable multidex support.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = 1
-        versionName = "1.0"
-    }
+  defaultConfig {
+    applicationId = "com.github.droibit.plugins.flutter.customtabs.flutter_custom_tabs_android_example"
+    // Enable multidex support.
+    minSdk = flutter.minSdkVersion
+    targetSdk = flutter.targetSdkVersion
+    versionCode = 1
+    versionName = "1.0"
+  }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            shrinkResources true
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
+  buildTypes {
+    release {
+      minifyEnabled true
+      shrinkResources true
+      // Signing with the debug keys for now, so `flutter run --release` works.
+      signingConfig signingConfigs.debug
     }
+  }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 flutter {
-    source "../.."
+  source "../.."
 }
