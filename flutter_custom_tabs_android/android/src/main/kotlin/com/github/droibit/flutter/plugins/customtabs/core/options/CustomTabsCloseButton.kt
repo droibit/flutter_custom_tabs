@@ -2,7 +2,7 @@ package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import androidx.browser.customtabs.CustomTabsIntent.CloseButtonPosition
 
-class CustomTabsCloseButton(
+class CustomTabsCloseButton internal constructor(
   val icon: String?,
   @CloseButtonPosition val position: Int?
 ) {

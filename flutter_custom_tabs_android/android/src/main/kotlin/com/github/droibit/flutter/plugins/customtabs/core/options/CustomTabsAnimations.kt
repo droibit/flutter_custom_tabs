@@ -1,6 +1,6 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
-class CustomTabsAnimations private constructor(
+class CustomTabsAnimations internal constructor(
   val startEnter: String?,
   val startExit: String?,
   val endEnter: String?,

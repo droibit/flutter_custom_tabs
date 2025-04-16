@@ -2,7 +2,7 @@ package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import androidx.browser.customtabs.CustomTabsIntent.ShareState
 
-class CustomTabsIntentOptions private constructor(
+class CustomTabsIntentOptions internal constructor(
   val colorSchemes: CustomTabsColorSchemes?,
   val urlBarHidingEnabled: Boolean?,
   @ShareState val shareState: Int?,
