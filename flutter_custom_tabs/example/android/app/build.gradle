@@ -6,7 +6,7 @@ plugins {
 
 android {
   namespace "com.github.droibit.flutter.plugins.customtabs.example"
-  compileSdk 34 //flutter.compileSdkVersion
+  compileSdk flutter.compileSdkVersion
   ndkVersion flutter.ndkVersion
 
   defaultConfig {
