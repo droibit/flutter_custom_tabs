@@ -25,120 +25,120 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(manifest = Config.NONE)
 class ExternalBrowserLauncherTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
+  @get:Rule
+  val mockkRule = MockKRule(this)
 
-    @MockK(relaxed = true)
-    private lateinit var context: Context
+  @MockK(relaxed = true)
+  private lateinit var context: Context
 
-    @InjectMockKs
-    private lateinit var launcher: ExternalBrowserLauncher
+  @InjectMockKs
+  private lateinit var launcher: ExternalBrowserLauncher
 
-    @Test
-    fun launch_withNullIntent_returnsFalse() {
-        val launcher = spyk(this.launcher) {
-            every { createIntent(any()) } returns null
-        }
-
-        val uri = "https://example.com".toUri()
-        val result = launcher.launch(context, uri, null)
-        assertThat(result).isFalse()
-
-        verify(exactly = 0) { context.startActivity(any()) }
+  @Test
+  fun launch_withNullIntent_returnsFalse() {
+    val launcher = spyk(this.launcher) {
+      every { createIntent(any()) } returns null
     }
 
-    @Test
-    fun launch_withValidIntent_returnsTrue() {
-        val intent = Intent()
-        val launcher = spyk(this.launcher) {
-            every { createIntent(any()) } returns intent
-        }
+    val uri = "https://example.com".toUri()
+    val result = launcher.launch(context, uri, null)
+    assertThat(result).isFalse()
 
-        val uri = Uri.parse("https://example.com")
-        val result = launcher.launch(context, uri, null)
-        assertThat(result).isTrue()
+    verify(exactly = 0) { context.startActivity(any()) }
+  }
 
-        assertThat(intent).hasData(uri)
-        verify { context.startActivity(refEq(intent)) }
+  @Test
+  fun launch_withValidIntent_returnsTrue() {
+    val intent = Intent()
+    val launcher = spyk(this.launcher) {
+      every { createIntent(any()) } returns intent
     }
 
-    @Test
-    fun createIntent_nullOptions() {
-        val result = launcher.createIntent(null)
-        assertThat(result).isNotNull()
-        assertThat(result).hasAction(Intent.ACTION_VIEW)
-        assertThat(result).extras().isNull()
-    }
+    val uri = Uri.parse("https://example.com")
+    val result = launcher.launch(context, uri, null)
+    assertThat(result).isTrue()
 
-    @Test
-    fun createIntent_emptyBrowserConfiguration() {
-        val options = CustomTabsIntentOptions.Builder()
-            .setBrowser(null)
-            .build()
-        val result = launcher.createIntent(options)
-        assertThat(result).isNull()
-    }
+    assertThat(intent).hasData(uri)
+    verify { context.startActivity(refEq(intent)) }
+  }
 
-    @Test
-    fun createIntent_noPriority() {
-        val options = CustomTabsIntentOptions.Builder()
-            .setBrowser(
-                BrowserConfiguration.Builder()
-                    .setPrefersExternalBrowser(null)
-                    .build()
-            )
-            .build()
-        val result = launcher.createIntent(options)
-        assertThat(result).isNull()
-    }
+  @Test
+  fun createIntent_nullOptions() {
+    val result = launcher.createIntent(null)
+    assertThat(result).isNotNull()
+    assertThat(result).hasAction(Intent.ACTION_VIEW)
+    assertThat(result).extras().isNull()
+  }
 
-    @Test
-    fun createIntent_prefersCustomTabs() {
-        val options = CustomTabsIntentOptions.Builder()
-            .setBrowser(
-                BrowserConfiguration.Builder()
-                    .setPrefersExternalBrowser(false)
-                    .build()
-            )
-            .build()
-        val result = launcher.createIntent(options)
-        assertThat(result).isNull()
-    }
+  @Test
+  fun createIntent_emptyBrowserConfiguration() {
+    val options = CustomTabsIntentOptions.Builder()
+      .setBrowser(null)
+      .build()
+    val result = launcher.createIntent(options)
+    assertThat(result).isNull()
+  }
 
-    @Test
-    fun createIntent_noHeaders() {
-        val options = CustomTabsIntentOptions.Builder()
-            .setBrowser(
-                BrowserConfiguration.Builder()
-                    .setPrefersExternalBrowser(true)
-                    .build()
-            )
-            .build()
-        val result = launcher.createIntent(options)
-        assertThat(result).isNotNull()
-        assertThat(result).hasAction(Intent.ACTION_VIEW)
-        assertThat(result).extras().isNull()
-    }
+  @Test
+  fun createIntent_noPriority() {
+    val options = CustomTabsIntentOptions.Builder()
+      .setBrowser(
+        BrowserConfiguration.Builder()
+          .setPrefersExternalBrowser(null)
+          .build()
+      )
+      .build()
+    val result = launcher.createIntent(options)
+    assertThat(result).isNull()
+  }
 
-    @Test
-    fun createIntent_addedHeaders() {
-        val expHeader = "key" to "value"
-        val options = CustomTabsIntentOptions.Builder()
-            .setBrowser(
-                BrowserConfiguration.Builder()
-                    .setPrefersExternalBrowser(true)
-                    .setHeaders(mapOf(expHeader))
-                    .build()
-            )
-            .build()
-        val result = launcher.createIntent(options)
-        assertThat(result).isNotNull()
-        assertThat(result).hasAction(Intent.ACTION_VIEW)
-        assertThat(result).extras().hasSize(1)
+  @Test
+  fun createIntent_prefersCustomTabs() {
+    val options = CustomTabsIntentOptions.Builder()
+      .setBrowser(
+        BrowserConfiguration.Builder()
+          .setPrefersExternalBrowser(false)
+          .build()
+      )
+      .build()
+    val result = launcher.createIntent(options)
+    assertThat(result).isNull()
+  }
 
-        val actualHeaders = requireNotNull(result).getBundleExtra(Browser.EXTRA_HEADERS)
-        assertThat(actualHeaders).isNotNull()
-        assertThat(actualHeaders).hasSize(1)
-        assertThat(actualHeaders).string(expHeader.first).isEqualTo(expHeader.second)
-    }
+  @Test
+  fun createIntent_noHeaders() {
+    val options = CustomTabsIntentOptions.Builder()
+      .setBrowser(
+        BrowserConfiguration.Builder()
+          .setPrefersExternalBrowser(true)
+          .build()
+      )
+      .build()
+    val result = launcher.createIntent(options)
+    assertThat(result).isNotNull()
+    assertThat(result).hasAction(Intent.ACTION_VIEW)
+    assertThat(result).extras().isNull()
+  }
+
+  @Test
+  fun createIntent_addedHeaders() {
+    val expHeader = "key" to "value"
+    val options = CustomTabsIntentOptions.Builder()
+      .setBrowser(
+        BrowserConfiguration.Builder()
+          .setPrefersExternalBrowser(true)
+          .setHeaders(mapOf(expHeader))
+          .build()
+      )
+      .build()
+    val result = launcher.createIntent(options)
+    assertThat(result).isNotNull()
+    assertThat(result).hasAction(Intent.ACTION_VIEW)
+    assertThat(result).extras().hasSize(1)
+
+    val actualHeaders = requireNotNull(result).getBundleExtra(Browser.EXTRA_HEADERS)
+    assertThat(actualHeaders).isNotNull()
+    assertThat(actualHeaders).hasSize(1)
+    assertThat(actualHeaders).string(expHeader.first).isEqualTo(expHeader.second)
+  }
 }

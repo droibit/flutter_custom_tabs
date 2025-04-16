@@ -67,549 +67,549 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(manifest = Config.NONE)
 class CustomTabsIntentFactoryTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
+  @get:Rule
+  val mockkRule = MockKRule(this)
 
-    @MockK
-    private lateinit var resources: ResourceFactory
+  @MockK
+  private lateinit var resources: ResourceFactory
 
-    @MockK(relaxed = true)
-    private lateinit var sessionProvider: CustomTabsSessionProvider
+  @MockK(relaxed = true)
+  private lateinit var sessionProvider: CustomTabsSessionProvider
 
-    @MockK
-    private lateinit var context: Context
+  @MockK
+  private lateinit var context: Context
 
-    @InjectMockKs
-    private lateinit var factory: CustomTabsIntentFactory
+  @InjectMockKs
+  private lateinit var factory: CustomTabsIntentFactory
 
-    @After
-    fun tearDown() {
-        unmockkAll()
+  @After
+  fun tearDown() {
+    unmockkAll()
+  }
+
+  @Test
+  fun createIntent_completeOptions() {
+    val expColorSchemes = mockk<CustomTabsColorSchemes>()
+    val expUrlBarHidingEnabled = true
+    val expShareState = SHARE_STATE_OFF
+    val expShowTitle = true
+    val expInstantAppsEnabled = false
+    val expBookmarksButtonEnabled = true
+    val expDownloadButtonEnabled = false
+    val expCloseButton = mockk<CustomTabsCloseButton>()
+    val expAnimations = mockk<CustomTabsAnimations>()
+    val expPartial = mockk<PartialCustomTabsConfiguration>()
+    val expBrowser = mockk<BrowserConfiguration>(relaxed = true)
+    val options = CustomTabsIntentOptions.Builder()
+      .setColorSchemes(expColorSchemes)
+      .setUrlBarHidingEnabled(expUrlBarHidingEnabled)
+      .setShareState(expShareState)
+      .setShowTitle(expShowTitle)
+      .setInstantAppsEnabled(expInstantAppsEnabled)
+      .setBookmarksButtonEnabled(expBookmarksButtonEnabled)
+      .setDownloadButtonEnabled(expDownloadButtonEnabled)
+      .setCloseButton(expCloseButton)
+      .setAnimations(expAnimations)
+      .setPartial(expPartial)
+      .setBrowser(expBrowser)
+      .build()
+
+    val factory = spyk(this.factory) {
+      justRun { applyColorSchemes(any(), any()) }
+      justRun { applyCloseButton(any(), any(), any()) }
+      justRun { applyAnimations(any(), any(), any()) }
+      justRun { applyPartialCustomTabsConfiguration(any(), any(), any()) }
+      justRun { applyBrowserConfiguration(any(), any(), any()) }
     }
 
-    @Test
-    fun createIntent_completeOptions() {
-        val expColorSchemes = mockk<CustomTabsColorSchemes>()
-        val expUrlBarHidingEnabled = true
-        val expShareState = SHARE_STATE_OFF
-        val expShowTitle = true
-        val expInstantAppsEnabled = false
-        val expBookmarksButtonEnabled = true
-        val expDownloadButtonEnabled = false
-        val expCloseButton = mockk<CustomTabsCloseButton>()
-        val expAnimations = mockk<CustomTabsAnimations>()
-        val expPartial = mockk<PartialCustomTabsConfiguration>()
-        val expBrowser = mockk<BrowserConfiguration>(relaxed = true)
-        val options = CustomTabsIntentOptions.Builder()
-            .setColorSchemes(expColorSchemes)
-            .setUrlBarHidingEnabled(expUrlBarHidingEnabled)
-            .setShareState(expShareState)
-            .setShowTitle(expShowTitle)
-            .setInstantAppsEnabled(expInstantAppsEnabled)
-            .setBookmarksButtonEnabled(expBookmarksButtonEnabled)
-            .setDownloadButtonEnabled(expDownloadButtonEnabled)
-            .setCloseButton(expCloseButton)
-            .setAnimations(expAnimations)
-            .setPartial(expPartial)
-            .setBrowser(expBrowser)
-            .build()
+    val customTabsIntent = factory.createIntent(context, options, sessionProvider)
+    val extras = assertThat(customTabsIntent.intent).extras()
 
-        val factory = spyk(this.factory) {
-            justRun { applyColorSchemes(any(), any()) }
-            justRun { applyCloseButton(any(), any(), any()) }
-            justRun { applyAnimations(any(), any(), any()) }
-            justRun { applyPartialCustomTabsConfiguration(any(), any(), any()) }
-            justRun { applyBrowserConfiguration(any(), any(), any()) }
-        }
+    val colorSchemesSlot = slot<CustomTabsColorSchemes>()
+    verify { factory.applyColorSchemes(any(), capture(colorSchemesSlot)) }
 
-        val customTabsIntent = factory.createIntent(context, options, sessionProvider)
-        val extras = assertThat(customTabsIntent.intent).extras()
+    assertThat(colorSchemesSlot.captured).isSameInstanceAs(expColorSchemes)
 
-        val colorSchemesSlot = slot<CustomTabsColorSchemes>()
-        verify { factory.applyColorSchemes(any(), capture(colorSchemesSlot)) }
+    extras.bool(EXTRA_ENABLE_URLBAR_HIDING).isEqualTo(expUrlBarHidingEnabled)
+    extras.integer(EXTRA_SHARE_STATE).isEqualTo(expShareState)
+    extras.integer(EXTRA_TITLE_VISIBILITY_STATE).isEqualTo(SHOW_PAGE_TITLE)
+    extras.bool(EXTRA_ENABLE_INSTANT_APPS).isEqualTo(expInstantAppsEnabled)
+    extras.bool(EXTRA_DISABLE_BOOKMARKS_BUTTON).isEqualTo(!expBookmarksButtonEnabled)
+    extras.bool(EXTRA_DISABLE_DOWNLOAD_BUTTON).isEqualTo(!expDownloadButtonEnabled)
 
-        assertThat(colorSchemesSlot.captured).isSameInstanceAs(expColorSchemes)
+    // Cannot verify `shareIdentityEnabled` as it cannot be retrieved from `Intent#extras` using a key.
 
-        extras.bool(EXTRA_ENABLE_URLBAR_HIDING).isEqualTo(expUrlBarHidingEnabled)
-        extras.integer(EXTRA_SHARE_STATE).isEqualTo(expShareState)
-        extras.integer(EXTRA_TITLE_VISIBILITY_STATE).isEqualTo(SHOW_PAGE_TITLE)
-        extras.bool(EXTRA_ENABLE_INSTANT_APPS).isEqualTo(expInstantAppsEnabled)
-        extras.bool(EXTRA_DISABLE_BOOKMARKS_BUTTON).isEqualTo(!expBookmarksButtonEnabled)
-        extras.bool(EXTRA_DISABLE_DOWNLOAD_BUTTON).isEqualTo(!expDownloadButtonEnabled)
+    val closeButtonSlot = slot<CustomTabsCloseButton>()
+    verify { factory.applyCloseButton(any(), any(), capture(closeButtonSlot)) }
+    assertThat(closeButtonSlot.captured).isSameInstanceAs(expCloseButton)
 
-        // Cannot verify `shareIdentityEnabled` as it cannot be retrieved from `Intent#extras` using a key.
+    val animationsSlot = slot<CustomTabsAnimations>()
+    verify { factory.applyAnimations(any(), any(), capture(animationsSlot)) }
+    assertThat(animationsSlot.captured).isSameInstanceAs(expAnimations)
 
-        val closeButtonSlot = slot<CustomTabsCloseButton>()
-        verify { factory.applyCloseButton(any(), any(), capture(closeButtonSlot)) }
-        assertThat(closeButtonSlot.captured).isSameInstanceAs(expCloseButton)
+    val partialSlot = slot<PartialCustomTabsConfiguration>()
+    verify { factory.applyPartialCustomTabsConfiguration(any(), any(), capture(partialSlot)) }
+    assertThat(partialSlot.captured).isSameInstanceAs(expPartial)
 
-        val animationsSlot = slot<CustomTabsAnimations>()
-        verify { factory.applyAnimations(any(), any(), capture(animationsSlot)) }
-        assertThat(animationsSlot.captured).isSameInstanceAs(expAnimations)
+    val browserSlot = slot<BrowserConfiguration>()
+    verify { factory.applyBrowserConfiguration(any(), any(), capture(browserSlot)) }
+    assertThat(browserSlot.captured).isSameInstanceAs(expBrowser)
+  }
 
-        val partialSlot = slot<PartialCustomTabsConfiguration>()
-        verify { factory.applyPartialCustomTabsConfiguration(any(), any(), capture(partialSlot)) }
-        assertThat(partialSlot.captured).isSameInstanceAs(expPartial)
-
-        val browserSlot = slot<BrowserConfiguration>()
-        verify { factory.applyBrowserConfiguration(any(), any(), capture(browserSlot)) }
-        assertThat(browserSlot.captured).isSameInstanceAs(expBrowser)
+  @Test
+  fun createIntent_minimumOptions() {
+    val options = CustomTabsIntentOptions.Builder()
+      .build()
+    val factory = spyk(this.factory) {
+      justRun { applyColorSchemes(any(), any()) }
+      justRun { applyCloseButton(any(), any(), any()) }
+      justRun { applyAnimations(any(), any(), any()) }
+      justRun { applyPartialCustomTabsConfiguration(any(), any(), any()) }
+      justRun { applyBrowserConfiguration(any(), any(), any()) }
     }
 
-    @Test
-    fun createIntent_minimumOptions() {
-        val options = CustomTabsIntentOptions.Builder()
-            .build()
-        val factory = spyk(this.factory) {
-            justRun { applyColorSchemes(any(), any()) }
-            justRun { applyCloseButton(any(), any(), any()) }
-            justRun { applyAnimations(any(), any(), any()) }
-            justRun { applyPartialCustomTabsConfiguration(any(), any(), any()) }
-            justRun { applyBrowserConfiguration(any(), any(), any()) }
-        }
+    val customTabsIntent = factory.createIntent(context, options, sessionProvider)
+    val extras = assertThat(customTabsIntent.intent).extras()
+    extras.doesNotContainKey(EXTRA_ENABLE_URLBAR_HIDING)
+    extras.doesNotContainKey(EXTRA_TITLE_VISIBILITY_STATE)
+    // It seems that CustomTabsIntent includes these extras by default.
+    extras.containsKey(EXTRA_SHARE_STATE)
+    extras.containsKey(EXTRA_ENABLE_INSTANT_APPS)
 
-        val customTabsIntent = factory.createIntent(context, options, sessionProvider)
-        val extras = assertThat(customTabsIntent.intent).extras()
-        extras.doesNotContainKey(EXTRA_ENABLE_URLBAR_HIDING)
-        extras.doesNotContainKey(EXTRA_TITLE_VISIBILITY_STATE)
-        // It seems that CustomTabsIntent includes these extras by default.
-        extras.containsKey(EXTRA_SHARE_STATE)
-        extras.containsKey(EXTRA_ENABLE_INSTANT_APPS)
-
-        verify(exactly = 0) {
-            factory.applyColorSchemes(any(), any())
-            factory.applyCloseButton(any(), any(), any())
-            factory.applyAnimations(any(), any(), any())
-            factory.applyPartialCustomTabsConfiguration(any(), any(), any())
-        }
-
-        val browserConfigSlot = slot<BrowserConfiguration>()
-        verify { factory.applyBrowserConfiguration(any(), any(), capture(browserConfigSlot)) }
-
-        val actualBrowserConfig = browserConfigSlot.captured
-        assertThat(actualBrowserConfig.prefersExternalBrowser).isNull()
-        assertThat(actualBrowserConfig.prefersDefaultBrowser).isNull()
-        assertThat(actualBrowserConfig.fallbackCustomTabPackages).isNull()
-        assertThat(actualBrowserConfig.headers).isNull()
+    verify(exactly = 0) {
+      factory.applyColorSchemes(any(), any())
+      factory.applyCloseButton(any(), any(), any())
+      factory.applyAnimations(any(), any(), any())
+      factory.applyPartialCustomTabsConfiguration(any(), any(), any())
     }
 
-    /**
-     * @noinspection DataFlowIssue
-     */
-    @Test
-    fun applyColorSchemes_completeOptions() {
-        val expLightParams = CustomTabColorSchemeParams.Builder()
-            .setToolbarColor(0xFFFFDBA0.toInt())
-            .setNavigationBarDividerColor(0xFFFFDBA1.toInt())
-            .setNavigationBarColor(0xFFFFDBA2.toInt())
-            .build()
-        val expDarkParams = CustomTabColorSchemeParams.Builder()
-            .setToolbarColor(0xFFFFDBA3.toInt())
-            .setNavigationBarDividerColor(0xFFFFDBA4.toInt())
-            .setNavigationBarColor(0xFFFFDBA5.toInt())
-            .build()
-        val expDefaultParams = CustomTabColorSchemeParams.Builder()
-            .setToolbarColor(0xFFFFDBA5.toInt())
-            .setNavigationBarDividerColor(0xFFFFDBA6.toInt())
-            .setNavigationBarColor(0xFFFFDBA7.toInt())
-            .build()
-        val expColorScheme = CustomTabsIntent.COLOR_SCHEME_SYSTEM
-        val options = CustomTabsColorSchemes.Builder()
-            .setColorScheme(expColorScheme)
-            .setLightParams(
-                CustomTabColorSchemeParams.Builder()
-                    .setToolbarColor(expLightParams.toolbarColor ?: 0)
-                    .setNavigationBarColor(expLightParams.navigationBarColor ?: 0)
-                    .setNavigationBarDividerColor(expLightParams.navigationBarDividerColor ?: 0)
-                    .build()
-            )
-            .setDarkParams(
-                CustomTabColorSchemeParams.Builder()
-                    .setToolbarColor(expDarkParams.toolbarColor ?: 0)
-                    .setNavigationBarColor(expDarkParams.navigationBarColor ?: 0)
-                    .setNavigationBarDividerColor(expDarkParams.navigationBarDividerColor ?: 0)
-                    .build()
-            )
-            .setDefaultParams(
-                CustomTabColorSchemeParams.Builder()
-                    .setToolbarColor(expDefaultParams.toolbarColor ?: 0)
-                    .setNavigationBarColor(expDefaultParams.navigationBarColor ?: 0)
-                    .setNavigationBarDividerColor(expDefaultParams.navigationBarDividerColor ?: 0)
-                    .build()
-            )
-            .build()
-        val builder = mockk<CustomTabsIntent.Builder>(relaxed = true)
-        factory.applyColorSchemes(builder, options)
+    val browserConfigSlot = slot<BrowserConfiguration>()
+    verify { factory.applyBrowserConfiguration(any(), any(), capture(browserConfigSlot)) }
 
-        val schemeSlot = mutableListOf<Int>()
-        val paramsSlot = mutableListOf<CustomTabColorSchemeParams>()
-        verify { builder.setColorScheme(capture(schemeSlot)) }
-        verify(exactly = 2) {
-            builder.setColorSchemeParams(capture(schemeSlot), capture(paramsSlot))
-        }
-        verify { builder.setDefaultColorSchemeParams(capture(paramsSlot)) }
+    val actualBrowserConfig = browserConfigSlot.captured
+    assertThat(actualBrowserConfig.prefersExternalBrowser).isNull()
+    assertThat(actualBrowserConfig.prefersDefaultBrowser).isNull()
+    assertThat(actualBrowserConfig.fallbackCustomTabPackages).isNull()
+    assertThat(actualBrowserConfig.headers).isNull()
+  }
 
-        assertThat(schemeSlot).containsExactly(
-            expColorScheme,
-            CustomTabsIntent.COLOR_SCHEME_LIGHT,
-            CustomTabsIntent.COLOR_SCHEME_DARK
-        )
-        assertThat(paramsSlot).hasSize(3)
+  /**
+   * @noinspection DataFlowIssue
+   */
+  @Test
+  fun applyColorSchemes_completeOptions() {
+    val expLightParams = CustomTabColorSchemeParams.Builder()
+      .setToolbarColor(0xFFFFDBA0.toInt())
+      .setNavigationBarDividerColor(0xFFFFDBA1.toInt())
+      .setNavigationBarColor(0xFFFFDBA2.toInt())
+      .build()
+    val expDarkParams = CustomTabColorSchemeParams.Builder()
+      .setToolbarColor(0xFFFFDBA3.toInt())
+      .setNavigationBarDividerColor(0xFFFFDBA4.toInt())
+      .setNavigationBarColor(0xFFFFDBA5.toInt())
+      .build()
+    val expDefaultParams = CustomTabColorSchemeParams.Builder()
+      .setToolbarColor(0xFFFFDBA5.toInt())
+      .setNavigationBarDividerColor(0xFFFFDBA6.toInt())
+      .setNavigationBarColor(0xFFFFDBA7.toInt())
+      .build()
+    val expColorScheme = CustomTabsIntent.COLOR_SCHEME_SYSTEM
+    val options = CustomTabsColorSchemes.Builder()
+      .setColorScheme(expColorScheme)
+      .setLightParams(
+        CustomTabColorSchemeParams.Builder()
+          .setToolbarColor(expLightParams.toolbarColor ?: 0)
+          .setNavigationBarColor(expLightParams.navigationBarColor ?: 0)
+          .setNavigationBarDividerColor(expLightParams.navigationBarDividerColor ?: 0)
+          .build()
+      )
+      .setDarkParams(
+        CustomTabColorSchemeParams.Builder()
+          .setToolbarColor(expDarkParams.toolbarColor ?: 0)
+          .setNavigationBarColor(expDarkParams.navigationBarColor ?: 0)
+          .setNavigationBarDividerColor(expDarkParams.navigationBarDividerColor ?: 0)
+          .build()
+      )
+      .setDefaultParams(
+        CustomTabColorSchemeParams.Builder()
+          .setToolbarColor(expDefaultParams.toolbarColor ?: 0)
+          .setNavigationBarColor(expDefaultParams.navigationBarColor ?: 0)
+          .setNavigationBarDividerColor(expDefaultParams.navigationBarDividerColor ?: 0)
+          .build()
+      )
+      .build()
+    val builder = mockk<CustomTabsIntent.Builder>(relaxed = true)
+    factory.applyColorSchemes(builder, options)
 
-        val actualLightParams = paramsSlot[0]
-        assertThat(actualLightParams.toolbarColor).isEqualTo(expLightParams.toolbarColor)
-        assertThat(actualLightParams.navigationBarColor)
-            .isEqualTo(expLightParams.navigationBarColor)
-        assertThat(actualLightParams.navigationBarDividerColor)
-            .isEqualTo(expLightParams.navigationBarDividerColor)
-
-        val actualDarkParams = paramsSlot[1]
-        assertThat(actualDarkParams.toolbarColor).isEqualTo(expDarkParams.toolbarColor)
-        assertThat(actualDarkParams.navigationBarColor)
-            .isEqualTo(expDarkParams.navigationBarColor)
-        assertThat(actualDarkParams.navigationBarDividerColor)
-            .isEqualTo(expDarkParams.navigationBarDividerColor)
-
-        val actualDefaultParams = paramsSlot[2]
-        assertThat(actualDefaultParams.toolbarColor)
-            .isEqualTo(expDefaultParams.toolbarColor)
-        assertThat(actualDefaultParams.navigationBarColor)
-            .isEqualTo(expDefaultParams.navigationBarColor)
-        assertThat(actualDefaultParams.navigationBarDividerColor)
-            .isEqualTo(expDefaultParams.navigationBarDividerColor)
+    val schemeSlot = mutableListOf<Int>()
+    val paramsSlot = mutableListOf<CustomTabColorSchemeParams>()
+    verify { builder.setColorScheme(capture(schemeSlot)) }
+    verify(exactly = 2) {
+      builder.setColorSchemeParams(capture(schemeSlot), capture(paramsSlot))
     }
+    verify { builder.setDefaultColorSchemeParams(capture(paramsSlot)) }
 
-    @Test
-    fun applyColorSchemes_minimumOptions() {
-        val options = CustomTabsColorSchemes.Builder().build()
-        val builder = mockk<CustomTabsIntent.Builder>()
-        factory.applyColorSchemes(builder, options)
+    assertThat(schemeSlot).containsExactly(
+      expColorScheme,
+      CustomTabsIntent.COLOR_SCHEME_LIGHT,
+      CustomTabsIntent.COLOR_SCHEME_DARK
+    )
+    assertThat(paramsSlot).hasSize(3)
 
-        verify(exactly = 0) {
-            builder.setColorScheme(any())
-            builder.setColorSchemeParams(any(), any())
-            builder.setDefaultColorSchemeParams(any())
-        }
+    val actualLightParams = paramsSlot[0]
+    assertThat(actualLightParams.toolbarColor).isEqualTo(expLightParams.toolbarColor)
+    assertThat(actualLightParams.navigationBarColor)
+      .isEqualTo(expLightParams.navigationBarColor)
+    assertThat(actualLightParams.navigationBarDividerColor)
+      .isEqualTo(expLightParams.navigationBarDividerColor)
+
+    val actualDarkParams = paramsSlot[1]
+    assertThat(actualDarkParams.toolbarColor).isEqualTo(expDarkParams.toolbarColor)
+    assertThat(actualDarkParams.navigationBarColor)
+      .isEqualTo(expDarkParams.navigationBarColor)
+    assertThat(actualDarkParams.navigationBarDividerColor)
+      .isEqualTo(expDarkParams.navigationBarDividerColor)
+
+    val actualDefaultParams = paramsSlot[2]
+    assertThat(actualDefaultParams.toolbarColor)
+      .isEqualTo(expDefaultParams.toolbarColor)
+    assertThat(actualDefaultParams.navigationBarColor)
+      .isEqualTo(expDefaultParams.navigationBarColor)
+    assertThat(actualDefaultParams.navigationBarDividerColor)
+      .isEqualTo(expDefaultParams.navigationBarDividerColor)
+  }
+
+  @Test
+  fun applyColorSchemes_minimumOptions() {
+    val options = CustomTabsColorSchemes.Builder().build()
+    val builder = mockk<CustomTabsIntent.Builder>()
+    factory.applyColorSchemes(builder, options)
+
+    verify(exactly = 0) {
+      builder.setColorScheme(any())
+      builder.setColorSchemeParams(any(), any())
+      builder.setDefaultColorSchemeParams(any())
     }
+  }
 
-    @Test
-    fun applyCloseButton_completeOptions() {
-        val expIcon = mockk<Bitmap>()
-        every { resources.getBitmap(any(), any()) } returns expIcon
+  @Test
+  fun applyCloseButton_completeOptions() {
+    val expIcon = mockk<Bitmap>()
+    every { resources.getBitmap(any(), any()) } returns expIcon
 
-        val expPosition = CustomTabsIntent.CLOSE_BUTTON_POSITION_DEFAULT
-        val options = CustomTabsCloseButton.Builder()
-            .setIcon("icon")
-            .setPosition(expPosition)
-            .build()
+    val expPosition = CustomTabsIntent.CLOSE_BUTTON_POSITION_DEFAULT
+    val options = CustomTabsCloseButton.Builder()
+      .setIcon("icon")
+      .setPosition(expPosition)
+      .build()
 
-        val builder = CustomTabsIntent.Builder()
-        factory.applyCloseButton(context, builder, options)
+    val builder = CustomTabsIntent.Builder()
+    factory.applyCloseButton(context, builder, options)
 
-        val customTabsIntent = builder.build()
-        val extras = assertThat(customTabsIntent.intent).extras()
-        extras.isNotNull()
-        extras.parcelable<Parcelable>(EXTRA_CLOSE_BUTTON_ICON).isSameInstanceAs(expIcon)
-        extras.integer(EXTRA_CLOSE_BUTTON_POSITION).isEqualTo(expPosition)
+    val customTabsIntent = builder.build()
+    val extras = assertThat(customTabsIntent.intent).extras()
+    extras.isNotNull()
+    extras.parcelable<Parcelable>(EXTRA_CLOSE_BUTTON_ICON).isSameInstanceAs(expIcon)
+    extras.integer(EXTRA_CLOSE_BUTTON_POSITION).isEqualTo(expPosition)
+  }
+
+  @Test
+  fun applyCloseButton_minimumOptions() {
+    val options = CustomTabsCloseButton.Builder().build()
+    val builder = CustomTabsIntent.Builder()
+    factory.applyCloseButton(context, builder, options)
+
+    val customTabsIntent = builder.build()
+    val extras = assertThat(customTabsIntent.intent).extras()
+    extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_ICON)
+    extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_POSITION)
+  }
+
+  @Test
+  fun applyCloseButton_invalidIcon() {
+    every { resources.getBitmap(any(), any()) } returns null
+
+    val options = CustomTabsCloseButton.Builder()
+      .setIcon("icon")
+      .build()
+    val builder = CustomTabsIntent.Builder()
+    factory.applyCloseButton(context, builder, options)
+
+    val customTabsIntent = builder.build()
+    val extras = assertThat(customTabsIntent.intent).extras()
+    extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_ICON)
+    extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_POSITION)
+  }
+
+  @Test
+  fun applyAnimations_completeOptions() {
+    val expStartEnter = 1
+    val expStartExit = 2
+    val expEndEnter = 3
+    val expEndExit = 4
+    every { resources.getAnimationIdentifier(any(), eq("start_enter")) } returns expStartEnter
+    every { resources.getAnimationIdentifier(any(), eq("start_exit")) } returns expStartExit
+    every { resources.getAnimationIdentifier(any(), eq("end_enter")) } returns expEndEnter
+    every { resources.getAnimationIdentifier(any(), eq("end_exit")) } returns expEndExit
+
+    val options = CustomTabsAnimations.Builder()
+      .setStartEnter("start_enter")
+      .setStartExit("start_exit")
+      .setEndEnter("end_enter")
+      .setEndExit("end_exit")
+      .build()
+    val builder = mockk<CustomTabsIntent.Builder>(relaxed = true)
+    factory.applyAnimations(context, builder, options)
+
+    val startEnterSlot = slot<Int>()
+    val startExitSlot = slot<Int>()
+    verify {
+      builder.setStartAnimations(
+        any(),
+        capture(startEnterSlot),
+        capture(startExitSlot)
+      )
     }
+    assertThat(startEnterSlot.captured).isEqualTo(expStartEnter)
+    assertThat(startExitSlot.captured).isEqualTo(expStartExit)
 
-    @Test
-    fun applyCloseButton_minimumOptions() {
-        val options = CustomTabsCloseButton.Builder().build()
-        val builder = CustomTabsIntent.Builder()
-        factory.applyCloseButton(context, builder, options)
+    val endEnterSlot = slot<Int>()
+    val endExitSlot = slot<Int>()
+    verify { builder.setExitAnimations(any(), capture(endEnterSlot), capture(endExitSlot)) }
+    assertThat(endEnterSlot.captured).isEqualTo(expEndEnter)
+    assertThat(endExitSlot.captured).isEqualTo(expEndExit)
+  }
 
-        val customTabsIntent = builder.build()
-        val extras = assertThat(customTabsIntent.intent).extras()
-        extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_ICON)
-        extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_POSITION)
+  @Test
+  fun applyAnimations_emptyOptions() {
+    every { resources.getAnimationIdentifier(any(), any()) } returns ID_NULL
+
+
+    val options = CustomTabsAnimations.Builder().build()
+    val builder = mockk<CustomTabsIntent.Builder>()
+    factory.applyAnimations(context, builder, options)
+
+    verify(exactly = 0) {
+      builder.setStartAnimations(any(), any(), any())
+      builder.setExitAnimations(any(), any(), any())
     }
+  }
 
-    @Test
-    fun applyCloseButton_invalidIcon() {
-        every { resources.getBitmap(any(), any()) } returns null
+  @Test
+  fun applyPartialCustomTabsConfiguration_completeOptions() {
+    val expBreakpoint = 300
+    val expSideSheetMaximizationEnabled = true
+    val expCornerRadius = 8
+    val options = PartialCustomTabsConfiguration.Builder()
+      .setInitialHeight(100.0)
+      .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_FIXED)
+      .setInitialWidth(200.0)
+      .setActivitySideSheetBreakpoint(expBreakpoint.toDouble())
+      .setActivitySideSheetMaximizationEnabled(expSideSheetMaximizationEnabled)
+      .setActivitySideSheetPosition(ACTIVITY_SIDE_SHEET_POSITION_START)
+      .setActivitySideSheetDecorationType(ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER)
+      .setActivitySideSheetRoundedCornersPosition(
+        ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
+      )
+      .setCornerRadius(expCornerRadius)
+      .setBackgroundInteractionEnabled(false)
+      .build()
 
-        val options = CustomTabsCloseButton.Builder()
-            .setIcon("icon")
-            .build()
-        val builder = CustomTabsIntent.Builder()
-        factory.applyCloseButton(context, builder, options)
+    val expInitialActivityHeight = 100
+    every { resources.convertToPx(any(), eq(100.0)) } returns expInitialActivityHeight
 
-        val customTabsIntent = builder.build()
-        val extras = assertThat(customTabsIntent.intent).extras()
-        extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_ICON)
-        extras.doesNotContainKey(EXTRA_CLOSE_BUTTON_POSITION)
+    val expInitialActivityWidth = 200
+    every { resources.convertToPx(any(), eq(200.0)) } returns expInitialActivityWidth
+
+    val builder = CustomTabsIntent.Builder()
+    factory.applyPartialCustomTabsConfiguration(context, builder, options)
+
+    val customTabsIntent = builder.build()
+    val extras = assertThat(customTabsIntent.intent).extras()
+    extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight)
+    extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_FIXED)
+    extras.integer(EXTRA_INITIAL_ACTIVITY_WIDTH_PX).isEqualTo(expInitialActivityWidth)
+    extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_BREAKPOINT_DP).isEqualTo(expBreakpoint)
+    extras.bool(EXTRA_ACTIVITY_SIDE_SHEET_ENABLE_MAXIMIZATION).isEqualTo(
+      expSideSheetMaximizationEnabled
+    )
+    extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_POSITION).isEqualTo(
+      ACTIVITY_SIDE_SHEET_POSITION_START
+    )
+    extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_DECORATION_TYPE).isEqualTo(
+      ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER
+    )
+    extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION).isEqualTo(
+      ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
+    )
+    extras.integer(EXTRA_TOOLBAR_CORNER_RADIUS_DP).isEqualTo(expCornerRadius)
+    extras.bool(EXTRA_DISABLE_BACKGROUND_INTERACTION).isTrue()
+  }
+
+  @Test
+  fun applyPartialCustomTabsConfiguration_minimumOptions() {
+    val options = PartialCustomTabsConfiguration.Builder()
+      .setInitialHeight(200.0)
+      .build()
+
+    val expInitialActivityHeight = 200
+    every { resources.convertToPx(any(), any()) } returns expInitialActivityHeight
+
+    val builder = CustomTabsIntent.Builder()
+    factory.applyPartialCustomTabsConfiguration(context, builder, options)
+
+    val customTabsIntent = builder.build()
+    val extras = assertThat(customTabsIntent.intent).extras()
+    extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_DEFAULT)
+    extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight)
+    extras.doesNotContainKey(EXTRA_TOOLBAR_CORNER_RADIUS_DP)
+  }
+
+  @Test
+  fun applyBrowserConfiguration_completeOptionsWithPrefersChrome() {
+    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+
+    val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
+    every {
+      customTabsIntent.setChromeCustomTabsPackage(any(), any())
+    } returns customTabsIntent
+
+    val expHeader = "key" to "value"
+    val options = BrowserConfiguration.Builder()
+      .setHeaders(mapOf(expHeader))
+      .setFallbackCustomTabs(setOf("com.example.customtabs"))
+      .setPrefersExternalBrowser(false)
+      .setPrefersDefaultBrowser(false)
+      .build()
+    factory.applyBrowserConfiguration(context, customTabsIntent, options)
+
+    assertThat(customTabsIntent.intent).extras().containsKey(EXTRA_HEADERS)
+    val actualHeaders = customTabsIntent.intent.getBundleExtra(EXTRA_HEADERS)
+    assertThat(actualHeaders).isNotNull()
+    assertThat(actualHeaders).hasSize(1)
+    assertThat(actualHeaders).string(expHeader.first).isEqualTo(expHeader.second)
+
+    verify {
+      customTabsIntent.setChromeCustomTabsPackage(
+        any(),
+        ofType(NonChromeCustomTabs::class)
+      )
     }
+  }
 
-    @Test
-    fun applyAnimations_completeOptions() {
-        val expStartEnter = 1
-        val expStartExit = 2
-        val expEndEnter = 3
-        val expEndExit = 4
-        every { resources.getAnimationIdentifier(any(), eq("start_enter")) } returns expStartEnter
-        every { resources.getAnimationIdentifier(any(), eq("start_exit")) } returns expStartExit
-        every { resources.getAnimationIdentifier(any(), eq("end_enter")) } returns expEndEnter
-        every { resources.getAnimationIdentifier(any(), eq("end_exit")) } returns expEndExit
+  @Suppress("deprecation")
+  @Test
+  fun applyBrowserConfiguration_minimumOptionsWithPrefersChrome() {
+    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
-        val options = CustomTabsAnimations.Builder()
-            .setStartEnter("start_enter")
-            .setStartExit("start_exit")
-            .setEndEnter("end_enter")
-            .setEndExit("end_exit")
-            .build()
-        val builder = mockk<CustomTabsIntent.Builder>(relaxed = true)
-        factory.applyAnimations(context, builder, options)
+    val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
+    every {
+      customTabsIntent.setChromeCustomTabsPackage(any(), any())
+    } returns customTabsIntent
 
-        val startEnterSlot = slot<Int>()
-        val startExitSlot = slot<Int>()
-        verify {
-            builder.setStartAnimations(
-                any(),
-                capture(startEnterSlot),
-                capture(startExitSlot)
-            )
-        }
-        assertThat(startEnterSlot.captured).isEqualTo(expStartEnter)
-        assertThat(startExitSlot.captured).isEqualTo(expStartExit)
-
-        val endEnterSlot = slot<Int>()
-        val endExitSlot = slot<Int>()
-        verify { builder.setExitAnimations(any(), capture(endEnterSlot), capture(endExitSlot)) }
-        assertThat(endEnterSlot.captured).isEqualTo(expEndEnter)
-        assertThat(endExitSlot.captured).isEqualTo(expEndExit)
+    val pm = mockk<PackageManager> {
+      every { queryIntentActivities(any(), any<Int>()) } returns emptyList()
     }
+    every { context.packageManager } returns pm
 
-    @Test
-    fun applyAnimations_emptyOptions() {
-        every { resources.getAnimationIdentifier(any(), any()) } returns ID_NULL
+    val options = BrowserConfiguration.Builder()
+      .setPrefersExternalBrowser(false)
+      .build()
+    factory.applyBrowserConfiguration(context, customTabsIntent, options)
 
+    assertThat(customTabsIntent.intent)
+      .extras()
+      .doesNotContainKey(EXTRA_HEADERS)
 
-        val options = CustomTabsAnimations.Builder().build()
-        val builder = mockk<CustomTabsIntent.Builder>()
-        factory.applyAnimations(context, builder, options)
-
-        verify(exactly = 0) {
-            builder.setStartAnimations(any(), any(), any())
-            builder.setExitAnimations(any(), any(), any())
-        }
+    verify {
+      customTabsIntent.setChromeCustomTabsPackage(
+        any(),
+        ofType(NonChromeCustomTabs::class)
+      )
     }
+  }
 
-    @Test
-    fun applyPartialCustomTabsConfiguration_completeOptions() {
-        val expBreakpoint = 300
-        val expSideSheetMaximizationEnabled = true
-        val expCornerRadius = 8
-        val options = PartialCustomTabsConfiguration.Builder()
-            .setInitialHeight(100.0)
-            .setActivityHeightResizeBehavior(ACTIVITY_HEIGHT_FIXED)
-            .setInitialWidth(200.0)
-            .setActivitySideSheetBreakpoint(expBreakpoint.toDouble())
-            .setActivitySideSheetMaximizationEnabled(expSideSheetMaximizationEnabled)
-            .setActivitySideSheetPosition(ACTIVITY_SIDE_SHEET_POSITION_START)
-            .setActivitySideSheetDecorationType(ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER)
-            .setActivitySideSheetRoundedCornersPosition(
-                ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
-            )
-            .setCornerRadius(expCornerRadius)
-            .setBackgroundInteractionEnabled(false)
-            .build()
+  @Suppress("deprecation")
+  @Test
+  fun applyBrowserConfiguration_prefersDefaultBrowser() {
+    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
-        val expInitialActivityHeight = 100
-        every { resources.convertToPx(any(), eq(100.0)) } returns expInitialActivityHeight
+    val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
+    every { customTabsIntent.setCustomTabsPackage(any(), any()) } returns customTabsIntent
 
-        val expInitialActivityWidth = 200
-        every { resources.convertToPx(any(), eq(200.0)) } returns expInitialActivityWidth
-
-        val builder = CustomTabsIntent.Builder()
-        factory.applyPartialCustomTabsConfiguration(context, builder, options)
-
-        val customTabsIntent = builder.build()
-        val extras = assertThat(customTabsIntent.intent).extras()
-        extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight)
-        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_FIXED)
-        extras.integer(EXTRA_INITIAL_ACTIVITY_WIDTH_PX).isEqualTo(expInitialActivityWidth)
-        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_BREAKPOINT_DP).isEqualTo(expBreakpoint)
-        extras.bool(EXTRA_ACTIVITY_SIDE_SHEET_ENABLE_MAXIMIZATION).isEqualTo(
-            expSideSheetMaximizationEnabled
-        )
-        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_POSITION).isEqualTo(
-            ACTIVITY_SIDE_SHEET_POSITION_START
-        )
-        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_DECORATION_TYPE).isEqualTo(
-            ACTIVITY_SIDE_SHEET_DECORATION_TYPE_DIVIDER
-        )
-        extras.integer(EXTRA_ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION).isEqualTo(
-            ACTIVITY_SIDE_SHEET_ROUNDED_CORNERS_POSITION_TOP
-        )
-        extras.integer(EXTRA_TOOLBAR_CORNER_RADIUS_DP).isEqualTo(expCornerRadius)
-        extras.bool(EXTRA_DISABLE_BACKGROUND_INTERACTION).isTrue()
+    val pm = mockk<PackageManager> {
+      every { queryIntentActivities(any(), any<Int>()) } returns emptyList()
     }
+    every { context.packageManager } returns pm
 
-    @Test
-    fun applyPartialCustomTabsConfiguration_minimumOptions() {
-        val options = PartialCustomTabsConfiguration.Builder()
-            .setInitialHeight(200.0)
-            .build()
+    val options = BrowserConfiguration.Builder()
+      .setPrefersExternalBrowser(false)
+      .setPrefersDefaultBrowser(true)
+      .build()
+    factory.applyBrowserConfiguration(context, customTabsIntent, options)
 
-        val expInitialActivityHeight = 200
-        every { resources.convertToPx(any(), any()) } returns expInitialActivityHeight
+    assertThat(customTabsIntent.intent)
+      .extras()
+      .doesNotContainKey(EXTRA_HEADERS)
 
-        val builder = CustomTabsIntent.Builder()
-        factory.applyPartialCustomTabsConfiguration(context, builder, options)
-
-        val customTabsIntent = builder.build()
-        val extras = assertThat(customTabsIntent.intent).extras()
-        extras.integer(EXTRA_ACTIVITY_HEIGHT_RESIZE_BEHAVIOR).isEqualTo(ACTIVITY_HEIGHT_DEFAULT)
-        extras.integer(EXTRA_INITIAL_ACTIVITY_HEIGHT_PX).isEqualTo(expInitialActivityHeight)
-        extras.doesNotContainKey(EXTRA_TOOLBAR_CORNER_RADIUS_DP)
+    verify {
+      customTabsIntent.setCustomTabsPackage(
+        any(),
+        ofType(NonChromeCustomTabs::class)
+      )
     }
+  }
 
-    @Test
-    fun applyBrowserConfiguration_completeOptionsWithPrefersChrome() {
-        mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+  @Test
+  fun applyBrowserConfiguration_customTabsSession() {
+    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
-        val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
-        every {
-            customTabsIntent.setChromeCustomTabsPackage(any(), any())
-        } returns customTabsIntent
+    val expSessionPackageName = "com.example.customtabs"
+    val options = BrowserConfiguration.Builder()
+      .setSessionPackageName(expSessionPackageName)
+      .build()
+    val customTabsIntent = CustomTabsIntent.Builder().build()
+    factory.applyBrowserConfiguration(context, customTabsIntent, options)
 
-        val expHeader = "key" to "value"
-        val options = BrowserConfiguration.Builder()
-            .setHeaders(mapOf(expHeader))
-            .setFallbackCustomTabs(setOf("com.example.customtabs"))
-            .setPrefersExternalBrowser(false)
-            .setPrefersDefaultBrowser(false)
-            .build()
-        factory.applyBrowserConfiguration(context, customTabsIntent, options)
+    assertThat(customTabsIntent.intent).hasPackage(expSessionPackageName)
 
-        assertThat(customTabsIntent.intent).extras().containsKey(EXTRA_HEADERS)
-        val actualHeaders = customTabsIntent.intent.getBundleExtra(EXTRA_HEADERS)
-        assertThat(actualHeaders).isNotNull()
-        assertThat(actualHeaders).hasSize(1)
-        assertThat(actualHeaders).string(expHeader.first).isEqualTo(expHeader.second)
-
-        verify {
-            customTabsIntent.setChromeCustomTabsPackage(
-                any(),
-                ofType(NonChromeCustomTabs::class)
-            )
-        }
+    verify(exactly = 0) {
+      customTabsIntent.setChromeCustomTabsPackage(any(), any())
+      customTabsIntent.setCustomTabsPackage(any(), any())
     }
+  }
 
-    @Suppress("deprecation")
-    @Test
-    fun applyBrowserConfiguration_minimumOptionsWithPrefersChrome() {
-        mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+  @Test
+  fun applyBrowserConfiguration_avoidOverridingPackage() {
+    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
-        val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
-        every {
-            customTabsIntent.setChromeCustomTabsPackage(any(), any())
-        } returns customTabsIntent
+    val customTabsIntent = CustomTabsIntent.Builder().build()
+    val expPackageName = "com.example.customtabs"
+    customTabsIntent.intent.setPackage(expPackageName)
 
-        val pm = mockk<PackageManager> {
-            every { queryIntentActivities(any(), any<Int>()) } returns emptyList()
-        }
-        every { context.packageManager } returns pm
+    val sessionPackageName = "com.example.session.customtabs"
+    val options = BrowserConfiguration.Builder()
+      .setSessionPackageName(sessionPackageName)
+      .build()
+    factory.applyBrowserConfiguration(context, customTabsIntent, options)
 
-        val options = BrowserConfiguration.Builder()
-            .setPrefersExternalBrowser(false)
-            .build()
-        factory.applyBrowserConfiguration(context, customTabsIntent, options)
+    assertThat(customTabsIntent.intent).hasPackage(expPackageName)
 
-        assertThat(customTabsIntent.intent)
-            .extras()
-            .doesNotContainKey(EXTRA_HEADERS)
-
-        verify {
-            customTabsIntent.setChromeCustomTabsPackage(
-                any(),
-                ofType(NonChromeCustomTabs::class)
-            )
-        }
+    verify(exactly = 0) {
+      customTabsIntent.setChromeCustomTabsPackage(any(), any())
+      customTabsIntent.setCustomTabsPackage(any(), any())
     }
+  }
 
-    @Suppress("deprecation")
-    @Test
-    fun applyBrowserConfiguration_prefersDefaultBrowser() {
-        mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+  @Test
+  fun createIntentOptions_nullOptions() {
+    val options = factory.createIntentOptions(null)
+    assertThat(options).isNull()
+  }
 
-        val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
-        every { customTabsIntent.setCustomTabsPackage(any(), any()) } returns customTabsIntent
-
-        val pm = mockk<PackageManager> {
-            every { queryIntentActivities(any(), any<Int>()) } returns emptyList()
-        }
-        every { context.packageManager } returns pm
-
-        val options = BrowserConfiguration.Builder()
-            .setPrefersExternalBrowser(false)
-            .setPrefersDefaultBrowser(true)
-            .build()
-        factory.applyBrowserConfiguration(context, customTabsIntent, options)
-
-        assertThat(customTabsIntent.intent)
-            .extras()
-            .doesNotContainKey(EXTRA_HEADERS)
-
-        verify {
-            customTabsIntent.setCustomTabsPackage(
-                any(),
-                ofType(NonChromeCustomTabs::class)
-            )
-        }
-    }
-
-    @Test
-    fun applyBrowserConfiguration_customTabsSession() {
-        mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
-
-        val expSessionPackageName = "com.example.customtabs"
-        val options = BrowserConfiguration.Builder()
-            .setSessionPackageName(expSessionPackageName)
-            .build()
-        val customTabsIntent = CustomTabsIntent.Builder().build()
-        factory.applyBrowserConfiguration(context, customTabsIntent, options)
-
-        assertThat(customTabsIntent.intent).hasPackage(expSessionPackageName)
-
-        verify(exactly = 0) {
-            customTabsIntent.setChromeCustomTabsPackage(any(), any())
-            customTabsIntent.setCustomTabsPackage(any(), any())
-        }
-    }
-
-    @Test
-    fun applyBrowserConfiguration_avoidOverridingPackage() {
-        mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
-
-        val customTabsIntent = CustomTabsIntent.Builder().build()
-        val expPackageName = "com.example.customtabs"
-        customTabsIntent.intent.setPackage(expPackageName)
-
-        val sessionPackageName = "com.example.session.customtabs"
-        val options = BrowserConfiguration.Builder()
-            .setSessionPackageName(sessionPackageName)
-            .build()
-        factory.applyBrowserConfiguration(context, customTabsIntent, options)
-
-        assertThat(customTabsIntent.intent).hasPackage(expPackageName)
-
-        verify(exactly = 0) {
-            customTabsIntent.setChromeCustomTabsPackage(any(), any())
-            customTabsIntent.setCustomTabsPackage(any(), any())
-        }
-    }
-
-    @Test
-    fun createIntentOptions_nullOptions() {
-        val options = factory.createIntentOptions(null)
-        assertThat(options).isNull()
-    }
-
-    @Test
-    fun createIntentOptions_notNullOptions() {
-        val options = factory.createIntentOptions(emptyMap())
-        assertThat(options).isNotNull()
-    }
+  @Test
+  fun createIntentOptions_notNullOptions() {
+    val options = factory.createIntentOptions(emptyMap())
+    assertThat(options).isNotNull()
+  }
 }

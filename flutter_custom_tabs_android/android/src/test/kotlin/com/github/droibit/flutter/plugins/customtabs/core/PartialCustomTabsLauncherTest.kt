@@ -18,37 +18,37 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(manifest = Config.NONE)
 class PartialCustomTabsLauncherTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
+  @get:Rule
+  val mockkRule = MockKRule(this)
 
-    @MockK(relaxed = true)
-    private lateinit var activity: Activity
+  @MockK(relaxed = true)
+  private lateinit var activity: Activity
 
-    @InjectMockKs
-    private lateinit var launcher: PartialCustomTabsLauncher
+  @InjectMockKs
+  private lateinit var launcher: PartialCustomTabsLauncher
 
-    @Test
-    fun launch_withValidCustomTabsIntent_returnsTrue() {
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setInitialActivityHeightPx(100)
-            .build()
+  @Test
+  fun launch_withValidCustomTabsIntent_returnsTrue() {
+    val customTabsIntent = CustomTabsIntent.Builder()
+      .setInitialActivityHeightPx(100)
+      .build()
 
-        val uri = "https://example.com".toUri()
-        val result = launcher.launch(activity, uri, customTabsIntent)
-        assertThat(result).isTrue()
-        assertThat(customTabsIntent.intent).hasData(uri)
+    val uri = "https://example.com".toUri()
+    val result = launcher.launch(activity, uri, customTabsIntent)
+    assertThat(result).isTrue()
+    assertThat(customTabsIntent.intent).hasData(uri)
 
-        verify { activity.startActivityForResult(refEq(customTabsIntent.intent), eq(1001)) }
-    }
+    verify { activity.startActivityForResult(refEq(customTabsIntent.intent), eq(1001)) }
+  }
 
-    @Test
-    fun launch_withoutRequiredExtras_returnsFalse() {
-        val customTabsIntent = CustomTabsIntent.Builder().build()
+  @Test
+  fun launch_withoutRequiredExtras_returnsFalse() {
+    val customTabsIntent = CustomTabsIntent.Builder().build()
 
-        val uri = "https://example.com".toUri()
-        val result = launcher.launch(activity, uri, customTabsIntent)
-        assertThat(result).isFalse()
+    val uri = "https://example.com".toUri()
+    val result = launcher.launch(activity, uri, customTabsIntent)
+    assertThat(result).isFalse()
 
-        verify(exactly = 0) { activity.startActivityForResult(any(), any()) }
-    }
+    verify(exactly = 0) { activity.startActivityForResult(any(), any()) }
+  }
 }

@@ -9,10 +9,10 @@
 --elseposition same-line
 --header ignore
 --ifdef indent
---indent 4
+--indent 2
 --importgrouping testable-bottom
 --linebreaks lf
---maxwidth 200
+--maxwidth 120
 --operatorfunc spaced
 --patternlet hoist
 --ranges spaced
@@ -24,6 +24,7 @@
 --wraparguments preserve
 --wrapcollections preserve
 --typeblanklines remove
+--hexgrouping 10
 
 # rules
 

@@ -1,79 +1,79 @@
 group 'com.github.droibit.plugins.flutter.customtabs'
 
 buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10'
-    }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:7.4.2'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10'
+  }
 }
 
 rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    if (project.android.hasProperty('namespace')) {
-        namespace 'com.github.droibit.plugins.flutter.customtabs'
+  if (project.android.hasProperty('namespace')) {
+    namespace 'com.github.droibit.plugins.flutter.customtabs'
+  }
+
+  compileSdk 34
+
+  defaultConfig {
+    minSdk 19
+
+    vectorDrawables.useSupportLibrary = true
+  }
+  lintOptions {
+    disable 'InvalidPackage'
+  }
+
+  buildFeatures {
+    buildConfig false
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = '1.8'
+    // ref. https://www.reddit.com/r/androiddev/comments/mztyva/a_few_tips_for_testparameterinjector_library/
+    freeCompilerArgs += ['-java-parameters']
+  }
+
+  testOptions {
+    unitTests.all {
+      testLogging {
+        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+      }
     }
+  }
 
-    compileSdk 34
+  dependencies {
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.browser:browser:1.8.0'
+    implementation 'io.github.droibit:customtabslauncher:3.0.0'
 
-    defaultConfig {
-        minSdk 19
-
-        vectorDrawables.useSupportLibrary = true
-    }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
-    buildFeatures {
-        buildConfig false
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-        // ref. https://www.reddit.com/r/androiddev/comments/mztyva/a_few_tips_for_testparameterinjector_library/
-        freeCompilerArgs += ['-java-parameters']
-    }
-
-    testOptions {
-        unitTests.all {
-            testLogging {
-                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-                outputs.upToDateWhen { false }
-                showStandardStreams = true
-            }
-        }
-    }
-
-    dependencies {
-        implementation 'androidx.core:core-ktx:1.9.0'
-        implementation 'androidx.browser:browser:1.8.0'
-        implementation 'io.github.droibit:customtabslauncher:3.0.0'
-
-        testImplementation 'junit:junit:4.13.2'
-        testImplementation 'org.robolectric:robolectric:4.11'
-        testImplementation 'io.mockk:mockk:1.13.3'
-        testImplementation 'com.google.truth:truth:1.4.4'
-        testImplementation 'androidx.test.ext:truth:1.6.0'
-        testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
-        testImplementation 'com.google.testparameterinjector:test-parameter-injector:1.18'
-    }
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.11'
+    testImplementation 'io.mockk:mockk:1.13.3'
+    testImplementation 'com.google.truth:truth:1.4.4'
+    testImplementation 'androidx.test.ext:truth:1.6.0'
+    testImplementation 'androidx.test.ext:junit-ktx:1.2.1'
+    testImplementation 'com.google.testparameterinjector:test-parameter-injector:1.18'
+  }
 }
