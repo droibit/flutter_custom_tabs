@@ -154,10 +154,10 @@ analyzer_rules:
   - unused_declaration
   - unused_import
 included:
-  - ios/Classes
+  - ios/flutter_custom_tabs_ios/Sources
   - example/ios/RunnerTests
 excluded:
-  - ios/Classes/messages.g.swift
+  - "ios/**/messages.g.swift"
 
 line_length:
   - 200   # warning
