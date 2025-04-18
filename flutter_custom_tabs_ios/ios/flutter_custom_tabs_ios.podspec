@@ -9,16 +9,16 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 iOS platform implementation of flutter_custom_tabs.
                        DESC
-  s.homepage         = 'https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_ios'
-  s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'roomful.rooms@gmail.com' }
-  s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.homepage         = 'https://github.com/droibit/flutter_custom_tabs/'
+  s.license          = { :type => 'Apache-2.0', :file => '../LICENSE' }
+  s.author           = 'Shinya Kumagai'
+  s.source           = { :http => 'https://github.com/droibit/flutter_custom_tabs/tree/develop/flutter_custom_tabs_ios' }
+  s.documentation_url = 'https://pub.dev/packages/flutter_custom_tabs'
+  s.source_files = 'flutter_custom_tabs_ios/Sources/**/*.swift'
   s.dependency 'Flutter'
   s.platform = :ios, '12.0'
   s.swift_version = '5.0'
-  s.resource_bundles = {'flutter_custom_tabs_ios_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  s.resource_bundles = {'flutter_custom_tabs_ios_privacy' => ['flutter_custom_tabs_ios/Sources/flutter_custom_tabs_ios/Resources/PrivacyInfo.xcprivacy']}
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 end

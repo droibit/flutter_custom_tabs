@@ -1,6 +1,6 @@
 # file options
 
---exclude Carthage,Pods,.swiftpm,./ios/Classes/messages.g.swift
+--exclude Carthage,Pods,.swiftpm,ios/**/messages.g.swift
 
 # format options
 

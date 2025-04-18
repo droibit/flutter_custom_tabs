@@ -15,7 +15,7 @@ on:
       - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
 env:
-  DEVELOPER_DIR: /Applications/Xcode_16.2.app
+  DEVELOPER_DIR: /Applications/Xcode_16.3.app
 
 jobs:
   build:
@@ -48,4 +48,20 @@ jobs:
       working-directory: ./flutter_custom_tabs_ios/example
     - name: Run iOS unit tests
       run: make test
-      working-directory: ./flutter_custom_tabs_ios/example  
+      working-directory: ./flutter_custom_tabs_ios/example
+
+  spm-integration:
+    runs-on: macos-15
+    steps:
+    - uses: actions/checkout@v4
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - name: Enable Swift Package Manager integration
+      run: flutter config --enable-swift-package-manager        
+    - name: Get flutter dependencies
+      run: flutter pub get
+      working-directory: ./flutter_custom_tabs_ios
+    - name: Build example iOS app with SPM enabled
+      run: flutter build ios --no-codesign
+      working-directory: ./flutter_custom_tabs_ios/example
