@@ -11,8 +11,8 @@ iOS platform implementation of flutter_custom_tabs.
                        DESC
   s.homepage         = 'https://github.com/droibit/flutter_custom_tabs/'
   s.license          = { :type => 'Apache-2.0', :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'roomful.rooms@gmail.com' }
-  s.source           = { :path => 'https://github.com/droibit/flutter_custom_tabs/tree/main/flutter_custom_tabs_ios' }
+  s.author           = 'Shinya Kumagai'
+  s.source           = { :http => 'https://github.com/droibit/flutter_custom_tabs/tree/develop/flutter_custom_tabs_ios' }
   s.documentation_url = 'https://pub.dev/packages/flutter_custom_tabs'
   s.source_files = 'flutter_custom_tabs_ios/Sources/**/*.swift'
   s.dependency 'Flutter'

@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_custom_tabs_ios: af96077a039faa919a691dccf6576823732db2f5
+  flutter_custom_tabs_ios: d206c851c149cb53d5e7799020aa59b95ead1dd6
   integration_test: 13825b8a9334a850581300559b8839134b124670
 
 PODFILE CHECKSUM: 2f40fced8ccaa4f568954e339e48cea7e274cbdb
