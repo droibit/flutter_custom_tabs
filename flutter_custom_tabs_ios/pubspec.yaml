@@ -29,5 +29,5 @@ flutter:
     implements: flutter_custom_tabs
     platforms:
       ios:
-        pluginClass: GDBCustomTabsPlugin
+        pluginClass: CustomTabsPlugin
         dartPluginClass: CustomTabsPluginIOS
