@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
-  swiftOut: 'ios/flutter_custom_tabs_ios/Sources/messages.g.swift',
+  swiftOut: 'ios/flutter_custom_tabs_ios/Sources/flutter_custom_tabs_ios/messages.g.swift',
   dartOut: 'lib/src/messages/messages.g.dart',
 ))
 @HostApi()
