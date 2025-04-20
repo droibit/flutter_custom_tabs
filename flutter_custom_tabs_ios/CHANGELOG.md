@@ -1,3 +1,9 @@
+## 2.4.0
+
+- Adds Swift Package Manager(SPM) support.
+- Removes unnecessary bridge code and cleanup for SPM support.
+- Adds .editorconfig for consistent code style.
+
 ## 2.3.1
 
 - No changes except for version bump.
