@@ -1,3 +1,7 @@
+## 2.3.1
+
+Adds .editorconfig to for consistent code style.
+
 ## 2.3.0
 
 - Adds new options to `CustomTabsOptions`:
