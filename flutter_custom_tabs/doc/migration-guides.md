@@ -202,6 +202,7 @@ CustomTabsOptions(
 </table>
 
 Remaining name changes:
+
 | Change Type | Before | After |
 | --- | --- | --- |
 | Property | `CustomTabsOption.showPageTitle` | `CustomTabsOptions.showTitle` |
