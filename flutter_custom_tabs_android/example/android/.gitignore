@@ -21,4 +21,5 @@ gradlew.bat
 .cxx/
 
 # Flutter files
+build/
 GeneratedPluginRegistrant.java
