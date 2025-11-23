@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
+// `@internal` is exported from `package:flutter/foundation.dart`
+// in Flutter >= 3.35.0; keep `meta` import for older SDKs (backcompat).
+// ignore: unnecessary_import
 import 'package:meta/meta.dart';
 
 /// The configuration of a Custom Tab visualization.
