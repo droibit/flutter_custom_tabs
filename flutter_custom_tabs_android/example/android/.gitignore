@@ -13,14 +13,13 @@ local.properties
 projectFilesBackup/
 output.json
 
-# Gradle files
-/.gradle
-/build
-/gradle
-/gradlew
-/gradlew.bat
-
-.DS_Store
+# Gradle
+**/gradle-wrapper.jar
+.gradle/
+gradlew
+gradlew.bat
+.cxx/
 
 # Flutter files
+build/
 GeneratedPluginRegistrant.java
