@@ -1,11 +1,10 @@
 name: flutter_custom_tabs_example
 description: Demonstrates how to use the flutter_custom_tabs plugin.
-
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
-  flutter: ">=3.19.0"
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
 
 dependencies:
   flutter:
