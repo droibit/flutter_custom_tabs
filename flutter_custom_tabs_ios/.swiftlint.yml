@@ -158,6 +158,7 @@ included:
   - example/ios/RunnerTests
 excluded:
   - "ios/**/messages.g.swift"
+  - "example/ios/Flutter/**"
 
 line_length:
   - 200   # warning
