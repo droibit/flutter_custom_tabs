@@ -146,8 +146,8 @@ void _launchUrl(BuildContext context) async {
 
 | Option | Android (`CustomTabsOptions`) | iOS (`SafariViewControllerOptions`) | `LaunchOptions` |
 | --- | :---: | :---: | :---: |
-| Change background color of app/bottom bar | ✅ | ✅ | ✅ |
-| Change color of controls on app/bottom bar | -<br>(Automatically adjusted by Custom Tabs) | ✅ | ✅ |
+| Change background color of app/bottom bar | ✅ | ✅<br>(Ignored on iOS 26+) | ✅<br>(Ignored on iOS 26+) |
+| Change color of controls on app/bottom bar | -<br>(Automatically adjusted by Custom Tabs) | ✅<br>(Ignored on iOS 26+) | ✅<br>(Ignored on iOS 26+) |
 | Change background color of system navigation bar | ✅ | - | ✅ |
 | Change color of system navigation divider | ✅ | - | ✅ |
 | Hide(Collapse) the app bar by scrolling | ✅ | ✅ | ✅ |
@@ -168,6 +168,17 @@ Support status in `flutter_custom_tabs`:
 
 - ✅: Supported.
 - `-`: Option not provided by Custom Tabs implementation.
+
+### Liquid Glass and iOS 26+ Appearance Changes
+
+Starting with iOS 26, Apple introduced the "Liquid Glass" background effects that are applied to system bars and controls. According to Apple's documentation, "Tinting the bars interferes with background effects that the system provides."
+
+As a result, the following properties in `SafariViewControllerOptions` are **ignored** on iOS 26 and later:
+
+- `preferredBarTintColor`
+- `preferredControlTintColor`
+
+For more details, see [here](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller).
 
 ## Advanced Usage
 
