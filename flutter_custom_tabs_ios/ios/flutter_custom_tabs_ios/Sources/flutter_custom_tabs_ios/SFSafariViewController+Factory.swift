@@ -20,6 +20,7 @@ extension SFSafariViewController {
       configuration: configuration
     )
 
+    // swiftlint:disable unavailable_condition
     if #available(iOS 26, *) {
       // On iOS 26 and later, `preferredBarTintColor` and
       // `preferredControlTintColor` are deprecated — do not set them.
@@ -31,6 +32,7 @@ extension SFSafariViewController {
         viewController.preferredControlTintColor = UIColor(controlTintColorHex)
       }
     }
+    // swiftlint:enable unavailable_condition
 
     if let dismissButtonStyleRawValue = options.dismissButtonStyle,
        let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: Int(dismissButtonStyleRawValue))

@@ -1,4 +1,4 @@
-// swiftlint:disable object_literal
+// swiftlint:disable object_literal function_body_length
 
 import SafariServices
 import XCTest
