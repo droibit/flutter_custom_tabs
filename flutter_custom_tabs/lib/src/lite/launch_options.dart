@@ -12,11 +12,15 @@ class LaunchOptions {
   });
 
   /// The background color of the app bar and bottom bar.
+  ///
+  /// **Note:** On iOS 26 and later, due to the introduction of Liquid Glass, this property is ignored even if specified.
   final Color? barColor;
 
   /// The color to tint the control buttons on the app bar and bottom bar.
   ///
   /// - Availability: **Only for iOS**
+  ///
+  /// **Note:** On iOS 26 and later, due to the introduction of Liquid Glass, this property is ignored even if specified.
   final Color? onBarColor;
 
   /// The color configuration of the system navigation bar.

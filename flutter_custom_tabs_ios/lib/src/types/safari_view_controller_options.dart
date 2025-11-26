@@ -40,10 +40,21 @@ class SafariViewControllerOptions implements PlatformOptions {
           pageSheet: configuration,
         );
 
+
   /// The color to tint the background of the navigation bar and the toolbar.
+  ///
+  /// **Note:** On iOS 26 and later, due to the introduction of Liquid Glass, this property is ignored even if specified.
+  ///
+  /// See also:
+  /// - [SFSafariViewController.preferredBarTintColor](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/preferredbartintcolor)
   final Color? preferredBarTintColor;
 
   /// The color to tint the control buttons on the navigation bar and the toolbar.
+  ///
+  /// **Note:** On iOS 26 and later, due to the introduction of Liquid Glass, this property is ignored even if specified.
+  ///
+  /// See also:
+  /// - [SFSafariViewController.preferredControlTintColor](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller/preferredcontroltintcolor)
   final Color? preferredControlTintColor;
 
   /// A Boolean value that enables the url bar to hide as the user scrolls down the page.
