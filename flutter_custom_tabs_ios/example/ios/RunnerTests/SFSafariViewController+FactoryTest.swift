@@ -16,7 +16,11 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
     // Validation of default values for non-null values.
     XCTAssertTrue(actual.configuration.barCollapsingEnabled)
     XCTAssertFalse(actual.configuration.entersReaderIfAvailable)
-    XCTAssertEqual(actual.dismissButtonStyle, .done)
+    if #available(iOS 26, *) {
+      XCTAssertEqual(actual.dismissButtonStyle, .close)
+    } else {
+      XCTAssertEqual(actual.dismissButtonStyle, .done)
+    }
     XCTAssertEqual(actual.modalPresentationStyle, .fullScreen)
 
     XCTAssertNil(actual.preferredBarTintColor)
@@ -48,18 +52,26 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
       actual.configuration.barCollapsingEnabled,
       srcOptions.barCollapsingEnabled
     )
+
     XCTAssertEqual(
       actual.configuration.entersReaderIfAvailable,
       srcOptions.entersReaderIfAvailable
     )
-    XCTAssertEqual(
-      actual.preferredBarTintColor,
-      UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-    )
-    XCTAssertEqual(
-      actual.preferredControlTintColor,
-      UIColor(red: 0, green: 0, blue: 1 / 255, alpha: 1)
-    )
+
+    if #available(iOS 26, *) {
+      XCTAssertNil(actual.preferredBarTintColor)
+      XCTAssertNil(actual.preferredControlTintColor)
+    } else {
+      XCTAssertEqual(
+        actual.preferredBarTintColor,
+        UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+      )
+      XCTAssertEqual(
+        actual.preferredControlTintColor,
+        UIColor(red: 0, green: 0, blue: 1 / 255, alpha: 1)
+      )
+    }
+
     XCTAssertEqual(
       actual.dismissButtonStyle,
       DismissButtonStyle(rawValue: Int(srcOptions.dismissButtonStyle!))

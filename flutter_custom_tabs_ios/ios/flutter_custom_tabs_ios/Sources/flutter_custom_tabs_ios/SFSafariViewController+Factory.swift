@@ -20,11 +20,16 @@ extension SFSafariViewController {
       configuration: configuration
     )
 
-    if let barTintColorHex = options.preferredBarTintColor {
-      viewController.preferredBarTintColor = UIColor(barTintColorHex)
-    }
-    if let controlTintColorHex = options.preferredControlTintColor {
-      viewController.preferredControlTintColor = UIColor(controlTintColorHex)
+    if #available(iOS 26, *) {
+      // On iOS 26 and later, `preferredBarTintColor` and
+      // `preferredControlTintColor` are deprecated — do not set them.
+    } else {
+      if let barTintColorHex = options.preferredBarTintColor {
+        viewController.preferredBarTintColor = UIColor(barTintColorHex)
+      }
+      if let controlTintColorHex = options.preferredControlTintColor {
+        viewController.preferredControlTintColor = UIColor(controlTintColorHex)
+      }
     }
 
     if let dismissButtonStyleRawValue = options.dismissButtonStyle,
