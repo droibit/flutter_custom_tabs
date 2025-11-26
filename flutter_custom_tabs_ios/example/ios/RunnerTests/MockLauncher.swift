@@ -1,5 +1,6 @@
 // swiftlint:disable legacy_objc_type
 import Foundation
+import UIKit
 @testable import flutter_custom_tabs_ios
 
 class MockLauncher: Launcher {
