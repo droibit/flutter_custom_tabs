@@ -40,7 +40,6 @@ class SafariViewControllerOptions implements PlatformOptions {
           pageSheet: configuration,
         );
 
-
   /// The color to tint the background of the navigation bar and the toolbar.
   ///
   /// **Note:** On iOS 26 and later, due to the introduction of Liquid Glass, this property is ignored even if specified.
