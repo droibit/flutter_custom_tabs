@@ -1,6 +1,6 @@
 disabled_rules:
   - force_cast
-  - force_try  
+  - force_try
   - blanket_disable_command
   # Prefer SwiftFormat
   - opening_brace
@@ -12,7 +12,7 @@ opt_in_rules:
   - array_init
   - async_without_await
   - attributes
-  - balanced_xctest_lifecycle  
+  - balanced_xctest_lifecycle
   - closure_body_length
   - closure_end_indentation
   - closure_spacing
@@ -34,14 +34,14 @@ opt_in_rules:
   - empty_collection_literal
   - empty_count
   - empty_string
-  - enum_case_associated_values_count  
+  - enum_case_associated_values_count
   - empty_xctest_method
   - expiring_todo
-  # - explicit_acl  
+  # - explicit_acl
   # - explicit_enum_raw_value
   - explicit_init
   # - explicit_top_level_acl
-  # - explicit_type_interface  
+  # - explicit_type_interface
   - extension_access_modifier
   - fallthrough
   - fatal_error_message
@@ -50,9 +50,9 @@ opt_in_rules:
   - file_name_no_space
   # - file_types_order
   - final_test_case
-  - first_where  
+  - first_where
   - flatmap_over_map_reduce
-  # - force_unwrapping  
+  # - force_unwrapping
   - function_default_parameter_at_end
   - ibinspectable_in_extension
   - identical_operands
@@ -76,10 +76,10 @@ opt_in_rules:
   # - multiline_literal_brackets
   # - multiline_parameters
   # - multiline_parameters_brackets
-  # - nimble_operator 
+  # - nimble_operator
   # - no_empty_block
   # - no_extension_access_modifier
-  # - no_grouping_extension  
+  # - no_grouping_extension
   # - no_magic_numbers
   - non_overridable_class_declaration
   - nslocalizedstring_key
@@ -93,8 +93,9 @@ opt_in_rules:
   - override_in_extension
   - pattern_matching_keywords
   - period_spacing
+  - prefer_asset_symbols
   - prefer_key_path
-  # - prefer_nimble  
+  # - prefer_nimble
   - prefer_self_in_static_references
   - prefer_self_type_over_type_of_self
   - prefer_zero_over_explicit_init
@@ -122,7 +123,7 @@ opt_in_rules:
   - single_test_class
   # - sorted_enum_cases
   - sorted_first_last
-  # - sorted_imports  
+  # - sorted_imports
   - static_operator
   # - strict_fileprivate
   # - strong_iboutlet
@@ -131,11 +132,11 @@ opt_in_rules:
   - test_case_accessibility
   - toggle_bool
   - trailing_closure
-  # - type_contents_order  
+  # - type_contents_order
   - unavailable_function
   - unhandled_throwing_task
   - unneeded_parentheses_in_closure_argument
-  # - unowned_variable_capture  
+  # - unowned_variable_capture
   - untyped_error_in_catch
   # - unused_capture_list
   # - unused_parameter
