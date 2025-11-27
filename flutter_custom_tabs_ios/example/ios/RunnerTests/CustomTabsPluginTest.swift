@@ -1,6 +1,5 @@
 import SafariServices
 import XCTest
-
 @testable import flutter_custom_tabs_ios
 
 final class CustomTabsPluginTest: XCTestCase {
@@ -16,10 +15,10 @@ final class CustomTabsPluginTest: XCTestCase {
     plugin = nil
   }
 
-  func testPresentSFSafariViewController() {
+  func testPresentSFSafariViewController() throws {
     launcher.setPresentCompletionHandlerResults(true)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     let options = SFSafariViewControllerOptions()
     plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: options) { result in
       if case .failure = result {
@@ -29,14 +28,14 @@ final class CustomTabsPluginTest: XCTestCase {
     XCTAssertTrue(launcher.openArguments.isEmpty)
     XCTAssertEqual(launcher.presentArguments.count, 1)
 
-    let actualArgument = launcher.presentArguments.first!
+    let actualArgument = try XCTUnwrap(launcher.presentArguments.first)
     XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
   }
 
-  func testFailedToPresentSFSafariViewController() {
+  func testFailedToPresentSFSafariViewController() throws {
     launcher.setPresentCompletionHandlerResults(false)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     let options = SFSafariViewControllerOptions()
     plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: options) { result in
       if case let .failure(error) = result {
@@ -50,14 +49,14 @@ final class CustomTabsPluginTest: XCTestCase {
     XCTAssertTrue(launcher.openArguments.isEmpty)
     XCTAssertEqual(launcher.presentArguments.count, 1)
 
-    let actualArgument = launcher.presentArguments.first!
+    let actualArgument = try XCTUnwrap(launcher.presentArguments.first)
     XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
   }
 
   func testOpenExternalBrowser() throws {
     launcher.setOpenCompletionHandlerResults(true)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: nil) { result in
       if case .failure = result {
         XCTFail("error")
@@ -71,7 +70,7 @@ final class CustomTabsPluginTest: XCTestCase {
   func testFailedToOpenExternalBrowser() throws {
     launcher.setOpenCompletionHandlerResults(false)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     plugin.launchURL(url.absoluteString, prefersDeepLink: false, options: nil) { result in
       if case let .failure(error) = result {
         XCTAssertTrue(error is PigeonError)
@@ -91,7 +90,7 @@ final class CustomTabsPluginTest: XCTestCase {
   func testDeepLinkToNativeApp() throws {
     launcher.setOpenCompletionHandlerResults(true)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     plugin.launchURL(url.absoluteString, prefersDeepLink: true, options: nil) { result in
       if case .failure = result {
         XCTFail("error")
@@ -106,7 +105,7 @@ final class CustomTabsPluginTest: XCTestCase {
   func testFallBackToExternalBrowser() throws {
     launcher.setOpenCompletionHandlerResults(false, true)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     plugin.launchURL(url.absoluteString, prefersDeepLink: true, options: nil) { result in
       if case .failure = result {
         XCTFail("error")
@@ -123,7 +122,7 @@ final class CustomTabsPluginTest: XCTestCase {
     launcher.setOpenCompletionHandlerResults(false)
     launcher.setPresentCompletionHandlerResults(true)
 
-    let url = URL(string: "https://example.com")!
+    let url = try XCTUnwrap(URL(string: "https://example.com"))
     let options = SFSafariViewControllerOptions()
     plugin.launchURL(url.absoluteString, prefersDeepLink: true, options: options) { result in
       if case .failure = result {
@@ -135,16 +134,16 @@ final class CustomTabsPluginTest: XCTestCase {
     ])
     XCTAssertEqual(launcher.presentArguments.count, 1)
 
-    let actualArgument = launcher.presentArguments.first!
+    let actualArgument = try XCTUnwrap(launcher.presentArguments.first)
     XCTAssertTrue(actualArgument.viewControllerToPresent is SFSafariViewController)
   }
 
   // MARK: - Prewarming
 
-  func testMayLaunchURLs() {
-    let urls = [
-      URL(string: "https://example.com")!,
-      URL(string: "https://flutter.dev")!,
+  func testMayLaunchURLs() throws {
+    let urls = try [
+      XCTUnwrap(URL(string: "https://example.com")),
+      XCTUnwrap(URL(string: "https://flutter.dev")),
     ]
     let urlStrings = urls.map(\.absoluteString)
     let expectedSessionId = "test-session-id"
@@ -154,15 +153,15 @@ final class CustomTabsPluginTest: XCTestCase {
       let sessionId = try plugin.mayLaunchURLs(urlStrings)
       XCTAssertEqual(sessionId, expectedSessionId)
 
-      let actualArgument = launcher.prewarmConnectionsArguments.first!
+      let actualArgument = try XCTUnwrap(launcher.prewarmConnectionsArguments.first)
       XCTAssertEqual(actualArgument.urls, urls)
     } catch {
       XCTFail("Unexpected error: \(error)")
     }
   }
 
-  func testMayLaunchURLsReturnsNil() {
-    let urls = [URL(string: "https://example.com")!]
+  func testMayLaunchURLsReturnsNil() throws {
+    let urls = try [XCTUnwrap(URL(string: "https://example.com"))]
     let urlStrings = urls.map(\.absoluteString)
     launcher.setPrewarmConnectionsResults(nil)
 
@@ -170,7 +169,7 @@ final class CustomTabsPluginTest: XCTestCase {
       let sessionId = try plugin.mayLaunchURLs(urlStrings)
       XCTAssertNil(sessionId)
 
-      let actualArgument = launcher.prewarmConnectionsArguments.first!
+      let actualArgument = try XCTUnwrap(launcher.prewarmConnectionsArguments.first)
       XCTAssertEqual(actualArgument.urls, urls)
     } catch {
       XCTFail("Unexpected error: \(error)")
@@ -179,12 +178,12 @@ final class CustomTabsPluginTest: XCTestCase {
 
   // MARK: - Invalidate Session
 
-  func testInvalidateSession() {
+  func testInvalidateSession() throws {
     do {
       let sessionId = "test-session-id"
       try plugin.invalidateSession(sessionId)
 
-      let actualArgument = launcher.invalidatePrewarmingSessionArguments.first!
+      let actualArgument = try XCTUnwrap(launcher.invalidatePrewarmingSessionArguments.first)
       XCTAssertEqual(actualArgument.sessionId, sessionId)
     } catch {
       XCTFail("Unexpected error: \(error)")

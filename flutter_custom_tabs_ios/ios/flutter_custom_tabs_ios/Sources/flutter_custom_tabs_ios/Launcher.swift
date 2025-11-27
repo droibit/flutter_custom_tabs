@@ -75,15 +75,15 @@ private extension UIWindow {
   static var keyWindow: UIWindow? {
     // iOS 13+
     if #available(iOS 13.0, *) {
-      return UIApplication.shared.connectedScenes
+      return UIApplication.shared
+        .connectedScenes
         .compactMap { $0 as? UIWindowScene }
-        .filter { $0.activationState == .foregroundActive }
-        .first?
+        .first { $0.activationState == .foregroundActive }?
         .windows
-        .first { $0.isKeyWindow }
+        .first(where: \ .isKeyWindow)
     }
     // iOS 12 fallback
-    return UIApplication.shared.windows.first { $0.isKeyWindow }
+    return UIApplication.shared.windows.first(where: \ .isKeyWindow)
   }
 
   func topViewController() -> UIViewController? {
