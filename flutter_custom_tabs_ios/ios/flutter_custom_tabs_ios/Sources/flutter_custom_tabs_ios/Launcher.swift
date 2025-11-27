@@ -75,7 +75,8 @@ private extension UIWindow {
   static var keyWindow: UIWindow? {
     // iOS 13+
     if #available(iOS 13.0, *) {
-      return UIApplication.shared.connectedScenes
+      return UIApplication.shared
+        .connectedScenes
         .compactMap { $0 as? UIWindowScene }
         .first { $0.activationState == .foregroundActive }?
         .windows

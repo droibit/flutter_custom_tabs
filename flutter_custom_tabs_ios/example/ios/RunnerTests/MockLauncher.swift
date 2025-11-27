@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 @testable import flutter_custom_tabs_ios
 
-class MockLauncher: Launcher {
+final class MockLauncher: Launcher {
   private var openCompletionHandlerResults = [Bool]()
   private var presentCompletionHandlerResults = [Bool]()
   private var prewarmConnectionsResults = [String?]()

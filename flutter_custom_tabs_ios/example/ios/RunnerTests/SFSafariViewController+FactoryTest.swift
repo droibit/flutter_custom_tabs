@@ -2,15 +2,14 @@
 
 import SafariServices
 import XCTest
-
 @testable import flutter_custom_tabs_ios
 
 private typealias DismissButtonStyle = SFSafariViewController.DismissButtonStyle
 
 final class SFSafariViewControllerFactoryTest: XCTestCase {
-  func testMakeWithMinimumOptions() {
-    let actual = SFSafariViewController.make(
-      url: URL(string: "https://example.com")!,
+  func testMakeWithMinimumOptions() throws {
+    let actual = try SFSafariViewController.make(
+      url: XCTUnwrap(URL(string: "https://example.com")),
       options: .init()
     )
     // Validation of default values for non-null values.
@@ -30,7 +29,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
     }
   }
 
-  func testMakeWithCompleOptions() {
+  func testMakeWithCompleOptions() throws {
     let srcOptions = SFSafariViewControllerOptions(
       preferredBarTintColor: 0xFF000000,
       preferredControlTintColor: 0xFF000001,
@@ -43,8 +42,8 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
         largestUndimmedDetentIdentifier: "medium"
       )
     )
-    let actual = SFSafariViewController.make(
-      url: URL(string: "https://example.com")!,
+    let actual = try SFSafariViewController.make(
+      url: XCTUnwrap(URL(string: "https://example.com")),
       options: srcOptions
     )
 
@@ -74,27 +73,27 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
 
     XCTAssertEqual(
       actual.dismissButtonStyle,
-      DismissButtonStyle(rawValue: Int(srcOptions.dismissButtonStyle!))
+      try DismissButtonStyle(rawValue: Int(XCTUnwrap(srcOptions.dismissButtonStyle)))
     )
     XCTAssertEqual(
       actual.modalPresentationStyle,
-      UIModalPresentationStyle(rawValue: Int(srcOptions.modalPresentationStyle!))
+      try UIModalPresentationStyle(rawValue: Int(XCTUnwrap(srcOptions.modalPresentationStyle)))
     )
 
     if #available(iOS 15, *) {
       XCTAssertNotNil(actual.sheetPresentationController)
       // Validation of the rest of `testMakeWithCompleteSheetConfinuration`.
       XCTAssertEqual(
-        actual.sheetPresentationController!.largestUndimmedDetentIdentifier,
+        actual.sheetPresentationController?.largestUndimmedDetentIdentifier,
         .medium
       )
     }
   }
 
   @available(iOS 15, *)
-  func testMakeWithMinimumSheetConfiguration() {
-    let actualViewController = SFSafariViewController.make(
-      url: URL(string: "https://example.com")!,
+  func testMakeWithMinimumSheetConfiguration() throws {
+    let actualViewController = try SFSafariViewController.make(
+      url: XCTUnwrap(URL(string: "https://example.com")),
       options: .init(
         modalPresentationStyle: Int64(UIModalPresentationStyle.formSheet.rawValue),
         pageSheet: .init(detents: ["large"])
@@ -102,7 +101,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
     )
     XCTAssertNotNil(actualViewController.sheetPresentationController)
 
-    let actual = actualViewController.sheetPresentationController!
+    let actual = try XCTUnwrap(actualViewController.sheetPresentationController)
     XCTAssertEqual(actual.detents, [.large()])
     XCTAssertNil(actual.largestUndimmedDetentIdentifier)
     XCTAssertNil(actual.preferredCornerRadius)
@@ -114,7 +113,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
   }
 
   @available(iOS 15, *)
-  func testMakeWithCompleteSheetConfiguration() {
+  func testMakeWithCompleteSheetConfiguration() throws {
     let srcSheet = UISheetPresentationControllerConfiguration(
       detents: ["large", "medium"],
       largestUndimmedDetentIdentifier: "large",
@@ -123,8 +122,8 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
       prefersEdgeAttachedInCompactHeight: true,
       preferredCornerRadius: 16.0
     )
-    let actualViewController = SFSafariViewController.make(
-      url: URL(string: "https://example.com")!,
+    let actualViewController = try SFSafariViewController.make(
+      url: XCTUnwrap(URL(string: "https://example.com")),
       options: .init(
         modalPresentationStyle: Int64(UIModalPresentationStyle.pageSheet.rawValue),
         pageSheet: srcSheet
@@ -132,7 +131,7 @@ final class SFSafariViewControllerFactoryTest: XCTestCase {
     )
     XCTAssertNotNil(actualViewController.sheetPresentationController)
 
-    let actual = actualViewController.sheetPresentationController!
+    let actual = try XCTUnwrap(actualViewController.sheetPresentationController)
     XCTAssertEqual(actual.detents, [.large(), .medium()])
     XCTAssertEqual(actual.largestUndimmedDetentIdentifier, .large)
     XCTAssertEqual(

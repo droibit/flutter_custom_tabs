@@ -1,7 +1,7 @@
 import Flutter
 import SafariServices
 
-public class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
+public final class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let plugin = CustomTabsPlugin()
     CustomTabsApiSetup.setUp(binaryMessenger: registrar.messenger(), api: plugin)
