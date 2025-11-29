@@ -27,7 +27,7 @@ android {
     namespace 'com.github.droibit.plugins.flutter.customtabs'
   }
 
-  compileSdk 34
+  compileSdk flutter.compileSdkVersion
 
   defaultConfig {
     minSdk 19
