@@ -15,11 +15,11 @@ on:
       - '.github/workflows/ios_implementation_package.yml'
       - '!**.md'
 env:
-  DEVELOPER_DIR: /Applications/Xcode_16.4.app
+  DEVELOPER_DIR: /Applications/Xcode_26.2.app
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
     - uses: actions/checkout@v4
     - uses: subosito/flutter-action@v2
@@ -51,7 +51,7 @@ jobs:
       working-directory: ./flutter_custom_tabs_ios/example
 
   spm-integration:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
     - uses: actions/checkout@v4
     - uses: subosito/flutter-action@v2
