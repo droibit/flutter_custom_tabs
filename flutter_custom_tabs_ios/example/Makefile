@@ -1,7 +1,7 @@
 TEST_SCHEME := Runner
 TEST_PROJECT := ios/Runner.xcworkspace
 TEST_SDK := iphonesimulator
-TESET_DESTINATION := 'platform=iOS Simulator,OS=latest,name=iPhone 17'
+TEST_DESTINATION := 'platform=iOS Simulator,OS=latest,name=iPhone 17'
 
 .PHONY: test
 test:
@@ -11,6 +11,6 @@ test:
 	-configuration Debug \
 	-scheme $(TEST_SCHEME) \
 	-sdk $(TEST_SDK) \
-	-destination $(TESET_DESTINATION) \
+	-destination $(TEST_DESTINATION) \
 	CODE_SIGNING_ALLOWED='NO' \
 	| xcbeautify
