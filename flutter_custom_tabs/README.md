@@ -74,6 +74,9 @@ You can launch a web URL similar to `url_launcher` and specify options to custom
 | --- | --- |
 | ![android](https://i.imgur.com/lgPWvLS.gif) | ![iOS](https://i.imgur.com/LhsCUzb.gif) |
 
+> [!NOTE]  
+> Advanced interactions or complex workflows involving coordination with App Links are not officially supported. For more information and potential workarounds regarding App Link coordination on Android, please refer to [Issue #271](https://github.com/droibit/flutter_custom_tabs/issues/271).
+
 ### Basic Usage
 
 ``` dart
