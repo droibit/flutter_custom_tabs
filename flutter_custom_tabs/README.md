@@ -36,7 +36,7 @@ dependencies:
 #### Android
 
 - Android Gradle Plugin v7.4.0 and above.
-- Kotlin v1.7.0 and above.
+- Kotlin v1.8.0 and above.
 
 <table>
 <tr><td>plugins</td><td>buildscript</td></tr>
@@ -46,7 +46,7 @@ dependencies:
 // your-project/android/settings.gradle
 plugins {
     id "com.android.application" version "7.4.0" apply false // and above.
-    id "org.jetbrains.kotlin.android" version "1.7.10" apply false // and above if explicitly depending on Kotlin.
+    id "org.jetbrains.kotlin.android" version "1.8.0" apply false // and above if explicitly depending on Kotlin.
 }
 ```
 
