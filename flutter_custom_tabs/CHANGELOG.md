@@ -1,3 +1,16 @@
+## 2.5.0
+
+- Updates minimum supported SDK version to Flutter 3.27.0/Dart 3.6.
+- Updates minimum supported Kotlin version to 1.8.0.
+- Adds notes to README about:
+  - iOS 26+ Liquid Glass appearance changes and affected option limitations.
+  - iOS background-launch workaround.
+  - App Links support limitations.
+- Updates minimum required `flutter_custom_tabs_ios` version to 2.5.0.
+- Updates minimum required `flutter_custom_tabs_android/web` version to 2.4.0.
+- Updates minimum required `flutter_lints` version to 5.0.0.
+- Updates minimum required `mockito` version to 5.4.4.
+
 ## 2.4.1
 
 - Updates minimum required `flutter_custom_tabs_ios` version to 2.4.1.
