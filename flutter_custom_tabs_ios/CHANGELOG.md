@@ -1,3 +1,11 @@
+## 2.5.0
+
+- Updates minimum supported SDK version to Flutter 3.27.0/Dart 3.6.
+- Handles iOS 26 deprecations for SFSafariViewController tint colors and dismiss button style.
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.4.0.
+- Updates minimum required `flutter_lints` version to 5.0.0.
+- Updates minimum required `pigeon` version to 26.0.0.
+
 ## 2.4.1
 
 - Fix SFSafariViewController launch failure under UIScene lifecycle.
