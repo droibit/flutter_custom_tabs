@@ -1,3 +1,9 @@
+## 2.4.0
+
+- Updates minimum supported SDK version to Flutter 3.27.0/Dart 3.6.
+- Updates minimum required mockito version to 5.4.4.
+- Updates minimum required flutter_lints version to 5.0.0.
+
 ## 2.3.0
 
 - Updates minimum supported SDK version to Flutter 3.19.0/Dart 3.3.
