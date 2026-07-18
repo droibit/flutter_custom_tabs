@@ -18,7 +18,7 @@ This file provides context for the **iOS implementation package**.
 
 ## Technical Specifications
 
-- **Minimum iOS Version:** 12.0
+- **Minimum iOS Version:** 13.0
 - **Swift Version:** 5.9
 
 ## Architecture Overview
