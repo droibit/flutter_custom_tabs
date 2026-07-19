@@ -12,7 +12,7 @@ final class MockLauncher: Launcher {
   private(set) var prewarmConnectionsArguments = [PrewarmConnectionsArgument]()
   private(set) var invalidatePrewarmingSessionArguments = [InvalidatePrewarmingSessionArgument]()
 
-  override init() {}
+  init() {}
 
   func setOpenCompletionHandlerResults(_ values: Bool...) {
     openCompletionHandlerResults.append(contentsOf: values)
@@ -26,7 +26,7 @@ final class MockLauncher: Launcher {
     prewarmConnectionsResults.append(contentsOf: values)
   }
 
-  override func open(
+  func open(
     _ url: URL,
     options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:],
     completionHandler completion: ((Bool) -> Void)? = nil
@@ -37,7 +37,7 @@ final class MockLauncher: Launcher {
     completion?(opened)
   }
 
-  override func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
+  func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
     presentArguments.append(
       .init(viewControllerToPresent: viewControllerToPresent)
     )
@@ -46,12 +46,14 @@ final class MockLauncher: Launcher {
     completion?(presented)
   }
 
-  override func prewarmConnections(to urls: [URL]) -> String? {
+  func dismissAll(completion: (() -> Void)?) {}
+
+  func prewarmConnections(to urls: [URL]) -> String? {
     prewarmConnectionsArguments.append(.init(urls: urls))
     return prewarmConnectionsResults.removeFirst()
   }
 
-  override func invalidatePrewarmingSession(withId sessionId: String) {
+  func invalidatePrewarmingSession(for sessionId: String) {
     invalidatePrewarmingSessionArguments.append(.init(sessionId: sessionId))
   }
 }

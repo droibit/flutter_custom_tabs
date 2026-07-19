@@ -10,7 +10,7 @@ public final class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
 
   private let launcher: Launcher
 
-  init(launcher: Launcher = Launcher()) {
+  init(launcher: Launcher = DefaultLauncher()) {
     self.launcher = launcher
   }
 
@@ -49,7 +49,7 @@ public final class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
   }
 
   func invalidateSession(_ sessionId: String) throws {
-    launcher.invalidatePrewarmingSession(withId: sessionId)
+    launcher.invalidatePrewarmingSession(for: sessionId)
   }
 
   // MARK: - Private

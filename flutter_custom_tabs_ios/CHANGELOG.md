@@ -3,6 +3,7 @@
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
 - Updates minimum supported version to iOS 13.
 - Adopts `UISceneDelegate` in the example app.
+- Refactors `Launcher` from an open class to a protocol with a `DefaultLauncher` implementation.
 
 ## 2.5.0
 
