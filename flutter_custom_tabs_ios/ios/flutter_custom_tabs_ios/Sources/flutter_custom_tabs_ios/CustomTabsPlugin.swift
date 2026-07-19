@@ -3,14 +3,16 @@ import SafariServices
 
 public final class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let plugin = CustomTabsPlugin()
+    let plugin = CustomTabsPlugin(
+      launcher: DefaultLauncher(registrar: registrar)
+    )
     CustomTabsApiSetup.setUp(binaryMessenger: registrar.messenger(), api: plugin)
     registrar.publish(plugin)
   }
 
   private let launcher: Launcher
 
-  init(launcher: Launcher = DefaultLauncher()) {
+  init(launcher: Launcher) {
     self.launcher = launcher
   }
 

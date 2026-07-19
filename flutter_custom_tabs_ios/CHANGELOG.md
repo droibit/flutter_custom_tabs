@@ -4,6 +4,7 @@
 - Updates minimum supported version to iOS 13.
 - Adopts `UISceneDelegate` in the example app.
 - Refactors `Launcher` from an open class to a protocol with a `DefaultLauncher` implementation.
+- Changes the presentation anchor of `SFSafariViewController` from the key window to the plugin registrar's view controller.
 
 ## 2.5.0
 
