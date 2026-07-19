@@ -1,0 +1,84 @@
+group = "com.github.droibit.plugins.flutter.customtabs"
+version = "1.0-SNAPSHOT"
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("com.android.tools.build:gradle:7.4.2")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22")
+  }
+}
+
+rootProject.allprojects {
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+
+plugins {
+  id("com.android.library")
+}
+
+android {
+  namespace = "com.github.droibit.plugins.flutter.customtabs"
+
+  compileSdk = flutter.compileSdkVersion
+
+  defaultConfig {
+    minSdk = 19
+
+    vectorDrawables.useSupportLibrary = true
+  }
+
+  buildFeatures {
+    buildConfig = false
+  }
+
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+    // ref. https://www.reddit.com/r/androiddev/comments/mztyva/a_few_tips_for_testparameterinjector_library/
+    freeCompilerArgs += listOf("-java-parameters")
+  }
+
+  lint {
+    checkAllWarnings = true
+    warningsAsErrors = true
+    disable.addAll(setOf("InvalidPackage", "AndroidGradlePluginVersion", "GradleDependency"))
+  }
+
+  testOptions {
+    unitTests {
+      all {
+        it.outputs.upToDateWhen { false }
+        it.testLogging {
+          events("passed", "skipped", "failed", "standardOut", "standardError")
+          showStandardStreams = true
+        }
+      }
+    }
+  }
+}
+
+dependencies {
+  implementation("androidx.core:core-ktx:1.9.0")
+  implementation("androidx.browser:browser:1.8.0")
+  implementation("io.github.droibit:customtabslauncher:3.0.0")
+
+  testImplementation("junit:junit:4.13.2")
+  testImplementation("org.robolectric:robolectric:4.11")
+  testImplementation("io.mockk:mockk:1.13.3")
+  testImplementation("com.google.truth:truth:1.4.4")
+  testImplementation("androidx.test.ext:truth:1.6.0")
+  testImplementation("androidx.test.ext:junit-ktx:1.2.1")
+  testImplementation("com.google.testparameterinjector:test-parameter-injector:1.18")
+}

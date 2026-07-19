@@ -1,13 +1,13 @@
 plugins {
-  id "com.android.application"
-  id "kotlin-android"
-  id "dev.flutter.flutter-gradle-plugin"
+  id("com.android.application")
+  id("org.jetbrains.kotlin.android")
+  id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
-  namespace "com.github.droibit.flutter.plugins.customtabs.example"
-  compileSdk flutter.compileSdkVersion
-  ndkVersion flutter.ndkVersion
+  namespace = "com.github.droibit.flutter.plugins.customtabs.example"
+  compileSdk = flutter.compileSdkVersion
+  ndkVersion = flutter.ndkVersion
 
   defaultConfig {
     applicationId = "com.github.droibit.flutter.plugins.customtabs.example"
@@ -19,20 +19,14 @@ android {
 
   buildTypes {
     release {
-      minifyEnabled true
-      shrinkResources true
       // Signing with the debug keys for now, so `flutter run --release` works.
-      signingConfig signingConfigs.debug
+      signingConfig = signingConfigs.getByName("debug")
     }
-  }
-
-  lint {
-    disable "InvalidPackage"
   }
 }
 
 flutter {
-  source "../.."
+  source = "../.."
 }
 
 dependencies {}

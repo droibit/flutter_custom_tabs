@@ -1,0 +1,40 @@
+plugins {
+  id("com.android.application")
+  id("kotlin-android")
+  id("dev.flutter.flutter-gradle-plugin")
+}
+
+android {
+  namespace = "com.github.droibit.plugins.flutter.customtabs.android.example"
+  compileSdk = flutter.compileSdkVersion
+  ndkVersion = flutter.ndkVersion
+
+  defaultConfig {
+    applicationId =
+      "com.github.droibit.plugins.flutter.customtabs.flutter_custom_tabs_android_example"
+    minSdk = flutter.minSdkVersion
+    targetSdk = flutter.targetSdkVersion
+    versionCode = 1
+    versionName = "1.0"
+  }
+
+  buildTypes {
+    release {
+      // Signing with the debug keys for now, so `flutter run --release` works.
+      signingConfig = signingConfigs.getByName("debug")
+    }
+  }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+  }
+}
+
+flutter {
+  source = "../.."
+}
