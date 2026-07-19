@@ -10,3 +10,7 @@ format:
 lint:
 	@xcrun --sdk macosx mint run swiftformat swiftformat --lint .
 	@xcrun --sdk macosx mint run swiftlint swiftlint lint
+
+.PHONY: run-pigeon
+run-pigeon:
+	dart run pigeon --input pigeons/messages.dart
