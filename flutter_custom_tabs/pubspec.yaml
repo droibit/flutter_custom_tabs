@@ -31,7 +31,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.4.4
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   plugin_platform_interface: ^2.1.8
 
 flutter:

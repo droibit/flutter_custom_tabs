@@ -6,6 +6,7 @@
 - Refactors `Launcher` from an open class to a protocol with a `DefaultLauncher` implementation.
 - Changes the presentation anchor of `SFSafariViewController` from the key window to the plugin registrar's view controller.
 - Updates minimum required `pigeon` version to 27.0.0.
+- Updates minimum required `flutter_lints` version to 6.0.0.
 
 ## 2.5.0
 

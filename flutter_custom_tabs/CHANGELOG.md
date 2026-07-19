@@ -3,6 +3,7 @@
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
 - Updates minimum supported version to iOS 13.
 - Adopts `UISceneDelegate` in the iOS example app.
+- Updates minimum required `flutter_lints` version to 6.0.0.
 
 ## 2.5.0
 
