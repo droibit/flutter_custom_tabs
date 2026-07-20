@@ -21,7 +21,7 @@
 
 ## 2.3.1
 
-- Adds .editorconfig to for consistent code style.
+- Adds .editorconfig for consistent code style.
 
 ## 2.3.0
 
