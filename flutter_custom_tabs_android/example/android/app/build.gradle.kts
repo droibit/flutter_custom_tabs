@@ -1,6 +1,5 @@
 plugins {
   id("com.android.application")
-  id("kotlin-android")
   id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -25,15 +24,22 @@ android {
     }
   }
 
-  kotlinOptions {
-    jvmTarget = "1.8"
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+  lint {
+    disable.add("InvalidPackage")
   }
 }
+
+kotlin {
+  compilerOptions {
+    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+  }
+}
+
 
 flutter {
   source = "../.."

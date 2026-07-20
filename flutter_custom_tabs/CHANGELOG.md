@@ -1,6 +1,7 @@
 ## NEXT
 
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
+- Migrates to built-in Kotlin.
 - Migrates the build configuration from Groovy to Kotlin in the android example app.
 - Updates minimum supported version to iOS 13.
 - Adopts `UISceneDelegate` in the iOS example app.

@@ -1,6 +1,7 @@
 ## NEXT
 
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
+- Migrates to built-in Kotlin.
 - Migrates the build configuration from Groovy to Kotlin.
 - Updates minimum required `pigeon` version to 27.0.0.
 - Updates minimum required `flutter_lints` version to 6.0.0.

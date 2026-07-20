@@ -8,8 +8,7 @@ buildscript {
   }
 
   dependencies {
-    classpath("com.android.tools.build:gradle:7.4.2")
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22")
+    classpath("com.android.tools.build:gradle:9.0.1")
   }
 }
 
@@ -40,14 +39,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
-
-  kotlinOptions {
-    jvmTarget = "1.8"
-    // ref. https://www.reddit.com/r/androiddev/comments/mztyva/a_few_tips_for_testparameterinjector_library/
-    freeCompilerArgs += listOf("-java-parameters")
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
 
   lint {
@@ -66,6 +59,15 @@ android {
         }
       }
     }
+  }
+}
+
+
+kotlin {
+  compilerOptions {
+    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    // ref. https://www.reddit.com/r/androiddev/comments/mztyva/a_few_tips_for_testparameterinjector_library/
+    freeCompilerArgs.addAll(listOf("-java-parameters"))
   }
 }
 
