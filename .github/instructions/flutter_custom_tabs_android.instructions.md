@@ -18,8 +18,8 @@ This file provides context for the **Android implementation package**.
 
 ## Technical Specifications
 
-- **Minimum Android SDK:** API 19
-- **Kotlin Version:** `1.8.0`
+- **Minimum Android SDK:** API 23
+- **Kotlin Version:** `2.2.0`
 
 ## Architecture Overview
 
