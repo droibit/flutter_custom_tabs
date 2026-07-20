@@ -53,26 +53,26 @@ class CustomTabsOptions implements PlatformOptions {
     CustomTabsCloseButton? closeButton,
     CustomTabsBrowserConfiguration? browser,
   }) : this(
-          colorSchemes: colorSchemes,
-          shareState: shareState,
-          showTitle: showTitle,
-          downloadButtonEnabled: downloadButtonEnabled,
-          bookmarksButtonEnabled: bookmarksButtonEnabled,
-          closeButton: closeButton,
-          browser: browser,
-          partial: configuration,
-        );
+         colorSchemes: colorSchemes,
+         shareState: shareState,
+         showTitle: showTitle,
+         downloadButtonEnabled: downloadButtonEnabled,
+         bookmarksButtonEnabled: bookmarksButtonEnabled,
+         closeButton: closeButton,
+         browser: browser,
+         partial: configuration,
+       );
 
   /// Creates a [CustomTabsOptions] instance with HTTP headers for an external browser.
   ///
   /// [headers] can be used to [add extra HTTP request headers](https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-request-headers).
   /// Note: Depending on the browser used to launch Custom Tabs, it may not be possible to add arbitrary headers.
-  CustomTabsOptions.externalBrowser({
-    required Map<String, String> headers,
-  }) : this(
-          browser:
-              CustomTabsBrowserConfiguration.externalBrowser(headers: headers),
-        );
+  CustomTabsOptions.externalBrowser({required Map<String, String> headers})
+    : this(
+        browser: CustomTabsBrowserConfiguration.externalBrowser(
+          headers: headers,
+        ),
+      );
 
   /// The visualization configuration.
   final CustomTabsColorSchemes? colorSchemes;

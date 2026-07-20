@@ -14,10 +14,7 @@ void main() async {
 class MyApp extends StatefulWidget {
   final CustomTabsSession session;
 
-  const MyApp(
-    this.session, {
-    super.key,
-  });
+  const MyApp(this.session, {super.key});
 
   @override
   State createState() => _MyAppState();
@@ -31,13 +28,10 @@ class _MyAppState extends State<MyApp> {
     // After warming up, the session might not be established immediately, so we wait for a short period.
     final session = widget.session;
     Future.delayed(const Duration(seconds: 1), () async {
-      await CustomTabsPlatform.instance.mayLaunch(
-        [
-          'https://flutter.dev',
-          'https://dart.dev',
-        ],
-        session: session,
-      );
+      await CustomTabsPlatform.instance.mayLaunch([
+        'https://flutter.dev',
+        'https://dart.dev',
+      ], session: session);
     });
   }
 
@@ -66,9 +60,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       home: Builder(
         builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Example for Android'),
-          ),
+          appBar: AppBar(title: const Text('Example for Android')),
           body: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
@@ -118,8 +110,9 @@ class _MyAppState extends State<MyApp> {
               ),
               FilledButton.tonal(
                 onPressed: () => _launchUrlWithAppSpecificHistory(),
-                child:
-                    const Text('Show flutter.dev (with app-specific history)'),
+                child: const Text(
+                  'Show flutter.dev (with app-specific history)',
+                ),
               ),
             ],
           ),
@@ -254,9 +247,7 @@ Future<void> _launchUrlAndCloseManually(BuildContext context) async {
 
 Future<void> _launchUrlInExternalBrowser() async {
   try {
-    await CustomTabsPlatform.instance.launch(
-      'https://flutter.dev',
-    );
+    await CustomTabsPlatform.instance.launch('https://flutter.dev');
   } catch (e) {
     debugPrint(e.toString());
   }

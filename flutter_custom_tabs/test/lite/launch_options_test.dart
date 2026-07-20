@@ -73,9 +73,7 @@ void main() {
     });
 
     test('toCustomTabsOptions() converts options with barColor', () {
-      const launchOptions = LaunchOptions(
-        barColor: Color(0xFFFEEBAA),
-      );
+      const launchOptions = LaunchOptions(barColor: Color(0xFFFEEBAA));
 
       final actual = launchOptions.toCustomTabsOptions();
       expect(actual.colorSchemes, isNotNull);
@@ -87,71 +85,71 @@ void main() {
     });
 
     test(
-        'toCustomTabsOptions() converts options with systemNavigationBarParams',
-        () {
-      const launchOptions = LaunchOptions(
-        systemNavigationBarParams: SystemNavigationBarParams(
-          backgroundColor: Color(0xFFFEEBAB),
-          dividerColor: Color(0xFFFEEBAC),
-        ),
-      );
+      'toCustomTabsOptions() converts options with systemNavigationBarParams',
+      () {
+        const launchOptions = LaunchOptions(
+          systemNavigationBarParams: SystemNavigationBarParams(
+            backgroundColor: Color(0xFFFEEBAB),
+            dividerColor: Color(0xFFFEEBAC),
+          ),
+        );
 
-      final actual = launchOptions.toCustomTabsOptions();
-      expect(actual.colorSchemes, isNotNull);
+        final actual = launchOptions.toCustomTabsOptions();
+        expect(actual.colorSchemes, isNotNull);
 
-      final actualDefaultParams = actual.colorSchemes!.defaultPrams!;
-      expect(actualDefaultParams.toolbarColor, isNull);
-      expect(
-        actualDefaultParams.navigationBarColor,
-        launchOptions.systemNavigationBarParams!.backgroundColor,
-      );
-      expect(
-        actualDefaultParams.navigationBarDividerColor,
-        launchOptions.systemNavigationBarParams!.dividerColor,
-      );
-    });
-
-    test(
-        'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled true',
-        () {
-      const launchOptions = LaunchOptions(
-        barFixingEnabled: true,
-      );
-
-      final actual = launchOptions.toCustomTabsOptions();
-      expect(actual.urlBarHidingEnabled, isFalse);
-    });
+        final actualDefaultParams = actual.colorSchemes!.defaultPrams!;
+        expect(actualDefaultParams.toolbarColor, isNull);
+        expect(
+          actualDefaultParams.navigationBarColor,
+          launchOptions.systemNavigationBarParams!.backgroundColor,
+        );
+        expect(
+          actualDefaultParams.navigationBarDividerColor,
+          launchOptions.systemNavigationBarParams!.dividerColor,
+        );
+      },
+    );
 
     test(
-        'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled false',
-        () {
-      const launchOptions = LaunchOptions(
-        barFixingEnabled: false,
-      );
+      'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled true',
+      () {
+        const launchOptions = LaunchOptions(barFixingEnabled: true);
 
-      final actual = launchOptions.toCustomTabsOptions();
-      expect(actual.urlBarHidingEnabled, isTrue);
-    });
+        final actual = launchOptions.toCustomTabsOptions();
+        expect(actual.urlBarHidingEnabled, isFalse);
+      },
+    );
+
+    test(
+      'toCustomTabsOptions() converts LaunchOptions with barFixingEnabled false',
+      () {
+        const launchOptions = LaunchOptions(barFixingEnabled: false);
+
+        final actual = launchOptions.toCustomTabsOptions();
+        expect(actual.urlBarHidingEnabled, isTrue);
+      },
+    );
   });
 
   group('SafariViewControllerOptions', () {
     test(
-        'toSafariViewControllerOptions() converts LaunchOptions with null values',
-        () {
-      const launchOptions = LaunchOptions();
+      'toSafariViewControllerOptions() converts LaunchOptions with null values',
+      () {
+        const launchOptions = LaunchOptions();
 
-      final actual = launchOptions.toSafariViewControllerOptions();
-      expect(actual.preferredBarTintColor, isNull);
-      expect(actual.preferredControlTintColor, isNull);
-      expect(actual.barCollapsingEnabled, isNull);
-      expect(actual.entersReaderIfAvailable, isNull);
-      expect(
-        actual.dismissButtonStyle,
-        SafariViewControllerDismissButtonStyle.done,
-      );
-      expect(actual.modalPresentationStyle, isNull);
-      expect(actual.pageSheet, isNull);
-    });
+        final actual = launchOptions.toSafariViewControllerOptions();
+        expect(actual.preferredBarTintColor, isNull);
+        expect(actual.preferredControlTintColor, isNull);
+        expect(actual.barCollapsingEnabled, isNull);
+        expect(actual.entersReaderIfAvailable, isNull);
+        expect(
+          actual.dismissButtonStyle,
+          SafariViewControllerDismissButtonStyle.done,
+        );
+        expect(actual.modalPresentationStyle, isNull);
+        expect(actual.pageSheet, isNull);
+      },
+    );
 
     test('toSafariViewControllerOptions() converts with complete options', () {
       const launchOptions = LaunchOptions(
@@ -178,40 +176,40 @@ void main() {
     });
 
     test('toSafariViewControllerOptions() converts options with barColor', () {
-      const launchOptions = LaunchOptions(
-        barColor: Color(0xFFFFEBAA),
-      );
+      const launchOptions = LaunchOptions(barColor: Color(0xFFFFEBAA));
 
       final actual = launchOptions.toSafariViewControllerOptions();
       expect(actual.preferredBarTintColor, launchOptions.barColor);
     });
 
-    test('toSafariViewControllerOptions() converts options with onBarColor',
-        () {
-      const launchOptions = LaunchOptions(
-        onBarColor: Color(0xFFFEEBAB),
-      );
+    test(
+      'toSafariViewControllerOptions() converts options with onBarColor',
+      () {
+        const launchOptions = LaunchOptions(onBarColor: Color(0xFFFEEBAB));
 
-      final actual = launchOptions.toSafariViewControllerOptions();
-      expect(actual.preferredControlTintColor, launchOptions.onBarColor);
-    });
+        final actual = launchOptions.toSafariViewControllerOptions();
+        expect(actual.preferredControlTintColor, launchOptions.onBarColor);
+      },
+    );
 
     test(
-        'toSafariViewControllerOptions() converts LaunchOptions with barFixingEnabled true',
-        () {
-      const launchOptions = LaunchOptions(barFixingEnabled: true);
+      'toSafariViewControllerOptions() converts LaunchOptions with barFixingEnabled true',
+      () {
+        const launchOptions = LaunchOptions(barFixingEnabled: true);
 
-      final actual = launchOptions.toSafariViewControllerOptions();
-      expect(actual.barCollapsingEnabled, isFalse);
-    });
+        final actual = launchOptions.toSafariViewControllerOptions();
+        expect(actual.barCollapsingEnabled, isFalse);
+      },
+    );
 
     test(
-        'toSafariViewControllerOptions converts LaunchOptions with barFixingEnabled false',
-        () {
-      const launchOptions = LaunchOptions(barFixingEnabled: false);
+      'toSafariViewControllerOptions converts LaunchOptions with barFixingEnabled false',
+      () {
+        const launchOptions = LaunchOptions(barFixingEnabled: false);
 
-      final actual = launchOptions.toSafariViewControllerOptions();
-      expect(actual.barCollapsingEnabled, isTrue);
-    });
+        final actual = launchOptions.toSafariViewControllerOptions();
+        expect(actual.barCollapsingEnabled, isTrue);
+      },
+    );
   });
 }

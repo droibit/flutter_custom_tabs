@@ -30,17 +30,19 @@ class MockUrlLauncherPlugin extends Mock
     String? webOnlyWindowName,
   }) async {
     return super.noSuchMethod(
-      Invocation.method(#launch, [
-        url
-      ], {
-        #useSafariVC: useSafariVC,
-        #useWebView: useWebView,
-        #enableJavaScript: enableJavaScript,
-        #enableDomStorage: enableDomStorage,
-        #universalLinksOnly: universalLinksOnly,
-        #headers: headers,
-        #webOnlyWindowName: webOnlyWindowName
-      }),
+      Invocation.method(
+        #launch,
+        [url],
+        {
+          #useSafariVC: useSafariVC,
+          #useWebView: useWebView,
+          #enableJavaScript: enableJavaScript,
+          #enableDomStorage: enableDomStorage,
+          #universalLinksOnly: universalLinksOnly,
+          #headers: headers,
+          #webOnlyWindowName: webOnlyWindowName,
+        },
+      ),
       returnValue: Future.value(false),
     );
   }

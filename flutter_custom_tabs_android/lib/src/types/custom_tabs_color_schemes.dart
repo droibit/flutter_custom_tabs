@@ -21,13 +21,13 @@ class CustomTabsColorSchemes {
     Color? navigationBarColor,
     Color? navigationBarDividerColor,
   }) : this(
-          colorScheme: colorScheme,
-          defaultPrams: CustomTabsColorSchemeParams(
-            toolbarColor: toolbarColor,
-            navigationBarColor: navigationBarColor,
-            navigationBarDividerColor: navigationBarDividerColor,
-          ),
-        );
+         colorScheme: colorScheme,
+         defaultPrams: CustomTabsColorSchemeParams(
+           toolbarColor: toolbarColor,
+           navigationBarColor: navigationBarColor,
+           navigationBarDividerColor: navigationBarDividerColor,
+         ),
+       );
 
   /// Desired color scheme.
   final CustomTabsColorScheme? colorScheme;

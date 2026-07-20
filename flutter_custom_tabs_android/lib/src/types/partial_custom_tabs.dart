@@ -37,12 +37,12 @@ class PartialCustomTabsConfiguration {
     this.activityHeightResizeBehavior,
     this.cornerRadius,
     this.backgroundInteractionEnabled,
-  })  : initialWidth = null,
-        activitySideSheetBreakpoint = null,
-        activitySideSheetMaximizationEnabled = null,
-        activitySideSheetPosition = null,
-        activitySideSheetDecorationType = null,
-        activitySideSheetRoundedCornersPosition = null;
+  }) : initialWidth = null,
+       activitySideSheetBreakpoint = null,
+       activitySideSheetMaximizationEnabled = null,
+       activitySideSheetPosition = null,
+       activitySideSheetDecorationType = null,
+       activitySideSheetRoundedCornersPosition = null;
 
   /// Creates a [PartialCustomTabsConfiguration] instance optimized for side sheet display.
   ///
@@ -57,8 +57,8 @@ class PartialCustomTabsConfiguration {
     this.activitySideSheetRoundedCornersPosition,
     this.cornerRadius,
     this.backgroundInteractionEnabled,
-  })  : initialHeight = null,
-        activityHeightResizeBehavior = null;
+  }) : initialHeight = null,
+       activityHeightResizeBehavior = null;
 
   /// Creates a [PartialCustomTabsConfiguration] instance with both bottom and side sheet support.
   const PartialCustomTabsConfiguration.adaptiveSheet({
@@ -115,11 +115,11 @@ class PartialCustomTabsConfiguration {
 
   /// A value that allows you to set how you want to distinguish the Partial Custom Tab side sheet from the rest of the display.
   final CustomTabsActivitySideSheetDecorationType?
-      activitySideSheetDecorationType;
+  activitySideSheetDecorationType;
 
   /// A value that allows you to choose which side sheet corners should be rounded, if any at all.
   final CustomTabsActivitySideSheetRoundedCornersPosition?
-      activitySideSheetRoundedCornersPosition;
+  activitySideSheetRoundedCornersPosition;
 
   /// The toolbar's top corner radius in logical pixels(dp).
   ///

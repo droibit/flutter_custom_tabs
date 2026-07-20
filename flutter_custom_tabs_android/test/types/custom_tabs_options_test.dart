@@ -49,10 +49,7 @@ void main() {
         ),
         browser: CustomTabsBrowserConfiguration(
           prefersDefaultBrowser: false,
-          fallbackCustomTabs: [
-            'org.mozilla.firefox',
-            'com.microsoft.emmx',
-          ],
+          fallbackCustomTabs: ['org.mozilla.firefox', 'com.microsoft.emmx'],
           headers: {'key': 'value'},
         ),
         partial: PartialCustomTabsConfiguration(
@@ -90,10 +87,7 @@ void main() {
         'downloadButtonEnabled': true,
         'bookmarksButtonEnabled': false,
         'shareIdentityEnabled': true,
-        'closeButton': {
-          'icon': "icon",
-          'position': 2,
-        },
+        'closeButton': {'icon': "icon", 'position': 2},
         'animations': <String, String>{
           'startEnter': '_startEnter',
           'startExit': '_startExit',
@@ -102,10 +96,7 @@ void main() {
         },
         'browser': {
           'prefersDefaultBrowser': false,
-          'fallbackCustomTabs': [
-            'org.mozilla.firefox',
-            'com.microsoft.emmx',
-          ],
+          'fallbackCustomTabs': ['org.mozilla.firefox', 'com.microsoft.emmx'],
           'headers': {'key': 'value'},
         },
         'partial': <String, Object>{
@@ -136,16 +127,12 @@ void main() {
       final actual = options.toMessage();
       expect(actual, <String, Object>{
         'colorSchemes': {
-          'defaultParams': {
-            'toolbarColor': '#ff1a73e8',
-          },
+          'defaultParams': {'toolbarColor': '#ff1a73e8'},
         },
         'showTitle': true,
         'downloadButtonEnabled': false,
         'bookmarksButtonEnabled': true,
-        'closeButton': {
-          'icon': "ic_close_black",
-        },
+        'closeButton': {'icon': "ic_close_black"},
         'partial': <String, Object>{
           'initialHeight': 800,
           'activityHeightResizeBehavior': 1,
@@ -155,9 +142,9 @@ void main() {
     });
 
     test('toMessage() returns a message with external browser options', () {
-      final options = CustomTabsOptions.externalBrowser(headers: const {
-        'key': 'value',
-      });
+      final options = CustomTabsOptions.externalBrowser(
+        headers: const {'key': 'value'},
+      );
 
       final actual = options.toMessage();
       expect(actual, <String, Object>{

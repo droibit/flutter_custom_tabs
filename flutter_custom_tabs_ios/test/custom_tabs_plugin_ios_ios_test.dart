@@ -20,9 +20,7 @@ void main() {
   test('launch() invoke method "launch" with valid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
-    const options = SafariViewControllerOptions(
-      barCollapsingEnabled: true,
-    );
+    const options = SafariViewControllerOptions(barCollapsingEnabled: true);
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
@@ -41,9 +39,7 @@ void main() {
   test('launch() invoke method "launch" with invalid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = false;
-    const options = _Options(
-      barCollapsingEnabled: true,
-    );
+    const options = _Options(barCollapsingEnabled: true);
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
@@ -61,14 +57,8 @@ void main() {
   test('launch() invoke method "launch" with no options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = false;
-    api.setLaunchExpectations(
-      url: url,
-      prefersDeepLink: prefersDeepLink,
-    );
-    await customTabs.launch(
-      url,
-      prefersDeepLink: prefersDeepLink,
-    );
+    api.setLaunchExpectations(url: url, prefersDeepLink: prefersDeepLink);
+    await customTabs.launch(url, prefersDeepLink: prefersDeepLink);
     expect(api.launchUrlCalled, isTrue);
   });
 
@@ -80,10 +70,7 @@ void main() {
   test('mayLaunch() invoke method "mayLaunch" with valid options', () async {
     const urls = ['http://example.com/'];
     const sessionId = 'test-session-id';
-    api.setMayLaunchExpectations(
-      urls: urls,
-      sessionId: sessionId,
-    );
+    api.setMayLaunchExpectations(urls: urls, sessionId: sessionId);
 
     final session = await customTabs.mayLaunch(urls);
     expect(
@@ -95,9 +82,7 @@ void main() {
 
   test('invalidate() invoke method "invalidate" with valid options', () async {
     const sessionId = 'test-session-id';
-    api.setInvalidateExpectations(
-      sessionId: sessionId,
-    );
+    api.setInvalidateExpectations(sessionId: sessionId);
 
     const session = SafariViewPrewarmingSession(sessionId);
     await customTabs.invalidate(session);
@@ -105,15 +90,14 @@ void main() {
   });
 
   test(
-      'invalidate() throws ArgumentError if session is not SafariViewPrewarmingSession',
-      () async {
-    expect(
-      () => customTabs.invalidate(_Session()),
-      throwsA(
-        isA<ArgumentError>(),
-      ),
-    );
-  });
+    'invalidate() throws ArgumentError if session is not SafariViewPrewarmingSession',
+    () async {
+      expect(
+        () => customTabs.invalidate(_Session()),
+        throwsA(isA<ArgumentError>()),
+      );
+    },
+  );
 
   test('invalidate() does nothing when session is NoSession', () async {
     await customTabs.invalidate(const SafariViewPrewarmingSession(null));
@@ -150,9 +134,7 @@ class _MockCustomTabsApi extends CustomTabsApi {
     this.sessionId = sessionId;
   }
 
-  void setInvalidateExpectations({
-    required String sessionId,
-  }) {
+  void setInvalidateExpectations({required String sessionId}) {
     this.sessionId = sessionId;
   }
 
@@ -168,8 +150,8 @@ class _MockCustomTabsApi extends CustomTabsApi {
     if (this.options == null) {
       expect(options, isNull);
     } else if (this.options is SafariViewControllerOptions) {
-      final expected =
-          (this.options as SafariViewControllerOptions).toMessage();
+      final expected = (this.options as SafariViewControllerOptions)
+          .toMessage();
       expect(options?.barCollapsingEnabled, expected.barCollapsingEnabled);
     } else {
       expect(options, isNotNull);
@@ -199,9 +181,7 @@ class _MockCustomTabsApi extends CustomTabsApi {
 class _Options implements PlatformOptions {
   final bool? barCollapsingEnabled;
 
-  const _Options({
-    this.barCollapsingEnabled,
-  });
+  const _Options({this.barCollapsingEnabled});
 }
 
 class _Session implements PlatformSession {}

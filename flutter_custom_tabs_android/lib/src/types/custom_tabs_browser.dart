@@ -26,8 +26,8 @@ class CustomTabsBrowserConfiguration {
     this.prefersDefaultBrowser,
     this.fallbackCustomTabs,
     this.headers,
-  })  : prefersExternalBrowser = null,
-        sessionPackageName = null;
+  }) : prefersExternalBrowser = null,
+       sessionPackageName = null;
 
   /// Creates a [CustomTabsBrowserConfiguration] that uses the provided [session].
   ///
@@ -39,18 +39,17 @@ class CustomTabsBrowserConfiguration {
   CustomTabsBrowserConfiguration.session(
     CustomTabsSession session, {
     this.headers,
-  })  : sessionPackageName = session.packageName,
-        prefersDefaultBrowser = null,
-        fallbackCustomTabs = null,
-        prefersExternalBrowser = null;
+  }) : sessionPackageName = session.packageName,
+       prefersDefaultBrowser = null,
+       fallbackCustomTabs = null,
+       prefersExternalBrowser = null;
 
   @internal
-  const CustomTabsBrowserConfiguration.externalBrowser({
-    required this.headers,
-  })  : sessionPackageName = null,
-        prefersDefaultBrowser = null,
-        fallbackCustomTabs = null,
-        prefersExternalBrowser = true;
+  const CustomTabsBrowserConfiguration.externalBrowser({required this.headers})
+    : sessionPackageName = null,
+      prefersDefaultBrowser = null,
+      fallbackCustomTabs = null,
+      prefersExternalBrowser = true;
 
   /// A Boolean value that determines whether to prioritize the default browser that supports Custom Tabs over Chrome.
   final bool? prefersDefaultBrowser;

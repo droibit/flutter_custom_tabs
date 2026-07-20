@@ -69,9 +69,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       home: Builder(
         builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Flutter Custom Tabs Example'),
-          ),
+          appBar: AppBar(title: const Text('Flutter Custom Tabs Example')),
           body: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
@@ -86,8 +84,9 @@ class _MyAppState extends State<MyApp> {
               if (Platform.isAndroid)
                 FilledButton(
                   onPressed: () => _launchUrlInDefaultBrowserOnAndroid(context),
-                  child:
-                      const Text('Show flutter.dev (prefer default browser)'),
+                  child: const Text(
+                    'Show flutter.dev (prefer default browser)',
+                  ),
                 ),
               FilledButton(
                 onPressed: () => _launchUrlLite(context),
@@ -126,7 +125,8 @@ class _MyAppState extends State<MyApp> {
                 FilledButton(
                   onPressed: () => _launchUrlWithAppSpecificHistoryOnAndroid(),
                   child: const Text(
-                      'Show flutter.dev (with app-specific history)'),
+                    'Show flutter.dev (with app-specific history)',
+                  ),
                 ),
             ],
           ),

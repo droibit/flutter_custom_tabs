@@ -177,10 +177,7 @@ Future<SafariViewPrewarmingSession> mayLaunchUrl(
   Uri url, {
   CustomTabsSession? customTabsSession,
 }) async {
-  return mayLaunchUrls(
-    [url],
-    customTabsSession: customTabsSession,
-  );
+  return mayLaunchUrls([url], customTabsSession: customTabsSession);
 }
 
 /// Tells the browser of potential URLs that might be launched later,
@@ -251,11 +248,7 @@ Future<void> invalidateSession(PlatformSession session) {
 
 String _requireWebUrl(Uri url) {
   if (url.scheme != 'http' && url.scheme != 'https') {
-    throw ArgumentError.value(
-      url,
-      'url',
-      'must have an http or https scheme.',
-    );
+    throw ArgumentError.value(url, 'url', 'must have an http or https scheme.');
   }
   return url.toString();
 }

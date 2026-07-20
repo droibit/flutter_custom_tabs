@@ -49,10 +49,7 @@ extension CustomTabsBrowserConfigurationConverter
 
 extension CustomTabsCloseButtonConverter on CustomTabsCloseButton {
   Map<String, Object> toMessage() {
-    return {
-      'icon': ?icon,
-      'position': ?position?.rawValue,
-    };
+    return {'icon': ?icon, 'position': ?position?.rawValue};
   }
 }
 
@@ -62,17 +59,18 @@ extension CustomTabsColorSchemesConverter on CustomTabsColorSchemes {
       'colorScheme': ?colorScheme?.rawValue,
       'lightParams': ?lightParams?.toMessage(),
       'darkParams': ?darkParams?.toMessage(),
-      'defaultParams': ?defaultPrams?.toMessage()
+      'defaultParams': ?defaultPrams?.toMessage(),
     };
   }
 }
 
 extension CustomTabsColorSchemeParamsConverter on CustomTabsColorSchemeParams {
   Map<String, String> toMessage() {
-    return {      
+    return {
       'toolbarColor': ?toolbarColor?.toHexColorString(),
       'navigationBarColor': ?navigationBarColor?.toHexColorString(),
-      'navigationBarDividerColor': ?navigationBarDividerColor?.toHexColorString(),
+      'navigationBarDividerColor': ?navigationBarDividerColor
+          ?.toHexColorString(),
     };
   }
 }
@@ -85,10 +83,13 @@ extension PartialCustomTabsConfigurationConverter
       'activityHeightResizeBehavior': ?activityHeightResizeBehavior?.rawValue,
       'initialWidth': ?initialWidth,
       'activitySideSheetBreakpoint': ?activitySideSheetBreakpoint,
-      'activitySideSheetMaximizationEnabled': ?activitySideSheetMaximizationEnabled,
+      'activitySideSheetMaximizationEnabled':
+          ?activitySideSheetMaximizationEnabled,
       'activitySideSheetPosition': ?activitySideSheetPosition?.rawValue,
-      'activitySideSheetDecorationType': ?activitySideSheetDecorationType?.rawValue,
-      'activitySideSheetRoundedCornersPosition': ?activitySideSheetRoundedCornersPosition?.rawValue,
+      'activitySideSheetDecorationType':
+          ?activitySideSheetDecorationType?.rawValue,
+      'activitySideSheetRoundedCornersPosition':
+          ?activitySideSheetRoundedCornersPosition?.rawValue,
       if (cornerRadius != null) 'cornerRadius': min(cornerRadius!, 16),
       'backgroundInteractionEnabled': ?backgroundInteractionEnabled,
     };

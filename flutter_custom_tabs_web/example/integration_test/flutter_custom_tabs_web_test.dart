@@ -19,18 +19,21 @@ void main() {
     plugin = CustomTabsPluginWeb();
   });
 
-  testWidgets('launch() delegate to "url_launcher_web"',
-      (WidgetTester _) async {
-    when(mock.launch(
-      any,
-      useSafariVC: anyNamed('useSafariVC'),
-      useWebView: anyNamed('useWebView'),
-      enableJavaScript: anyNamed('enableJavaScript'),
-      enableDomStorage: anyNamed('enableDomStorage'),
-      universalLinksOnly: anyNamed('universalLinksOnly'),
-      headers: anyNamed('headers'),
-      webOnlyWindowName: anyNamed('webOnlyWindowName'),
-    )).thenAnswer((_) async => true);
+  testWidgets('launch() delegate to "url_launcher_web"', (
+    WidgetTester _,
+  ) async {
+    when(
+      mock.launch(
+        any,
+        useSafariVC: anyNamed('useSafariVC'),
+        useWebView: anyNamed('useWebView'),
+        enableJavaScript: anyNamed('enableJavaScript'),
+        enableDomStorage: anyNamed('enableDomStorage'),
+        universalLinksOnly: anyNamed('universalLinksOnly'),
+        headers: anyNamed('headers'),
+        webOnlyWindowName: anyNamed('webOnlyWindowName'),
+      ),
+    ).thenAnswer((_) async => true);
 
     const url = 'https://example.com';
     await plugin.launch(

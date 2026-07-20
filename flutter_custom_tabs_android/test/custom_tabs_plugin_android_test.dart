@@ -20,9 +20,7 @@ void main() {
   test('launch() invoke method "launch" with valid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
-    const options = CustomTabsOptions(
-      urlBarHidingEnabled: true,
-    );
+    const options = CustomTabsOptions(urlBarHidingEnabled: true);
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
@@ -40,9 +38,7 @@ void main() {
   test('launch() invoke method "launch" with invalid options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
-    const options = _Options(
-      urlBarHidingEnabled: true,
-    );
+    const options = _Options(urlBarHidingEnabled: true);
     api.setLaunchExpectations(
       url: url,
       prefersDeepLink: prefersDeepLink,
@@ -60,15 +56,9 @@ void main() {
   test('launch() invoke method "launch" with no options', () async {
     const url = 'http://example.com/';
     const prefersDeepLink = true;
-    api.setLaunchExpectations(
-      url: url,
-      prefersDeepLink: prefersDeepLink,
-    );
+    api.setLaunchExpectations(url: url, prefersDeepLink: prefersDeepLink);
 
-    await customTabs.launch(
-      url,
-      prefersDeepLink: prefersDeepLink,
-    );
+    await customTabs.launch(url, prefersDeepLink: prefersDeepLink);
   });
 
   test('closeAllIfPossible() invoke method "closeAllIfPossible"', () async {
@@ -77,9 +67,7 @@ void main() {
   });
 
   test('warmup() invoke method "warmup" with valid options', () async {
-    const options = CustomTabsSessionOptions(
-      prefersDefaultBrowser: true,
-    );
+    const options = CustomTabsSessionOptions(prefersDefaultBrowser: true);
     const packageName = 'com.example.browser';
     api.setWarmupExpectations(
       options: options,
@@ -89,22 +77,26 @@ void main() {
     final session = await customTabs.warmup(options);
     expect(
       session,
-      isA<CustomTabsSession>()
-          .having((s) => s.packageName, 'packageName', packageName),
+      isA<CustomTabsSession>().having(
+        (s) => s.packageName,
+        'packageName',
+        packageName,
+      ),
     );
   });
 
   test('warmup() invoke method "warmup" with no options', () async {
     const packageName = 'com.example.browser';
-    api.setWarmupExpectations(
-      sessionPackageName: packageName,
-    );
+    api.setWarmupExpectations(sessionPackageName: packageName);
 
     final session = await customTabs.warmup();
     expect(
       session,
-      isA<CustomTabsSession>()
-          .having((s) => s.packageName, 'packageName', packageName),
+      isA<CustomTabsSession>().having(
+        (s) => s.packageName,
+        'packageName',
+        packageName,
+      ),
     );
   });
 
@@ -114,67 +106,59 @@ void main() {
   });
 
   test(
-      'warmup() throws ArgumentError when options is not CustomTabsSessionOptions',
-      () async {
-    expect(
-      customTabs.warmup(const _Options()),
-      throwsA(isA<ArgumentError>()),
-    );
-  });
+    'warmup() throws ArgumentError when options is not CustomTabsSessionOptions',
+    () async {
+      expect(
+        customTabs.warmup(const _Options()),
+        throwsA(isA<ArgumentError>()),
+      );
+    },
+  );
 
   test('mayLaunch() invoke method "mayLaunch" with valid session', () async {
     const urls = ['http://example.com/'];
     const packageName = 'com.example.browser';
-    api.setMayLaunchExpectations(
-      urls: urls,
-      sessionPackageName: packageName,
-    );
+    api.setMayLaunchExpectations(urls: urls, sessionPackageName: packageName);
 
     const session = CustomTabsSession(packageName);
-    await customTabs.mayLaunch(
-      urls,
-      session: session,
-    );
+    await customTabs.mayLaunch(urls, session: session);
     expect(api.mayLaunchCalled, isTrue);
   });
 
-  test('mayLaunch() throws ArgumentError when session is not CustomTabsSession',
-      () {
-    expect(
-      customTabs.mayLaunch(
-        ['http://example.com/'],
-        session: _Session(),
-      ),
-      throwsA(isA<ArgumentError>()),
-    );
-  });
+  test(
+    'mayLaunch() throws ArgumentError when session is not CustomTabsSession',
+    () {
+      expect(
+        customTabs.mayLaunch(['http://example.com/'], session: _Session()),
+        throwsA(isA<ArgumentError>()),
+      );
+    },
+  );
 
   test('mayLaunch() does nothing when session is NoSession', () async {
-    await customTabs.mayLaunch(
-      ['http://example.com/'],
-      session: const CustomTabsSession(null),
-    );
+    await customTabs.mayLaunch([
+      'http://example.com/',
+    ], session: const CustomTabsSession(null));
     expect(api.mayLaunchCalled, isFalse);
   });
 
   test('invalidate() invoke method "invalidate" with valid options', () async {
     const packageName = 'com.example.browser';
-    api.setInvalidateExpectations(
-      sessionPackageName: packageName,
-    );
+    api.setInvalidateExpectations(sessionPackageName: packageName);
 
     await customTabs.invalidate(const CustomTabsSession(packageName));
     expect(api.invalidateCalled, isTrue);
   });
 
   test(
-      'invalidate() throws ArgumentError when session is not CustomTabsSession',
-      () {
-    expect(
-      () => customTabs.invalidate(_Session()),
-      throwsA(isA<ArgumentError>()),
-    );
-  });
+    'invalidate() throws ArgumentError when session is not CustomTabsSession',
+    () {
+      expect(
+        () => customTabs.invalidate(_Session()),
+        throwsA(isA<ArgumentError>()),
+      );
+    },
+  );
 
   test('invalidate() does nothing when session is NoSession', () async {
     await customTabs.invalidate(const CustomTabsSession(null));
@@ -213,9 +197,7 @@ class _MockCustomTabsApi extends CustomTabsApi {
     sessionOptions = options;
   }
 
-  void setInvalidateExpectations({
-    required String sessionPackageName,
-  }) {
+  void setInvalidateExpectations({required String sessionPackageName}) {
     this.sessionPackageName = sessionPackageName;
   }
 
@@ -286,9 +268,7 @@ class _MockCustomTabsApi extends CustomTabsApi {
 class _Options implements PlatformOptions {
   final bool? urlBarHidingEnabled;
 
-  const _Options({
-    this.urlBarHidingEnabled,
-  });
+  const _Options({this.urlBarHidingEnabled});
 }
 
 class _Session implements PlatformSession {}

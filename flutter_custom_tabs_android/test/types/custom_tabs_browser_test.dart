@@ -12,10 +12,7 @@ void main() {
   test('toMessage() returns a message with complete options', () {
     const configuration = CustomTabsBrowserConfiguration(
       prefersDefaultBrowser: true,
-      fallbackCustomTabs: [
-        'org.mozilla.firefox',
-        'com.microsoft.emmx',
-      ],
+      fallbackCustomTabs: ['org.mozilla.firefox', 'com.microsoft.emmx'],
       headers: {'key': 'value'},
     );
     final actual = configuration.toMessage();

@@ -29,11 +29,7 @@ Future<void> launchUrl(
   LaunchOptions options = const LaunchOptions(),
 }) async {
   if (url.scheme != 'http' && url.scheme != 'https') {
-    throw ArgumentError.value(
-      url,
-      'url',
-      'must have an http or https scheme.',
-    );
+    throw ArgumentError.value(url, 'url', 'must have an http or https scheme.');
   }
 
   await CustomTabsPlatform.instance.launch(

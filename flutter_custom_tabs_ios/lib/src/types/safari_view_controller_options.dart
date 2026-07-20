@@ -31,14 +31,13 @@ class SafariViewControllerOptions implements PlatformOptions {
     bool? entersReaderIfAvailable,
     SafariViewControllerDismissButtonStyle? dismissButtonStyle,
   }) : this(
-          preferredBarTintColor: preferredBarTintColor,
-          preferredControlTintColor: preferredControlTintColor,
-          entersReaderIfAvailable: entersReaderIfAvailable,
-          dismissButtonStyle: dismissButtonStyle,
-          modalPresentationStyle:
-              ViewControllerModalPresentationStyle.pageSheet,
-          pageSheet: configuration,
-        );
+         preferredBarTintColor: preferredBarTintColor,
+         preferredControlTintColor: preferredControlTintColor,
+         entersReaderIfAvailable: entersReaderIfAvailable,
+         dismissButtonStyle: dismissButtonStyle,
+         modalPresentationStyle: ViewControllerModalPresentationStyle.pageSheet,
+         pageSheet: configuration,
+       );
 
   /// The color to tint the background of the navigation bar and the toolbar.
   ///

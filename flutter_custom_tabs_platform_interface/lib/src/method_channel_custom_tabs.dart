@@ -6,8 +6,9 @@ import '../flutter_custom_tabs_platform_interface.dart';
 /// An implementation of [CustomTabsPlatform] that uses method channels.
 @internal
 class MethodChannelCustomTabs extends CustomTabsPlatform {
-  static const MethodChannel _channel =
-      MethodChannel('plugins.flutter.droibit.github.io/custom_tabs');
+  static const MethodChannel _channel = MethodChannel(
+    'plugins.flutter.droibit.github.io/custom_tabs',
+  );
 
   @override
   Future<void> launch(
