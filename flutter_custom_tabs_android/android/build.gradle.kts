@@ -29,7 +29,7 @@ android {
   compileSdk = flutter.compileSdkVersion
 
   defaultConfig {
-    minSdk = 19
+    minSdk = 23
 
     vectorDrawables.useSupportLibrary = true
   }

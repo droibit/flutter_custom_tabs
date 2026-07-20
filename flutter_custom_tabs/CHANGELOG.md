@@ -4,6 +4,7 @@
 - Migrates to built-in Kotlin.
 - Updates minimum supported Kotlin version to 2.2.10.
 - Migrates the build configuration from Groovy to Kotlin in the android example app.
+- Updates the minimum supported SDK version to Android SDK 23.
 - Updates minimum supported version to iOS 13.
 - Adopts `UISceneDelegate` in the iOS example app.
 - Updates minimum required `flutter_lints` version to 6.0.0.

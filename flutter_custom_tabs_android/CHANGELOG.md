@@ -1,6 +1,7 @@
 ## NEXT
 
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
+- Updates the minimum supported SDK version to Android SDK 23.
 - Migrates to built-in Kotlin.
 - Updates minimum supported Kotlin version to 2.2.10.
 - Migrates the build configuration from Groovy to Kotlin.
@@ -20,7 +21,7 @@
 
 ## 2.3.1
 
-Adds .editorconfig to for consistent code style.
+- Adds .editorconfig to for consistent code style.
 
 ## 2.3.0
 
