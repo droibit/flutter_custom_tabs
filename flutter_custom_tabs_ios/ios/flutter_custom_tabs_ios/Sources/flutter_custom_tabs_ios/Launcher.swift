@@ -2,19 +2,59 @@ import Flutter
 import SafariServices
 import UIKit
 
-open class Launcher {
-  private var prewarmingTokenCache = [String: Any]()
+protocol Launcher {
+  func open(
+    _ url: URL,
+    options: [UIApplication.OpenExternalURLOptionsKey: Any],
+    completionHandler completion: ((Bool) -> Void)?
+  )
 
-  open func open(
+  func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)?)
+
+  func dismissAll(completion: (() -> Void)?)
+
+  func prewarmConnections(to urls: [URL]) -> String?
+
+  func invalidatePrewarmingSession(for sessionId: String)
+}
+
+extension Launcher {
+  func open(
     _ url: URL,
     options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:],
     completionHandler completion: ((Bool) -> Void)? = nil
   ) {
+    open(url, options: options, completionHandler: completion)
+  }
+}
+
+// MARK: - Impl
+
+final class DefaultLauncher: Launcher {
+  private let registrar: FlutterPluginRegistrar
+  private var prewarmingTokenCache = [String: Any]()
+
+  private var viewController: UIViewController? {
+    registrar.viewController
+  }
+
+  init(registrar: FlutterPluginRegistrar) {
+    self.registrar = registrar
+  }
+
+  func open(
+    _ url: URL,
+    options: [UIApplication.OpenExternalURLOptionsKey: Any],
+    completionHandler completion: ((Bool) -> Void)?
+  ) {
     UIApplication.shared.open(url, options: options, completionHandler: completion)
   }
 
-  open func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)? = nil) {
-    guard let topViewController = UIWindow.keyWindow?.topViewController() else {
+  func present(_ viewControllerToPresent: UIViewController, completion: ((Bool) -> Void)?) {
+    guard
+      let viewController,
+      let topViewController = recursivelyFindTopViewController(from: viewController)
+    else {
       completion?(false)
       return
     }
@@ -23,8 +63,8 @@ open class Launcher {
     }
   }
 
-  open func dismissAll(completion: (() -> Void)? = nil) {
-    guard let rootViewController = UIWindow.keyWindow?.rootViewController else {
+  func dismissAll(completion: (() -> Void)?) {
+    guard let rootViewController = viewController else {
       completion?()
       return
     }
@@ -44,7 +84,7 @@ open class Launcher {
     )
   }
 
-  open func prewarmConnections(to urls: [URL]) -> String? {
+  func prewarmConnections(to urls: [URL]) -> String? {
     guard #available(iOS 15.0, *) else {
       return nil
     }
@@ -55,7 +95,7 @@ open class Launcher {
     return id
   }
 
-  open func invalidatePrewarmingSession(withId sessionId: String) {
+  func invalidatePrewarmingSession(for sessionId: String) {
     guard #available(iOS 15.0, *) else {
       return
     }
@@ -68,26 +108,6 @@ open class Launcher {
     }
     token.invalidate()
     prewarmingTokenCache.removeValue(forKey: id)
-  }
-}
-
-private extension UIWindow {
-  static var keyWindow: UIWindow? {
-    // iOS 13+
-    if #available(iOS 13.0, *) {
-      return UIApplication.shared
-        .connectedScenes
-        .compactMap { $0 as? UIWindowScene }
-        .first { $0.activationState == .foregroundActive }?
-        .windows
-        .first(where: \ .isKeyWindow)
-    }
-    // iOS 12 fallback
-    return UIApplication.shared.windows.first(where: \ .isKeyWindow)
-  }
-
-  func topViewController() -> UIViewController? {
-    recursivelyFindTopViewController(from: rootViewController)
   }
 }
 

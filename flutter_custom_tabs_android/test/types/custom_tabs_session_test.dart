@@ -12,10 +12,7 @@ void main() {
   test('toMessage() returns a message with complete options', () {
     const options = CustomTabsSessionOptions(
       prefersDefaultBrowser: true,
-      fallbackCustomTabs: [
-        'org.mozilla.firefox',
-        'com.microsoft.emmx',
-      ],
+      fallbackCustomTabs: ['org.mozilla.firefox', 'com.microsoft.emmx'],
     );
     final actual = options.toMessage();
     expect(actual, <String, Object>{

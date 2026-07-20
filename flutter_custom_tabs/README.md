@@ -10,9 +10,9 @@ In version 2.0, the plugin expands the support for launching a URL in mobile app
 - Launch a URL in an external browser.
 - Launch a deep link URL.
 
-|             | Android | iOS   |  Web  |
-|-------------|---------|-------|-------|
-| **Support** | SDK 19+ | 12.0+ | Any   |
+| | Android | iOS | Web |
+| --- | --- | --- | --- |
+| **Support** | SDK 23+ | 13.0+ | Any |
 | Implementation | [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) | [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) | [url_launcher](https://pub.dev/packages/url_launcher) |
 
 ## Getting Started
@@ -35,36 +35,16 @@ dependencies:
 
 #### Android
 
-- Android Gradle Plugin v7.4.0 and above.
-- Kotlin v1.8.0 and above.
+- Android Gradle Plugin v9.0.0 and above.
+- Kotlin v2.2.10 and above.
 
-<table>
-<tr><td>plugins</td><td>buildscript</td></tr>
-<tr><td>
-
-```groovy
-// your-project/android/settings.gradle
+```kotlin
+// your-project/android/settings.gradle.kts
 plugins {
-    id "com.android.application" version "7.4.0" apply false // and above.
-    id "org.jetbrains.kotlin.android" version "1.8.0" apply false // and above if explicitly depending on Kotlin.
+  id "com.android.application" version "9.0.0" apply false // and above.
+  id "org.jetbrains.kotlin.android" version "2.2.10" apply false // and above if explicitly depending on Kotlin.
 }
 ```
-
-</td><td>
-
-```groovy
-// your-project/android/build.gradle
-buildscript {
-    ext.kotlin_version = '1.7.0' // and above if explicitly depending on Kotlin.
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0' // and above.
-    }
-}
-```
-
-</td></tr>
-</table>
 
 ## Usage
 

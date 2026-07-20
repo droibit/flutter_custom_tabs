@@ -8,9 +8,8 @@ import 'types/types.dart';
 /// This class implements the `package:flutter_custom_tabs` functionality for Android.
 class CustomTabsPluginAndroid extends CustomTabsPlatform {
   /// Creates a new plugin implementation instance.
-  CustomTabsPluginAndroid({
-    CustomTabsApi? api,
-  }) : _hostApi = api ?? CustomTabsApi();
+  CustomTabsPluginAndroid({CustomTabsApi? api})
+    : _hostApi = api ?? CustomTabsApi();
 
   final CustomTabsApi _hostApi;
 

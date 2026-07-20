@@ -8,9 +8,7 @@ import 'types/types.dart';
 /// This class implements the `package:flutter_custom_tabs` functionality for iOS.
 class CustomTabsPluginIOS extends CustomTabsPlatform {
   /// Creates a new plugin implementation instance.
-  CustomTabsPluginIOS({
-    CustomTabsApi? api,
-  }) : _hostApi = api ?? CustomTabsApi();
+  CustomTabsPluginIOS({CustomTabsApi? api}) : _hostApi = api ?? CustomTabsApi();
 
   final CustomTabsApi _hostApi;
 

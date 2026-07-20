@@ -83,10 +83,6 @@ internal class CustomTabsLauncher @VisibleForTesting constructor(
 
   override fun closeAllIfPossible() {
     val activity = this.activity ?: return
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-      return
-    }
-
     val am = activity.getSystemService<ActivityManager>()
     val selfActivityName = ComponentName(activity, activity.javaClass)
     for (appTask in requireNotNull(am).appTasks) {
@@ -136,7 +132,6 @@ internal class CustomTabsLauncher @VisibleForTesting constructor(
   /**
    * @noinspection SameParameterValue
    */
-  @Suppress("deprecation")
   private fun resolveService(
     pm: PackageManager,
     intent: Intent,

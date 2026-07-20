@@ -9,15 +9,14 @@ void main() {
   final mock = MockCustomTabsPlatform();
   setUp(() => {CustomTabsPlatform.instance = mock});
 
-  test('launchUrl() throws ArgumentError when launching with non-web URL',
-      () async {
-    final url = Uri.parse('file:/home');
-    expect(
-      () => launchUrl(url),
-      throwsA(isA<ArgumentError>()),
-    );
-    expect(mock.launchUrlCalled, isFalse);
-  });
+  test(
+    'launchUrl() throws ArgumentError when launching with non-web URL',
+    () async {
+      final url = Uri.parse('file:/home');
+      expect(() => launchUrl(url), throwsA(isA<ArgumentError>()));
+      expect(mock.launchUrlCalled, isFalse);
+    },
+  );
 
   test('launchUrl() launch with empty options', () async {
     final url = Uri.parse('http://example.com/');
@@ -31,11 +30,7 @@ void main() {
     );
 
     try {
-      await launchUrl(
-        url,
-        prefersDeepLink: prefersDeepLink,
-        options: options,
-      );
+      await launchUrl(url, prefersDeepLink: prefersDeepLink, options: options);
     } catch (e) {
       fail(e.toString());
     }
@@ -44,9 +39,7 @@ void main() {
   test('launchUrl() launch with options', () async {
     final url = Uri.parse('http://example.com/');
     const prefersDeepLink = true;
-    const options = LaunchOptions(
-      barFixingEnabled: false,
-    );
+    const options = LaunchOptions(barFixingEnabled: false);
     mock.setLaunchExpectations(
       url: url.toString(),
       prefersDeepLink: prefersDeepLink,
@@ -55,11 +48,7 @@ void main() {
     );
 
     try {
-      await launchUrl(
-        url,
-        prefersDeepLink: prefersDeepLink,
-        options: options,
-      );
+      await launchUrl(url, prefersDeepLink: prefersDeepLink, options: options);
     } catch (e) {
       fail(e.toString());
     }

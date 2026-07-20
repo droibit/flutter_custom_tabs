@@ -1,13 +1,15 @@
 import 'package:pigeon/pigeon.dart';
 
-@ConfigurePigeon(PigeonOptions(
-  kotlinOut:
-      'android/src/main/kotlin/com/github/droibit/flutter/plugins/customtabs/Messages.kt',
-  kotlinOptions: KotlinOptions(
-    package: 'com.github.droibit.flutter.plugins.customtabs',
+@ConfigurePigeon(
+  PigeonOptions(
+    kotlinOut:
+        'android/src/main/kotlin/com/github/droibit/flutter/plugins/customtabs/Messages.kt',
+    kotlinOptions: KotlinOptions(
+      package: 'com.github.droibit.flutter.plugins.customtabs',
+    ),
+    dartOut: 'lib/src/messages/messages.g.dart',
   ),
-  dartOut: 'lib/src/messages/messages.g.dart',
-))
+)
 @HostApi()
 abstract class CustomTabsApi {
   void launch(

@@ -50,9 +50,7 @@ class MockCustomTabsPlatform extends Fake
     returnSession = prewarmingSession;
   }
 
-  void setInvalidateExpectations({
-    required PlatformSession session,
-  }) {
+  void setInvalidateExpectations({required PlatformSession session}) {
     argSession = session;
   }
 

@@ -3,10 +3,7 @@ import 'package:meta/meta.dart';
 /// The configuration for close button on the Custom Tab.
 @immutable
 class CustomTabsCloseButton {
-  const CustomTabsCloseButton({
-    this.icon,
-    this.position,
-  });
+  const CustomTabsCloseButton({this.icon, this.position});
 
   /// Resource identifier of the close button icon for the Custom Tab.
   final String? icon;

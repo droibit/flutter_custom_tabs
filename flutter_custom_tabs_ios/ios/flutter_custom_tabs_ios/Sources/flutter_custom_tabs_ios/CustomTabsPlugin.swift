@@ -1,16 +1,19 @@
+// swiftlint:disable unneeded_throws_rethrows
 import Flutter
 import SafariServices
 
 public final class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let plugin = CustomTabsPlugin()
+    let plugin = CustomTabsPlugin(
+      launcher: DefaultLauncher(registrar: registrar)
+    )
     CustomTabsApiSetup.setUp(binaryMessenger: registrar.messenger(), api: plugin)
     registrar.publish(plugin)
   }
 
   private let launcher: Launcher
 
-  init(launcher: Launcher = Launcher()) {
+  init(launcher: Launcher) {
     self.launcher = launcher
   }
 
@@ -49,7 +52,7 @@ public final class CustomTabsPlugin: NSObject, FlutterPlugin, CustomTabsApi {
   }
 
   func invalidateSession(_ sessionId: String) throws {
-    launcher.invalidatePrewarmingSession(withId: sessionId)
+    launcher.invalidatePrewarmingSession(for: sessionId)
   }
 
   // MARK: - Private

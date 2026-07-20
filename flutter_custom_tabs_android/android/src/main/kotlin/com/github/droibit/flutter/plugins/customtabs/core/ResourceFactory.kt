@@ -19,11 +19,8 @@ class ResourceFactory {
       return null
     }
 
-    var drawable = ContextCompat.getDrawable(context, drawableResId)
+    val drawable = ContextCompat.getDrawable(context, drawableResId)
       ?: return null
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-      drawable = DrawableCompat.wrap(drawable).mutate()
-    }
     return drawable.toBitmap()
   }
 

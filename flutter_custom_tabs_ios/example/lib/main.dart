@@ -21,12 +21,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     Future(() async {
-      _session = await CustomTabsPlatform.instance.mayLaunch(
-        [
-          'https://flutter.dev',
-          'https://dart.dev',
-        ],
-      );
+      _session = await CustomTabsPlatform.instance.mayLaunch([
+        'https://flutter.dev',
+        'https://dart.dev',
+      ]);
       debugPrint('Prewarming connection: $_session');
     });
   }
@@ -59,9 +57,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       home: Builder(
         builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Example for iOS'),
-          ),
+          appBar: AppBar(title: const Text('Example for iOS')),
           body: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
@@ -97,10 +93,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-Future<void> _launchUrl(
-  String url,
-  BuildContext context,
-) async {
+Future<void> _launchUrl(String url, BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await CustomTabsPlatform.instance.launch(
@@ -187,9 +180,7 @@ Future<void> _launchUrlAndCloseManually(BuildContext context) async {
 
 Future<void> _launchUrlInExternalBrowser() async {
   try {
-    await CustomTabsPlatform.instance.launch(
-      'https://flutter.dev',
-    );
+    await CustomTabsPlatform.instance.launch('https://flutter.dev');
   } catch (e) {
     debugPrint(e.toString());
   }

@@ -1,7 +1,12 @@
+## NEXT
+
+- Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
+- Updates minimum required `flutter_lints` version to 6.0.0.
+
 ## 2.4.0
 
 - Updates minimum supported SDK version to Flutter 3.27.0/Dart 3.6.
-- Updates minimum required flutter_lints version to 5.0.0.
+- Updates minimum required `flutter_lints` version to 5.0.0.
 - Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.4.0.
 
 ## 2.3.0

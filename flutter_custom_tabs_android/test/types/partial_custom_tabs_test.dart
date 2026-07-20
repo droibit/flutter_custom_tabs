@@ -195,17 +195,15 @@ void main() {
     test('returns associated value', () {
       expect(
         CustomTabsActivitySideSheetRoundedCornersPosition
-            .defaultPosition.rawValue,
+            .defaultPosition
+            .rawValue,
         0,
       );
       expect(
         CustomTabsActivitySideSheetRoundedCornersPosition.none.rawValue,
         1,
       );
-      expect(
-        CustomTabsActivitySideSheetRoundedCornersPosition.top.rawValue,
-        2,
-      );
+      expect(CustomTabsActivitySideSheetRoundedCornersPosition.top.rawValue, 2);
     });
   });
 }

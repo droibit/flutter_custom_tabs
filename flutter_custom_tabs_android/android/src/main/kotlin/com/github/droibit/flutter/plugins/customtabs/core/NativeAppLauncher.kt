@@ -1,5 +1,6 @@
 package com.github.droibit.flutter.plugins.customtabs.core
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -67,14 +68,9 @@ class NativeAppLauncher {
     return true
   }
 
-  @Suppress("deprecation")
+  @SuppressLint("QueryPermissionsNeeded")
   private fun queryIntentActivities(pm: PackageManager, intent: Intent): List<ResolveInfo> {
-    val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      PackageManager.MATCH_ALL
-    } else {
-      PackageManager.MATCH_DEFAULT_ONLY
-    }
-
+    val flags = PackageManager.MATCH_ALL
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       pm.queryIntentActivities(
         intent,
