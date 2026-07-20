@@ -4,7 +4,7 @@ import androidx.browser.customtabs.CustomTabsIntent.CloseButtonPosition
 
 class CustomTabsCloseButton internal constructor(
   val icon: String?,
-  @CloseButtonPosition val position: Int?
+  @get:CloseButtonPosition val position: Int?
 ) {
   class Builder {
     private var icon: String? = null

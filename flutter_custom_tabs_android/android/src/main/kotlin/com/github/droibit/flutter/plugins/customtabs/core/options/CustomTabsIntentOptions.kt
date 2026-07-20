@@ -5,7 +5,7 @@ import androidx.browser.customtabs.CustomTabsIntent.ShareState
 class CustomTabsIntentOptions internal constructor(
   val colorSchemes: CustomTabsColorSchemes?,
   val urlBarHidingEnabled: Boolean?,
-  @ShareState val shareState: Int?,
+  @get:ShareState val shareState: Int?,
   val showTitle: Boolean?,
   val instantAppsEnabled: Boolean?,
   val bookmarksButtonEnabled: Boolean?,

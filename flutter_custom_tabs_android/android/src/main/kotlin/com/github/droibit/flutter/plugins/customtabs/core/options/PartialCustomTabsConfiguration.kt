@@ -7,15 +7,15 @@ import androidx.browser.customtabs.CustomTabsIntent.ActivitySideSheetPosition
 import androidx.browser.customtabs.CustomTabsIntent.ActivitySideSheetRoundedCornersPosition
 
 class PartialCustomTabsConfiguration internal constructor(
-  @Dimension(unit = Dimension.DP) val initialHeight: Double?,
-  @ActivityHeightResizeBehavior val activityHeightResizeBehavior: Int?,
-  @Dimension(unit = Dimension.DP) val initialWidth: Double?,
-  @Dimension(unit = Dimension.DP) val activitySideSheetBreakpoint: Double?,
+  @get:Dimension(unit = Dimension.DP) val initialHeight: Double?,
+  @get:ActivityHeightResizeBehavior val activityHeightResizeBehavior: Int?,
+  @get:Dimension(unit = Dimension.DP) val initialWidth: Double?,
+  @get:Dimension(unit = Dimension.DP) val activitySideSheetBreakpoint: Double?,
   val activitySideSheetMaximizationEnabled: Boolean?,
-  @ActivitySideSheetPosition val activitySideSheetPosition: Int?,
-  @ActivitySideSheetDecorationType val activitySideSheetDecorationType: Int?,
-  @ActivitySideSheetRoundedCornersPosition val activitySideSheetRoundedCornersPosition: Int?,
-  @Dimension(unit = Dimension.DP) val cornerRadius: Int?,
+  @get:ActivitySideSheetPosition val activitySideSheetPosition: Int?,
+  @get:ActivitySideSheetDecorationType val activitySideSheetDecorationType: Int?,
+  @get:ActivitySideSheetRoundedCornersPosition val activitySideSheetRoundedCornersPosition: Int?,
+  @get:Dimension(unit = Dimension.DP) val cornerRadius: Int?,
   val backgroundInteractionEnabled: Boolean?,
 ) {
   class Builder {

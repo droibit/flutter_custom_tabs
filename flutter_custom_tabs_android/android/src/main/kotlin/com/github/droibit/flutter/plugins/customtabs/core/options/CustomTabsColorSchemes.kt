@@ -1,11 +1,11 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
-import android.graphics.Color
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent.ColorScheme
+import androidx.core.graphics.toColorInt
 
 class CustomTabsColorSchemes internal constructor(
-  @ColorScheme val colorScheme: Int?,
+  @get:ColorScheme val colorScheme: Int?,
   val lightParams: CustomTabColorSchemeParams?,
   val darkParams: CustomTabColorSchemeParams?,
   val defaultPrams: CustomTabColorSchemeParams?
@@ -58,17 +58,17 @@ class CustomTabsColorSchemes internal constructor(
       val builder = CustomTabColorSchemeParams.Builder()
       val toolbarColor = source[KEY_TOOLBAR_COLOR] as String?
       if (toolbarColor != null) {
-        builder.setToolbarColor(Color.parseColor(toolbarColor))
+        builder.setToolbarColor(toolbarColor.toColorInt())
       }
 
       val navigationBarColor = source[KEY_NAVIGATION_BAR_COLOR] as String?
       if (navigationBarColor != null) {
-        builder.setNavigationBarColor(Color.parseColor(navigationBarColor))
+        builder.setNavigationBarColor(navigationBarColor.toColorInt())
       }
 
       val navigationBarDividerColor = source[KEY_NAVIGATION_BAR_DIVIDER_COLOR] as String?
       if (navigationBarDividerColor != null) {
-        builder.setNavigationBarDividerColor(Color.parseColor(navigationBarDividerColor))
+        builder.setNavigationBarDividerColor(navigationBarDividerColor.toColorInt())
       }
       return builder.build()
     }
