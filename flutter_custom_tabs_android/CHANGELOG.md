@@ -6,6 +6,7 @@
 - Migrates the build configuration from Groovy to Kotlin.
 - Updates minimum required `pigeon` version to 27.0.0.
 - Updates minimum required `flutter_lints` version to 6.0.0.
+- Updates minimum required `androidx.browser` version to 1.10.0.
 
 ## 2.4.0
 

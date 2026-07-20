@@ -72,15 +72,15 @@ kotlin {
 }
 
 dependencies {
-  implementation("androidx.core:core-ktx:1.9.0")
-  implementation("androidx.browser:browser:1.8.0")
-  implementation("io.github.droibit:customtabslauncher:3.0.0")
+  implementation("androidx.core:core-ktx:1.10.0")
+  implementation("androidx.browser:browser:1.10.0")
+  implementation("io.github.droibit:customtabslauncher:4.1.0")
 
   testImplementation("junit:junit:4.13.2")
-  testImplementation("org.robolectric:robolectric:4.11")
-  testImplementation("io.mockk:mockk:1.13.3")
-  testImplementation("com.google.truth:truth:1.4.4")
-  testImplementation("androidx.test.ext:truth:1.6.0")
-  testImplementation("androidx.test.ext:junit-ktx:1.2.1")
-  testImplementation("com.google.testparameterinjector:test-parameter-injector:1.18")
+  testImplementation("org.robolectric:robolectric:4.16.1")
+  testImplementation("io.mockk:mockk:1.14.11")
+  testImplementation("com.google.truth:truth:1.4.5")
+  testImplementation("androidx.test.ext:truth:1.7.0")
+  testImplementation("androidx.test.ext:junit-ktx:1.3.0")
+  testImplementation("com.google.testparameterinjector:test-parameter-injector:1.22")
 }
