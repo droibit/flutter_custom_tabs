@@ -30,17 +30,16 @@
 # rules
 
 --enable isEmpty
---enable blankLinesBetweenImports
 --enable blockComments
---enable environmentEntry
 --enable noGuardInTests
+--enable preferContains
 --enable preferFinalClasses
+--enable preferFirstWhere
+--enable preferFlatMap
+--enable preferMinOverSorted
+--enable preferSwiftStringAPI
 --enable privateStateVariables
---enable redundantMemberwiseInit
---enable redundantAsync
---enable redundantProperty
---enable redundantThrows
---enable throwingTests
---enable wrapMultilineFunctionChains
---enable wrapMultilineStatementBraces
+--enable noForceTryInTests
 --enable noForceUnwrapInTests
+--enable validateTestCases
+--enable wrapMultilineFunctionChains

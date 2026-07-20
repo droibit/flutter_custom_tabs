@@ -1,3 +1,4 @@
+// swiftlint:disable unneeded_throws_rethrows
 import SafariServices
 import XCTest
 @testable import flutter_custom_tabs_ios

@@ -7,7 +7,7 @@ private let pageSheetDetentLarge = "large"
 
 extension SFSafariViewController {
   static func make(url: URL, options: SFSafariViewControllerOptions) -> SFSafariViewController {
-    let configuration = SFSafariViewController.Configuration()
+    let configuration = Configuration()
     if let barCollapsingEnabled = options.barCollapsingEnabled {
       configuration.barCollapsingEnabled = barCollapsingEnabled
     }
@@ -35,7 +35,7 @@ extension SFSafariViewController {
     // swiftlint:enable unavailable_condition
 
     if let dismissButtonStyleRawValue = options.dismissButtonStyle,
-       let dismissButtonStyle = SFSafariViewController.DismissButtonStyle(rawValue: Int(dismissButtonStyleRawValue))
+       let dismissButtonStyle = DismissButtonStyle(rawValue: Int(dismissButtonStyleRawValue))
     {
       viewController.dismissButtonStyle = dismissButtonStyle
     }

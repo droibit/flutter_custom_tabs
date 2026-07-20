@@ -1,3 +1,4 @@
+// swiftlint:disable unneeded_throws_rethrows
 import Flutter
 import SafariServices
 
