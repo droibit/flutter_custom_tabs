@@ -36,9 +36,9 @@ import androidx.core.content.res.ResourcesCompat.ID_NULL
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.ext.truth.content.IntentSubject.assertThat
 import androidx.test.ext.truth.os.BundleSubject.assertThat
-import com.droibit.android.customtabs.launcher.NonChromeCustomTabs
-import com.droibit.android.customtabs.launcher.setChromeCustomTabsPackage
-import com.droibit.android.customtabs.launcher.setCustomTabsPackage
+import com.github.droibit.android.customtabs.launcher.NonChromeCustomTabs
+import com.github.droibit.android.customtabs.launcher.setChromeCustomTabsPackage
+import com.github.droibit.android.customtabs.launcher.setCustomTabsPackage
 import com.github.droibit.flutter.plugins.customtabs.core.options.BrowserConfiguration
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsAnimations
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsCloseButton
@@ -467,7 +467,7 @@ class CustomTabsIntentFactoryTest {
 
   @Test
   fun applyBrowserConfiguration_completeOptionsWithPrefersChrome() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
     every {
@@ -497,10 +497,9 @@ class CustomTabsIntentFactoryTest {
     }
   }
 
-  @Suppress("deprecation")
   @Test
   fun applyBrowserConfiguration_minimumOptionsWithPrefersChrome() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
     every {
@@ -529,10 +528,9 @@ class CustomTabsIntentFactoryTest {
     }
   }
 
-  @Suppress("deprecation")
   @Test
   fun applyBrowserConfiguration_prefersDefaultBrowser() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
     every { customTabsIntent.setCustomTabsPackage(any(), any()) } returns customTabsIntent
@@ -562,7 +560,7 @@ class CustomTabsIntentFactoryTest {
 
   @Test
   fun applyBrowserConfiguration_customTabsSession() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val expSessionPackageName = "com.example.customtabs"
     val options = BrowserConfiguration.Builder()
@@ -581,7 +579,7 @@ class CustomTabsIntentFactoryTest {
 
   @Test
   fun applyBrowserConfiguration_avoidOverridingPackage() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val customTabsIntent = CustomTabsIntent.Builder().build()
     val expPackageName = "com.example.customtabs"

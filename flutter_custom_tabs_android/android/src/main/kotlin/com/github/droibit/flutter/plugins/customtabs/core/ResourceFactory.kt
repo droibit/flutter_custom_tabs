@@ -3,13 +3,11 @@ package com.github.droibit.flutter.plugins.customtabs.core
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Build
 import androidx.annotation.AnimRes
 import androidx.annotation.AnyRes
 import androidx.annotation.Px
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 
 class ResourceFactory {

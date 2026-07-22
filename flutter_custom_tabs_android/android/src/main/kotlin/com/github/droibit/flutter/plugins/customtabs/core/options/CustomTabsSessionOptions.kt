@@ -1,7 +1,7 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
-import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider
+import com.github.droibit.android.customtabs.launcher.CustomTabsPackageProvider
 
 class CustomTabsSessionOptions internal constructor(
   private val browser: BrowserConfiguration

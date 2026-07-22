@@ -1,8 +1,8 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
-import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider
-import com.droibit.android.customtabs.launcher.NonChromeCustomTabs
+import com.github.droibit.android.customtabs.launcher.CustomTabsPackageProvider
+import com.github.droibit.android.customtabs.launcher.NonChromeCustomTabs
 
 class BrowserConfiguration internal constructor(
   val prefersExternalBrowser: Boolean?,

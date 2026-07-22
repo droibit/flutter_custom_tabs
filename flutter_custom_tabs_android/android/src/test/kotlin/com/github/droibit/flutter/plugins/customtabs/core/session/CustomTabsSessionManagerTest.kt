@@ -3,8 +3,8 @@ package com.github.droibit.flutter.plugins.customtabs.core.session
 import android.content.Context
 import androidx.browser.customtabs.CustomTabsSession
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.droibit.android.customtabs.launcher.CustomTabsPackageProvider
-import com.droibit.android.customtabs.launcher.getCustomTabsPackage
+import com.github.droibit.android.customtabs.launcher.CustomTabsPackageProvider
+import com.github.droibit.android.customtabs.launcher.getCustomTabsPackage
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSessionOptions
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -38,7 +38,7 @@ class CustomTabsSessionManagerTest {
 
   @Test
   fun createSessionController_withValidPackage_returnsSessionController() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val packageName = "com.example.customtabs"
     every { getCustomTabsPackage(any(), any(), any()) } returns packageName
@@ -60,7 +60,7 @@ class CustomTabsSessionManagerTest {
 
   @Test
   fun createSessionController_withNullPackage_returnsNull() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
     every { getCustomTabsPackage(any(), any(), any()) } returns null
 
     val additionalCustomTabs = mockk<CustomTabsPackageProvider>()
@@ -78,7 +78,7 @@ class CustomTabsSessionManagerTest {
 
   @Test
   fun createSessionController_prefersDefaultBrowser_returnsSessionController() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val packageName = "com.example.customtabs"
     every { getCustomTabsPackage(any(), any(), any()) } returns packageName
@@ -100,7 +100,7 @@ class CustomTabsSessionManagerTest {
 
   @Test
   fun createSessionController_prefersChrome_returnsSessionController() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
 
     val packageName = "com.example.customtabs"
     every { getCustomTabsPackage(any(), any(), any()) } returns packageName

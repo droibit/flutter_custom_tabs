@@ -74,7 +74,6 @@ kotlin {
 dependencies {
   implementation("androidx.core:core-ktx:1.10.0")
   implementation("androidx.browser:browser:1.10.0")
-  implementation("io.github.droibit:customtabslauncher:4.1.0")
 
   testImplementation("junit:junit:4.13.2")
   testImplementation("org.robolectric:robolectric:4.16.1")
