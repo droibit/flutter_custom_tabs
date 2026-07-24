@@ -14,7 +14,7 @@ class BrowserConfigurationBuilderTest {
     val config = BrowserConfiguration.Builder()
       .setPrefersExternalBrowser(true)
       .setPrefersDefaultBrowser(false)
-      .setFallbackCustomTabs(setOf("com.example.browser"))
+      .setFallbackCustomTabs(listOf("com.example.browser"))
       .setHeaders(mapOf("key" to "value"))
       .setSessionPackageName("com.example.session")
       .build()
@@ -99,11 +99,10 @@ class BrowserConfigurationBuilderTest {
   @TestParameters("{input: []}", customName = "Empty packages")
   @TestParameters("{input: null}", customName = "Null packages")
   fun setFallbackCustomTabs_parameterized(input: List<String>?) {
-    val inputSet = input?.toSet()
     val config = BrowserConfiguration.Builder()
-      .setFallbackCustomTabs(inputSet)
+      .setFallbackCustomTabs(input)
       .build()
-    assertThat(config.fallbackCustomTabPackages).isEqualTo(inputSet)
+    assertThat(config.fallbackCustomTabPackages).isEqualTo(input)
   }
 
   @Test

@@ -1,14 +1,13 @@
 package com.github.droibit.flutter.plugins.customtabs.core
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.github.droibit.flutter.plugins.customtabs.core.utils.queryIntentActivitiesCompat
 
 /**
  * ref. [Let native applications handle the content](https://developer.chrome.com/docs/android/custom-tabs/howto-custom-tab-native-apps/)
@@ -44,7 +43,7 @@ class NativeAppLauncher {
       .addCategory(Intent.CATEGORY_BROWSABLE)
       .setData(Uri.fromParts(uri.scheme, "", null))
     val genericResolvedList: Set<String> = extractPackageNames(
-      queryIntentActivities(pm, browserActivityIntent)
+      pm.queryIntentActivitiesCompat(browserActivityIntent)
     )
 
     // Get all apps that resolve the specific Url
@@ -52,7 +51,7 @@ class NativeAppLauncher {
       .addCategory(Intent.CATEGORY_BROWSABLE)
     val resolvedSpecializedList = buildSet {
       addAll(
-        extractPackageNames(queryIntentActivities(pm, specializedActivityIntent))
+        extractPackageNames(pm.queryIntentActivitiesCompat(specializedActivityIntent))
       )
       // Keep only the Urls that resolve the specific, but not the generic urls.
       removeAll(genericResolvedList)
@@ -66,19 +65,6 @@ class NativeAppLauncher {
     specializedActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     context.startActivity(specializedActivityIntent)
     return true
-  }
-
-  @SuppressLint("QueryPermissionsNeeded")
-  private fun queryIntentActivities(pm: PackageManager, intent: Intent): List<ResolveInfo> {
-    val flags = PackageManager.MATCH_ALL
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      pm.queryIntentActivities(
-        intent,
-        PackageManager.ResolveInfoFlags.of(flags.toLong())
-      )
-    } else {
-      pm.queryIntentActivities(intent, flags)
-    }
   }
 
   private fun extractPackageNames(resolveInfo: List<ResolveInfo>): Set<String> {

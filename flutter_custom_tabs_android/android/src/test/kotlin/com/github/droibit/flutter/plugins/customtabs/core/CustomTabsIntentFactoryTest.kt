@@ -36,9 +36,8 @@ import androidx.core.content.res.ResourcesCompat.ID_NULL
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.ext.truth.content.IntentSubject.assertThat
 import androidx.test.ext.truth.os.BundleSubject.assertThat
-import com.droibit.android.customtabs.launcher.NonChromeCustomTabs
-import com.droibit.android.customtabs.launcher.setChromeCustomTabsPackage
-import com.droibit.android.customtabs.launcher.setCustomTabsPackage
+import com.github.droibit.flutter.plugins.customtabs.core.browser.setChromeCustomTabsPackage
+import com.github.droibit.flutter.plugins.customtabs.core.browser.setCustomTabsPackage
 import com.github.droibit.flutter.plugins.customtabs.core.options.BrowserConfiguration
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsAnimations
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsCloseButton
@@ -467,7 +466,7 @@ class CustomTabsIntentFactoryTest {
 
   @Test
   fun applyBrowserConfiguration_completeOptionsWithPrefersChrome() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsIntentHelper")
 
     val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
     every {
@@ -477,7 +476,7 @@ class CustomTabsIntentFactoryTest {
     val expHeader = "key" to "value"
     val options = BrowserConfiguration.Builder()
       .setHeaders(mapOf(expHeader))
-      .setFallbackCustomTabs(setOf("com.example.customtabs"))
+      .setFallbackCustomTabs(listOf("com.example.customtabs"))
       .setPrefersExternalBrowser(false)
       .setPrefersDefaultBrowser(false)
       .build()
@@ -492,15 +491,14 @@ class CustomTabsIntentFactoryTest {
     verify {
       customTabsIntent.setChromeCustomTabsPackage(
         any(),
-        ofType(NonChromeCustomTabs::class)
+        eq(listOf("com.example.customtabs"))
       )
     }
   }
 
-  @Suppress("deprecation")
   @Test
   fun applyBrowserConfiguration_minimumOptionsWithPrefersChrome() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsIntentHelper")
 
     val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
     every {
@@ -524,15 +522,14 @@ class CustomTabsIntentFactoryTest {
     verify {
       customTabsIntent.setChromeCustomTabsPackage(
         any(),
-        ofType(NonChromeCustomTabs::class)
+        eq(emptyList())
       )
     }
   }
 
-  @Suppress("deprecation")
   @Test
   fun applyBrowserConfiguration_prefersDefaultBrowser() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsIntentHelper")
 
     val customTabsIntent = spyk(CustomTabsIntent.Builder().build())
     every { customTabsIntent.setCustomTabsPackage(any(), any()) } returns customTabsIntent
@@ -555,14 +552,14 @@ class CustomTabsIntentFactoryTest {
     verify {
       customTabsIntent.setCustomTabsPackage(
         any(),
-        ofType(NonChromeCustomTabs::class)
+        eq(emptyList())
       )
     }
   }
 
   @Test
   fun applyBrowserConfiguration_customTabsSession() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsIntentHelper")
 
     val expSessionPackageName = "com.example.customtabs"
     val options = BrowserConfiguration.Builder()
@@ -581,7 +578,7 @@ class CustomTabsIntentFactoryTest {
 
   @Test
   fun applyBrowserConfiguration_avoidOverridingPackage() {
-    mockkStatic("com.droibit.android.customtabs.launcher.CustomTabsIntentHelper")
+    mockkStatic("com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsIntentHelper")
 
     val customTabsIntent = CustomTabsIntent.Builder().build()
     val expPackageName = "com.example.customtabs"

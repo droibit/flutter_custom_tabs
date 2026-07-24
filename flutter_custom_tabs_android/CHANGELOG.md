@@ -8,6 +8,7 @@
 - Updates minimum required `pigeon` version to 27.0.0.
 - Updates minimum required `flutter_lints` version to 6.0.0.
 - Updates minimum required `androidx.browser` version to 1.10.0.
+- Removes CustomTabsLauncher dependency and inline launcher helpers.
 
 ## 2.4.0
 
