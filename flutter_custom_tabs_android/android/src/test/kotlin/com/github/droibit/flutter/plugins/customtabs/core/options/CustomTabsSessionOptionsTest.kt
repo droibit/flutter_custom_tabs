@@ -1,7 +1,6 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
-import com.github.droibit.android.customtabs.launcher.CustomTabsPackageProvider
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -11,7 +10,7 @@ class CustomTabsSessionOptionsTest {
   @Test
   fun constructor_withPrefersDefaultBrowserAndFallbackPackages() {
     val prefersDefaultBrowser = true
-    val fallbackPackages = setOf("com.example.browser1", "com.example.browser2")
+    val fallbackPackages = listOf("com.example.browser1", "com.example.browser2")
     val sessionOptions = CustomTabsSessionOptions(prefersDefaultBrowser, fallbackPackages)
 
     assertThat(sessionOptions.prefersDefaultBrowser).isEqualTo(prefersDefaultBrowser)
@@ -36,7 +35,7 @@ class CustomTabsSessionOptionsTest {
 
   @Test
   fun fallbackCustomTabPackages_delegatesToBrowserConfiguration() {
-    val fallbackPackages = setOf("com.example.browser1", "com.example.browser2")
+    val fallbackPackages = listOf("com.example.browser1", "com.example.browser2")
     val sessionOptions = CustomTabsSessionOptions(null, fallbackPackages)
 
     assertThat(sessionOptions.fallbackCustomTabPackages).isEqualTo(fallbackPackages)
@@ -44,15 +43,15 @@ class CustomTabsSessionOptionsTest {
 
   @Test
   fun getAdditionalCustomTabs_delegatesToBrowserConfiguration() {
-    val additionalCustomTabs = mockk<CustomTabsPackageProvider>()
+    val additionalCustomTabs = listOf("com.example.browser")
     val browser = mockk<BrowserConfiguration> {
       every { getAdditionalCustomTabs(any()) } returns additionalCustomTabs
     }
     val sessionOptions = CustomTabsSessionOptions(browser)
 
     val context = mockk<Context>()
-    val provider = sessionOptions.getAdditionalCustomTabs(context)
+    val result = sessionOptions.getAdditionalCustomTabs(context)
 
-    assertThat(provider).isSameInstanceAs(additionalCustomTabs)
+    assertThat(result).isEqualTo(additionalCustomTabs)
   }
 }

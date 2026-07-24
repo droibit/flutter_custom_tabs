@@ -1,14 +1,13 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
-import com.github.droibit.android.customtabs.launcher.CustomTabsPackageProvider
 
 class CustomTabsSessionOptions internal constructor(
   private val browser: BrowserConfiguration
 ) {
   constructor(
     prefersDefaultBrowser: Boolean?,
-    fallbackCustomTabPackages: Set<String>?
+    fallbackCustomTabPackages: List<String>?
   ) : this(
     BrowserConfiguration.Builder()
       .setPrefersDefaultBrowser(prefersDefaultBrowser)
@@ -19,16 +18,16 @@ class CustomTabsSessionOptions internal constructor(
   val prefersDefaultBrowser: Boolean?
     get() = browser.prefersDefaultBrowser
 
-  val fallbackCustomTabPackages: Set<String>?
+  val fallbackCustomTabPackages: List<String>?
     get() = browser.fallbackCustomTabPackages
 
-  fun getAdditionalCustomTabs(context: Context): CustomTabsPackageProvider {
+  fun getAdditionalCustomTabs(context: Context): List<String> {
     return browser.getAdditionalCustomTabs(context)
   }
 
   class Builder {
     private var prefersDefaultBrowser: Boolean? = null
-    private var fallbackCustomTabs: Set<String>? = null
+    private var fallbackCustomTabs: List<String>? = null
 
     fun setOptions(options: Map<String, Any>?): Builder {
       if (options == null) {
@@ -37,7 +36,7 @@ class CustomTabsSessionOptions internal constructor(
 
       prefersDefaultBrowser = options[KEY_PREFERS_DEFAULT_BROWSER] as Boolean?
       @Suppress("UNCHECKED_CAST")
-      fallbackCustomTabs = (options[KEY_FALLBACK_CUSTOM_TABS] as List<String>?)?.toSet()
+      fallbackCustomTabs = options[KEY_FALLBACK_CUSTOM_TABS] as List<String>?
       return this
     }
 
@@ -46,7 +45,7 @@ class CustomTabsSessionOptions internal constructor(
       return this
     }
 
-    fun setFallbackCustomTabs(fallbackCustomTabs: Set<String>?): Builder {
+    fun setFallbackCustomTabs(fallbackCustomTabs: List<String>?): Builder {
       this.fallbackCustomTabs = fallbackCustomTabs
       return this
     }

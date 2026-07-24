@@ -3,7 +3,7 @@ package com.github.droibit.flutter.plugins.customtabs.core.session
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.browser.customtabs.CustomTabsSession
-import com.github.droibit.android.customtabs.launcher.getCustomTabsPackage
+import com.github.droibit.flutter.plugins.customtabs.core.browser.getCustomTabsPackage
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsSessionOptions
 
 class CustomTabsSessionManager @VisibleForTesting internal constructor(

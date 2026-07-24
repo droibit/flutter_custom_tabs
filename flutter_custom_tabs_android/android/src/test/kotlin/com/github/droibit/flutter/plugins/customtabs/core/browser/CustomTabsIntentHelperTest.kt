@@ -1,10 +1,10 @@
-package com.github.droibit.android.customtabs.launcher
+package com.github.droibit.flutter.plugins.customtabs.core.browser
 
 import android.content.Context
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.droibit.android.customtabs.launcher.CustomTabsPackage.CHROME_PACKAGES
+import com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsPackage.CHROME_PACKAGES
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -73,7 +73,7 @@ class CustomTabsIntentHelperTest {
     val nonChromePackage = "com.example.customtabs"
     every { CustomTabsClient.getPackageName(any(), any(), any()) } returns nonChromePackage
 
-    val additionalCustomTabs = NonChromeCustomTabs(setOf(nonChromePackage))
+    val additionalCustomTabs = listOf(nonChromePackage)
     val customTabsIntent = CustomTabsIntent.Builder()
       .build()
       .setChromeCustomTabsPackage(context, additionalCustomTabs)
@@ -145,7 +145,7 @@ class CustomTabsIntentHelperTest {
     val nonChromePackage = "com.example.customtabs"
     every { CustomTabsClient.getPackageName(any(), any(), any()) } returns nonChromePackage
 
-    val additionalCustomTabs = NonChromeCustomTabs(setOf(nonChromePackage))
+    val additionalCustomTabs = listOf(nonChromePackage)
     val customTabsIntent = CustomTabsIntent.Builder()
       .build()
       .setCustomTabsPackage(context, additionalCustomTabs)
@@ -199,7 +199,7 @@ class CustomTabsIntentHelperTest {
     val nonChromePackage = "com.example.browser"
     every { CustomTabsClient.getPackageName(any(), any(), any()) } returns nonChromePackage
 
-    val additionalCustomTabs = NonChromeCustomTabs(setOf(nonChromePackage))
+    val additionalCustomTabs = listOf(nonChromePackage)
     val packageName =
       getCustomTabsPackage(context, additionalCustomTabs = additionalCustomTabs)
     assertThat(packageName).isEqualTo(nonChromePackage)

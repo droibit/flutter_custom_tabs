@@ -1,11 +1,11 @@
-package com.github.droibit.android.customtabs.launcher
+package com.github.droibit.flutter.plugins.customtabs.core.browser
 
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.droibit.android.customtabs.launcher.CustomTabsPackage.CHROME_PACKAGES
+import com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsPackage.CHROME_PACKAGES
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

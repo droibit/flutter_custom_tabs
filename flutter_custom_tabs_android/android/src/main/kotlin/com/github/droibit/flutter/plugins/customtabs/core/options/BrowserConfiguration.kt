@@ -1,25 +1,23 @@
 package com.github.droibit.flutter.plugins.customtabs.core.options
 
 import android.content.Context
-import com.github.droibit.android.customtabs.launcher.CustomTabsPackageProvider
-import com.github.droibit.android.customtabs.launcher.NonChromeCustomTabs
+import com.github.droibit.flutter.plugins.customtabs.core.browser.CustomTabsPackage
 
 class BrowserConfiguration internal constructor(
   val prefersExternalBrowser: Boolean?,
   val prefersDefaultBrowser: Boolean?,
-  val fallbackCustomTabPackages: Set<String>?,
+  val fallbackCustomTabPackages: List<String>?,
   val headers: Map<String, String>?,
   val sessionPackageName: String?
 ) {
-  fun getAdditionalCustomTabs(context: Context): CustomTabsPackageProvider {
-    return fallbackCustomTabPackages?.let { NonChromeCustomTabs(it) }
-      ?: NonChromeCustomTabs(context)
+  fun getAdditionalCustomTabs(context: Context): List<String> {
+    return fallbackCustomTabPackages ?: CustomTabsPackage.getNonChromeCustomTabsPackages(context)
   }
 
   class Builder {
     private var prefersExternalBrowser: Boolean? = null
     private var prefersDefaultBrowser: Boolean? = null
-    private var fallbackCustomTabs: Set<String>? = null
+    private var fallbackCustomTabs: List<String>? = null
     private var headers: Map<String, String>? = null
     private var sessionPackageName: String? = null
 
@@ -34,7 +32,7 @@ class BrowserConfiguration internal constructor(
 
       prefersExternalBrowser = options[KEY_PREFERS_EXTERNAL_BROWSER] as Boolean?
       prefersDefaultBrowser = options[KEY_PREFERS_DEFAULT_BROWSER] as Boolean?
-      fallbackCustomTabs = (options[KEY_FALLBACK_CUSTOM_TABS] as List<String>?)?.toSet()
+      fallbackCustomTabs = options[KEY_FALLBACK_CUSTOM_TABS] as List<String>?
       headers = options[KEY_HEADERS] as Map<String, String>?
       sessionPackageName = options[KEY_SESSION_PACKAGE_NAME] as String?
       return this
@@ -50,7 +48,7 @@ class BrowserConfiguration internal constructor(
       return this
     }
 
-    fun setFallbackCustomTabs(fallbackCustomTabs: Set<String>?): Builder {
+    fun setFallbackCustomTabs(fallbackCustomTabs: List<String>?): Builder {
       this.fallbackCustomTabs = fallbackCustomTabs
       return this
     }

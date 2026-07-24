@@ -57,12 +57,11 @@ class CustomTabsSessionOptionsBuilderTest {
   @TestParameters("{input: []}", customName = "Empty packages")
   @TestParameters("{input: null}", customName = "Null packages")
   fun setFallbackCustomTabs_parameterized(input: List<String>?) {
-    val inputSet = input?.toSet()
     val sessionOptions = CustomTabsSessionOptions.Builder()
-      .setFallbackCustomTabs(inputSet)
+      .setFallbackCustomTabs(input)
       .build()
 
-    assertThat(sessionOptions.fallbackCustomTabPackages).isEqualTo(inputSet)
+    assertThat(sessionOptions.fallbackCustomTabPackages).isEqualTo(input)
   }
 
   @Test

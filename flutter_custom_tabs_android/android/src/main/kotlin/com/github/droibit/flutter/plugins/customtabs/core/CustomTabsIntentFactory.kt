@@ -7,8 +7,8 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
 import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
 import androidx.core.content.res.ResourcesCompat.ID_NULL
-import com.github.droibit.android.customtabs.launcher.setChromeCustomTabsPackage
-import com.github.droibit.android.customtabs.launcher.setCustomTabsPackage
+import com.github.droibit.flutter.plugins.customtabs.core.browser.setChromeCustomTabsPackage
+import com.github.droibit.flutter.plugins.customtabs.core.browser.setCustomTabsPackage
 import com.github.droibit.flutter.plugins.customtabs.core.options.BrowserConfiguration
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsAnimations
 import com.github.droibit.flutter.plugins.customtabs.core.options.CustomTabsCloseButton
