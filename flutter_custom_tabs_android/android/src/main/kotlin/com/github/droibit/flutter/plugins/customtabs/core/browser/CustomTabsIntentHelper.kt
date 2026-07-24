@@ -74,7 +74,7 @@ private fun CustomTabsIntent.setCustomTabsPackage(
  * It then uses the [CustomTabsClient] to determine the best package to handle Custom Tabs.
  *
  * @param context The source Context
- * @param ignoreDefault If set to `true`, the default browser is prioritized when selecting the Custom Tabs package.
+ * @param ignoreDefault If set to `true`, the default browser is ignored when selecting the Custom Tabs package.
  * @param additionalCustomTabs Additional browser packages that support Custom Tabs.
  *
  * @return The package name of the selected browser that supports Custom Tabs, or `null` if none found.
