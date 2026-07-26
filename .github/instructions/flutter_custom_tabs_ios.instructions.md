@@ -35,8 +35,8 @@ The iOS implementation is split between Dart and Swift, communicating via Pigeon
 
 The native side has a clear separation of concerns:
 
-- `CustomTabsPlugin.swift`: The standard Flutter plugin entry point. Its primary role is to set up the Pigeon channel and wire it to the `Launcher`. It implements the generated `CustomTabsApiProtocol`.
-- `Launcher.swift`: The core logic hub. It receives commands from Dart (via `CustomTabsPlugin`) and orchestrates the presentation and dismissal of `SFSafariViewController`.
+- `CustomTabsPlugin.swift`: The standard Flutter plugin entry point. Its primary role is to set up the Pigeon channel and wire it to the `Launcher`. It implements the generated `CustomTabsApi` protocol.
+- `Launcher.swift`: The core logic hub. It receives commands from Dart (via `CustomTabsPlugin`) and orchestrates deep-link opening, presentation/dismissal of `SFSafariViewController`, and URL prewarming.
 - `SFSafariViewController+Factory.swift`: A helper responsible for converting the options from Dart into a fully configured `SFSafariViewController` instance.
 
 ## Platform Channel: Pigeon
