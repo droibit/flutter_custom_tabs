@@ -1,4 +1,4 @@
-## NEXT
+## 2.5.0
 
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
 - Updates minimum required `flutter_lints` version to 6.0.0.
