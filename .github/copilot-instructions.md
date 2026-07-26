@@ -16,7 +16,7 @@ Each package has its own specific instructions file in `.github/instructions/`. 
 
 ## Development Environment
 
-- **Flutter:** `3.19.3-stable`
+- **Flutter:** `3.44.x-stable`
 - **Dart:** The Dart version is tied to the Flutter version.
 
 ## General Coding Style and Conventions
