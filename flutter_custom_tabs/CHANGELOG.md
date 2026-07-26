@@ -1,4 +1,4 @@
-## NEXT
+## 2.6.0
 
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
 - Migrates to built-in Kotlin.
@@ -8,6 +8,8 @@
 - Updates minimum supported version to iOS 13.
 - Adopts `UISceneDelegate` in the iOS example app.
 - Updates minimum required `flutter_lints` version to 6.0.0.
+- Updates minimum required `flutter_custom_tabs_ios` version to 2.6.0.
+- Updates minimum required `flutter_custom_tabs_android/web` version to 2.5.0.
 
 ## 2.5.0
 
