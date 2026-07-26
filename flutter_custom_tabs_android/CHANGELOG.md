@@ -1,4 +1,4 @@
-## NEXT
+## 2.5.0
 
 - Updates the minimum supported SDK version to Flutter 3.44/Dart 3.12.
 - Updates the minimum supported SDK version to Android SDK 23.
@@ -7,6 +7,7 @@
 - Migrates the build configuration from Groovy to Kotlin.
 - Updates minimum required `pigeon` version to 27.0.0.
 - Updates minimum required `flutter_lints` version to 6.0.0.
+- Updates minimum required `flutter_custom_tabs_platform_interface` version to 2.5.0.
 - Updates minimum required `androidx.browser` version to 1.10.0.
 - Removes CustomTabsLauncher dependency and inline launcher helpers.
 
